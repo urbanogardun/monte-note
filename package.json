@@ -1,6 +1,7 @@
 {
   "name": "new-my-app",
   "version": "0.1.0",
+  "main": "main.js",
   "private": true,
   "dependencies": {
     "autoprefixer": "7.1.2",
@@ -47,7 +48,8 @@
     "@types/jest": "^21.1.8",
     "@types/node": "^8.5.1",
     "@types/react": "^16.0.31",
-    "@types/react-dom": "^16.0.3"
+    "@types/react-dom": "^16.0.3",
+    "electron": "1.7.9"
   },
   "jest": {
     "mapCoverage": true,
