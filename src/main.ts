@@ -1,4 +1,4 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 
 let mainWindow: Electron.BrowserWindow;
 
@@ -49,6 +49,10 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+});
+
+ipcMain.on('get-global-packages', () => {
+    console.log('create nbook!');
 });
 
 // In this file you can include the rest of your app's specific main process

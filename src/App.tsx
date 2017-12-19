@@ -1,19 +1,24 @@
 import * as React from 'react';
 import './App.css';
-
-const logo = require('./logo.svg');
+import NewNotebook from './components/HomeSidebar/NewNotebook/NewNotebook';
 
 class App extends React.Component {
   render() {
     return (
-      <div className="App">
-        <div className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h2>Welcome to React</h2>
+      <div className="App container-fluid">
+        
+        <div className="row">
+          <div className="col-sm-2">
+            <NewNotebook name={'John'} />
+          </div>
+          <div className="col-sm-4">
+            <h1>Main</h1>
+          </div>
+          <div className="col-sm">
+            <h1>Preview Note Content</h1>
+          </div>
         </div>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+
       </div>
     );
   }

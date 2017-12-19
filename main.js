@@ -44,5 +44,8 @@ electron_1.app.on('activate', () => {
         createWindow();
     }
 });
+electron_1.ipcMain.on('get-global-packages', () => {
+    console.log('create nbook!');
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

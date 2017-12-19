@@ -3,8 +3,9 @@ import * as ReactDOM from 'react-dom';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
-import 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';
+import 'jquery';
 
 ReactDOM.render(
   <App />,
