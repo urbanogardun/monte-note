@@ -3,7 +3,7 @@ import { IpcRendererShim } from './shim';
 
 declare global {
     interface Window {
-        require: any;
+        require: {};
     }
 }
 
