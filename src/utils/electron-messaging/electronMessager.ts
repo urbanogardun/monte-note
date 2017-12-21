@@ -1,4 +1,3 @@
-// const Store = require('electron-store');
 import { IpcRendererShim } from './shim';
 
 declare global {
