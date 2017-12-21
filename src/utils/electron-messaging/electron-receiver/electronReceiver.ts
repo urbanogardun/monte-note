@@ -1,22 +1,18 @@
 import { ipcMain } from 'electron';
-// import NotebookManager from '../../notebook-management/notebookManager';
+import NotebookManager from '../../notebook-management/notebookManager';
 
 export default class ElectronReceiver {
 
-    notebooks: string[];
-    
-    constructor() {
-        this.notebooks = [];
-    }
+    notebookManager: NotebookManager;
 
     receiveMessage(message: string) {
         ipcMain.on(message, () => {
             
-            if (message.includes('set-location-for-notebooks')) {
-                // message.split(':')
-                // notebookManager = new NotebookManager()
+            if (this.isLocationForNotebooks(message)) {
+                this.parseLocationForNotebooks(message);
+                this.createLocationForNotebooks(message);
             } else {
-                console.log('Process other');
+                // console.log('Process other');
             }
         });
     }
@@ -32,5 +28,20 @@ export default class ElectronReceiver {
                         .join(' ')
                         .trim();
         return location;
+    }
+    /**
+     * Creates directory where notebooks will be stored
+     * @param  {string} location
+     */
+    createLocationForNotebooks(location: string) {
+        this.notebookManager = new NotebookManager(location);
+    }
+
+    private isLocationForNotebooks(message: string): boolean {
+        if (message.includes('set-location-for-notebooks')) {
+            return true;
+        }
+
+        return false;
     }
 }
