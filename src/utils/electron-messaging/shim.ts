@@ -27,6 +27,7 @@ export class IpcRendererShim {
             return message;
         } else {
             this.ipcRenderer.send(message);
+            return;
         }
     }
 
