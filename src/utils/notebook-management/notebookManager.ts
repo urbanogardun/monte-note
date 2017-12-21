@@ -1,6 +1,7 @@
 const Store = require('electron-store');
 const store = new Store();
 const fs = require('fs');
+const path = require('path');
 
 export class NotebookManager {
 
@@ -12,6 +13,7 @@ export class NotebookManager {
     constructor(saveDir: string) {
         this.directoryToSaveNotebooksAt = saveDir;
         this.saveNotebookLocation(this.directoryToSaveNotebooksAt);
+        this.createRootDirectory(this.directoryToSaveNotebooksAt);
         this.notebooks = [];
     }
 
@@ -30,8 +32,18 @@ export class NotebookManager {
     }
 
     deleteNotebook(name: string) {
-        this.deleteDirectory(name);
+        this.deleteDirectory(path.join(this.directoryToSaveNotebooksAt, name));
         this.deleteNotebookFromLog(name);
+    }
+
+    /** 
+     * Deletes all notebooks
+     */
+    deleteEverything() {
+        this.notebooks.map((notebook) => {
+            // Delete notebook folder and files in it
+            this.deleteNotebook(notebook);
+        });
     }
 
     /**
@@ -73,11 +85,11 @@ export class NotebookManager {
      * Deletes a directory and all files in it
      * @param  {string} path - path to directory
      */
-    private deleteDirectory(path: string) {
-        if (fs.existsSync(path)) {
+    private deleteDirectory(directoryPath: string) {
+        if (fs.existsSync(directoryPath)) {
             
-            fs.readdirSync(path).forEach(function(this: NotebookManager, file: string) {
-                var curPath = `${path}/${file}`;
+            fs.readdirSync(directoryPath).forEach(function(this: NotebookManager, file: string) {
+                var curPath = `${directoryPath}/${file}`;
                 
                 if (fs.lstatSync(curPath).isDirectory()) { // recurse
                     this.deleteDirectory(curPath);
@@ -87,7 +99,17 @@ export class NotebookManager {
 
             });
 
-            fs.rmdirSync(path);
+            fs.rmdirSync(directoryPath);
+        }
+    }
+
+    /**
+     * Creates root directory inside which notebooks will be created
+     * @param  {string} path - directory path
+     */
+    private createRootDirectory(directoryPath: string) {
+        if (!fs.existsSync(directoryPath)) {
+            fs.mkdirSync(`${this.directoryToSaveNotebooksAt}`);
         }
     }
 
