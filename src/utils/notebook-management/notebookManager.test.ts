@@ -8,7 +8,7 @@ beforeAll(() => {
 });
 
 test('gets notebook directory location', () => {
-  expect(notebookManager.getNotebookLocation()).toEqual(process.cwd() + '\\testing');
+  expect(NotebookManager.getNotebookLocation()).toEqual(process.cwd() + '\\testing');
 });
 
 test('creates notebook', () => {
@@ -24,7 +24,7 @@ test('deletes a notebook', () => {
 });
 
 test('deletes all notebooks', () => {
-  notebookManager.addNotebook(testNotebook);
+  notebookManager.addNotebook(testNotebook + '-industrial');
   notebookManager.addNotebook(testNotebook + '-biology');
   notebookManager.addNotebook(testNotebook + '-organic');
 

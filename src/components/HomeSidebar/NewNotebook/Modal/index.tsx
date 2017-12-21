@@ -1,22 +1,10 @@
 import * as React from 'react';
-import { IpcRendererShim } from './shim';
+import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
 
-declare global {
-    interface Window {
-        require: Function;
-    }
-}
-
-let ipcRenderer = new IpcRendererShim();
-
-export interface Props {
-    name?: string;
-    enthusiasmLevel?: number;
-}
-
-export class Modal extends React.Component<{}, Props> {
+export class Modal extends React.Component<{}, {}> {
 
 // notebookManager: NotebookManager;
+electronMessager: ElectronMessager;
 
     componentDidMount() {
         // Read save directory from electron store config
@@ -24,7 +12,8 @@ export class Modal extends React.Component<{}, Props> {
     }
 
     addNotebook(name: string): boolean {
-        ipcRenderer.send('get-global-packages');
+        // ipcRenderer.send('get-global-packages');
+        ElectronMessager.isLocationForNotebooksSet();
         return true;
     }
 

@@ -1,11 +1,18 @@
 import ElectronMessager from './electronMessager';
 
-test('notifies that notebook location has not been set', () => {
-    const spy = jest.spyOn(ElectronMessager, 'setLocationForNotebooks');
-    
-    let testDir = process.cwd();
+test('sends ipcRenderer with message to set a location for notebooks', () => {
+  const spy = jest.spyOn(ElectronMessager, 'setLocationForNotebooks');
+  
+  let testDir = process.cwd();
 
-    ElectronMessager.setLocationForNotebooks(testDir);
+  ElectronMessager.setLocationForNotebooks(testDir);
 
-    expect(spy).toHaveBeenCalled();
+  expect(spy).toHaveBeenCalled();
 });
+
+// test('checks if location for notebooks has been set', () => {
+
+//   let isLocationForNotebooksSet = ElectronMessager.isLocationForNotebooksSet();
+
+//   expect(isLocationForNotebooksSet).toEqual(true);
+// });

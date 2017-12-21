@@ -1,42 +1,33 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const Store = require('electron-store');
 const store = new Store();
 const fs = require('fs');
 const path = require('path');
-
-export class NotebookManager {
-
-    // Key that holds location value to notebook directory
-    static notebookSaveKey: string = 'notebook-save-directory';
-    directoryToSaveNotebooksAt: string;
-    notebooks: string[];
-
-    /**
-     * @returns string - location of save directory
-     */
-    static getNotebookLocation(): string {
-        return store.get(NotebookManager.notebookSaveKey);
-    }
-    
-    constructor(saveDir: string) {
+class NotebookManager {
+    constructor(saveDir) {
         this.directoryToSaveNotebooksAt = saveDir;
         this.saveNotebookLocation(this.directoryToSaveNotebooksAt);
         this.createRootDirectory(this.directoryToSaveNotebooksAt);
         this.notebooks = [];
     }
-
-    addNotebook(name: string) {
+    /**
+     * @returns string - location of save directory
+     */
+    static getNotebookLocation() {
+        return store.get(NotebookManager.notebookSaveKey);
+    }
+    addNotebook(name) {
         if (this.notebookExists(name)) {
             fs.mkdirSync(`${this.directoryToSaveNotebooksAt}\\${name}`);
         }
         this.addNotebookToLog(name);
     }
-
-    deleteNotebook(name: string) {
+    deleteNotebook(name) {
         this.deleteDirectory(path.join(this.directoryToSaveNotebooksAt, name));
         this.deleteNotebookFromLog(name);
     }
-
-    /** 
+    /**
      * Deletes all notebooks
      */
     deleteEverything() {
@@ -45,74 +36,66 @@ export class NotebookManager {
             this.deleteNotebook(notebook);
         });
     }
-
     /**
      * Sets default directory where notebooks will get saved
      * @param  {string} location - directory for notebooks
      */
-    private saveNotebookLocation(location: string) {
+    saveNotebookLocation(location) {
         store.set(NotebookManager.notebookSaveKey, location);
     }
-    
     /**
      * Checks if notebook is already created
      * @param  {string} name - notebook name
      * @returns boolean
      */
-    private notebookExists(name: string): boolean {
+    notebookExists(name) {
         return (!fs.existsSync(`${this.directoryToSaveNotebooksAt}\\${name}`));
     }
-
     /**
      * Keeps track of notebooks that were created during a session
      * @param  {string} name - notebook name
      */
-    private addNotebookToLog(name: string) {
+    addNotebookToLog(name) {
         if (this.notebooks.indexOf(name) === -1) {
             this.notebooks.push(name);
         }
     }
-
     /**
      * Removes notebook from log
      * @param  {string} name - notebook name
      */
-    private deleteNotebookFromLog(name: string) {
+    deleteNotebookFromLog(name) {
         this.notebooks = this.notebooks.filter((val) => val !== name);
     }
-
     /**
      * Deletes a directory and all files in it
      * @param  {string} path - path to directory
      */
-    private deleteDirectory(directoryPath: string) {
+    deleteDirectory(directoryPath) {
         if (fs.existsSync(directoryPath)) {
-            
-            fs.readdirSync(directoryPath).forEach(function(this: NotebookManager, file: string) {
+            fs.readdirSync(directoryPath).forEach(function (file) {
                 var curPath = `${directoryPath}/${file}`;
-                
-                if (fs.lstatSync(curPath).isDirectory()) { // recurse
+                if (fs.lstatSync(curPath).isDirectory()) {
                     this.deleteDirectory(curPath);
-                } else { // delete file
+                }
+                else {
                     fs.unlinkSync(curPath);
                 }
-
             });
-
             fs.rmdirSync(directoryPath);
         }
     }
-
     /**
      * Creates root directory inside which notebooks will be created
      * @param  {string} path - directory path
      */
-    private createRootDirectory(directoryPath: string) {
+    createRootDirectory(directoryPath) {
         if (!fs.existsSync(directoryPath)) {
             fs.mkdirSync(`${this.directoryToSaveNotebooksAt}`);
         }
     }
-
 }
-
-export default NotebookManager;
+// Key that holds location value to notebook directory
+NotebookManager.notebookSaveKey = 'notebook-save-directory';
+exports.NotebookManager = NotebookManager;
+exports.default = NotebookManager;

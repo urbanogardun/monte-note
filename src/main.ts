@@ -1,4 +1,5 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
+import NotebookManager from './utils/notebook-management/notebookManager';
 
 let mainWindow: Electron.BrowserWindow;
 
@@ -53,6 +54,10 @@ app.on('activate', () => {
 
 ipcMain.on('get-global-packages', () => {
     console.log('create nbook!');
+});
+
+ipcMain.on('is-location-for-notebooks-set', (event: any, args: any) => {
+  event.sender.send('start-it!', NotebookManager.getNotebookLocation());
 });
 
 // In this file you can include the rest of your app's specific main process
