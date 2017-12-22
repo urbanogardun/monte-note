@@ -2,13 +2,29 @@ import * as React from 'react';
 import './App.css';
 import NewNotebook from './components/HomeSidebar/NewNotebook/NewNotebook';
 import Welcome from './components/WelcomeScreen/Welcome';
+import ElectronMessager from './utils/electron-messaging/electronMessager';
 
 class App extends React.Component {
+
+  isNotebooksLocationSet: boolean;
+
+  componentDidMount() {
+    this.isNotebooksLocationSet = ElectronMessager.isLocationForNotebooksSet();
+  }
+
   render() {
+
+    let componentToRender;
+    if (this.isNotebooksLocationSet) {
+      componentToRender = <NewNotebook />;
+    } else {
+      componentToRender = <Welcome />;
+    }
+
     return (
       <div className="App container-fluid">
         
-        <Welcome />
+        {componentToRender}
 
         <div className="row">
           <div className="col-sm-2">

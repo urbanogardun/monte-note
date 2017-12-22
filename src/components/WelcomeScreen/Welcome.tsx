@@ -6,7 +6,7 @@ class Welcome extends React.Component {
     render() {
         return(
             <div className="welcome">
-                <p>Welcome</p>
+                <h1>Welcome</h1>
                 <button className="btn btn-primary btn-lg" onClick={() => { console.log('ccc'); }}>Click Me</button>
             </div>
         );
