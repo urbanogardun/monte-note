@@ -27,10 +27,6 @@ export class ElectronMessager {
         ElectronMessager.sendMessageWithIpcRenderer(`choose-location-for-notebooks`);
     }
 
-    static setLocationForNotebooks(location: string) {
-        ElectronMessager.sendMessageWithIpcRenderer(`set-location-for-notebooks: ${location}`);
-    }
-
     static sendMessageWithIpcRenderer(message: string) {
         if (ipcRenderer.send !== undefined) {
             ipcRenderer.send(message);
@@ -45,9 +41,6 @@ export class ElectronMessager {
         } else {
             return false;
         }
-        // ElectronMessager.sendMessageWithIpcRenderer(`is-location-for-notebooks-set`);
-        // let notebookLocation = NotebookManager.getNotebookLocation();
-        // return false;
     }
 
 }
