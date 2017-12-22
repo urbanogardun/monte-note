@@ -1,4 +1,5 @@
-import { IpcRenderer, Event } from 'electron';
+import { IpcRenderer } from 'electron';
+import { ipcRendererEventsBootstrap } from './ipcRendererEventsBootstrap';
 
 declare global {
     interface Window {
@@ -8,23 +9,7 @@ declare global {
 
 let ipcRenderer: IpcRenderer;
 
-// Electron's methods are not available outside of electron itself. When we're
-// running unit tests and are accessing our application through the web browser
-// we'll get an error thrown: window.require is not a function - this try/catch
-// suppresses that.
-try {
-    ipcRenderer = window.require('electron').ipcRenderer;
-    
-    ipcRenderer.on('start-it!', (event: Event, arg: string): boolean => {
-        if (arg) {
-            return true;
-        } else {
-            return false;
-        }
-    });
-} catch (error) {
-    ipcRenderer = {} as IpcRenderer;
-}
+ipcRenderer = ipcRendererEventsBootstrap();
 
 // TODO:
 // I configured ipcRenderer to IpcMain and ipcMain to ipcRenderer
