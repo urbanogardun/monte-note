@@ -1,5 +1,6 @@
 import { IpcRenderer } from 'electron';
 import { ipcRendererEventsBootstrap } from './ipcRendererEventsBootstrap';
+import { NOTEBOOK_SAVE_DIRECTORY } from '../../utils/constants';
 
 declare global {
     interface Window {
@@ -37,9 +38,16 @@ export class ElectronMessager {
     }
 
     static isLocationForNotebooksSet(): boolean {
-        ElectronMessager.sendMessageWithIpcRenderer(`is-location-for-notebooks-set`);
+        let isLocationSet = localStorage.getItem(NOTEBOOK_SAVE_DIRECTORY);
+
+        if (isLocationSet) {
+            return true;
+        } else {
+            return false;
+        }
+        // ElectronMessager.sendMessageWithIpcRenderer(`is-location-for-notebooks-set`);
         // let notebookLocation = NotebookManager.getNotebookLocation();
-        return false;
+        // return false;
     }
 
 }

@@ -11,18 +11,17 @@ export function ipcRendererEventsBootstrap() {
     try {
         ipcRenderer = window.require('electron').ipcRenderer;
         
-        ipcRenderer.on('start-it!', (event: Event, arg: string): void => {
-            if (arg) {
-                localStorage.setItem(NOTEBOOK_SAVE_DIRECTORY, arg);
-            }
-        });
-
-        ipcRenderer.on('location-for-notebooks', (event: Event, arg: string): boolean => {
-            console.log(arg);
+        ipcRenderer.on('start-it!', (event: Event, arg: string): boolean => {
             if (arg) {
                 return true;
             } else {
                 return false;
+            }
+        });
+
+        ipcRenderer.on('location-for-notebooks', (event: Event, arg: string): void => {
+            if (arg) {
+                localStorage.setItem(NOTEBOOK_SAVE_DIRECTORY, arg);
             }
         });
 

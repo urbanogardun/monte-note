@@ -8,17 +8,12 @@ class App extends React.Component {
 
   isNotebooksLocationSet: boolean;
 
-  componentDidMount() {
-    this.isNotebooksLocationSet = ElectronMessager.isLocationForNotebooksSet();
-  }
-
   render() {
 
-    let componentToRender;
+    let componentToRender = <Welcome />;
+    this.isNotebooksLocationSet = ElectronMessager.isLocationForNotebooksSet();
     if (this.isNotebooksLocationSet) {
       componentToRender = <HomePage />;
-    } else {
-      componentToRender = <Welcome />;
     }
 
     return (
