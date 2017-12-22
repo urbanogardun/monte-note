@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import NotebookManager from './utils/notebook-management/notebookManager';
 
 let mainWindow: Electron.BrowserWindow;
@@ -28,6 +28,7 @@ function createWindow() {
     // when you should delete the corresponding element.
     // mainWindow = null;
   });
+    
 }
 
 // This method will be called when Electron has finished
@@ -57,6 +58,13 @@ ipcMain.on('get-global-packages', () => {
 });
 
 ipcMain.on('is-location-for-notebooks-set', (event: any, args: any) => {
+  event.sender.send('start-it!', NotebookManager.getNotebookLocation());
+});
+
+ipcMain.on('choose-location-for-notebooks', (event: any, args: any) => {
+  console.log('choose location!');
+  console.log(dialog.showOpenDialog({properties: ['openFile', 'openDirectory', 'multiSelections']}));
+
   event.sender.send('start-it!', NotebookManager.getNotebookLocation());
 });
 

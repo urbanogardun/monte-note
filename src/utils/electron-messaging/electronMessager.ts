@@ -15,8 +15,12 @@ let ipcRenderer: IpcRenderer;
 try {
     ipcRenderer = window.require('electron').ipcRenderer;
     
-    ipcRenderer.on('start-it!', (event: Event, arg: string) => {
-        console.log(arg + '-blah');
+    ipcRenderer.on('start-it!', (event: Event, arg: string): boolean => {
+        if (arg) {
+            return true;
+        } else {
+            return false;
+        }
     });
 } catch (error) {
     ipcRenderer = {} as IpcRenderer;
@@ -32,13 +36,17 @@ export class ElectronMessager {
     // Key that holds location value to notebook directory
     static notebooksLocation: string;
 
+    static chooseLocationForNotebooks() {
+        ElectronMessager.sendMessageWithIpcRenderer(`choose-location-for-notebooks`);
+    }
+
     static setLocationForNotebooks(location: string) {
         ElectronMessager.sendMessageWithIpcRenderer(`set-location-for-notebooks: ${location}`);
     }
 
     static sendMessageWithIpcRenderer(message: string) {
         if (ipcRenderer.send !== undefined) {
-            ipcRenderer.send(`is-location-for-notebooks-set`);
+            ipcRenderer.send(message);
         }
     }
 

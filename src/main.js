@@ -51,5 +51,10 @@ electron_1.ipcMain.on('get-global-packages', () => {
 electron_1.ipcMain.on('is-location-for-notebooks-set', (event, args) => {
     event.sender.send('start-it!', notebookManager_1.default.getNotebookLocation());
 });
+electron_1.ipcMain.on('choose-location-for-notebooks', (event, args) => {
+    console.log('choose location!');
+    console.log(electron_1.dialog.showOpenDialog({ properties: ['openFile', 'openDirectory', 'multiSelections'] }));
+    event.sender.send('start-it!', notebookManager_1.default.getNotebookLocation());
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

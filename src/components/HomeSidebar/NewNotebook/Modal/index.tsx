@@ -13,7 +13,8 @@ electronMessager: ElectronMessager;
 
     addNotebook(name: string): boolean {
         // ipcRenderer.send('get-global-packages');
-        ElectronMessager.isLocationForNotebooksSet();
+        // ElectronMessager.isLocationForNotebooksSet();
+        ElectronMessager.chooseLocationForNotebooks();
         return true;
     }
 
