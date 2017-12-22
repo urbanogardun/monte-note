@@ -1,5 +1,5 @@
 import * as React from 'react';
-import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
+import ElectronMessager from '../../../../../utils/electron-messaging/electronMessager';
 
 export class Modal extends React.Component<{}, {}> {
 

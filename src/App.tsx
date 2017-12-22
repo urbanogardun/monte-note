@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './App.css';
-import NewNotebook from './components/HomeSidebar/NewNotebook/NewNotebook';
+import NewNotebook from './components/HomePage/HomeSidebar/NewNotebook/NewNotebook';
 import Welcome from './components/WelcomeScreen/Welcome';
 import ElectronMessager from './utils/electron-messaging/electronMessager';
 
