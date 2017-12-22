@@ -7,7 +7,7 @@ export class NotebookManager {
 
     // Key that holds location value to notebook directory
     static notebookSaveKey: string = 'notebook-save-directory';
-    directoryToSaveNotebooksAt: string;
+    static directoryToSaveNotebooksAt: string;
     notebooks: string[];
 
     /**
@@ -16,23 +16,27 @@ export class NotebookManager {
     static getNotebookLocation(): string {
         return store.get(NotebookManager.notebookSaveKey);
     }
+
+    static setNotebooksLocation(location: string): void {
+        store.set(NotebookManager.notebookSaveKey, location);
+    }
     
     constructor(saveDir: string) {
-        this.directoryToSaveNotebooksAt = saveDir;
-        this.saveNotebookLocation(this.directoryToSaveNotebooksAt);
-        this.createRootDirectory(this.directoryToSaveNotebooksAt);
+        NotebookManager.directoryToSaveNotebooksAt = saveDir;
+        this.saveNotebookLocation(NotebookManager.directoryToSaveNotebooksAt);
+        this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
         this.notebooks = [];
     }
 
     addNotebook(name: string) {
         if (this.notebookExists(name)) {
-            fs.mkdirSync(`${this.directoryToSaveNotebooksAt}\\${name}`);
+            fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`);
         }
         this.addNotebookToLog(name);
     }
 
     deleteNotebook(name: string) {
-        this.deleteDirectory(path.join(this.directoryToSaveNotebooksAt, name));
+        this.deleteDirectory(path.join(NotebookManager.directoryToSaveNotebooksAt, name));
         this.deleteNotebookFromLog(name);
     }
 
@@ -60,7 +64,7 @@ export class NotebookManager {
      * @returns boolean
      */
     private notebookExists(name: string): boolean {
-        return (!fs.existsSync(`${this.directoryToSaveNotebooksAt}\\${name}`));
+        return (!fs.existsSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`));
     }
 
     /**
@@ -109,7 +113,7 @@ export class NotebookManager {
      */
     private createRootDirectory(directoryPath: string) {
         if (!fs.existsSync(directoryPath)) {
-            fs.mkdirSync(`${this.directoryToSaveNotebooksAt}`);
+            fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}`);
         }
     }
 

@@ -1,4 +1,5 @@
 import { IpcRenderer, Event } from 'electron';
+import { NOTEBOOK_SAVE_DIRECTORY } from '../../utils/constants';
 
 let ipcRenderer: IpcRenderer;
 
@@ -10,7 +11,13 @@ export function ipcRendererEventsBootstrap() {
     try {
         ipcRenderer = window.require('electron').ipcRenderer;
         
-        ipcRenderer.on('start-it!', (event: Event, arg: string): boolean => {
+        ipcRenderer.on('start-it!', (event: Event, arg: string): void => {
+            if (arg) {
+                localStorage.setItem(NOTEBOOK_SAVE_DIRECTORY, arg);
+            }
+        });
+
+        ipcRenderer.on('location-for-notebooks', (event: Event, arg: string): boolean => {
             console.log(arg);
             if (arg) {
                 return true;
@@ -18,6 +25,7 @@ export function ipcRendererEventsBootstrap() {
                 return false;
             }
         });
+
     } catch (error) {
         ipcRenderer = {} as IpcRenderer;
     } finally {

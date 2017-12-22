@@ -53,7 +53,8 @@ electron_1.ipcMain.on('is-location-for-notebooks-set', (event, args) => {
 });
 electron_1.ipcMain.on('choose-location-for-notebooks', (event, args) => {
     let notebooksDirectory = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
-    event.sender.send('start-it!', notebooksDirectory);
+    notebookManager_1.default.setNotebooksLocation(notebooksDirectory);
+    event.sender.send('location-for-notebooks', notebookManager_1.default.getNotebookLocation());
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

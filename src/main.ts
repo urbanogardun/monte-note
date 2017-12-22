@@ -63,7 +63,10 @@ ipcMain.on('is-location-for-notebooks-set', (event: any, args: any) => {
 
 ipcMain.on('choose-location-for-notebooks', (event: any, args: any) => {
   let notebooksDirectory = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
-  event.sender.send('start-it!', notebooksDirectory);
+
+  NotebookManager.setNotebooksLocation(notebooksDirectory as string);
+
+  event.sender.send('location-for-notebooks', NotebookManager.getNotebookLocation());
 });
 
 // In this file you can include the rest of your app's specific main process

@@ -20,6 +20,7 @@ export class ElectronMessager {
 
     // Key that holds location value to notebook directory
     static notebooksLocation: string;
+    static isNotebooksLocationSet: boolean;
 
     static chooseLocationForNotebooks() {
         ElectronMessager.sendMessageWithIpcRenderer(`choose-location-for-notebooks`);
@@ -37,6 +38,7 @@ export class ElectronMessager {
 
     static isLocationForNotebooksSet(): boolean {
         ElectronMessager.sendMessageWithIpcRenderer(`is-location-for-notebooks-set`);
+        // let notebookLocation = NotebookManager.getNotebookLocation();
         return false;
     }
 

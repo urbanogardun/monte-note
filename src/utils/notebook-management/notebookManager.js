@@ -6,9 +6,9 @@ const fs = require('fs');
 const path = require('path');
 class NotebookManager {
     constructor(saveDir) {
-        this.directoryToSaveNotebooksAt = saveDir;
-        this.saveNotebookLocation(this.directoryToSaveNotebooksAt);
-        this.createRootDirectory(this.directoryToSaveNotebooksAt);
+        NotebookManager.directoryToSaveNotebooksAt = saveDir;
+        this.saveNotebookLocation(NotebookManager.directoryToSaveNotebooksAt);
+        this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
         this.notebooks = [];
     }
     /**
@@ -17,14 +17,17 @@ class NotebookManager {
     static getNotebookLocation() {
         return store.get(NotebookManager.notebookSaveKey);
     }
+    static setNotebooksLocation(location) {
+        store.set(NotebookManager.notebookSaveKey, location);
+    }
     addNotebook(name) {
         if (this.notebookExists(name)) {
-            fs.mkdirSync(`${this.directoryToSaveNotebooksAt}\\${name}`);
+            fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`);
         }
         this.addNotebookToLog(name);
     }
     deleteNotebook(name) {
-        this.deleteDirectory(path.join(this.directoryToSaveNotebooksAt, name));
+        this.deleteDirectory(path.join(NotebookManager.directoryToSaveNotebooksAt, name));
         this.deleteNotebookFromLog(name);
     }
     /**
@@ -49,7 +52,7 @@ class NotebookManager {
      * @returns boolean
      */
     notebookExists(name) {
-        return (!fs.existsSync(`${this.directoryToSaveNotebooksAt}\\${name}`));
+        return (!fs.existsSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`));
     }
     /**
      * Keeps track of notebooks that were created during a session
@@ -91,7 +94,7 @@ class NotebookManager {
      */
     createRootDirectory(directoryPath) {
         if (!fs.existsSync(directoryPath)) {
-            fs.mkdirSync(`${this.directoryToSaveNotebooksAt}`);
+            fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}`);
         }
     }
 }
