@@ -4,7 +4,8 @@ import { StoreState } from '../types/index';
 
 let storeState: StoreState = {
     enthusiasmLevel: 1,
-    languageName: 'TypeScript'
+    languageName: 'TypeScript',
+    notebooksLocation: '',
 };
 
 beforeEach(() => {

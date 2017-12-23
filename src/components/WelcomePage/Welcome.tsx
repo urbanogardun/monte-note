@@ -1,21 +1,26 @@
 import * as React from 'react';
 import ElectronMessager from '../../utils/electron-messaging/electronMessager';
 
-class Welcome extends React.Component {
+export interface Props {
+    name?: string;
+    notebooksLocation?: string;
+}
+
+class Welcome extends React.Component<Props, object> {
 
     chooseNotebooksLocation(): void {
         ElectronMessager.chooseLocationForNotebooks();
     }
-    
+
     render() {
-        return(
+        return (
             <div className="welcome">
                 <h1>Welcome</h1>
-                <button 
-                    className="btn btn-primary btn-lg" 
+                <button
+                    className="btn btn-primary btn-lg"
                     onClick={() => { this.chooseNotebooksLocation(); }}
                 >
-                Click Me
+                    Click Me
                 </button>
             </div>
         );

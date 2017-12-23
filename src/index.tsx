@@ -15,11 +15,12 @@ import { StoreState } from './types/index';
 const store = createStore<StoreState>(enthusiasm, {
   enthusiasmLevel: 1,
   languageName: 'TypeScript',
+  notebooksLocation: '',
 });
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />,
+    <App />
   </Provider>,
   document.getElementById('root') as HTMLElement
 );

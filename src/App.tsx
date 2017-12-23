@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
 import HomePage from './components/HomePage/index';
-import Welcome from './components/WelcomePage/Welcome';
+import Welcome from './containers/WelcomePage/Welcome';
 import ElectronMessager from './utils/electron-messaging/electronMessager';
 
 class App extends React.Component {
@@ -10,7 +10,7 @@ class App extends React.Component {
 
   render() {
 
-    let componentToRender = <Welcome />;
+    let componentToRender = <Welcome name={'John'} notebooksLocation={''} />;
     this.isNotebooksLocationSet = ElectronMessager.isLocationForNotebooksSet();
     if (this.isNotebooksLocationSet) {
       componentToRender = <HomePage />;
