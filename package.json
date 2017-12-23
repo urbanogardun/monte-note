@@ -4,6 +4,7 @@
   "main": "src/main.js",
   "private": true,
   "dependencies": {
+    "@types/react-redux": "^5.0.14",
     "autoprefixer": "7.1.2",
     "bootstrap": "^4.0.0-beta.2",
     "case-sensitive-paths-webpack-plugin": "2.1.1",
@@ -25,6 +26,8 @@
     "react": "^16.2.0",
     "react-dev-utils": "^4.0.1",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
     "source-map-loader": "^0.2.1",
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.4",
