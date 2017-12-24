@@ -8,18 +8,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import 'jquery';
 
-import { createStore } from 'redux';
-import { enthusiasm } from './reducers/index';
-import { StoreState } from './types/index';
-
-const store = createStore<StoreState>(enthusiasm, {
-  enthusiasmLevel: 1,
-  languageName: 'TypeScript',
-  notebooksLocation: '',
-});
+import reduxStore from './store/index';
 
 ReactDOM.render(
-  <Provider store={store}>
+  <Provider store={reduxStore}>
     <App />
   </Provider>,
   document.getElementById('root') as HTMLElement

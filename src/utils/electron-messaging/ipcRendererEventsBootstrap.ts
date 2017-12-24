@@ -1,6 +1,8 @@
 import { IpcRenderer, Event } from 'electron';
 import { NOTEBOOK_SAVE_DIRECTORY } from '../../utils/constants';
-
+import reduxStore from '../../store/index';
+import * as actions from '../../actions/';
+    
 let ipcRenderer: IpcRenderer;
 
 // Electron's methods are not available outside of electron itself. When we're
@@ -21,6 +23,7 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on('location-for-notebooks', (event: Event, arg: string): void => {
             if (arg) {
+                reduxStore.dispatch(actions.incrementEnthusiasm());
                 localStorage.setItem(NOTEBOOK_SAVE_DIRECTORY, arg);
             }
         });

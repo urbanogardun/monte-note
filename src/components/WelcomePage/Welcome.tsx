@@ -7,6 +7,10 @@ export interface Props {
 }
 
 class Welcome extends React.Component<Props, object> {
+    
+    componentDidMount() {
+        console.log(this.props);
+    }
 
     chooseNotebooksLocation(): void {
         ElectronMessager.chooseLocationForNotebooks();
