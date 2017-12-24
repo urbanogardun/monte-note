@@ -2,17 +2,21 @@ import * as React from 'react';
 import './App.css';
 import HomePage from './components/HomePage/index';
 import Welcome from './containers/WelcomePage/Welcome';
-import ElectronMessager from './utils/electron-messaging/electronMessager';
+// import ElectronMessager from './utils/electron-messaging/electronMessager';
 
-class App extends React.Component<any, any> {
+interface Props {
+  enthusiasmLevel?: number;
+}
+
+class App extends React.Component<Props, object> {
 
   isNotebooksLocationSet: boolean;
 
   render() {
+    let enthusiasmLevel = this.props.enthusiasmLevel as number;
 
     let componentToRender = <Welcome name={'John'} notebooksLocation={''} />;
-    this.isNotebooksLocationSet = ElectronMessager.isLocationForNotebooksSet();
-    if (this.isNotebooksLocationSet) {
+    if (enthusiasmLevel >= 2) {
       componentToRender = <HomePage />;
     }
 
