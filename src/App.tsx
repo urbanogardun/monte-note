@@ -4,7 +4,7 @@ import HomePage from './components/HomePage/index';
 import Welcome from './containers/WelcomePage/Welcome';
 import ElectronMessager from './utils/electron-messaging/electronMessager';
 
-class App extends React.Component {
+class App extends React.Component<any, any> {
 
   isNotebooksLocationSet: boolean;
 
