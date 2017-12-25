@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './App.css';
-import HomePage from './components/HomePage/index';
+import HomePage from './containers/HomePage/HomePage';
 import Welcome from './containers/WelcomePage/Welcome';
 // import ElectronMessager from './utils/electron-messaging/electronMessager';
 

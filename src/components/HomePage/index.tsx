@@ -1,7 +1,8 @@
 import * as React from 'react';
-import NewNotebookButton from './Sidebar/NewNotebook/index';
+// import NewNotebookButton from './Sidebar/NewNotebook/index';
+import NewNotebookButton from '../../containers/HomePage/Sidebar/index';
 
-export class HomePage extends React.Component<{}, {}> {
+export class HomePage extends React.Component {
     render() {
         return (
             <div className="row">

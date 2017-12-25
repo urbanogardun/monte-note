@@ -1,11 +1,16 @@
 import * as React from 'react';
 
-export class NewNotebookButton extends React.Component {
-    
+export interface Props {
+    onIncrement?: () => void;
+    onDecrement?: () => void;
+}
+
+export class NewNotebookButton extends React.Component<Props, Props> {
     render() {
         return (
             <div>
-                <button
+                <button 
+                    onClick={this.props.onIncrement}
                     type="button"
                     className="btn btn-secondary btn-sm add-notebook"
                     data-toggle="modal"
@@ -14,7 +19,6 @@ export class NewNotebookButton extends React.Component {
                     Add Notebook
                 </button>
             </div>
-    
         );
     }
 }
