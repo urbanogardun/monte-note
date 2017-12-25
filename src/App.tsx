@@ -6,6 +6,7 @@ import Welcome from './containers/WelcomePage/Welcome';
 
 interface Props {
   enthusiasmLevel?: number;
+  notebooksLocation?: string;
 }
 
 class App extends React.Component<Props, object> {
@@ -13,10 +14,11 @@ class App extends React.Component<Props, object> {
   isNotebooksLocationSet: boolean;
 
   render() {
-    let enthusiasmLevel = this.props.enthusiasmLevel as number;
+    console.log(this.props);
+    let enthusiasmLevel = this.props.notebooksLocation as string;
 
     let componentToRender = <Welcome name={'John'} notebooksLocation={''} />;
-    if (enthusiasmLevel >= 2) {
+    if (enthusiasmLevel) {
       componentToRender = <HomePage />;
     }
 

@@ -3,10 +3,10 @@ import * as actions from '../actions/';
 import { StoreState } from '../types/index';
 import { connect, Dispatch } from 'react-redux';
 
-export function mapStateToProps({ enthusiasmLevel, languageName }: StoreState) {
+export function mapStateToProps({ enthusiasmLevel, notebooksLocation }: StoreState) {
     return {
         enthusiasmLevel,
-        name: languageName,
+        notebooksLocation,
     };
 }
 

@@ -23,7 +23,7 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on('location-for-notebooks', (event: Event, arg: string): void => {
             if (arg) {
-                reduxStore.dispatch(actions.incrementEnthusiasm());
+                reduxStore.dispatch(actions.setNotebooksLocation(arg));
                 localStorage.setItem(NOTEBOOK_SAVE_DIRECTORY, arg);
             }
         });

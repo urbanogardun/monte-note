@@ -1,10 +1,9 @@
-import { enthusiasm } from './index';
-import { incrementEnthusiasm, decrementEnthusiasm } from '../actions/index';
+import { enthusiasmLevel, notebooksLocation } from './index';
+import { incrementEnthusiasm, decrementEnthusiasm, setNotebooksLocation } from '../actions/index';
 import { StoreState } from '../types/index';
 
 let storeState: StoreState = {
     enthusiasmLevel: 1,
-    languageName: 'TypeScript',
     notebooksLocation: '',
 };
 
@@ -13,13 +12,19 @@ beforeEach(() => {
 });
 
 it('increments enthusiasm level', () => {
-    storeState = enthusiasm(storeState, incrementEnthusiasm());
+    let enthusiasmLevelNew = enthusiasmLevel(storeState, incrementEnthusiasm());
 
-    expect(storeState.enthusiasmLevel).toEqual(2);
+    expect(enthusiasmLevelNew).toEqual(2);
 });
 
 it('decrements enthusiasm level', () => {
-    storeState = enthusiasm(storeState, decrementEnthusiasm());
+    let enthusiasmLevelNew = enthusiasmLevel(storeState, decrementEnthusiasm());
 
-    expect(storeState.enthusiasmLevel).toEqual(1);
+    expect(enthusiasmLevelNew).toEqual(1);
+});
+
+it('sets notebooks location', () => {
+    let notebooksLocationNew = notebooksLocation(storeState, setNotebooksLocation('test-location'));
+
+    expect(notebooksLocationNew).toEqual('test-location');
 });

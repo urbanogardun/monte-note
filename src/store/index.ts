@@ -1,11 +1,14 @@
 import { createStore } from 'redux';
-import { enthusiasm } from '../reducers/index';
+import reducer from '../reducers/index';
 import { StoreState } from '../types/index';
+import { NOTEBOOK_SAVE_DIRECTORY } from '../utils/constants';
 
-const reduxStore = createStore<StoreState>(enthusiasm, {
+// Hydrate the state
+let notebooksLocation = localStorage.getItem(NOTEBOOK_SAVE_DIRECTORY) || '';
+
+const reduxStore = createStore<StoreState>(reducer, {
   enthusiasmLevel: 1,
-  languageName: 'TypeScript',
-  notebooksLocation: '',
+  notebooksLocation: notebooksLocation,
 });
 
 export default reduxStore;

@@ -8,6 +8,11 @@ export interface DecrementEnthusiasm {
     type: constants.DECREMENT_ENTHUSIASM;
 }
 
+export interface SetNotebooksLocation {
+    type: constants.SET_NOTEBOOKS_LOCATION;
+    notebooksLocation: string;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export function incrementEnthusiasm(): IncrementEnthusiasm {
@@ -19,5 +24,12 @@ export function incrementEnthusiasm(): IncrementEnthusiasm {
 export function decrementEnthusiasm(): DecrementEnthusiasm {
     return {
         type: constants.DECREMENT_ENTHUSIASM
+    };
+}
+
+export function setNotebooksLocation(notebooksLocation: string): SetNotebooksLocation {
+    return {
+        type: constants.SET_NOTEBOOKS_LOCATION,
+        notebooksLocation
     };
 }
