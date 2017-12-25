@@ -1,12 +1,12 @@
 import * as React from 'react';
-import NewNotebook from './HomeSidebar/NewNotebook/NewNotebook';
+import NewNotebookButton from './Sidebar/NewNotebook/index';
 
 export class HomePage extends React.Component<{}, {}> {
     render() {
         return (
             <div className="row">
                 <div className="col-sm-2">
-                    <NewNotebook />
+                    <NewNotebookButton />
                 </div>
                 <div className="col-sm-4">
                     <h1>Main</h1>
