@@ -1,8 +1,9 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import NotebookManager from './utils/notebook-management/notebookManager';
-import { CHOOSE_LOCATION_FOR_NOTEBOOKS } from './utils/constants';
+import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK } from './constants/index';
 
 let mainWindow: Electron.BrowserWindow;
+let notebookManager: NotebookManager;
 
 function createWindow() {
   // Create the browser window.
@@ -65,9 +66,19 @@ ipcMain.on('is-location-for-notebooks-set', (event: any, args: any) => {
 ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
   let notebooksDirectory = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
 
-  NotebookManager.setNotebooksLocation(notebooksDirectory as string);
+  notebookManager = new NotebookManager(notebooksDirectory as string);
 
   event.sender.send('location-for-notebooks', NotebookManager.getNotebookLocation());
+});
+
+ipcMain.on(ADD_NOTEBOOK, (event: any, args: any) => {
+  try {
+    notebookManager.addNotebook(args);
+  } catch (error) {
+    // Retrieve notebook directory location from electron-store storage
+    notebookManager = new NotebookManager(NotebookManager.getNotebookLocation());
+    notebookManager.addNotebook(args);
+  }
 });
 
 // In this file you can include the rest of your app's specific main process

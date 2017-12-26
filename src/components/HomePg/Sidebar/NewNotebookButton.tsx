@@ -1,4 +1,6 @@
 import * as React from 'react';
+import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
+import { ADD_NOTEBOOK } from '../../../constants/index';
 
 export interface Props {
     onIncrement?: () => void;
@@ -8,7 +10,7 @@ export interface Props {
 export class NewNotebookButton extends React.Component<Props, Props> {
 
     addNotebook(name: string) {
-        console.log(`Add notebook directory: ${name}`);
+        ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTEBOOK, name);
     }
 
     render() {

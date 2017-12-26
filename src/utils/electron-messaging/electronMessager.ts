@@ -12,17 +12,15 @@ let ipcRenderer: IpcRenderer;
 
 ipcRenderer = ipcRendererEventsBootstrap();
 
-// TODO:
-// Create constants for electron messenger messages sent with IPC renderer
 export class ElectronMessager {
 
     static chooseLocationForNotebooks() {
         ElectronMessager.sendMessageWithIpcRenderer(CHOOSE_LOCATION_FOR_NOTEBOOKS);
     }
 
-    static sendMessageWithIpcRenderer(message: string) {
+    static sendMessageWithIpcRenderer(message: string, argument?: string) {
         if (ipcRenderer.send !== undefined) {
-            ipcRenderer.send(message);
+            ipcRenderer.send(message, argument);
         }
     }
 

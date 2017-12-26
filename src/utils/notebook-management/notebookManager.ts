@@ -17,10 +17,6 @@ export class NotebookManager {
         return store.get(NotebookManager.notebookSaveKey);
     }
 
-    static setNotebooksLocation(location: string): void {
-        store.set(NotebookManager.notebookSaveKey, location);
-    }
-    
     constructor(saveDir: string) {
         NotebookManager.directoryToSaveNotebooksAt = saveDir;
         this.saveNotebookLocation(NotebookManager.directoryToSaveNotebooksAt);
