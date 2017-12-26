@@ -39,6 +39,7 @@ export class NewNotebookButton extends React.Component<Props, Props> {
 
                 <div className={`input-group input-group-sm ${this.state.showInput}`}>
                     <input 
+                        ref={input => input && input.focus()}
                         type="text" 
                         className="form-control" 
                         placeholder="Username" 
