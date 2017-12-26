@@ -1,5 +1,6 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import NotebookManager from './utils/notebook-management/notebookManager';
+import { CHOOSE_LOCATION_FOR_NOTEBOOKS } from './utils/constants';
 
 let mainWindow: Electron.BrowserWindow;
 
@@ -61,7 +62,7 @@ ipcMain.on('is-location-for-notebooks-set', (event: any, args: any) => {
   event.sender.send('start-it!', NotebookManager.getNotebookLocation());
 });
 
-ipcMain.on('choose-location-for-notebooks', (event: any, args: any) => {
+ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
   let notebooksDirectory = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
 
   NotebookManager.setNotebooksLocation(notebooksDirectory as string);

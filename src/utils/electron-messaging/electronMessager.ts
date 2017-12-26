@@ -1,6 +1,6 @@
 import { IpcRenderer } from 'electron';
 import { ipcRendererEventsBootstrap } from './ipcRendererEventsBootstrap';
-import { NOTEBOOK_SAVE_DIRECTORY } from '../../utils/constants';
+import { CHOOSE_LOCATION_FOR_NOTEBOOKS } from '../../utils/constants';
 
 declare global {
     interface Window {
@@ -13,33 +13,16 @@ let ipcRenderer: IpcRenderer;
 ipcRenderer = ipcRendererEventsBootstrap();
 
 // TODO:
-// I configured ipcRenderer to IpcMain and ipcMain to ipcRenderer
-// on ipcMain part check if default location for saving notebooks is saved
-// if it is not, display welcome screen to set the location
-// otherwise display main application page
+// Create constants for electron messenger messages sent with IPC renderer
 export class ElectronMessager {
 
-    // Key that holds location value to notebook directory
-    static notebooksLocation: string;
-    static isNotebooksLocationSet: boolean;
-
     static chooseLocationForNotebooks() {
-        ElectronMessager.sendMessageWithIpcRenderer(`choose-location-for-notebooks`);
+        ElectronMessager.sendMessageWithIpcRenderer(CHOOSE_LOCATION_FOR_NOTEBOOKS);
     }
 
     static sendMessageWithIpcRenderer(message: string) {
         if (ipcRenderer.send !== undefined) {
             ipcRenderer.send(message);
-        }
-    }
-
-    static isLocationForNotebooksSet(): boolean {
-        let isLocationSet = localStorage.getItem(NOTEBOOK_SAVE_DIRECTORY);
-
-        if (isLocationSet) {
-            return true;
-        } else {
-            return false;
         }
     }
 

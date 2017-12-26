@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const notebookManager_1 = require("./utils/notebook-management/notebookManager");
+const constants_1 = require("./utils/constants");
 let mainWindow;
 function createWindow() {
     // Create the browser window.
@@ -51,7 +52,7 @@ electron_1.ipcMain.on('get-global-packages', () => {
 electron_1.ipcMain.on('is-location-for-notebooks-set', (event, args) => {
     event.sender.send('start-it!', notebookManager_1.default.getNotebookLocation());
 });
-electron_1.ipcMain.on('choose-location-for-notebooks', (event, args) => {
+electron_1.ipcMain.on(constants_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
     let notebooksDirectory = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
     notebookManager_1.default.setNotebooksLocation(notebooksDirectory);
     event.sender.send('location-for-notebooks', notebookManager_1.default.getNotebookLocation());

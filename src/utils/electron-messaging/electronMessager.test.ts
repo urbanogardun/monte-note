@@ -1,7 +1,6 @@
 import ElectronMessager from './electronMessager';
-import { NOTEBOOK_SAVE_DIRECTORY } from '../constants';
+// import { NOTEBOOK_SAVE_DIRECTORY } from '../constants';
 
-let testDir = 'C:\\test-dir';
 // Jest uses jsdom for testing. Since jsdom doesn't have localStorage we import
 // a mock of it.
 beforeAll(() => {
@@ -9,10 +8,9 @@ beforeAll(() => {
   ls.setLocalStorage();
 });
 
-test('checks if location for notebooks has been set', () => {
-  localStorage.setItem(NOTEBOOK_SAVE_DIRECTORY, testDir);
+test('sends message from renderer process', () => {
+  const spy = jest.spyOn(ElectronMessager, 'sendMessageWithIpcRenderer');
+  ElectronMessager.sendMessageWithIpcRenderer('test message');
 
-  let isLocationForNotebooksSet = ElectronMessager.isLocationForNotebooksSet();
-
-  expect(isLocationForNotebooksSet).toEqual(true);
+  expect(spy).toHaveBeenCalled();
 });

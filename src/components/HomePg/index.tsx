@@ -1,13 +1,11 @@
 import * as React from 'react';
-import NewNotebookButton from '../../containers/HomePage/Sidebar/index';
+import Sidebar from './Sidebar/index';
 
 export class HomePage extends React.Component {
     render() {
         return (
             <div className="row">
-                <div className="col-sm-2">
-                    <NewNotebookButton />
-                </div>
+                <Sidebar />
                 <div className="col-sm-4">
                     <h1>Main</h1>
                 </div>
