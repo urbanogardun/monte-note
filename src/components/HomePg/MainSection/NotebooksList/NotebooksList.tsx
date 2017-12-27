@@ -1,16 +1,25 @@
 import * as React from 'react';
+var notebooksData = require('../../../../store/store.json');
 
 export interface Props {
     notebooks?: string[];
 }
 
-export interface State {}
+export interface State {
+    notebooks: string[];
+}
 
 export class NotebooksList extends React.Component<Props, State> {
 
+    constructor(props: Props) {
+        super(props);
+        this.state = {
+            notebooks: notebooksData.notebooks,
+        }
+    }
+
     componentDidMount() {
-        // fetch('C:\Users\seneca\AppData\Roaming\new-my-app\application-data.json');
-        // console.log(jsdata);
+        console.log(notebooksData);
     }
 
     render() {
@@ -18,7 +27,7 @@ export class NotebooksList extends React.Component<Props, State> {
             <div className="col-sm-4">
                 <h1>Notebooks List!</h1>
                 <ul>
-                    {(this.props.notebooks as string[]).map((name: string, index: number) => {
+                    {(this.state.notebooks as string[]).map((name: string, index: number) => {
                         return <li key={index}>{name}</li>;
                     })}
                 </ul>
