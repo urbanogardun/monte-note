@@ -16,7 +16,6 @@ export class NotebooksList extends React.Component<Props, State> {
                         return <li key={index}>{name}</li>;
                     })}
                 </ul>
-
             </div>
         );
     }

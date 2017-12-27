@@ -2,7 +2,6 @@ import { createStore } from 'redux';
 import reducer from '../reducers/index';
 import { StoreState } from '../types/index';
 import { NOTEBOOK_SAVE_DIRECTORY } from '../utils/constants';
-// import ElectronMessager from '../utils/electron-messaging/electronMessager';
 
 // Hydrate the state
 let notebooksLocation;
@@ -13,11 +12,7 @@ try {
 }
 
 let notebooks: string[];
-// try {
-  // ElectronMessager.sendMessageWithIpcRenderer(GET_NOTEBOOKS);
-// } catch {
-notebooks = ['la', 'bla'];
-// }
+notebooks = ['la', 'bla1'];
 
 const reduxStore = createStore<StoreState>(reducer, {
   enthusiasmLevel: 1,

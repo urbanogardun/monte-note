@@ -50,6 +50,12 @@ export class NotebookManager {
         });
     }
 
+    getNotebooks() {
+        return fs.readdirSync(NotebookManager.directoryToSaveNotebooksAt).filter(function(file: string) {
+            return fs.statSync(NotebookManager.directoryToSaveNotebooksAt + '/' + file).isDirectory();
+        });
+    }
+
     /**
      * Sets default directory where notebooks will get saved
      * @param  {string} location - directory for notebooks

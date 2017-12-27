@@ -68,5 +68,8 @@ electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, args) => {
         notebookManager.addNotebook(args);
     }
 });
+electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
+    return ['book-1', 'book-2', 'book-3'];
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

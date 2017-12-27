@@ -1,5 +1,5 @@
 import { IpcRenderer, Event } from 'electron';
-import { NOTEBOOK_SAVE_DIRECTORY } from '../../utils/constants';
+import { NOTEBOOK_SAVE_DIRECTORY, GET_NOTEBOOKS } from '../../utils/constants';
 import reduxStore from '../../store/index';
 import * as actions from '../../actions/';
     
@@ -25,6 +25,13 @@ export function ipcRendererEventsBootstrap() {
             if (arg) {
                 reduxStore.dispatch(actions.setNotebooksLocation(arg));
                 localStorage.setItem(NOTEBOOK_SAVE_DIRECTORY, arg);
+            }
+        });
+
+        ipcRenderer.on(GET_NOTEBOOKS, (event: Event, arg: string[]): void => {
+            console.log(arg);
+            if (arg) {
+                reduxStore.dispatch(actions.getNotebooks(arg));
             }
         });
 
