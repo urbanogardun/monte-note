@@ -17,14 +17,16 @@ class NotebookManager {
     static getNotebookLocation() {
         return store.get(NotebookManager.notebookSaveKey);
     }
-    static setNotebooksLocation(location) {
-        store.set(NotebookManager.notebookSaveKey, location);
-    }
     addNotebook(name) {
         if (this.notebookExists(name)) {
-            fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`);
+            try {
+                fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`);
+                this.addNotebookToLog(name);
+            }
+            catch (error) {
+                console.log(error);
+            }
         }
-        this.addNotebookToLog(name);
     }
     deleteNotebook(name) {
         this.deleteDirectory(path.join(NotebookManager.directoryToSaveNotebooksAt, name));

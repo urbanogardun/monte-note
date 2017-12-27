@@ -55,19 +55,15 @@ electron_1.ipcMain.on('is-location-for-notebooks-set', (event, args) => {
 });
 electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
     let notebooksDirectory = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
-    // NotebookManager.setNotebooksLocation(notebooksDirectory as string);
     notebookManager = new notebookManager_1.default(notebooksDirectory);
     event.sender.send('location-for-notebooks', notebookManager_1.default.getNotebookLocation());
 });
 electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, args) => {
-    console.log('ADD NOTEBOOK');
-    console.log(args);
     try {
         notebookManager.addNotebook(args);
     }
     catch (error) {
-        console.log(error);
-        console.log(notebookManager_1.default.getNotebookLocation());
+        // Retrieve notebook directory location from electron-store storage
         notebookManager = new notebookManager_1.default(notebookManager_1.default.getNotebookLocation());
         notebookManager.addNotebook(args);
     }

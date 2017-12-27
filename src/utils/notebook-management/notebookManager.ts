@@ -26,9 +26,13 @@ export class NotebookManager {
 
     addNotebook(name: string) {
         if (this.notebookExists(name)) {
-            fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`);
+            try {
+                fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`);
+                this.addNotebookToLog(name);
+            } catch (error) {
+                return;          
+            }
         }
-        this.addNotebookToLog(name);
     }
 
     deleteNotebook(name: string) {
