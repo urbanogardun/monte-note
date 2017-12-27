@@ -1,5 +1,5 @@
 import * as React from 'react';
-import PouchDB from 'pouchdb';
+import db from '../../../../db/index';
 
 export interface Props {
     notebooks?: string[];
@@ -19,12 +19,11 @@ export class NotebooksList extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        var db = new PouchDB('kittens');
         db.info().then(function (info: any) {
             console.log(info);
         });
 
-        db.get('mittens')
+        db.get('mydoc')
         .then((doc) => {
             console.log(doc);
         })
