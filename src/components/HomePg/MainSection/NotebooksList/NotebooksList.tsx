@@ -7,6 +7,12 @@ export interface Props {
 export interface State {}
 
 export class NotebooksList extends React.Component<Props, State> {
+
+    componentDidMount() {
+        // fetch('C:\Users\seneca\AppData\Roaming\new-my-app\application-data.json');
+        // console.log(jsdata);
+    }
+
     render() {
         return (
             <div className="col-sm-4">

@@ -41,6 +41,11 @@ class NotebookManager {
             this.deleteNotebook(notebook);
         });
     }
+    getNotebooks() {
+        return fs.readdirSync(NotebookManager.directoryToSaveNotebooksAt).filter(function (file) {
+            return fs.statSync(NotebookManager.directoryToSaveNotebooksAt + '/' + file).isDirectory();
+        });
+    }
     /**
      * Sets default directory where notebooks will get saved
      * @param  {string} location - directory for notebooks

@@ -3,8 +3,17 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const notebookManager_1 = require("./utils/notebook-management/notebookManager");
 const index_1 = require("./constants/index");
+const store_1 = require("./store/store");
 let mainWindow;
 let notebookManager;
+// First instantiate the class
+const store = new store_1.default({
+    // We'll call our data file 'store'
+    configName: 'store',
+    defaults: {
+        notebooks: [],
+    }
+});
 function createWindow() {
     // Create the browser window.
     mainWindow = new electron_1.BrowserWindow({
@@ -56,9 +65,13 @@ electron_1.ipcMain.on('is-location-for-notebooks-set', (event, args) => {
 electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
     let notebooksDirectory = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
     notebookManager = new notebookManager_1.default(notebooksDirectory);
+    let notebooks = notebookManager.getNotebooks();
+    // Now that we have them, save them using the `set` method.
+    store.set('notebooks', notebooks);
     event.sender.send('location-for-notebooks', notebookManager_1.default.getNotebookLocation());
 });
 electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, args) => {
+    console.log(`args: ${args}`);
     try {
         notebookManager.addNotebook(args);
     }
@@ -67,9 +80,10 @@ electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, args) => {
         notebookManager = new notebookManager_1.default(notebookManager_1.default.getNotebookLocation());
         notebookManager.addNotebook(args);
     }
-});
-electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
-    return ['book-1', 'book-2', 'book-3'];
+    finally {
+        let notebooks = notebookManager.getNotebooks();
+        store.set('notebooks', notebooks);
+    }
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 
