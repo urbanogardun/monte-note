@@ -1,6 +1,5 @@
 import * as React from 'react';
 import * as enzyme from 'enzyme';
-// import * as sinon from 'sinon';
 import NewNotebookButton from './NewNotebookButton';
 
 it('renders the button', () => {
@@ -8,8 +7,8 @@ it('renders the button', () => {
   expect(button.find('.add-notebook').text()).toEqual('Add Notebook');
 });
 
-it('renders the input', () => {
-  const button = enzyme.shallow(<NewNotebookButton />);
-  button.find('.add-notebook').simulate('click');
+it('renders the input on button click', () => {
+  const button = enzyme.mount(<NewNotebookButton />);
+  button.find('.add-notebook').simulate('submit');
   expect(button.find('.hidden').exists()).toEqual(true);
 });

@@ -25,6 +25,16 @@ export class NewNotebookButton extends React.Component<Props, Props> {
         this.setState({showInput: showInput});
     }
 
+    handleKeyPress(e: any) {
+        if (e.key === 'Enter') {
+            console.log('Enter key pressed. Add notebook!');
+        }
+    }
+
+    handleFocusOut() {
+        console.log('focused out! add notebook');
+    }
+
     render() {
         return (
             <div>
@@ -40,6 +50,8 @@ export class NewNotebookButton extends React.Component<Props, Props> {
                 <div className={`input-group input-group-sm ${this.state.showInput}`}>
                     <input 
                         ref={input => input && input.focus()}
+                        onKeyPress={this.handleKeyPress}
+                        onBlur={this.handleFocusOut}
                         type="text" 
                         className="form-control" 
                         placeholder="Username" 
