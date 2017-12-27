@@ -24,7 +24,7 @@ class NotebookManager {
                 this.addNotebookToLog(name);
             }
             catch (error) {
-                console.log(error);
+                return;
             }
         }
     }

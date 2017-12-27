@@ -7,6 +7,7 @@ import Welcome from './containers/WelcomePage/Welcome';
 interface Props {
   enthusiasmLevel?: number;
   notebooksLocation?: string;
+  notebooks?: string[];
 }
 
 class App extends React.Component<Props, object> {
