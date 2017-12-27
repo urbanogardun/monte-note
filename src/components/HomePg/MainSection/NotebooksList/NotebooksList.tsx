@@ -1,5 +1,5 @@
 import * as React from 'react';
-var notebooksData = require('../../../../store/store.json');
+import PouchDB from 'pouchdb';
 
 export interface Props {
     notebooks?: string[];
@@ -14,12 +14,42 @@ export class NotebooksList extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            notebooks: notebooksData.notebooks,
-        }
+            notebooks: [],
+        };
     }
 
     componentDidMount() {
-        console.log(notebooksData);
+        var db = new PouchDB('kittens');
+        db.info().then(function (info: any) {
+            console.log(info);
+        });
+
+        db.get('mittens')
+        .then((doc) => {
+            console.log(doc);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+
+        // var doc = {
+        // '_id': 'mittens',
+        // 'name': 'Mittens',
+        // 'occupation': 'kitten',
+        // 'age': 3,
+        // 'hobbies': [
+        // 'playing with balls of yarn',
+        // 'chasing laser pointers',
+        // 'lookin hella cute'
+        // ]
+        // };
+
+        // db.put(doc)
+        // .then((response) => {
+        //     console.log(response);
+        // });
+
+        // console.log(notebooksData);
     }
 
     render() {

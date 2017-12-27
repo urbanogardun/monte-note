@@ -1,19 +1,9 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import NotebookManager from './utils/notebook-management/notebookManager';
 import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK } from './constants/index';
-import Store from './store/store';
 
 let mainWindow: Electron.BrowserWindow;
 let notebookManager: NotebookManager;
-
-// First instantiate the class
-const store = new Store({
-  // We'll call our data file 'store'
-  configName: 'store',
-  defaults: {
-    notebooks: [],
-  }
-});
 
 function createWindow() {
   // Create the browser window.
@@ -78,11 +68,6 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
 
   notebookManager = new NotebookManager(notebooksDirectory as string);
 
-  let notebooks = notebookManager.getNotebooks();
-
-  // Now that we have them, save them using the `set` method.
-  store.set('notebooks', notebooks);
-
   event.sender.send('location-for-notebooks', NotebookManager.getNotebookLocation());
 });
 
@@ -93,9 +78,6 @@ ipcMain.on(ADD_NOTEBOOK, (event: any, args: any) => {
     // Retrieve notebook directory location from electron-store storage
     notebookManager = new NotebookManager(NotebookManager.getNotebookLocation());
     notebookManager.addNotebook(args);
-  } finally {
-    let notebooks = notebookManager.getNotebooks();
-    store.set('notebooks', notebooks);
   }
 });
 
