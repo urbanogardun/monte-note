@@ -67,7 +67,6 @@ export class NewNotebookButton extends React.Component<Props, Props> {
         return (
             <div>
                 <button 
-                    // onClick={() => addNotebook('chemistry notes')}
                     onClick={() => this.showInput()}
                     type="button"
                     className="btn btn-secondary btn-sm add-notebook"
