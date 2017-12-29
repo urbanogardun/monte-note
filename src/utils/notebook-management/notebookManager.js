@@ -18,14 +18,19 @@ class NotebookManager {
     static getNotebookLocation() {
         return store.get(NotebookManager.notebookSaveKey);
     }
+    // TODO:
+    // After notebook dir is created, add notebook name to DB
     addNotebook(name) {
         index_1.default.find({}, (err, docs) => {
             console.log(docs);
         });
         if (this.notebookExists(name)) {
             try {
-                fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`);
-                this.addNotebookToLog(name);
+                fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
+                    this.addNotebookToLog(name);
+                    console.log('notebook created!');
+                    index_1.default.update({ name: 'notebooks' }, { $push: { notebooks: name } });
+                });
             }
             catch (error) {
                 return;

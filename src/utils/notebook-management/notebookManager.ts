@@ -25,16 +25,21 @@ export class NotebookManager {
         this.notebooks = [];
     }
 
+    // TODO:
+    // After notebook dir is created, add notebook name to DB
     addNotebook(name: string) {
         db.find({}, (err: any, docs: any) => {
             console.log(docs);
         });
         if (this.notebookExists(name)) {
             try {
-                fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`);
-                this.addNotebookToLog(name);
+                fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
+                    this.addNotebookToLog(name);
+                    console.log('notebook created!');
+                    db.update({ name: 'notebooks' }, { $push: { notebooks: name } });
+                });
             } catch (error) {
-                return;          
+                return;
             }
         }
     }
