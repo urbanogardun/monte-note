@@ -26,7 +26,7 @@ export function notebooksLocation(state: StoreState, action: SetNotebooksLocatio
 export function notebooks(state: StoreState, action: GetNotebooks): StoreState {
   switch (action.type) {
     case GET_NOTEBOOKS:
-      return ['huh'] as StoreState;
+      return action.notebooks as StoreState;
     default:
       return state || ['lala'] as StoreState;
     }

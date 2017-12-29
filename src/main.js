@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const notebookManager_1 = require("./utils/notebook-management/notebookManager");
 const index_1 = require("./constants/index");
+const index_2 = require("./db/index");
 let mainWindow;
 let notebookManager;
 function createWindow() {
@@ -67,6 +68,18 @@ electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, args) => {
         notebookManager = new notebookManager_1.default(notebookManager_1.default.getNotebookLocation());
         notebookManager.addNotebook(args);
     }
+});
+electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
+    console.log('GET THE NOTEBOOKS FROM DB.');
+    // Bootstrap db with notebooks entry
+    index_2.default.find({ name: 'notebooks' }, (err, docs) => {
+        try {
+            event.sender.send(index_1.GET_NOTEBOOKS, docs[0].notebooks);
+        }
+        catch (error) {
+            event.sender.send(index_1.GET_NOTEBOOKS, []);
+        }
+    });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

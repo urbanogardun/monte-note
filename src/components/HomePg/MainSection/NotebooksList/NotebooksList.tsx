@@ -1,5 +1,6 @@
 import * as React from 'react';
 import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
+import { GET_NOTEBOOKS } from '../../../../constants/index';
 
 export interface Props {
     notebooks?: string[];
@@ -19,37 +20,7 @@ export class NotebooksList extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        ElectronMessager.sendMessageWithIpcRenderer('get-global-packages');
-        // db.info().then(function (info: any) {
-        //     console.log(info);
-        // });
-
-        // db.get('mydoc')
-        // .then((doc: any) => {
-        //     console.log(doc);
-        // })
-        // .catch((error: any) => {
-        //     console.log(error);
-        // });
-
-        // var doc = {
-        // '_id': 'mittens',
-        // 'name': 'Mittens',
-        // 'occupation': 'kitten',
-        // 'age': 3,
-        // 'hobbies': [
-        // 'playing with balls of yarn',
-        // 'chasing laser pointers',
-        // 'lookin hella cute'
-        // ]
-        // };
-
-        // db.put(doc)
-        // .then((response) => {
-        //     console.log(response);
-        // });
-
-        // console.log(notebooksData);
+        ElectronMessager.sendMessageWithIpcRenderer(GET_NOTEBOOKS);
     }
 
     render() {
@@ -57,7 +28,7 @@ export class NotebooksList extends React.Component<Props, State> {
             <div className="col-sm-4">
                 <h1>Notebooks List!</h1>
                 <ul>
-                    {(this.state.notebooks as string[]).map((name: string, index: number) => {
+                    {(this.props.notebooks as string[]).map((name: string, index: number) => {
                         return <li key={index}>{name}</li>;
                     })}
                 </ul>

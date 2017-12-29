@@ -1,6 +1,7 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import NotebookManager from './utils/notebook-management/notebookManager';
-import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK } from './constants/index';
+import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK, GET_NOTEBOOKS } from './constants/index';
+import db from './db/index';
 
 let mainWindow: Electron.BrowserWindow;
 let notebookManager: NotebookManager;
@@ -79,6 +80,21 @@ ipcMain.on(ADD_NOTEBOOK, (event: any, args: any) => {
     notebookManager = new NotebookManager(NotebookManager.getNotebookLocation());
     notebookManager.addNotebook(args);
   }
+});
+
+ipcMain.on(GET_NOTEBOOKS, (event: any, args: any) => {
+  console.log('GET THE NOTEBOOKS FROM DB.');
+  // Bootstrap db with notebooks entry
+  db.find({ name: 'notebooks' }, (err: any, docs: any) => {
+
+    try {
+      event.sender.send(GET_NOTEBOOKS, docs[0].notebooks);
+    } catch (error) {
+      event.sender.send(GET_NOTEBOOKS, []);
+    }
+
+  });
+
 });
 
 // In this file you can include the rest of your app's specific main process
