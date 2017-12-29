@@ -23,14 +23,23 @@ export class NotebookManager {
         this.saveNotebookLocation(NotebookManager.directoryToSaveNotebooksAt);
         this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
         this.notebooks = [];
+
+        let notebooksList = this.getNotebooks();
+        console.log('nlist: ' + notebooksList);
+
+        // Bootstrap db with notebooks entry
+        db.find({ name: 'notebooks' }, function (err: any, docs: any) {
+            console.log(docs.length);
+            if (docs.length === 0) {
+                db.insert({ name: 'notebooks', notebooks: notebooksList });
+            }
+        });
+        // db.insert({ name: 'notebooks' }, { notebooks: notebooksList });
     }
 
     // TODO:
     // After notebook dir is created, add notebook name to DB
     addNotebook(name: string) {
-        db.find({}, (err: any, docs: any) => {
-            console.log(docs);
-        });
         if (this.notebookExists(name)) {
             try {
                 fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
@@ -59,6 +68,9 @@ export class NotebookManager {
         });
     }
 
+    /** 
+     * Gets all notebooks
+     */
     getNotebooks() {
         return fs.readdirSync(NotebookManager.directoryToSaveNotebooksAt).filter(function(file: string) {
             return fs.statSync(NotebookManager.directoryToSaveNotebooksAt + '/' + file).isDirectory();

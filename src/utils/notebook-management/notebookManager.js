@@ -11,6 +11,16 @@ class NotebookManager {
         this.saveNotebookLocation(NotebookManager.directoryToSaveNotebooksAt);
         this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
         this.notebooks = [];
+        let notebooksList = this.getNotebooks();
+        console.log('nlist: ' + notebooksList);
+        // Bootstrap db with notebooks entry
+        index_1.default.find({ name: 'notebooks' }, function (err, docs) {
+            console.log(docs.length);
+            if (docs.length === 0) {
+                index_1.default.insert({ name: 'notebooks', notebooks: notebooksList });
+            }
+        });
+        // db.insert({ name: 'notebooks' }, { notebooks: notebooksList });
     }
     /**
      * @returns string - location of save directory
@@ -50,6 +60,9 @@ class NotebookManager {
             this.deleteNotebook(notebook);
         });
     }
+    /**
+     * Gets all notebooks
+     */
     getNotebooks() {
         return fs.readdirSync(NotebookManager.directoryToSaveNotebooksAt).filter(function (file) {
             return fs.statSync(NotebookManager.directoryToSaveNotebooksAt + '/' + file).isDirectory();
