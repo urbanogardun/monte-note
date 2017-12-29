@@ -4,6 +4,7 @@ const Store = require('electron-store');
 const store = new Store();
 const fs = require('fs');
 const path = require('path');
+const index_1 = require("../../db/index");
 class NotebookManager {
     constructor(saveDir) {
         NotebookManager.directoryToSaveNotebooksAt = saveDir;
@@ -18,6 +19,9 @@ class NotebookManager {
         return store.get(NotebookManager.notebookSaveKey);
     }
     addNotebook(name) {
+        index_1.default.find({}, (err, docs) => {
+            console.log(docs);
+        });
         if (this.notebookExists(name)) {
             try {
                 fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`);

@@ -2,6 +2,7 @@ const Store = require('electron-store');
 const store = new Store();
 const fs = require('fs');
 const path = require('path');
+import db from '../../db/index';
 
 export class NotebookManager {
 
@@ -25,6 +26,9 @@ export class NotebookManager {
     }
 
     addNotebook(name: string) {
+        db.find({}, (err: any, docs: any) => {
+            console.log(docs);
+        });
         if (this.notebookExists(name)) {
             try {
                 fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`);
