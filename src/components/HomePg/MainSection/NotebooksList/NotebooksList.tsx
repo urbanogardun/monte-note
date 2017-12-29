@@ -1,4 +1,5 @@
 import * as React from 'react';
+import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
 
 export interface Props {
     notebooks?: string[];
@@ -18,6 +19,7 @@ export class NotebooksList extends React.Component<Props, State> {
     }
 
     componentDidMount() {
+        ElectronMessager.sendMessageWithIpcRenderer('get-global-packages');
         // db.info().then(function (info: any) {
         //     console.log(info);
         // });

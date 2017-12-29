@@ -31,9 +31,6 @@ class NotebookManager {
     // TODO:
     // After notebook dir is created, add notebook name to DB
     addNotebook(name) {
-        index_1.default.find({}, (err, docs) => {
-            console.log(docs);
-        });
         if (this.notebookExists(name)) {
             try {
                 fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
