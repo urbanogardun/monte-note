@@ -79,6 +79,8 @@ ipcMain.on(ADD_NOTEBOOK, (event: any, args: any) => {
     // Retrieve notebook directory location from electron-store storage
     notebookManager = new NotebookManager(NotebookManager.getNotebookLocation());
     notebookManager.addNotebook(args);
+  } finally {
+    event.sender.send(ADD_NOTEBOOK, args);
   }
 });
 

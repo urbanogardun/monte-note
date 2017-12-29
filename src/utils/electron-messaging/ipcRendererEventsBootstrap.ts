@@ -2,6 +2,7 @@ import { IpcRenderer, Event } from 'electron';
 import { NOTEBOOK_SAVE_DIRECTORY, GET_NOTEBOOKS } from '../../utils/constants';
 import reduxStore from '../../store/index';
 import * as actions from '../../actions/';
+import { ADD_NOTEBOOK } from '../../constants/index';
     
 let ipcRenderer: IpcRenderer;
 
@@ -32,6 +33,12 @@ export function ipcRendererEventsBootstrap() {
             console.log(arg);
             if (arg) {
                 reduxStore.dispatch(actions.getNotebooks(arg));
+            }
+        });
+
+        ipcRenderer.on(ADD_NOTEBOOK, (event: Event, arg: string): void => {
+            if (arg) {
+                reduxStore.dispatch(actions.addNotebook(arg));
             }
         });
 

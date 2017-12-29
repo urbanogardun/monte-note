@@ -18,7 +18,14 @@ export interface GetNotebooks {
     notebooks: string[];
 }
 
+export interface AddNotebook {
+    type: constants.ADD_NOTEBOOK;
+    notebook: string;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
+
+export type NotebooksAction = GetNotebooks | AddNotebook;
 
 export function incrementEnthusiasm(): IncrementEnthusiasm {
     return {
@@ -43,5 +50,12 @@ export function getNotebooks(notebooks: string[]): GetNotebooks {
     return {
         type: constants.GET_NOTEBOOKS,
         notebooks
+    };
+}
+
+export function addNotebook(notebook: string): AddNotebook {
+    return {
+        type: constants.ADD_NOTEBOOK,
+        notebook
     };
 }

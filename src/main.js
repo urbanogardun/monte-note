@@ -68,6 +68,9 @@ electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, args) => {
         notebookManager = new notebookManager_1.default(notebookManager_1.default.getNotebookLocation());
         notebookManager.addNotebook(args);
     }
+    finally {
+        event.sender.send(index_1.ADD_NOTEBOOK, args);
+    }
 });
 electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
     console.log('GET THE NOTEBOOKS FROM DB.');
