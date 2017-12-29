@@ -1,5 +1,4 @@
 import * as React from 'react';
-import db from '../../../../db/index';
 
 export interface Props {
     notebooks?: string[];
@@ -19,17 +18,17 @@ export class NotebooksList extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        db.info().then(function (info: any) {
-            console.log(info);
-        });
+        // db.info().then(function (info: any) {
+        //     console.log(info);
+        // });
 
-        db.get('mydoc')
-        .then((doc) => {
-            console.log(doc);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
+        // db.get('mydoc')
+        // .then((doc: any) => {
+        //     console.log(doc);
+        // })
+        // .catch((error: any) => {
+        //     console.log(error);
+        // });
 
         // var doc = {
         // '_id': 'mittens',
