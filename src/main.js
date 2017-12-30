@@ -4,6 +4,7 @@ const electron_1 = require("electron");
 const notebookManager_1 = require("./utils/notebook-management/notebookManager");
 const index_1 = require("./constants/index");
 const index_2 = require("./db/index");
+let db = new index_2.default().getDb();
 let mainWindow;
 let notebookManager;
 function createWindow() {
@@ -75,7 +76,7 @@ electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, args) => {
 electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
     console.log('GET THE NOTEBOOKS FROM DB.');
     // Bootstrap db with notebooks entry
-    index_2.default.find({ name: 'notebooks' }, (err, docs) => {
+    db.find({ name: 'notebooks' }, (err, docs) => {
         try {
             event.sender.send(index_1.GET_NOTEBOOKS, docs[0].notebooks);
         }

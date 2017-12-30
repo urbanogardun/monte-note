@@ -1,32 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Store = require('electron-store');
-const store = new Store();
+// const Store = require('electron-store');
+// const store = new Store();
 const fs = require('fs');
 const path = require('path');
-const index_1 = require("../../db/index");
 class NotebookManager {
     constructor(saveDir) {
         NotebookManager.directoryToSaveNotebooksAt = saveDir;
-        this.saveNotebookLocation(NotebookManager.directoryToSaveNotebooksAt);
+        // this.saveNotebookLocation(NotebookManager.directoryToSaveNotebooksAt);
         this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
         this.notebooks = [];
         let notebooksList = this.getNotebooks();
         console.log('nlist: ' + notebooksList);
-        // Bootstrap db with notebooks entry
-        index_1.default.find({ name: 'notebooks' }, function (err, docs) {
-            console.log(docs.length);
-            if (docs.length === 0) {
-                index_1.default.insert({ name: 'notebooks', notebooks: notebooksList });
-            }
-        });
+        // this.DbConnection = new DbMessager();
+        // // Bootstrap db with notebooks entry
+        // db.find({ name: 'notebooks' }, function (err: any, docs: any) {
+        //     console.log(docs.length);
+        //     if (docs.length === 0) {
+        //         db.insert({ name: 'notebooks', notebooks: notebooksList });
+        //     }
+        // });
         // db.insert({ name: 'notebooks' }, { notebooks: notebooksList });
     }
     /**
      * @returns string - location of save directory
      */
     static getNotebookLocation() {
-        return store.get(NotebookManager.notebookSaveKey);
+        return NotebookManager.directoryToSaveNotebooksAt;
+        // return store.get(NotebookManager.notebookSaveKey);
     }
     // TODO:
     // After notebook dir is created, add notebook name to DB
@@ -36,7 +37,8 @@ class NotebookManager {
                 fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
                     this.addNotebookToLog(name);
                     console.log('notebook created!');
-                    index_1.default.update({ name: 'notebooks' }, { $push: { notebooks: name } });
+                    return;
+                    // db.update({ name: 'notebooks' }, { $push: { notebooks: name } });
                 });
             }
             catch (error) {
@@ -69,9 +71,9 @@ class NotebookManager {
      * Sets default directory where notebooks will get saved
      * @param  {string} location - directory for notebooks
      */
-    saveNotebookLocation(location) {
-        store.set(NotebookManager.notebookSaveKey, location);
-    }
+    // private saveNotebookLocation(location: string) {
+    //     store.set(NotebookManager.notebookSaveKey, location);
+    // }
     /**
      * Checks if notebook is already created
      * @param  {string} name - notebook name

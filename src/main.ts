@@ -1,8 +1,9 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import NotebookManager from './utils/notebook-management/notebookManager';
 import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK, GET_NOTEBOOKS } from './constants/index';
-import db from './db/index';
+import Db from './db/index';
 
+let db = new Db().getDb() as Nedb;
 let mainWindow: Electron.BrowserWindow;
 let notebookManager: NotebookManager;
 

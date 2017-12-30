@@ -10,7 +10,7 @@ export class DbMessager {
     }
 
     messageDb() {
-        this.db.find({}, (err, docs) => {
+        this.db.find({}, (err: any, docs: any) => {
             console.log('DOCS');
             console.log(docs);
         });

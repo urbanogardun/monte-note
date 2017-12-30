@@ -1,5 +1,5 @@
-const Store = require('electron-store');
-const store = new Store();
+// const Store = require('electron-store');
+// const store = new Store();
 const fs = require('fs');
 const path = require('path');
 // import db from '../../db/index';
@@ -86,9 +86,9 @@ export class NotebookManager {
      * Sets default directory where notebooks will get saved
      * @param  {string} location - directory for notebooks
      */
-    private saveNotebookLocation(location: string) {
-        store.set(NotebookManager.notebookSaveKey, location);
-    }
+    // private saveNotebookLocation(location: string) {
+    //     store.set(NotebookManager.notebookSaveKey, location);
+    // }
     
     /**
      * Checks if notebook is already created

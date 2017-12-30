@@ -2,7 +2,7 @@ jest.mock('fs');
 jest.mock('../../notebook-management/notebookManager');
 import ElectronReceiver from './electronReceiver';
 import * as path from 'path';
-import * as fs from 'fs';
+// import * as fs from 'fs';
 
 let electronReceiver: ElectronReceiver;
 let testDir = path.join(process.cwd(), 'testing-electron-receiver');
