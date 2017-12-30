@@ -46,7 +46,3 @@ test('gets all notebooks inside notebooks location directory', () => {
 
   expect(notebookManager.getNotebooks()).toHaveLength(2);
 });
-
-// afterAll(() => {
-//   notebookManager.deleteEverything();
-// });

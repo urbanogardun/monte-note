@@ -30,13 +30,15 @@ export class NotebookManager {
         let notebooksList = this.getNotebooks();
         console.log('nlist: ' + notebooksList);
 
-        // this.DbConnection = new DbMessager();
+        this.DbConnection = new DbMessager();
+
+        this.DbConnection.messageDb();
         // // Bootstrap db with notebooks entry
-        // db.find({ name: 'notebooks' }, function (err: any, docs: any) {
+        // this.db.find({ name: 'notebooks' }, function (err: any, docs: any) {
         //     console.log(docs.length);
-        //     if (docs.length === 0) {
-        //         db.insert({ name: 'notebooks', notebooks: notebooksList });
-        //     }
+            // if (docs.length === 0) {
+            //     db.insert({ name: 'notebooks', notebooks: notebooksList });
+            // }
         // });
         // db.insert({ name: 'notebooks' }, { notebooks: notebooksList });
     }

@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 // const store = new Store();
 const fs = require('fs');
 const path = require('path');
+// import db from '../../db/index';
+const dbMessager_1 = require("../dbMessager");
 class NotebookManager {
     constructor(saveDir) {
         NotebookManager.directoryToSaveNotebooksAt = saveDir;
@@ -12,7 +14,7 @@ class NotebookManager {
         this.notebooks = [];
         let notebooksList = this.getNotebooks();
         console.log('nlist: ' + notebooksList);
-        // this.DbConnection = new DbMessager();
+        this.DbConnection = new dbMessager_1.default();
         // // Bootstrap db with notebooks entry
         // db.find({ name: 'notebooks' }, function (err: any, docs: any) {
         //     console.log(docs.length);

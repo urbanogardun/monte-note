@@ -10,10 +10,15 @@ export class DbMessager {
     }
 
     messageDb() {
-        this.db.find({}, (err: any, docs: any) => {
-            console.log('DOCS');
+        console.log('LOLOLOLO');
+        this.db.find({ name: 'notebooks' }, function (err: any, docs: any) {
             console.log(docs);
         });
+
+        // this.db.find({}, (err: any, docs: any) => {
+        //     console.log('DOCS');
+        //     console.log(docs);
+        // });
     }
 }
 
