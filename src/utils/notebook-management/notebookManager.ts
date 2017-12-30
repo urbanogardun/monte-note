@@ -17,19 +17,20 @@ export class NotebookManager {
      * @returns string - location of save directory
      */
     static getNotebookLocation(): string {
-        return store.get(NotebookManager.notebookSaveKey);
+        return NotebookManager.directoryToSaveNotebooksAt;
+        // return store.get(NotebookManager.notebookSaveKey);
     }
 
     constructor(saveDir: string) {
         NotebookManager.directoryToSaveNotebooksAt = saveDir;
-        this.saveNotebookLocation(NotebookManager.directoryToSaveNotebooksAt);
+        // this.saveNotebookLocation(NotebookManager.directoryToSaveNotebooksAt);
         this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
         this.notebooks = [];
 
         let notebooksList = this.getNotebooks();
         console.log('nlist: ' + notebooksList);
 
-        this.DbConnection = new DbMessager();
+        // this.DbConnection = new DbMessager();
         // // Bootstrap db with notebooks entry
         // db.find({ name: 'notebooks' }, function (err: any, docs: any) {
         //     console.log(docs.length);
@@ -45,10 +46,10 @@ export class NotebookManager {
     addNotebook(name: string) {
         if (this.notebookExists(name)) {
             try {
-                console.log('create nbook!');
                 fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
                     this.addNotebookToLog(name);
                     console.log('notebook created!');
+                    return;
                     // db.update({ name: 'notebooks' }, { $push: { notebooks: name } });
                 });
             } catch (error) {

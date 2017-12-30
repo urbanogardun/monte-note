@@ -35,6 +35,7 @@ export default class ElectronReceiver {
      */
     createLocationForNotebooks(location: string) {
         this.notebookManager = new NotebookManager(location);
+        return this.notebookManager;
     }
 
     private isLocationForNotebooks(message: string): boolean {

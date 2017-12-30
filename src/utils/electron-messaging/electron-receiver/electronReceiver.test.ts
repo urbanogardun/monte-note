@@ -1,3 +1,4 @@
+jest.mock('fs');
 jest.mock('../../notebook-management/notebookManager');
 import ElectronReceiver from './electronReceiver';
 import * as path from 'path';
@@ -24,13 +25,7 @@ test('parses location from received ipcRenderer message', () => {
 });
 
 test('creates main directory for notebooks', () => {
-    electronReceiver.createLocationForNotebooks(testDir);
+    let location = electronReceiver.createLocationForNotebooks(testDir);
 
-    let directoryExists = fs.existsSync(testDir);
-
-    expect(directoryExists).toEqual(true);
-});
-
-afterAll(() => {
-    fs.rmdirSync(testDir);
+    expect(location).toHaveProperty('addNotebook');
 });
