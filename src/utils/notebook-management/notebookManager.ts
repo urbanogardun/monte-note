@@ -2,7 +2,8 @@ const Store = require('electron-store');
 const store = new Store();
 const fs = require('fs');
 const path = require('path');
-import db from '../../db/index';
+// import db from '../../db/index';
+import DbMessager from '../dbMessager';
 
 export class NotebookManager {
 
@@ -10,6 +11,7 @@ export class NotebookManager {
     static notebookSaveKey: string = 'notebook-save-directory';
     static directoryToSaveNotebooksAt: string;
     notebooks: string[];
+    DbConnection: DbMessager;
 
     /**
      * @returns string - location of save directory
@@ -27,13 +29,14 @@ export class NotebookManager {
         let notebooksList = this.getNotebooks();
         console.log('nlist: ' + notebooksList);
 
-        // Bootstrap db with notebooks entry
-        db.find({ name: 'notebooks' }, function (err: any, docs: any) {
-            console.log(docs.length);
-            if (docs.length === 0) {
-                db.insert({ name: 'notebooks', notebooks: notebooksList });
-            }
-        });
+        this.DbConnection = new DbMessager();
+        // // Bootstrap db with notebooks entry
+        // db.find({ name: 'notebooks' }, function (err: any, docs: any) {
+        //     console.log(docs.length);
+        //     if (docs.length === 0) {
+        //         db.insert({ name: 'notebooks', notebooks: notebooksList });
+        //     }
+        // });
         // db.insert({ name: 'notebooks' }, { notebooks: notebooksList });
     }
 
@@ -42,10 +45,11 @@ export class NotebookManager {
     addNotebook(name: string) {
         if (this.notebookExists(name)) {
             try {
+                console.log('create nbook!');
                 fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
                     this.addNotebookToLog(name);
                     console.log('notebook created!');
-                    db.update({ name: 'notebooks' }, { $push: { notebooks: name } });
+                    // db.update({ name: 'notebooks' }, { $push: { notebooks: name } });
                 });
             } catch (error) {
                 return;
