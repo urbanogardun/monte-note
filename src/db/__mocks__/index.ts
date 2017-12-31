@@ -9,6 +9,8 @@ export class Db {
     getDb() {
         return {find: () => {
             return Db.notebookList;
+        }, update: () => {
+            return true;
         }};
     }
 

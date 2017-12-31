@@ -22,3 +22,11 @@ test('messages db & gets a list of notebooks', () => {
 
     expect(result).toHaveLength(3);
 });
+
+test('adds notebook to list of notebooks', () => {
+    let notebook = 'test-notebook-123';
+
+    let result = dbMessager.addNotebook(notebook);
+
+    expect(result).toEqual(true);
+});

@@ -1,8 +1,5 @@
-// const Store = require('electron-store');
-// const store = new Store();
 const fs = require('fs');
 const path = require('path');
-// import db from '../../db/index';
 import DbMessager from '../dbMessager';
 
 export class NotebookManager {
@@ -50,9 +47,9 @@ export class NotebookManager {
             try {
                 fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
                     this.addNotebookToLog(name);
-                    console.log('notebook created!');
-                    return;
                     // db.update({ name: 'notebooks' }, { $push: { notebooks: name } });
+                    this.DbConnection.addNotebook(name);
+                    return;
                 });
             } catch (error) {
                 return;
