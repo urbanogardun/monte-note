@@ -9,6 +9,16 @@ export class DbMessager {
         this.db = setup.getDb();
     }
 
+    getNotebooks(): any {
+        return this.db.find({ name: 'notebooks' }, (err: any, docs: any): string[] => {
+            console.log('DOCS: ' + docs);
+            if (docs.length) {
+                return docs[0].notebooks;
+            }
+            return [];
+        });
+    }
+
     messageDb() {
         console.log('LOLOLOLO');
         this.db.find({ name: 'notebooks' }, function (err: any, docs: any) {
