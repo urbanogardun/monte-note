@@ -1,10 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-// const Store = require('electron-store');
-// const store = new Store();
 const fs = require('fs');
 const path = require('path');
-// import db from '../../db/index';
 const dbMessager_1 = require("../dbMessager");
 class NotebookManager {
     constructor(saveDir) {
@@ -39,9 +36,9 @@ class NotebookManager {
             try {
                 fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
                     this.addNotebookToLog(name);
-                    console.log('notebook created!');
-                    return;
                     // db.update({ name: 'notebooks' }, { $push: { notebooks: name } });
+                    this.DbConnection.addNotebook(name);
+                    return;
                 });
             }
             catch (error) {

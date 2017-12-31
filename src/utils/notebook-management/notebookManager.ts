@@ -29,7 +29,13 @@ export class NotebookManager {
 
         this.DbConnection = new DbMessager();
 
-        this.DbConnection.messageDb();
+        // this.DbConnection.messageDb();
+
+
+        // TODO:
+        // Add saveDir to db if it is not there already (otherwise replace it)
+        this.DbConnection.setNotebooksLocation(saveDir);
+
         // // Bootstrap db with notebooks entry
         // this.db.find({ name: 'notebooks' }, function (err: any, docs: any) {
         //     console.log(docs.length);

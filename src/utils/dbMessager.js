@@ -7,12 +7,19 @@ class DbMessager {
         this.db = setup.getDb();
     }
     getNotebooks() {
-        this.db.find({ name: 'notebooks' }, (err, docs) => {
-            console.log(docs);
+        return this.db.find({ name: 'notebooks' }, (err, docs) => {
             if (docs.length) {
                 return docs[0].notebooks;
             }
             return [];
+        });
+    }
+    addNotebook(name) {
+        return this.db.update({ name: 'notebooks' }, { $push: { notebooks: name } }, {}, (err) => {
+            if (err) {
+                return false;
+            }
+            return true;
         });
     }
     messageDb() {
@@ -20,10 +27,6 @@ class DbMessager {
         this.db.find({ name: 'notebooks' }, function (err, docs) {
             console.log(docs);
         });
-        // this.db.find({}, (err: any, docs: any) => {
-        //     console.log('DOCS');
-        //     console.log(docs);
-        // });
     }
 }
 exports.DbMessager = DbMessager;

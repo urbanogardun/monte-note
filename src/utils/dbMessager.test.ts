@@ -30,3 +30,12 @@ test('adds notebook to list of notebooks', () => {
 
     expect(result).toEqual(true);
 });
+
+test('adds location for notebooks to db', () => {
+    let location = 'C:\\test-dir';
+    require('../db/index').Db.__setNotebooksLocation(location);
+    let notebooksLocation = require('../db/index').Db.notebooksLocation;
+    
+    dbMessager.setNotebooksLocation(location);
+    expect(notebooksLocation).toEqual(location);
+});

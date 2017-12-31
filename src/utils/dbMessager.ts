@@ -27,6 +27,17 @@ export class DbMessager {
         });
     }
 
+    setNotebooksLocation(location: string): void {
+        let documentName = 'notebooksLocation';
+        this.db.find({ name: documentName }, (err: Error, docs: any) => {
+            if (docs.length) {
+                this.db.update( { name: documentName }, { notebooksLocation: location });
+            } else {
+                this.db.insert( {name: documentName, notebooksLocation: location });
+            }
+        });
+    }
+
     messageDb() {
         console.log('LOLOLOLO');
         this.db.find({ name: 'notebooks' }, function (err: any, docs: any) {
