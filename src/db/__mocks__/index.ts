@@ -26,7 +26,7 @@ export class Db {
                 callback(err, [{notebooks: notebookList}]);
                 return;
             }
-        }, update: (searchQuery: any, toUpdate: any, options: any, callback) => {
+        }, update: (searchQuery: any, toUpdate: any, options: any, callback: any) => {
             // console.log(Db.notebookList);
             Db.notebookList = [...Db.notebookList, 'ex-nb-1', 'ex-nb-2', 'ex-nb-3'];
             console.log(Db.notebookList);
