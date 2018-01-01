@@ -6,7 +6,7 @@ let notebookManager: NotebookManager;
 let testNotebook = 'chemistry';
 beforeAll(() => {
   // Set notebook directory location as current working directory
-  notebookManager = new NotebookManager(process.cwd() + '\\testing');
+  notebookManager = new NotebookManager();
 });
 
 beforeEach(() => {

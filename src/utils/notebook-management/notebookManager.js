@@ -4,26 +4,13 @@ const fs = require('fs');
 const path = require('path');
 const dbMessager_1 = require("../dbMessager");
 class NotebookManager {
-    constructor(saveDir) {
-        NotebookManager.directoryToSaveNotebooksAt = saveDir;
-        // this.saveNotebookLocation(NotebookManager.directoryToSaveNotebooksAt);
-        this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
-        this.notebooks = [];
-        let notebooksList = this.getNotebooks();
-        console.log('nlist: ' + notebooksList);
+    constructor() {
+        // NotebookManager.directoryToSaveNotebooksAt = saveDir;
+        // this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
+        // this.notebooks = [];
+        // let notebooksList = this.getNotebooks();
         this.DbConnection = new dbMessager_1.default();
-        // this.DbConnection.messageDb();
-        // TODO:
-        // Add saveDir to db if it is not there already (otherwise replace it)
-        this.DbConnection.setNotebooksLocation(saveDir);
-        // // Bootstrap db with notebooks entry
-        // this.db.find({ name: 'notebooks' }, function (err: any, docs: any) {
-        //     console.log(docs.length);
-        // if (docs.length === 0) {
-        //     db.insert({ name: 'notebooks', notebooks: notebooksList });
-        // }
-        // });
-        // db.insert({ name: 'notebooks' }, { notebooks: notebooksList });
+        // this.DbConnection.setNotebooksLocation(saveDir);
     }
     /**
      * @returns string - location of save directory
@@ -31,6 +18,22 @@ class NotebookManager {
     static getNotebookLocation() {
         return NotebookManager.directoryToSaveNotebooksAt;
         // return store.get(NotebookManager.notebookSaveKey);
+    }
+    getNotebooksLocation() {
+        return new Promise(resolve => {
+            this.DbConnection.getNotebooksLocation()
+                .then((location) => {
+                resolve(location);
+            });
+        });
+    }
+    setNotebooksLocation(location) {
+        return new Promise(resolve => {
+            this.DbConnection.setNotebooksLocation(location)
+                .then((result) => {
+                resolve(result);
+            });
+        });
     }
     // TODO:
     // After notebook dir is created, add notebook name to DB
@@ -117,15 +120,6 @@ class NotebookManager {
                 }
             });
             fs.rmdirSync(directoryPath);
-        }
-    }
-    /**
-     * Creates root directory inside which notebooks will be created
-     * @param  {string} path - directory path
-     */
-    createRootDirectory(directoryPath) {
-        if (!fs.existsSync(directoryPath)) {
-            fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}`);
         }
     }
 }

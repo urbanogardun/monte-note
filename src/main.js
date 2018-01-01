@@ -56,9 +56,14 @@ electron_1.ipcMain.on('is-location-for-notebooks-set', (event, args) => {
     event.sender.send('start-it!', notebookManager_1.default.getNotebookLocation());
 });
 electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
-    let notebooksDirectory = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
-    notebookManager = new notebookManager_1.default(notebooksDirectory);
-    event.sender.send('location-for-notebooks', notebookManager_1.default.getNotebookLocation());
+    let location = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
+    // notebookManager = new NotebookManager(notebooksDirectory as string);
+    notebookManager.setNotebooksLocation(location)
+        .then((result) => {
+        if (result) {
+            event.sender.send('location-for-notebooks', location);
+        }
+    });
 });
 electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, args) => {
     try {
@@ -66,7 +71,7 @@ electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, args) => {
     }
     catch (error) {
         // Retrieve notebook directory location from electron-store storage
-        notebookManager = new notebookManager_1.default(notebookManager_1.default.getNotebookLocation());
+        // notebookManager = new NotebookManager(NotebookManager.getNotebookLocation());
         notebookManager.addNotebook(args);
     }
     finally {
@@ -83,6 +88,13 @@ electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
         catch (error) {
             event.sender.send(index_1.GET_NOTEBOOKS, []);
         }
+    });
+});
+electron_1.ipcMain.on(index_1.LOAD_SETTINGS, (event) => {
+    notebookManager = new notebookManager_1.default();
+    notebookManager.getNotebooksLocation()
+        .then((location) => {
+        console.log('LOCATION FOR NOTEBOOKS IN DB IS: ' + location);
     });
 });
 // In this file you can include the rest of your app's specific main process

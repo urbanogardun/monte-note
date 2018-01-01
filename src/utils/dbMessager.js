@@ -7,39 +7,72 @@ class DbMessager {
         this.db = setup.getDb();
     }
     getNotebooks() {
-        return this.db.find({ name: 'notebooks' }, (err, docs) => {
-            if (docs.length) {
-                return docs[0].notebooks;
-            }
-            return [];
+        return new Promise((resolve) => {
+            this.db.find({ name: 'notebooks' }, (err, docs) => {
+                if (docs.length) {
+                    resolve(docs[0].notebooks);
+                }
+                resolve([]);
+            });
         });
     }
     getNotebooksLocation() {
-        return this.db.find({ name: 'notebooksLocation' }, (err, docs) => {
-            if (docs.length) {
-                localStorage.setItem('NOTEBOOK_SAVE_DIRECTORY', docs[0].notebooksLocation);
-                return docs[0].notebooksLocation;
-            }
-            return '';
+        return new Promise(resolve => {
+            this.db.find({ name: 'notebooksLocation' }, (err, docs) => {
+                if (docs.length) {
+                    resolve(docs[0].notebooksLocation);
+                }
+                resolve('');
+            });
         });
     }
     addNotebook(name) {
-        return this.db.update({ name: 'notebooks' }, { $push: { notebooks: name } }, {}, (err) => {
-            if (err) {
-                return false;
-            }
-            return true;
+        return new Promise((resolve) => {
+            this.db.update({ name: 'notebooks' }, { $push: { notebooks: name } }, {}, (err) => {
+                if (err) {
+                    resolve(false);
+                }
+                resolve(true);
+            });
+        });
+    }
+    addExistingNotebooks(notebooks) {
+        return new Promise((resolve) => {
+            this.db.find({ name: 'notebooks' }, (err, docs) => {
+                if (docs.length) {
+                    this.db.update({ name: 'notebooks' }, { $push: { notebooks: name } }, {}, () => {
+                        resolve(true);
+                    });
+                }
+                else {
+                    this.db.insert({ name: 'notebooks', notebooks: notebooks }, () => {
+                        resolve(true);
+                    });
+                }
+            });
         });
     }
     setNotebooksLocation(location) {
-        let documentName = 'notebooksLocation';
-        this.db.find({ name: documentName }, (err, docs) => {
-            if (docs.length) {
-                this.db.update({ name: documentName }, { notebooksLocation: location });
-            }
-            else {
-                this.db.insert({ name: documentName, notebooksLocation: location });
-            }
+        return new Promise(resolve => {
+            let documentName = 'notebooksLocation';
+            this.db.find({ name: documentName }, (err, docs) => {
+                if (docs.length) {
+                    this.db.update({ name: documentName }, { notebooksLocation: location }, {}, (error) => {
+                        if (error) {
+                            resolve(false);
+                        }
+                        resolve(true);
+                    });
+                }
+                else {
+                    this.db.insert({ name: documentName, notebooksLocation: location }, (error) => {
+                        if (error) {
+                            resolve(false);
+                        }
+                        resolve(true);
+                    });
+                }
+            });
         });
     }
     messageDb() {

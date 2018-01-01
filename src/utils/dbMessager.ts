@@ -21,12 +21,13 @@ export class DbMessager {
     }
 
     getNotebooksLocation(): any {
-        return this.db.find({ name: 'notebooksLocation' }, (err: Error, docs: any) => {
-            if (docs.length) {
-                localStorage.setItem('NOTEBOOK_SAVE_DIRECTORY', docs[0].notebooksLocation); 
-                return docs[0].notebooksLocation;
-            }
-            return '';
+        return new Promise(resolve => {
+            this.db.find({ name: 'notebooksLocation' }, (err: Error, docs: any) => {
+                if (docs.length) {
+                    resolve(docs[0].notebooksLocation);
+                }
+                resolve('');
+            });
         });
     }
 
@@ -57,14 +58,26 @@ export class DbMessager {
         });
     }
 
-    setNotebooksLocation(location: string): void {
-        let documentName = 'notebooksLocation';
-        this.db.find({ name: documentName }, (err: Error, docs: any) => {
-            if (docs.length) {
-                this.db.update( { name: documentName }, { notebooksLocation: location });
-            } else {
-                this.db.insert( {name: documentName, notebooksLocation: location });
-            }
+    setNotebooksLocation(location: string): any {
+        return new Promise(resolve => {
+            let documentName = 'notebooksLocation';
+            this.db.find({ name: documentName }, (err: Error, docs: any) => {
+                if (docs.length) {
+                    this.db.update( { name: documentName }, { notebooksLocation: location }, {}, (error: Error) => {
+                        if (error) {
+                            resolve(false);
+                        }
+                        resolve(true);
+                    });
+                } else {
+                    this.db.insert( {name: documentName, notebooksLocation: location }, (error: Error) => {
+                        if (error) {
+                            resolve(false);
+                        }
+                        resolve(true);
+                    });
+                }
+            });
         });
     }
 

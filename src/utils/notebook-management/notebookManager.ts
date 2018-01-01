@@ -18,31 +18,31 @@ export class NotebookManager {
         // return store.get(NotebookManager.notebookSaveKey);
     }
 
-    constructor(saveDir: string) {
-        NotebookManager.directoryToSaveNotebooksAt = saveDir;
-        // this.saveNotebookLocation(NotebookManager.directoryToSaveNotebooksAt);
-        this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
-        this.notebooks = [];
-
-        let notebooksList = this.getNotebooks();
-        console.log('nlist: ' + notebooksList);
-
+    constructor() {
+        // NotebookManager.directoryToSaveNotebooksAt = saveDir;
+        // this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
+        // this.notebooks = [];
+        // let notebooksList = this.getNotebooks();
         this.DbConnection = new DbMessager();
+        // this.DbConnection.setNotebooksLocation(saveDir);
+    }
 
-        // this.DbConnection.messageDb();
+    getNotebooksLocation() {
+        return new Promise(resolve => {
+            this.DbConnection.getNotebooksLocation()
+            .then((location: string) => {
+                resolve(location);
+            });
+        });
+    }
 
-        this.DbConnection.setNotebooksLocation(saveDir);
-        // TODO:
-        // Add all existing notebooks to db
-
-        // // Bootstrap db with notebooks entry
-        // this.db.find({ name: 'notebooks' }, function (err: any, docs: any) {
-        //     console.log(docs.length);
-            // if (docs.length === 0) {
-            //     db.insert({ name: 'notebooks', notebooks: notebooksList });
-            // }
-        // });
-        // db.insert({ name: 'notebooks' }, { notebooks: notebooksList });
+    setNotebooksLocation(location: string) {
+        return new Promise(resolve => {
+            this.DbConnection.setNotebooksLocation(location)
+            .then((result: boolean) => {
+                resolve(result);
+            });
+        });
     }
 
     // TODO:
@@ -147,11 +147,11 @@ export class NotebookManager {
      * Creates root directory inside which notebooks will be created
      * @param  {string} path - directory path
      */
-    private createRootDirectory(directoryPath: string) {
-        if (!fs.existsSync(directoryPath)) {
-            fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}`);
-        }
-    }
+    // private createRootDirectory(directoryPath: string) {
+    //     if (!fs.existsSync(directoryPath)) {
+    //         fs.mkdirSync(`${NotebookManager.directoryToSaveNotebooksAt}`);
+    //     }
+    // }
 
 }
 

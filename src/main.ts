@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import NotebookManager from './utils/notebook-management/notebookManager';
-import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK, GET_NOTEBOOKS } from './constants/index';
+import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK, GET_NOTEBOOKS, LOAD_SETTINGS } from './constants/index';
 import Db from './db/index';
 
 let db = new Db().getDb() as Nedb;
@@ -66,11 +66,16 @@ ipcMain.on('is-location-for-notebooks-set', (event: any, args: any) => {
 });
 
 ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
-  let notebooksDirectory = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
+  let location = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
 
-  notebookManager = new NotebookManager(notebooksDirectory as string);
+  // notebookManager = new NotebookManager(notebooksDirectory as string);
+  notebookManager.setNotebooksLocation(location as string)
+  .then((result: boolean) => {
+    if (result) {
+      event.sender.send('location-for-notebooks', location);
+    }
+  });
 
-  event.sender.send('location-for-notebooks', NotebookManager.getNotebookLocation());
 });
 
 ipcMain.on(ADD_NOTEBOOK, (event: any, args: any) => {
@@ -78,7 +83,7 @@ ipcMain.on(ADD_NOTEBOOK, (event: any, args: any) => {
     notebookManager.addNotebook(args);
   } catch (error) {
     // Retrieve notebook directory location from electron-store storage
-    notebookManager = new NotebookManager(NotebookManager.getNotebookLocation());
+    // notebookManager = new NotebookManager(NotebookManager.getNotebookLocation());
     notebookManager.addNotebook(args);
   } finally {
     event.sender.send(ADD_NOTEBOOK, args);
@@ -96,6 +101,16 @@ ipcMain.on(GET_NOTEBOOKS, (event: any, args: any) => {
       event.sender.send(GET_NOTEBOOKS, []);
     }
 
+  });
+
+});
+
+ipcMain.on(LOAD_SETTINGS, (event: any) => {
+
+  notebookManager = new NotebookManager();
+  notebookManager.getNotebooksLocation()
+  .then((location: string) => {
+    console.log('LOCATION FOR NOTEBOOKS IN DB IS: ' + location);
   });
 
 });

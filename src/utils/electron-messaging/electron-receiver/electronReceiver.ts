@@ -34,7 +34,7 @@ export default class ElectronReceiver {
      * @param  {string} location
      */
     createLocationForNotebooks(location: string) {
-        this.notebookManager = new NotebookManager(location);
+        this.notebookManager = new NotebookManager();
         return this.notebookManager;
     }
 
