@@ -14,12 +14,32 @@ class DbMessager {
             return [];
         });
     }
+    getNotebooksLocation() {
+        return this.db.find({ name: 'notebooksLocation' }, (err, docs) => {
+            if (docs.length) {
+                localStorage.setItem('NOTEBOOK_SAVE_DIRECTORY', docs[0].notebooksLocation);
+                return docs[0].notebooksLocation;
+            }
+            return '';
+        });
+    }
     addNotebook(name) {
         return this.db.update({ name: 'notebooks' }, { $push: { notebooks: name } }, {}, (err) => {
             if (err) {
                 return false;
             }
             return true;
+        });
+    }
+    setNotebooksLocation(location) {
+        let documentName = 'notebooksLocation';
+        this.db.find({ name: documentName }, (err, docs) => {
+            if (docs.length) {
+                this.db.update({ name: documentName }, { notebooksLocation: location });
+            }
+            else {
+                this.db.insert({ name: documentName, notebooksLocation: location });
+            }
         });
     }
     messageDb() {

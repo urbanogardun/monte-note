@@ -17,18 +17,22 @@ test('sets up database', () => {
     expect(dbMessager).toHaveProperty('db');
 });
 
-test('messages db & gets a list of notebooks', () => {
-    let result = dbMessager.getNotebooks();
+test('messages db & gets a list of notebooks', done => {
+    dbMessager.getNotebooks()
+    .then((result: string[]) => {
+        expect(result).toHaveLength(3);
+        done();
+    });
 
-    expect(result).toHaveLength(3);
 });
 
-test('adds notebook to list of notebooks', () => {
+test('adds notebook to list of notebooks', done => {
     let notebook = 'test-notebook-123';
-
-    let result = dbMessager.addNotebook(notebook);
-
-    expect(result).toEqual(true);
+    dbMessager.addNotebook(notebook)
+    .then((result: boolean) => {
+        done();
+        expect(result).toEqual(true);
+    });
 });
 
 test('adds location for notebooks to db', () => {
@@ -38,4 +42,17 @@ test('adds location for notebooks to db', () => {
     
     dbMessager.setNotebooksLocation(location);
     expect(notebooksLocation).toEqual(location);
+});
+
+test('adds all existing notebooks to db', done => {
+
+    let notebooksToBeAdded = ['ex-nb-1', 'ex-nb-2', 'ex-nb-3'];
+    
+    dbMessager.addExistingNotebooks(notebooksToBeAdded)
+    .then(() => {
+        let notebooksInDb = require('../db/index').Db.__getNotebooksList();
+        expect(notebooksInDb).toContain(notebooksToBeAdded[1]);
+        done();
+    });
+
 });

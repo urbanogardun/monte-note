@@ -10,20 +10,50 @@ export class DbMessager {
     }
 
     getNotebooks(): any {
-        return this.db.find({ name: 'notebooks' }, (err: any, docs: any): string[] => {
+        return new Promise((resolve) => {
+            this.db.find({ name: 'notebooks' }, (err: any, docs: any): any => {
+                if (docs.length) {
+                    resolve(docs[0].notebooks);
+                }
+                resolve([]);
+            });
+        });
+    }
+
+    getNotebooksLocation(): any {
+        return this.db.find({ name: 'notebooksLocation' }, (err: Error, docs: any) => {
             if (docs.length) {
-                return docs[0].notebooks;
+                localStorage.setItem('NOTEBOOK_SAVE_DIRECTORY', docs[0].notebooksLocation); 
+                return docs[0].notebooksLocation;
             }
-            return [];
+            return '';
         });
     }
 
     addNotebook(name: string): any {
-        return this.db.update({ name: 'notebooks' }, { $push: { notebooks: name } }, {}, (err: Error) => {
-            if (err) {
-                return false;
-            }
-            return true;
+        return new Promise((resolve) => {
+            this.db.update({ name: 'notebooks' }, { $push: { notebooks: name } }, {}, (err: Error) => {
+                if (err) {
+                    resolve(false);
+                }
+                resolve(true);
+            });
+        });
+    }
+
+    addExistingNotebooks(notebooks: string[]): any {
+        return new Promise((resolve) => {
+            this.db.find({ name: 'notebooks' }, (err: Error, docs: any) => {
+                if (docs.length) {
+                    this.db.update({ name: 'notebooks' }, { $push: { notebooks: name }}, {}, () => {
+                        resolve(true);
+                    });
+                } else {
+                    this.db.insert({ name: 'notebooks', notebooks: notebooks }, () => {
+                        resolve(true);
+                    });
+                }
+            });
         });
     }
 
