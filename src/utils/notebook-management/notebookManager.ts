@@ -21,8 +21,8 @@ export class NotebookManager {
     constructor() {
         // NotebookManager.directoryToSaveNotebooksAt = saveDir;
         // this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
-        // this.notebooks = [];
         // let notebooksList = this.getNotebooks();
+        this.notebooks = [];
         this.DbConnection = new DbMessager();
         // this.DbConnection.setNotebooksLocation(saveDir);
     }
@@ -31,6 +31,7 @@ export class NotebookManager {
         return new Promise(resolve => {
             this.DbConnection.getNotebooksLocation()
             .then((location: string) => {
+                NotebookManager.directoryToSaveNotebooksAt = location;
                 resolve(location);
             });
         });
@@ -47,19 +48,24 @@ export class NotebookManager {
 
     // TODO:
     // After notebook dir is created, add notebook name to DB
-    addNotebook(name: string) {
-        if (this.notebookExists(name)) {
-            try {
-                fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
-                    this.addNotebookToLog(name);
-                    // db.update({ name: 'notebooks' }, { $push: { notebooks: name } });
-                    this.DbConnection.addNotebook(name);
-                    return;
-                });
-            } catch (error) {
-                return;
+    addNotebook(name: string): any {
+        return new Promise(resolve => {
+            if (this.notebookExists(name)) {
+                try {
+                    fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
+                        this.addNotebookToLog(name);
+                        this.DbConnection.addNotebook(name)
+                        .then((result: boolean) => {
+                            resolve(result);
+                        });
+                    });
+                } catch (error) {
+                    return resolve(false);
+                }
+            } else {
+                resolve(false);
             }
-        }
+        });
     }
 
     deleteNotebook(name: string) {

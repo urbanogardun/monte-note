@@ -30,6 +30,10 @@ function isDirectory(obj) {
     return true;
 }
 
+function callbackFunc() {
+    return ['blam', 'lamma'];
+}
+
 fs.mkdir = mkdir;
 fs.existsSync = existsSync;
 fs.mkdirSync = mkdirSync;

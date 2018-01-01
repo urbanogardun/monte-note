@@ -4,24 +4,38 @@ import NotebookManager from './notebookManager';
 
 let notebookManager: NotebookManager;
 let testNotebook = 'chemistry';
-beforeAll(() => {
+beforeAll(done => {
   // Set notebook directory location as current working directory
   notebookManager = new NotebookManager();
+
+  notebookManager.setNotebooksLocation(process.cwd() + '\\testing')
+  .then(() => {
+    done();
+  });
+
 });
 
 beforeEach(() => {
   const NOTEBOOK_LIST = [testNotebook, testNotebook];
-
   require('fs').__setNotebookList(NOTEBOOK_LIST);
 });
 
-test('gets notebook directory location', () => {
-  expect(NotebookManager.getNotebookLocation()).toEqual(process.cwd() + '\\testing');
+test('gets notebook directory location', done => {
+
+    notebookManager.getNotebooksLocation()
+    .then(result => {
+      done();
+      expect(result).toEqual(process.cwd() + '\\testing');
+    });
+
 });
 
-test('creates notebook', () => {
-  notebookManager.addNotebook(testNotebook);
-  expect(notebookManager.notebooks).toContain(testNotebook);
+test('creates notebook', done => {
+  notebookManager.addNotebook(testNotebook)
+  .then(() => {
+    done();
+    expect(notebookManager.notebooks).toContain(testNotebook);
+  });
 });
 
 test('deletes a notebook', () => {
