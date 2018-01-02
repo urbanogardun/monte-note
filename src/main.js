@@ -91,11 +91,30 @@ electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
     });
 });
 electron_1.ipcMain.on(index_1.LOAD_SETTINGS, (event) => {
-    notebookManager = new notebookManager_1.default();
-    notebookManager.getNotebooksLocation()
-        .then((location) => {
-        console.log('LOCATION FOR NOTEBOOKS IN DB IS: ' + location);
+    console.log('Query DB to get the application settings.');
+    db.findOne({ name: 'applicationSettings' }, (err, doc) => {
+        if (doc) {
+            event.sender.send(index_1.LOAD_SETTINGS, doc);
+        }
+        else {
+            db.insert({ name: 'applicationSettings' }, (error, document) => {
+                if (error) {
+                    console.log('Settings could not get saved for some reason');
+                }
+                else {
+                    event.sender.send(index_1.LOAD_SETTINGS, doc);
+                }
+            });
+        }
     });
+    // notebookManager = new NotebookManager();
+    // notebookManager.getNotebooksLocation()
+    // .then((location: string) => {
+    //   console.log('LOCATION FOR NOTEBOOKS IN DB IS: ' + location);
+    //   if (!location.length) {
+    //     // notebookManager.
+    //   }
+    // });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

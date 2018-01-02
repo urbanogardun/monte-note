@@ -44,6 +44,9 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(LOAD_SETTINGS, (event: Event, arg: any): void => {
+            // TODO:
+            // Parse the received settings file and dispatch parts of it
+            // using appropriate actions
             console.log('SETTINGS ARE: ' + JSON.stringify(arg));
         });
 

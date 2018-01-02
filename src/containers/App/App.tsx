@@ -8,7 +8,7 @@ export function mergeProps(stateProps: Object, dispatchProps: Object, ownProps: 
 }
 
 export function mapStateToProps({ enthusiasmLevel, notebooksLocation, notebooks }: StoreState) {
-    console.log(notebooksLocation);
+    // console.log(notebooksLocation);
     return {
         notebooksLocation,
         notebooks,
@@ -17,7 +17,7 @@ export function mapStateToProps({ enthusiasmLevel, notebooksLocation, notebooks 
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>) {
     return {
-        onIncrement: () => { console.log('yooooooooooooo'); },
+        onIncrement: () => dispatch(actions.decrementEnthusiasm()),
         onDecrement: () => dispatch(actions.decrementEnthusiasm()),
     };
 }

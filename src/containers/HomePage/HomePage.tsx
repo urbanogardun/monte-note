@@ -16,7 +16,7 @@ export function mapStateToProps({ enthusiasmLevel, notebooksLocation }: StoreSta
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>) {
     return {
-        onIncrement: () => console.log('cccccccccccccccccccccceee'),
+        onIncrement: () => dispatch(actions.decrementEnthusiasm()),
         onDecrement: () => dispatch(actions.decrementEnthusiasm()),
     };
 }

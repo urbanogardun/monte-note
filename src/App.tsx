@@ -20,7 +20,7 @@ class App extends React.Component<Props, object> {
   }
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     let enthusiasmLevel = this.props.notebooksLocation as string;
 
     let componentToRender = <Welcome name={'John'} notebooksLocation={''} />;

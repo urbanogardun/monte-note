@@ -28,6 +28,15 @@ class NotebookManager {
             });
         });
     }
+    loadExistingNotebooksIntoApp() {
+        return new Promise(resolve => {
+            let notebooks = this.getNotebooks();
+            this.DbConnection.addExistingNotebooks(notebooks)
+                .then((result) => {
+                resolve(result);
+            });
+        });
+    }
     setNotebooksLocation(location) {
         return new Promise(resolve => {
             this.DbConnection.setNotebooksLocation(location)

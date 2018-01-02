@@ -8,8 +8,8 @@ export function mergeProps(stateProps: Object, dispatchProps: Object, ownProps: 
 }
 
 export function mapStateToProps({ notebooks }: StoreState) {
-    console.log("WATCH OUT!!!");
-    console.log(notebooks);
+    // console.log("WATCH OUT!!!");
+    // console.log(notebooks);
     return {
         notebooks,
     };
@@ -17,7 +17,7 @@ export function mapStateToProps({ notebooks }: StoreState) {
 
 export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>) {
     return {
-        onIncrement: () => console.log('cccccccccccccccccccccceee'),
+        onIncrement: () => dispatch(actions.decrementEnthusiasm()),
         onDecrement: () => dispatch(actions.decrementEnthusiasm()),
     };
 }
