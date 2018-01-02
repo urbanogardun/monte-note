@@ -60,7 +60,14 @@ electron_1.ipcMain.on('is-location-for-notebooks-set', (event, args) => {
 electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
     let location = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
     // notebookManager = new NotebookManager(notebooksDirectory as string);
-    notebookManager.setNotebooksLocation(location)
+    // notebookManager.setNotebooksLocation(location as string)
+    // .then((result: boolean) => {
+    //   if (result) {
+    //     event.sender.send('location-for-notebooks', location);
+    //   }
+    // });
+    console.log('location is: ' + location);
+    dbMessager.updateSettings('notebooksLocation', location)
         .then((result) => {
         if (result) {
             event.sender.send('location-for-notebooks', location);
@@ -85,7 +92,6 @@ electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
     // Bootstrap db with notebooks entry
     dbMessager.getNotebooks()
         .then((notebooks) => {
-        console.log(notebooks);
         event.sender.send(index_1.GET_NOTEBOOKS, notebooks);
     });
 });

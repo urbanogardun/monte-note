@@ -38,8 +38,8 @@ class DbMessager {
     }
     addExistingNotebooks(notebooks) {
         return new Promise((resolve) => {
-            this.db.find({ name: 'notebooks' }, (err, docs) => {
-                if (docs.length) {
+            this.db.findOne({ name: 'notebooks' }, (err, doc) => {
+                if (doc) {
                     this.db.update({ name: 'notebooks' }, { $push: { notebooks: name } }, {}, () => {
                         resolve(true);
                     });
@@ -55,8 +55,8 @@ class DbMessager {
     setNotebooksLocation(location) {
         return new Promise(resolve => {
             let documentName = 'notebooksLocation';
-            this.db.find({ name: documentName }, (err, docs) => {
-                if (docs.length) {
+            this.db.findOne({ name: documentName }, (err, doc) => {
+                if (doc) {
                     this.db.update({ name: documentName }, { notebooksLocation: location }, {}, (error) => {
                         if (error) {
                             resolve(false);
@@ -87,6 +87,20 @@ class DbMessager {
                             resolve(document);
                         }
                     });
+                }
+            });
+        });
+    }
+    updateSettings(key, value) {
+        let valueToUpdate = {};
+        valueToUpdate[key] = value;
+        return new Promise(resolve => {
+            this.db.update({ name: 'applicationSettings' }, { $set: valueToUpdate }, {}, (error) => {
+                if (error) {
+                    resolve(false);
+                }
+                else {
+                    resolve(true);
                 }
             });
         });

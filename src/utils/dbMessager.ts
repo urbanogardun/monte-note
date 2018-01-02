@@ -63,7 +63,10 @@ export class DbMessager {
             let documentName = 'notebooksLocation';
             this.db.findOne({ name: documentName }, (err: Error, doc: any) => {
                 if (doc) {
-                    this.db.update( { name: documentName }, { notebooksLocation: location }, {}, (error: Error) => {
+                    this.db.update( 
+                        { name: documentName }, 
+                        { $set: { notebooksLocation: location } }, 
+                        {}, (error: Error) => {
                         if (error) {
                             resolve(false);
                         }
@@ -98,8 +101,10 @@ export class DbMessager {
     }
 
     updateSettings(key: string, value: string) {
+        let newValue = {};
+        newValue[key] = value;
         return new Promise(resolve => {
-            this.db.update({ name: 'applicationSettings'}, { key: value }, {}, (error: Error) => {
+            this.db.update({ name: 'applicationSettings'}, { $set: newValue }, {}, (error: Error) => {
                 if (error) {
                     resolve(false);
                 } else {

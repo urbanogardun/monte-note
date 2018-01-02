@@ -71,7 +71,14 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
   let location = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
 
   // notebookManager = new NotebookManager(notebooksDirectory as string);
-  notebookManager.setNotebooksLocation(location as string)
+  // notebookManager.setNotebooksLocation(location as string)
+  // .then((result: boolean) => {
+  //   if (result) {
+  //     event.sender.send('location-for-notebooks', location);
+  //   }
+  // });
+  console.log('location is: ' + location);
+  dbMessager.updateSettings('notebooksLocation', location as string)
   .then((result: boolean) => {
     if (result) {
       event.sender.send('location-for-notebooks', location);
