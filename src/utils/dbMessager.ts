@@ -97,6 +97,18 @@ export class DbMessager {
         });
     }
 
+    updateSettings(key: string, value: string) {
+        return new Promise(resolve => {
+            this.db.update({ name: 'applicationSettings'}, { key: value }, {}, (error: Error) => {
+                if (error) {
+                    resolve(false);
+                } else {
+                    resolve(true);
+                }
+            });
+        });
+    }
+
     messageDb() {
         console.log('LOLOLOLO');
         this.db.find({ name: 'notebooks' }, function (err: any, docs: any) {

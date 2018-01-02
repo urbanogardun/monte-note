@@ -64,3 +64,12 @@ test('initializes and returns a settings object', done => {
         expect(settings).toHaveProperty('notebooksLocation');
     });
 });
+
+test('updates an item in settings object', done => {
+    let testDir = 'test-dir';
+    dbMessager.updateSettings('notebooksLocation', testDir)
+    .then((result: any) => {
+        done();
+        expect(result).toEqual(true);
+    });
+});
