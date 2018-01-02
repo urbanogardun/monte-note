@@ -37,6 +37,16 @@ export class NotebookManager {
         });
     }
 
+    loadExistingNotebooksIntoApp() {
+        return new Promise(resolve => {
+            let notebooks = this.getNotebooks();
+            this.DbConnection.addExistingNotebooks(notebooks)
+            .then((result: boolean) => {
+                resolve(result);
+            });
+        });
+    }
+
     setNotebooksLocation(location: string) {
         return new Promise(resolve => {
             this.DbConnection.setNotebooksLocation(location)

@@ -18,7 +18,7 @@ function mkdirSync(dir) {
     return true;
 }
 
-function readdirSync() {
+function readdirSync(arg) {
     return notebookList;
 }
 

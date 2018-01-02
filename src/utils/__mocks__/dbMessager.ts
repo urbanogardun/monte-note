@@ -22,6 +22,17 @@ export class DbMessager {
             resolve(true);
         });
     }
+
+    getNotebooks() {
+        return DbMessager.notebookList;
+    }
+
+    addExistingNotebooks(notebooks: string[]) {
+        return new Promise(resolve => {
+            DbMessager.notebookList = notebooks;
+            resolve(true);
+        });
+    }
 }
 
 export default DbMessager;

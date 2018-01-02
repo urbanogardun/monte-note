@@ -7,8 +7,8 @@ class NotebookManager {
     constructor() {
         // NotebookManager.directoryToSaveNotebooksAt = saveDir;
         // this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
-        // this.notebooks = [];
         // let notebooksList = this.getNotebooks();
+        this.notebooks = [];
         this.DbConnection = new dbMessager_1.default();
         // this.DbConnection.setNotebooksLocation(saveDir);
     }
@@ -23,6 +23,7 @@ class NotebookManager {
         return new Promise(resolve => {
             this.DbConnection.getNotebooksLocation()
                 .then((location) => {
+                NotebookManager.directoryToSaveNotebooksAt = location;
                 resolve(location);
             });
         });
@@ -38,19 +39,25 @@ class NotebookManager {
     // TODO:
     // After notebook dir is created, add notebook name to DB
     addNotebook(name) {
-        if (this.notebookExists(name)) {
-            try {
-                fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
-                    this.addNotebookToLog(name);
-                    // db.update({ name: 'notebooks' }, { $push: { notebooks: name } });
-                    this.DbConnection.addNotebook(name);
-                    return;
-                });
+        return new Promise(resolve => {
+            if (this.notebookExists(name)) {
+                try {
+                    fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
+                        this.addNotebookToLog(name);
+                        this.DbConnection.addNotebook(name)
+                            .then((result) => {
+                            resolve(result);
+                        });
+                    });
+                }
+                catch (error) {
+                    return resolve(false);
+                }
             }
-            catch (error) {
-                return;
+            else {
+                resolve(false);
             }
-        }
+        });
     }
     deleteNotebook(name) {
         this.deleteDirectory(path.join(NotebookManager.directoryToSaveNotebooksAt, name));

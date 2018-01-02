@@ -1,13 +1,13 @@
 jest.mock('../dbMessager');
 jest.mock('fs');
 import NotebookManager from './notebookManager';
+import { DbMessager } from '../dbMessager';
 
 let notebookManager: NotebookManager;
 let testNotebook = 'chemistry';
 beforeAll(done => {
   // Set notebook directory location as current working directory
   notebookManager = new NotebookManager();
-
   notebookManager.setNotebooksLocation(process.cwd() + '\\testing')
   .then(() => {
     done();
@@ -59,4 +59,19 @@ test('gets all notebooks inside notebooks location directory', () => {
   notebookManager.addNotebook(testNotebook + '-blam');
 
   expect(notebookManager.getNotebooks()).toHaveLength(2);
+});
+
+// TODO: Finish the function implementation & mock the getNotebooks method
+test('loads all existing notebooks into the db', done => {
+  let dbMessager = new DbMessager();
+  notebookManager.loadExistingNotebooksIntoApp()
+  .then(() => {
+    let notebooks = dbMessager.getNotebooks();
+    expect(notebooks).toHaveLength(2);
+    done();
+  });
+});
+
+afterEach(() => {
+  notebookManager.deleteEverything();
 });

@@ -30,6 +30,7 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(GET_NOTEBOOKS, (event: Event, arg: string[]): void => {
+            console.log('NOTEBOOKS ARE: ');
             console.log(arg);
             if (arg) {
                 reduxStore.dispatch(actions.getNotebooks(arg));

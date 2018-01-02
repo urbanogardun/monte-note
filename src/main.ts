@@ -111,6 +111,9 @@ ipcMain.on(LOAD_SETTINGS, (event: any) => {
   notebookManager.getNotebooksLocation()
   .then((location: string) => {
     console.log('LOCATION FOR NOTEBOOKS IN DB IS: ' + location);
+    if (!location.length) {
+      // notebookManager.
+    }
   });
 
 });
