@@ -1,11 +1,13 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import NotebookManager from './utils/notebook-management/notebookManager';
 import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK, GET_NOTEBOOKS, LOAD_SETTINGS } from './constants/index';
-import Db from './db/index';
+// import Db from './db/index';
+import DbMessager from './utils/dbMessager';
 
-let db = new Db().getDb() as Nedb;
+// let db = new Db().getDb() as Nedb;
 let mainWindow: Electron.BrowserWindow;
 let notebookManager: NotebookManager;
+let dbMessager = new DbMessager();
 
 function createWindow() {
   // Create the browser window.
@@ -93,15 +95,16 @@ ipcMain.on(ADD_NOTEBOOK, (event: any, args: any) => {
 ipcMain.on(GET_NOTEBOOKS, (event: any, args: any) => {
   console.log('GET THE NOTEBOOKS FROM DB.');
   // Bootstrap db with notebooks entry
-  db.find({ name: 'notebooks' }, (err: any, docs: any) => {
 
-    try {
-      event.sender.send(GET_NOTEBOOKS, docs[0].notebooks);
-    } catch (error) {
-      event.sender.send(GET_NOTEBOOKS, []);
-    }
+  // db.find({ name: 'notebooks' }, (err: any, docs: any) => {
 
-  });
+  //   try {
+  //     event.sender.send(GET_NOTEBOOKS, docs[0].notebooks);
+  //   } catch (error) {
+  //     event.sender.send(GET_NOTEBOOKS, []);
+  //   }
+
+  // });
 
 });
 
@@ -109,28 +112,10 @@ ipcMain.on(LOAD_SETTINGS, (event: any) => {
 
   console.log('Query DB to get the application settings.');
 
-  db.findOne({name: 'applicationSettings'}, (err: Error, doc: any) => {
-    if (doc) {
-      event.sender.send(LOAD_SETTINGS, doc);
-    } else {
-      db.insert({name: 'applicationSettings'}, (error: Error, document: any) => {
-        if (error) {
-          console.log('Settings could not get saved for some reason');
-        } else {
-          event.sender.send(LOAD_SETTINGS, doc);
-        }
-      });
-    }
+  dbMessager.loadSettings()
+  .then((settings: any) => {
+    event.sender.send(LOAD_SETTINGS, settings);
   });
-
-  // notebookManager = new NotebookManager();
-  // notebookManager.getNotebooksLocation()
-  // .then((location: string) => {
-  //   console.log('LOCATION FOR NOTEBOOKS IN DB IS: ' + location);
-  //   if (!location.length) {
-  //     // notebookManager.
-  //   }
-  // });
 
 });
 

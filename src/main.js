@@ -3,10 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const notebookManager_1 = require("./utils/notebook-management/notebookManager");
 const index_1 = require("./constants/index");
-const index_2 = require("./db/index");
-let db = new index_2.default().getDb();
+// import Db from './db/index';
+const dbMessager_1 = require("./utils/dbMessager");
+// let db = new Db().getDb() as Nedb;
 let mainWindow;
 let notebookManager;
+let dbMessager = new dbMessager_1.default();
 function createWindow() {
     // Create the browser window.
     mainWindow = new electron_1.BrowserWindow({
@@ -81,40 +83,20 @@ electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, args) => {
 electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
     console.log('GET THE NOTEBOOKS FROM DB.');
     // Bootstrap db with notebooks entry
-    db.find({ name: 'notebooks' }, (err, docs) => {
-        try {
-            event.sender.send(index_1.GET_NOTEBOOKS, docs[0].notebooks);
-        }
-        catch (error) {
-            event.sender.send(index_1.GET_NOTEBOOKS, []);
-        }
-    });
+    // db.find({ name: 'notebooks' }, (err: any, docs: any) => {
+    //   try {
+    //     event.sender.send(GET_NOTEBOOKS, docs[0].notebooks);
+    //   } catch (error) {
+    //     event.sender.send(GET_NOTEBOOKS, []);
+    //   }
+    // });
 });
 electron_1.ipcMain.on(index_1.LOAD_SETTINGS, (event) => {
     console.log('Query DB to get the application settings.');
-    db.findOne({ name: 'applicationSettings' }, (err, doc) => {
-        if (doc) {
-            event.sender.send(index_1.LOAD_SETTINGS, doc);
-        }
-        else {
-            db.insert({ name: 'applicationSettings' }, (error, document) => {
-                if (error) {
-                    console.log('Settings could not get saved for some reason');
-                }
-                else {
-                    event.sender.send(index_1.LOAD_SETTINGS, doc);
-                }
-            });
-        }
+    dbMessager.loadSettings()
+        .then((settings) => {
+        event.sender.send(index_1.LOAD_SETTINGS, settings);
     });
-    // notebookManager = new NotebookManager();
-    // notebookManager.getNotebooksLocation()
-    // .then((location: string) => {
-    //   console.log('LOCATION FOR NOTEBOOKS IN DB IS: ' + location);
-    //   if (!location.length) {
-    //     // notebookManager.
-    //   }
-    // });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

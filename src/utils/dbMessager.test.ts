@@ -56,3 +56,11 @@ test('adds all existing notebooks to db', done => {
     });
 
 });
+
+test('initializes and returns a settings object', done => {
+    dbMessager.loadSettings()
+    .then((settings: any) => {
+        done();
+        expect(settings).toHaveProperty('notebooksLocation');
+    });
+});

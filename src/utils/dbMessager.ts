@@ -81,6 +81,22 @@ export class DbMessager {
         });
     }
 
+    loadSettings() {
+        return new Promise(resolve => {
+            this.db.findOne({ name: 'applicationSettings' }, (err: Error, doc: any) => {
+                if (doc) {
+                    resolve(doc);
+                } else {
+                    this.db.insert({ name: 'applicationSettings' }, (error: Error, document: any) => {
+                        if (document) {
+                            resolve(document);
+                        }
+                    });
+                }
+            });
+        });
+    }
+
     messageDb() {
         console.log('LOLOLOLO');
         this.db.find({ name: 'notebooks' }, function (err: any, docs: any) {

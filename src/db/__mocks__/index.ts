@@ -34,6 +34,12 @@ export class Db {
             callback('', '');
         }, insert: (query: string) => {
             return true;
+        }, findOne: (query: any, callback: any) => {
+            if (query.name === 'applicationSettings') {
+                callback(null, {notebooksLocation: ''});
+            } else {
+                callback();
+            }
         }};
     }
 
