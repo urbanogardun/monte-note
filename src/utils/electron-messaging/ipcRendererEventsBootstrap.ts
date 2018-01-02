@@ -2,7 +2,7 @@ import { IpcRenderer, Event } from 'electron';
 import { NOTEBOOK_SAVE_DIRECTORY, GET_NOTEBOOKS } from '../../utils/constants';
 import reduxStore from '../../store/index';
 import * as actions from '../../actions/';
-import { ADD_NOTEBOOK } from '../../constants/index';
+import { ADD_NOTEBOOK, LOAD_SETTINGS } from '../../constants/index';
     
 let ipcRenderer: IpcRenderer;
 
@@ -30,8 +30,8 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(GET_NOTEBOOKS, (event: Event, arg: string[]): void => {
-            console.log('NOTEBOOKS ARE: ');
-            console.log(arg);
+            // console.log('NOTEBOOKS ARE: ');
+            // console.log(arg);
             if (arg) {
                 reduxStore.dispatch(actions.getNotebooks(arg));
             }
@@ -41,6 +41,10 @@ export function ipcRendererEventsBootstrap() {
             if (arg) {
                 reduxStore.dispatch(actions.addNotebook(arg));
             }
+        });
+
+        ipcRenderer.on(LOAD_SETTINGS, (event: Event, arg: any): void => {
+            console.log('SETTINGS ARE: ' + JSON.stringify(arg));
         });
 
     } catch (error) {

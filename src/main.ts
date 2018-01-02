@@ -107,14 +107,30 @@ ipcMain.on(GET_NOTEBOOKS, (event: any, args: any) => {
 
 ipcMain.on(LOAD_SETTINGS, (event: any) => {
 
-  notebookManager = new NotebookManager();
-  notebookManager.getNotebooksLocation()
-  .then((location: string) => {
-    console.log('LOCATION FOR NOTEBOOKS IN DB IS: ' + location);
-    if (!location.length) {
-      // notebookManager.
+  console.log('Query DB to get the application settings.');
+
+  db.findOne({name: 'applicationSettings'}, (err: Error, doc: any) => {
+    if (doc) {
+      event.sender.send(LOAD_SETTINGS, doc);
+    } else {
+      db.insert({name: 'applicationSettings'}, (error: Error, document: any) => {
+        if (error) {
+          console.log('Settings could not get saved for some reason');
+        } else {
+          event.sender.send(LOAD_SETTINGS, doc);
+        }
+      });
     }
   });
+
+  // notebookManager = new NotebookManager();
+  // notebookManager.getNotebooksLocation()
+  // .then((location: string) => {
+  //   console.log('LOCATION FOR NOTEBOOKS IN DB IS: ' + location);
+  //   if (!location.length) {
+  //     // notebookManager.
+  //   }
+  // });
 
 });
 
