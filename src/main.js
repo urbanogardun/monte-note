@@ -83,13 +83,11 @@ electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, args) => {
 electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
     console.log('GET THE NOTEBOOKS FROM DB.');
     // Bootstrap db with notebooks entry
-    // db.find({ name: 'notebooks' }, (err: any, docs: any) => {
-    //   try {
-    //     event.sender.send(GET_NOTEBOOKS, docs[0].notebooks);
-    //   } catch (error) {
-    //     event.sender.send(GET_NOTEBOOKS, []);
-    //   }
-    // });
+    dbMessager.getNotebooks()
+        .then((notebooks) => {
+        console.log(notebooks);
+        event.sender.send(index_1.GET_NOTEBOOKS, notebooks);
+    });
 });
 electron_1.ipcMain.on(index_1.LOAD_SETTINGS, (event) => {
     console.log('Query DB to get the application settings.');

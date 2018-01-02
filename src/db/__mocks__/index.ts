@@ -37,6 +37,8 @@ export class Db {
         }, findOne: (query: any, callback: any) => {
             if (query.name === 'applicationSettings') {
                 callback(null, {notebooksLocation: ''});
+            } else if (query.name === 'notebooks') {
+                callback(null, {notebooks: ['book-1', 'book-2', 'book-3']});
             } else {
                 callback();
             }

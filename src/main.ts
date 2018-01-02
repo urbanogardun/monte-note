@@ -96,15 +96,10 @@ ipcMain.on(GET_NOTEBOOKS, (event: any, args: any) => {
   console.log('GET THE NOTEBOOKS FROM DB.');
   // Bootstrap db with notebooks entry
 
-  // db.find({ name: 'notebooks' }, (err: any, docs: any) => {
-
-  //   try {
-  //     event.sender.send(GET_NOTEBOOKS, docs[0].notebooks);
-  //   } catch (error) {
-  //     event.sender.send(GET_NOTEBOOKS, []);
-  //   }
-
-  // });
+  dbMessager.getNotebooks()
+  .then((notebooks: string[]) => {
+    event.sender.send(GET_NOTEBOOKS, notebooks);
+  });
 
 });
 

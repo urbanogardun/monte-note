@@ -11,9 +11,9 @@ export class DbMessager {
 
     getNotebooks(): any {
         return new Promise((resolve) => {
-            this.db.find({ name: 'notebooks' }, (err: any, docs: any): any => {
-                if (docs.length) {
-                    resolve(docs[0].notebooks);
+            this.db.findOne({ name: 'notebooks' }, (err: any, doc: any): any => {
+                if (doc) {
+                    resolve(doc.notebooks);
                 }
                 resolve([]);
             });
@@ -22,9 +22,9 @@ export class DbMessager {
 
     getNotebooksLocation(): any {
         return new Promise(resolve => {
-            this.db.find({ name: 'notebooksLocation' }, (err: Error, docs: any) => {
-                if (docs.length) {
-                    resolve(docs[0].notebooksLocation);
+            this.db.findOne({ name: 'notebooksLocation' }, (err: Error, doc: any) => {
+                if (doc) {
+                    resolve(doc.notebooksLocation);
                 }
                 resolve('');
             });
@@ -44,8 +44,8 @@ export class DbMessager {
 
     addExistingNotebooks(notebooks: string[]): any {
         return new Promise((resolve) => {
-            this.db.find({ name: 'notebooks' }, (err: Error, docs: any) => {
-                if (docs.length) {
+            this.db.findOne({ name: 'notebooks' }, (err: Error, doc: any) => {
+                if (doc) {
                     this.db.update({ name: 'notebooks' }, { $push: { notebooks: name }}, {}, () => {
                         resolve(true);
                     });
@@ -61,8 +61,8 @@ export class DbMessager {
     setNotebooksLocation(location: string): any {
         return new Promise(resolve => {
             let documentName = 'notebooksLocation';
-            this.db.find({ name: documentName }, (err: Error, docs: any) => {
-                if (docs.length) {
+            this.db.findOne({ name: documentName }, (err: Error, doc: any) => {
+                if (doc) {
                     this.db.update( { name: documentName }, { notebooksLocation: location }, {}, (error: Error) => {
                         if (error) {
                             resolve(false);

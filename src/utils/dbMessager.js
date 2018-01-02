@@ -8,9 +8,9 @@ class DbMessager {
     }
     getNotebooks() {
         return new Promise((resolve) => {
-            this.db.find({ name: 'notebooks' }, (err, docs) => {
-                if (docs.length) {
-                    resolve(docs[0].notebooks);
+            this.db.findOne({ name: 'notebooks' }, (err, doc) => {
+                if (doc) {
+                    resolve(doc.notebooks);
                 }
                 resolve([]);
             });
@@ -18,9 +18,9 @@ class DbMessager {
     }
     getNotebooksLocation() {
         return new Promise(resolve => {
-            this.db.find({ name: 'notebooksLocation' }, (err, docs) => {
-                if (docs.length) {
-                    resolve(docs[0].notebooksLocation);
+            this.db.findOne({ name: 'notebooksLocation' }, (err, doc) => {
+                if (doc) {
+                    resolve(doc.notebooksLocation);
                 }
                 resolve('');
             });
