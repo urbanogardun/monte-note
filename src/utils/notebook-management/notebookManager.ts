@@ -18,6 +18,24 @@ export class NotebookManager {
         // return store.get(NotebookManager.notebookSaveKey);
     }
 
+    static getNotebooks(directory: string) {
+        return fs.readdirSync(directory).filter(function(file: string) {
+            return fs.statSync(directory + '/' + file).isDirectory();
+        });
+    }
+
+    static addNotebook(directory: string, name: string) {
+        return new Promise(resolve => {
+            try {
+                fs.mkdir(`${directory}\\${name}`, () => {
+                    resolve(true);
+                });
+            } catch (error) {
+                return resolve(false);
+            }
+        });
+    }
+
     constructor() {
         // NotebookManager.directoryToSaveNotebooksAt = saveDir;
         // this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);

@@ -72,6 +72,12 @@ test('loads all existing notebooks into the db', done => {
   });
 });
 
+test('returns all existing notebooks in chosen dir', () => {
+  let dir = 'test-dir';
+  let result = NotebookManager.getNotebooks(dir);
+  expect(result).toHaveLength(2);
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

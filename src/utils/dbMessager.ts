@@ -46,7 +46,7 @@ export class DbMessager {
         return new Promise((resolve) => {
             this.db.findOne({ name: 'notebooks' }, (err: Error, doc: any) => {
                 if (doc) {
-                    this.db.update({ name: 'notebooks' }, { $push: { notebooks: name }}, {}, () => {
+                    this.db.update({ name: 'notebooks' }, { notebooks: notebooks }, {}, () => {
                         resolve(true);
                     });
                 } else {
@@ -100,7 +100,19 @@ export class DbMessager {
         });
     }
 
-    updateSettings(key: string, value: string) {
+    getFromSettings(key: string) {
+        return new Promise(resolve => {
+            this.db.findOne({ name: 'applicationSettings', }, (error: Error, document: any) => {
+                if (document) {
+                    resolve(document[key]);
+                } else {
+                    resolve(false);
+                }
+            });
+        });
+    }
+
+    updateSettings(key: string, value: any) {
         let newValue = {};
         newValue[key] = value;
         return new Promise(resolve => {

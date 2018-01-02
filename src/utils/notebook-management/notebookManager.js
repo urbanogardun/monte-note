@@ -19,6 +19,23 @@ class NotebookManager {
         return NotebookManager.directoryToSaveNotebooksAt;
         // return store.get(NotebookManager.notebookSaveKey);
     }
+    static getNotebooks(directory) {
+        return fs.readdirSync(directory).filter(function (file) {
+            return fs.statSync(directory + '/' + file).isDirectory();
+        });
+    }
+    static addNotebook(directory, name) {
+        return new Promise(resolve => {
+            try {
+                fs.mkdir(`${directory}\\${name}`, () => {
+                    resolve(true);
+                });
+            }
+            catch (error) {
+                return resolve(false);
+            }
+        });
+    }
     getNotebooksLocation() {
         return new Promise(resolve => {
             this.DbConnection.getNotebooksLocation()

@@ -7,7 +7,7 @@ const index_1 = require("./constants/index");
 const dbMessager_1 = require("./utils/dbMessager");
 // let db = new Db().getDb() as Nedb;
 let mainWindow;
-let notebookManager;
+// let notebookManager: NotebookManager;
 let dbMessager = new dbMessager_1.default();
 function createWindow() {
     // Create the browser window.
@@ -74,26 +74,51 @@ electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
         }
     });
 });
-electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, args) => {
-    try {
-        notebookManager.addNotebook(args);
-    }
-    catch (error) {
-        // Retrieve notebook directory location from electron-store storage
-        // notebookManager = new NotebookManager(NotebookManager.getNotebookLocation());
-        notebookManager.addNotebook(args);
-    }
-    finally {
-        event.sender.send(index_1.ADD_NOTEBOOK, args);
-    }
+electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, notebookName) => {
+    console.log('ADD NOTEBOOK: ' + notebookName);
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        if (location) {
+            notebookManager_1.default.addNotebook(location, notebookName)
+                .then((result) => {
+                if (result) {
+                    dbMessager.addNotebook(notebookName);
+                    event.sender.send(index_1.ADD_NOTEBOOK, notebookName);
+                }
+            });
+        }
+    });
+    // try {
+    //   notebookManager.addNotebook(args);
+    // } catch (error) {
+    //   // Retrieve notebook directory location from electron-store storage
+    //   // notebookManager = new NotebookManager(NotebookManager.getNotebookLocation());
+    //   notebookManager.addNotebook(args);
+    // } finally {
+    //   event.sender.send(ADD_NOTEBOOK, args);
+    // }
 });
 electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
     console.log('GET THE NOTEBOOKS FROM DB.');
     // Bootstrap db with notebooks entry
-    dbMessager.getNotebooks()
-        .then((notebooks) => {
-        event.sender.send(index_1.GET_NOTEBOOKS, notebooks);
+    // let notebooks = NotebookManager.getNotebooks(location as string);
+    // dbMessager.updateSettings('notebooksList', notebooks)
+    // .then(() => {
+    // });
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        let notebooks = notebookManager_1.default.getNotebooks(location);
+        // dbMessager.updateSettings('notebooks', notebooks)
+        dbMessager.addExistingNotebooks(notebooks)
+            .then(() => {
+            event.sender.send(index_1.GET_NOTEBOOKS, notebooks);
+        });
     });
+    // NotebookManager.getNotebooks()
+    // dbMessager.getNotebooks()
+    // .then((notebooks: string[]) => {
+    //   event.sender.send(GET_NOTEBOOKS, notebooks);
+    // });
 });
 electron_1.ipcMain.on(index_1.LOAD_SETTINGS, (event) => {
     console.log('Query DB to get the application settings.');

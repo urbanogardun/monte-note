@@ -60,7 +60,9 @@ export class NewNotebookButton extends React.Component<Props, Props> {
     }
 
     addNotebook(name: string) {
-        ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTEBOOK, name);
+        if (name) {
+            ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTEBOOK, name);
+        }
     }
 
     render() {

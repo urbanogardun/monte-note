@@ -40,7 +40,7 @@ class DbMessager {
         return new Promise((resolve) => {
             this.db.findOne({ name: 'notebooks' }, (err, doc) => {
                 if (doc) {
-                    this.db.update({ name: 'notebooks' }, { $push: { notebooks: name } }, {}, () => {
+                    this.db.update({ name: 'notebooks' }, { notebooks: notebooks }, {}, () => {
                         resolve(true);
                     });
                 }
@@ -57,7 +57,7 @@ class DbMessager {
             let documentName = 'notebooksLocation';
             this.db.findOne({ name: documentName }, (err, doc) => {
                 if (doc) {
-                    this.db.update({ name: documentName }, { notebooksLocation: location }, {}, (error) => {
+                    this.db.update({ name: documentName }, { $set: { notebooksLocation: location } }, {}, (error) => {
                         if (error) {
                             resolve(false);
                         }
@@ -91,11 +91,23 @@ class DbMessager {
             });
         });
     }
-    updateSettings(key, value) {
-        let valueToUpdate = {};
-        valueToUpdate[key] = value;
+    getFromSettings(key) {
         return new Promise(resolve => {
-            this.db.update({ name: 'applicationSettings' }, { $set: valueToUpdate }, {}, (error) => {
+            this.db.findOne({ name: 'applicationSettings', }, (error, document) => {
+                if (document) {
+                    resolve(document[key]);
+                }
+                else {
+                    resolve(false);
+                }
+            });
+        });
+    }
+    updateSettings(key, value) {
+        let newValue = {};
+        newValue[key] = value;
+        return new Promise(resolve => {
+            this.db.update({ name: 'applicationSettings' }, { $set: newValue }, {}, (error) => {
                 if (error) {
                     resolve(false);
                 }

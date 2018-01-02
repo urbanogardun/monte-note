@@ -73,3 +73,12 @@ test('updates an item in settings object', done => {
         expect(result).toEqual(true);
     });
 });
+
+test('gets item from the settings object', done => {
+    let item = 'notebooksLocation';
+    dbMessager.getFromSettings(item)
+    .then((value: string) => {
+        done();
+        expect(value).toEqual('');
+    });
+});

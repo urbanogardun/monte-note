@@ -6,7 +6,7 @@ import DbMessager from './utils/dbMessager';
 
 // let db = new Db().getDb() as Nedb;
 let mainWindow: Electron.BrowserWindow;
-let notebookManager: NotebookManager;
+// let notebookManager: NotebookManager;
 let dbMessager = new DbMessager();
 
 function createWindow() {
@@ -87,27 +87,35 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
 
 });
 
-ipcMain.on(ADD_NOTEBOOK, (event: any, args: any) => {
-  try {
-    notebookManager.addNotebook(args);
-  } catch (error) {
-    // Retrieve notebook directory location from electron-store storage
-    // notebookManager = new NotebookManager(NotebookManager.getNotebookLocation());
-    notebookManager.addNotebook(args);
-  } finally {
-    event.sender.send(ADD_NOTEBOOK, args);
-  }
+ipcMain.on(ADD_NOTEBOOK, (event: any, notebookName: any) => {
+  console.log('ADD NOTEBOOK: ' + notebookName);
+
+  dbMessager.getFromSettings('notebooksLocation')
+  .then((location: string) => {
+    if (location) {
+      NotebookManager.addNotebook(location, notebookName)
+      .then((result: boolean) => {
+        if (result) {
+          dbMessager.addNotebook(notebookName);
+          event.sender.send(ADD_NOTEBOOK, notebookName);
+        }
+      });
+    }
+  });
 });
 
 ipcMain.on(GET_NOTEBOOKS, (event: any, args: any) => {
   console.log('GET THE NOTEBOOKS FROM DB.');
   // Bootstrap db with notebooks entry
-
-  dbMessager.getNotebooks()
-  .then((notebooks: string[]) => {
-    event.sender.send(GET_NOTEBOOKS, notebooks);
+  dbMessager.getFromSettings('notebooksLocation')
+  .then((location: string) => {
+    let notebooks = NotebookManager.getNotebooks(location);
+    // dbMessager.updateSettings('notebooks', notebooks)
+    dbMessager.addExistingNotebooks(notebooks)
+    .then(() => {
+      event.sender.send(GET_NOTEBOOKS, notebooks);
+    });
   });
-
 });
 
 ipcMain.on(LOAD_SETTINGS, (event: any) => {
