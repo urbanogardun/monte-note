@@ -7,13 +7,16 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap';
 import 'jquery';
+import { BrowserRouter } from 'react-router-dom';
 
 import reduxStore from './store/index';
 
 ReactDOM.render(
-  <Provider store={reduxStore}>
-    <App />
-  </Provider>,
+  <BrowserRouter>
+    <Provider store={reduxStore}>
+      <App />
+    </Provider>
+  </BrowserRouter>,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();
