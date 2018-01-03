@@ -1,11 +1,12 @@
-import { EnthusiasmAction, SetNotebooksLocation, NotebooksAction } from '../actions';
+import { EnthusiasmAction, SetNotebooksLocation, NotebooksAction, AddNote } from '../actions';
 import { StoreState } from '../types/index';
 import { 
   INCREMENT_ENTHUSIASM, 
   DECREMENT_ENTHUSIASM, 
   SET_NOTEBOOKS_LOCATION, 
   GET_NOTEBOOKS, 
-  ADD_NOTEBOOK } from '../constants/index';
+  ADD_NOTEBOOK,
+  ADD_NOTE } from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -39,6 +40,15 @@ export function notebooks(state: StoreState, action: NotebooksAction): StoreStat
     }
 }
 
-const rootReducers: Reducer<StoreState> = combineReducers({ enthusiasmLevel, notebooksLocation, notebooks });
+export function notes(state: StoreState, action: AddNote): StoreState {
+  switch (action.type) {
+    case ADD_NOTE:
+      return [...state as StoreState[], action.note] as StoreState;
+    default:
+      return state || [] as StoreState;
+  }
+}
+
+const rootReducers: Reducer<StoreState> = combineReducers({ enthusiasmLevel, notebooksLocation, notebooks, notes });
 
 export default rootReducers;

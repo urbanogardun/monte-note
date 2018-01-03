@@ -52,7 +52,7 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(ADD_NOTE, (event: Event, arg: any): void => {
-            console.log('Note added: ' + arg);
+            reduxStore.dispatch(actions.addNote(arg));
         });
 
     } catch (error) {

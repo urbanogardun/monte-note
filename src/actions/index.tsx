@@ -23,6 +23,11 @@ export interface AddNotebook {
     notebook: string;
 }
 
+export interface AddNote {
+    type: constants.ADD_NOTE;
+    note: string;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -57,5 +62,12 @@ export function addNotebook(notebook: string): AddNotebook {
     return {
         type: constants.ADD_NOTEBOOK,
         notebook
+    };
+}
+
+export function addNote(note: string): AddNote {
+    return {
+        type: constants.ADD_NOTE,
+        note
     };
 }

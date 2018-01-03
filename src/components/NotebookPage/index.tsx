@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Sidebar from './Sidebar/index';
+import Sidebar from '../../containers/NotebookPage/Sidebar';
 import { Link } from 'react-router-dom';
 
 export interface Props {

@@ -5,6 +5,7 @@ import { ADD_NOTE } from '../../../constants/index';
 export interface Props {
     location?: any;
     notebookName: string;
+    notes?: string[];
 }
 
 export interface State {
