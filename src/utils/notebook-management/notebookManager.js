@@ -24,10 +24,25 @@ class NotebookManager {
             return fs.statSync(directory + '/' + file).isDirectory();
         });
     }
-    static addNotebook(directory, name) {
+    static addNotebook(location, name) {
         return new Promise(resolve => {
             try {
-                fs.mkdir(`${directory}\\${name}`, () => {
+                fs.mkdir(`${location}\\${name}`, () => {
+                    resolve(true);
+                });
+            }
+            catch (error) {
+                return resolve(false);
+            }
+        });
+    }
+    static addNote(location, name) {
+        return new Promise(resolve => {
+            try {
+                fs.writeFile(`${location}\\${name}.html`, '', (err) => {
+                    if (err) {
+                        resolve(false);
+                    }
                     resolve(true);
                 });
             }

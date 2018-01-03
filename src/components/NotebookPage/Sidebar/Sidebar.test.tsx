@@ -2,7 +2,7 @@ import * as React from 'react';
 import * as enzyme from 'enzyme';
 import Sidebar from './index';
 
-const sidebar = enzyme.mount(<Sidebar />);
+const sidebar = enzyme.mount(<Sidebar notebookName="test-notebook" />);
 const instance = sidebar.instance() as Sidebar; // explicitly declare type
 
 it('renders the sidebar', () => {

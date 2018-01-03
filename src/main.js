@@ -110,7 +110,18 @@ electron_1.ipcMain.on(index_1.LOAD_SETTINGS, (event) => {
     });
 });
 electron_1.ipcMain.on(index_1.ADD_NOTE, (event, args) => {
-    console.log('ADD NOTE: ' + args);
+    let noteName = args.noteName;
+    let notebook = args.notebookName;
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        console.log('location is: ' + location);
+        notebookManager_1.default.addNote(`${location}\\${notebook}`, noteName)
+            .then((result) => {
+            if (result) {
+                event.sender.send(index_1.ADD_NOTE, noteName);
+            }
+        });
+    });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

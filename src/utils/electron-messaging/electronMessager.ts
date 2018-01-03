@@ -18,7 +18,7 @@ export class ElectronMessager {
         ElectronMessager.sendMessageWithIpcRenderer(CHOOSE_LOCATION_FOR_NOTEBOOKS);
     }
 
-    static sendMessageWithIpcRenderer(message: string, argument?: string) {
+    static sendMessageWithIpcRenderer(message: string, argument?: any) {
         if (ipcRenderer.send !== undefined) {
             ipcRenderer.send(message, argument);
         }

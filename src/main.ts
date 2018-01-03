@@ -130,7 +130,22 @@ ipcMain.on(LOAD_SETTINGS, (event: any) => {
 });
 
 ipcMain.on(ADD_NOTE, (event: any, args: any) => {
-  console.log('ADD NOTE: ' + args);
+  let noteName = args.noteName;
+  let notebook = args.notebookName;
+
+  dbMessager.getFromSettings('notebooksLocation')
+  .then((location: string) => {
+    console.log('location is: ' + location);
+    NotebookManager.addNote(`${location}\\${notebook}`, noteName)
+    .then((result: boolean) => {
+      
+      if (result) {
+        event.sender.send(ADD_NOTE, noteName);
+      }
+
+    });
+  });
+
 });
 
 // In this file you can include the rest of your app's specific main process

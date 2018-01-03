@@ -4,6 +4,7 @@ import { ADD_NOTE } from '../../../constants/index';
 
 export interface Props {
     location?: any;
+    notebookName: string;
 }
 
 export interface State {
@@ -60,7 +61,8 @@ export class Sidebar extends React.Component<Props, State> {
 
     addNote(name: string) {
         if (name) {
-            ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTE, name);
+            let data = {notebookName: this.props.notebookName, noteName: name};
+            ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTE, data);
         }
     }
     

@@ -13,7 +13,7 @@ export class Notebook extends React.Component<Props, {}> {
         return (
             <div className="container-fluid">
                 <div className="row">
-                    <Sidebar />
+                    <Sidebar notebookName={notebookName} />
                     <div className="col-sm">
                         <Link to="/">Home</Link>
                         <h1>Note Content</h1>

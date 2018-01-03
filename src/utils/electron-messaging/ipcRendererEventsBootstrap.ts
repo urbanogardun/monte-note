@@ -2,7 +2,7 @@ import { IpcRenderer, Event } from 'electron';
 import { NOTEBOOK_SAVE_DIRECTORY, GET_NOTEBOOKS } from '../../utils/constants';
 import reduxStore from '../../store/index';
 import * as actions from '../../actions/';
-import { ADD_NOTEBOOK, LOAD_SETTINGS } from '../../constants/index';
+import { ADD_NOTEBOOK, LOAD_SETTINGS, ADD_NOTE } from '../../constants/index';
     
 let ipcRenderer: IpcRenderer;
 
@@ -49,6 +49,10 @@ export function ipcRendererEventsBootstrap() {
             // Parse the received settings file and dispatch parts of it
             // using appropriate actions
             console.log('SETTINGS ARE: ' + JSON.stringify(arg));
+        });
+
+        ipcRenderer.on(ADD_NOTE, (event: Event, arg: any): void => {
+            console.log('Note added: ' + arg);
         });
 
     } catch (error) {
