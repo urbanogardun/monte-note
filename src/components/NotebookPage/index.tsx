@@ -6,10 +6,11 @@ export interface Props {
 
 export class Notebook extends React.Component<Props, {}> {
     render() {
-        console.log(this.props.location);
+        // Gets notebook name from the path url
+        let notebookName = this.props.location.pathname.split('/').pop();
         return (
             <div>
-                <h1>Notebook Page</h1>
+                <h1>Notebook: {notebookName}</h1>
                 <p>NOTEBOOKZZZZZZZZ</p>
             </div>
         );

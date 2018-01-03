@@ -40,6 +40,7 @@ export function ipcRendererEventsBootstrap() {
         ipcRenderer.on(ADD_NOTEBOOK, (event: Event, arg: string): void => {
             if (arg) {
                 reduxStore.dispatch(actions.addNotebook(arg));
+                window.location.href = `/notebooks/${arg}`;
             }
         });
 

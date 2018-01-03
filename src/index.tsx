@@ -17,7 +17,7 @@ ReactDOM.render(
   <Provider store={reduxStore}>
     <BrowserRouter>
       <div>
-        <Route path="/about" component={Notebook}/>
+        <Route path="/notebooks/:name" component={Notebook}/>
         <Route exact={true} path="/" component={App} />
       </div>
     </BrowserRouter>
