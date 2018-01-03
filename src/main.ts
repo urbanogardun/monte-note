@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import NotebookManager from './utils/notebook-management/notebookManager';
-import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK, GET_NOTEBOOKS, LOAD_SETTINGS } from './constants/index';
+import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK, GET_NOTEBOOKS, LOAD_SETTINGS, ADD_NOTE } from './constants/index';
 // import Db from './db/index';
 import DbMessager from './utils/dbMessager';
 
@@ -127,6 +127,10 @@ ipcMain.on(LOAD_SETTINGS, (event: any) => {
     event.sender.send(LOAD_SETTINGS, settings);
   });
 
+});
+
+ipcMain.on(ADD_NOTE, (event: any, args: any) => {
+  console.log('ADD NOTE: ' + args);
 });
 
 // In this file you can include the rest of your app's specific main process

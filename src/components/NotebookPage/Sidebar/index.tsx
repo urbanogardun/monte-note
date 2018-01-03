@@ -1,4 +1,6 @@
 import * as React from 'react';
+import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
+import { ADD_NOTE } from '../../../constants/index';
 
 export interface Props {
     location?: any;
@@ -58,8 +60,7 @@ export class Sidebar extends React.Component<Props, State> {
 
     addNote(name: string) {
         if (name) {
-            console.log(name);
-            // ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTEBOOK, name);
+            ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTE, name);
         }
     }
     

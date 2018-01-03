@@ -21,3 +21,6 @@ export type GET_NOTEBOOKS = typeof GET_NOTEBOOKS;
 
 export const LOAD_SETTINGS = 'LOAD_SETTINGS';
 export type LOAD_SETTINGS = typeof LOAD_SETTINGS;
+
+export const ADD_NOTE = 'ADD_NOTE';
+export type ADD_NOTE = typeof ADD_NOTE;
