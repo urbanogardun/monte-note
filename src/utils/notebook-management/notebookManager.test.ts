@@ -61,7 +61,6 @@ test('gets all notebooks inside notebooks location directory', () => {
   expect(notebookManager.getNotebooks()).toHaveLength(2);
 });
 
-// TODO: Finish the function implementation & mock the getNotebooks method
 test('loads all existing notebooks into the db', done => {
   let dbMessager = new DbMessager();
   notebookManager.loadExistingNotebooksIntoApp()
@@ -76,6 +75,15 @@ test('returns all existing notebooks in chosen dir', () => {
   let dir = 'test-dir';
   let result = NotebookManager.getNotebooks(dir);
   expect(result).toHaveLength(2);
+});
+
+test('creates note page file', done => {
+  let locationToNotebook = 'C:\\test-dir\\test-notebook';
+  NotebookManager.addNote(locationToNotebook, 'test-note-page')
+  .then((result: boolean) => {
+    done();
+    expect(result).toEqual(true);
+  });
 });
 
 afterEach(() => {

@@ -24,10 +24,25 @@ export class NotebookManager {
         });
     }
 
-    static addNotebook(directory: string, name: string) {
+    static addNotebook(location: string, name: string) {
         return new Promise(resolve => {
             try {
-                fs.mkdir(`${directory}\\${name}`, () => {
+                fs.mkdir(`${location}\\${name}`, () => {
+                    resolve(true);
+                });
+            } catch (error) {
+                return resolve(false);
+            }
+        });
+    }
+
+    static addNote(location: string, name: string) {
+        return new Promise(resolve => {
+            try {
+                fs.writeFile(`${location}\\${name}.html`, '', (err: Error) => {
+                    if (err) {
+                        resolve(false);
+                    }
                     resolve(true);
                 });
             } catch (error) {

@@ -34,12 +34,17 @@ function callbackFunc() {
     return ['blam', 'lamma'];
 }
 
+function writeFile(file, data, callback) {
+    callback('');
+}
+
 fs.mkdir = mkdir;
 fs.existsSync = existsSync;
 fs.mkdirSync = mkdirSync;
 fs.readdirSync = readdirSync;
 fs.statSync = statSync;
 fs.isDirectory = isDirectory;
+fs.writeFile = writeFile;
 fs.__setNotebookList = __setNotebookList;
 
 module.exports = fs;
