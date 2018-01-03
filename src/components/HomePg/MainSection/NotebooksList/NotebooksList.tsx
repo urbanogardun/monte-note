@@ -28,7 +28,7 @@ export class NotebooksList extends React.Component<Props, State> {
         return (
             <div className="col-sm-4">
                 <h1>Notebooks List!</h1>
-                <Link to="/about">Link to Notebook</Link>
+                <Link to="/notebooks/about">Link to Notebook</Link>
                 <ul>
                     {(this.props.notebooks as string[]).map((name: string, index: number) => {
                         return <li key={index}>{name}</li>;
