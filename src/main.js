@@ -88,23 +88,10 @@ electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, notebookName) => {
             });
         }
     });
-    // try {
-    //   notebookManager.addNotebook(args);
-    // } catch (error) {
-    //   // Retrieve notebook directory location from electron-store storage
-    //   // notebookManager = new NotebookManager(NotebookManager.getNotebookLocation());
-    //   notebookManager.addNotebook(args);
-    // } finally {
-    //   event.sender.send(ADD_NOTEBOOK, args);
-    // }
 });
 electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
     console.log('GET THE NOTEBOOKS FROM DB.');
     // Bootstrap db with notebooks entry
-    // let notebooks = NotebookManager.getNotebooks(location as string);
-    // dbMessager.updateSettings('notebooksList', notebooks)
-    // .then(() => {
-    // });
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
         let notebooks = notebookManager_1.default.getNotebooks(location);
@@ -114,11 +101,6 @@ electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
             event.sender.send(index_1.GET_NOTEBOOKS, notebooks);
         });
     });
-    // NotebookManager.getNotebooks()
-    // dbMessager.getNotebooks()
-    // .then((notebooks: string[]) => {
-    //   event.sender.send(GET_NOTEBOOKS, notebooks);
-    // });
 });
 electron_1.ipcMain.on(index_1.LOAD_SETTINGS, (event) => {
     console.log('Query DB to get the application settings.');
