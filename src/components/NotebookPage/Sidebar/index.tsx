@@ -26,16 +26,16 @@ export class Sidebar extends React.Component<Props, State> {
     // Creates notebook on Enter key press
     handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'Enter') {
-            let notebook = this.prepareNotebook(this.state.inputValue as string);
-            this.addNotebook(notebook);
+            let note = this.prepareNote(this.state.inputValue as string);
+            this.addNote(note);
             this.resetComponentState();
         }
     }
 
     // Creates notebook when input field loses focus
     handleFocusOut() {
-        let notebook = this.prepareNotebook(this.state.inputValue as string);
-        this.addNotebook(notebook);
+        let note = this.prepareNote(this.state.inputValue as string);
+        this.addNote(note);
         this.resetComponentState();
     }
 
@@ -52,11 +52,11 @@ export class Sidebar extends React.Component<Props, State> {
         this.setState({inputValue: e.target.value});
     }
 
-    prepareNotebook(name: string) {
+    prepareNote(name: string) {
         return name.trim();
     }
 
-    addNotebook(name: string) {
+    addNote(name: string) {
         if (name) {
             console.log(name);
             // ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTEBOOK, name);
@@ -69,9 +69,9 @@ export class Sidebar extends React.Component<Props, State> {
                 <button 
                     onClick={() => this.showInput()}
                     type="button"
-                    className="btn btn-secondary btn-sm add-notebook"
+                    className="btn btn-secondary btn-sm add-note"
                 >
-                    Add Notebook
+                    Add Note
                 </button>
 
                 <div className={`input-group input-group-sm ${this.state.showInput}`}>
