@@ -3,6 +3,8 @@ import Sidebar from '../../containers/NotebookPage/Sidebar';
 import { Link } from 'react-router-dom';
 import ElectronMessager from '../../utils/electron-messaging/electronMessager';
 import { GET_NOTES } from '../../constants/index';
+import Quill from 'quill';
+import '../../assets/css/quill.snow.css';
 
 export interface Props {
     location: any;
@@ -21,6 +23,20 @@ export class Notebook extends React.Component<Props, State> {
         };
     }
 
+    componentDidMount() {
+        var quill = new Quill('#editor-container', {
+            modules: {
+              toolbar: [
+                ['bold', 'italic', 'underline'],
+                ['image', 'code-block']
+              ]
+            },
+            placeholder: 'Take notes...',
+            theme: 'snow'  // or 'bubble'
+        });
+        return quill;
+    }
+
     componentWillMount() {
         ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES, this.state.notebookName);
     }
@@ -33,8 +49,8 @@ export class Notebook extends React.Component<Props, State> {
                     <Sidebar notebookName={this.state.notebookName} />
                     <div className="col-sm">
                         <Link to="/">Home</Link>
-                        <h1>Note Content</h1>
-                        <h4>{this.state.notebookName}</h4>
+                        <h4>Notebook: {this.state.notebookName}</h4>
+                        <div id="editor-container" />
                     </div>
                 </div>
             </div>
