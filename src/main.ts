@@ -1,6 +1,14 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import NotebookManager from './utils/notebook-management/notebookManager';
-import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK, GET_NOTEBOOKS, LOAD_SETTINGS, ADD_NOTE, GET_NOTES } from './constants/index';
+import {
+  CHOOSE_LOCATION_FOR_NOTEBOOKS, 
+  ADD_NOTEBOOK, 
+  GET_NOTEBOOKS, 
+  LOAD_SETTINGS, 
+  ADD_NOTE, 
+  GET_NOTES,
+  UPDATE_NOTE_STATE
+ } from './constants/index';
 // import Db from './db/index';
 import DbMessager from './utils/dbMessager';
 
@@ -163,6 +171,13 @@ ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
     });
   });
 
+});
+
+ipcMain.on(UPDATE_NOTE_STATE, (event: any, args: any) => {
+  // let noteName = args.noteName;
+  // let notebook = args.notebookName;
+
+  console.log('UPDATE DB for notebook entry with lastOpened value being a note');
 });
 
 // In this file you can include the rest of your app's specific main process

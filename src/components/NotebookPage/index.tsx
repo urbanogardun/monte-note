@@ -3,7 +3,7 @@ import Sidebar from '../../containers/NotebookPage/Sidebar';
 import { Link } from 'react-router-dom';
 import ElectronMessager from '../../utils/electron-messaging/electronMessager';
 import { GET_NOTES } from '../../constants/index';
-import Quill from 'quill';
+import Quill, { DeltaStatic } from 'quill';
 import '../../assets/css/quill.snow.css';
 
 export interface Props {
@@ -34,7 +34,13 @@ export class Notebook extends React.Component<Props, State> {
             placeholder: 'Take notes...',
             theme: 'snow'  // or 'bubble'
         });
-        return quill;
+
+        quill.on('text-change', (delta: DeltaStatic, oldContents: DeltaStatic) => {
+            console.log('text changed!');
+            console.log('CONTENT OF EDITOR: ');
+            let content = document.querySelector('.ql-editor') as Element;
+            console.log(content.innerHTML as string);
+        });
     }
 
     componentWillMount() {

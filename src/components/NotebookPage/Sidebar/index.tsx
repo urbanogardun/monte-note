@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { ADD_NOTE } from '../../../constants/index';
+import { ADD_NOTE, UPDATE_NOTE_STATE } from '../../../constants/index';
 
 export interface Props {
     location?: any;
@@ -64,7 +64,13 @@ export class Sidebar extends React.Component<Props, State> {
         if (name) {
             let data = {notebookName: this.props.notebookName, noteName: name};
             ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTE, data);
+            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
         }
+    }
+
+    updateLastOpenedNote(name: string) {
+        let data = {notebookName: this.props.notebookName, noteName: name};
+        ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
     }
     
     render() {
@@ -98,7 +104,7 @@ export class Sidebar extends React.Component<Props, State> {
 
                 <ul>
                     {(this.props.notes as string[]).map((name: string, index: number) => {
-                        return <li key={index}>{name}</li>;
+                        return <li onClick={() => this.updateLastOpenedNote(name)} key={index}>{name}</li>;
                     })}
                 </ul>
 

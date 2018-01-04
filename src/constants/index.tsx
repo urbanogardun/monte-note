@@ -30,3 +30,6 @@ export type GET_NOTES = typeof GET_NOTES;
 
 export const LOAD_NOTES = 'LOAD_NOTES';
 export type LOAD_NOTES = typeof LOAD_NOTES;
+
+export const UPDATE_NOTE_STATE = 'UPDATE_NOTE_STATE';
+export type UPDATE_NOTE_STATE = typeof UPDATE_NOTE_STATE;
