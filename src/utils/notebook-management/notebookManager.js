@@ -101,6 +101,23 @@ class NotebookManager {
         notes = sortable.map((note) => { return note[0]; });
         return notes;
     }
+    /**
+     * Formats note name by removing file extension: .html in this case
+     * @param  {string} note
+     * @returns {string}
+     */
+    static formatNoteName(note) {
+        note = note.slice(0, note.length - 5);
+        return note;
+    }
+    static formatNotes(notes) {
+        let formattedNotes = [];
+        notes.forEach((note) => {
+            note = NotebookManager.formatNoteName(note);
+            formattedNotes.push(note);
+        });
+        return formattedNotes;
+    }
     getNotebooksLocation() {
         return new Promise(resolve => {
             this.DbConnection.getNotebooksLocation()

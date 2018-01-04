@@ -157,6 +157,7 @@ ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
       NotebookManager.getNotesCreationDate(`${location}\\${notebook}`, notes)
       .then((result: any) => {
         notes = NotebookManager.orderNotesBy(result, 'created_at');
+        notes = NotebookManager.formatNotes(notes);
         event.sender.send(GET_NOTES, notes);
       });
     });

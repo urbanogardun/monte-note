@@ -95,6 +95,13 @@ export class Sidebar extends React.Component<Props, State> {
                 </div>
 
                 <h3>Notes List</h3>
+
+                <ul>
+                    {(this.props.notes as string[]).map((name: string, index: number) => {
+                        return <li key={index}>{name}</li>;
+                    })}
+                </ul>
+
             </div> 
         );
     }
