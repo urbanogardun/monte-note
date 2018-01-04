@@ -120,6 +120,20 @@ test('sorts notebooks object by a property value that we specify', () => {
   expect(result[4]).toEqual('fishie-2.html');
 });
 
+test('removes .html extension from note filename', () => {
+  let result = NotebookManager.formatNoteName('fishie-2.html');
+
+  expect(result).toEqual('fishie-2');
+});
+
+test('pretty formats note list', () => {
+  let notes = ['fishie-2.html', 'coffee.html', 'bikes.html'];
+
+  let result = NotebookManager.formatNotes(notes);
+
+  expect(result).toEqual(['fishie-2', 'coffee', 'bikes']);
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

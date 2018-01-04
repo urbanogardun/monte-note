@@ -108,6 +108,25 @@ export class NotebookManager {
         
         return notes;
     }
+    
+    /**
+     * Formats note name by removing file extension: .html in this case
+     * @param  {string} note
+     * @returns {string}
+     */
+    static formatNoteName(note: string): string {
+        note = note.slice(0, note.length - 5);
+        return note;
+    }
+
+    static formatNotes(notes: string[]): string[] {
+        let formattedNotes: string[] = [];
+        notes.forEach((note: string) => {
+            note = NotebookManager.formatNoteName(note);
+            formattedNotes.push(note);
+        });
+        return formattedNotes;
+    }
 
     constructor() {
         // NotebookManager.directoryToSaveNotebooksAt = saveDir;
