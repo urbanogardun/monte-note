@@ -1,4 +1,4 @@
-import { EnthusiasmAction, SetNotebooksLocation, NotebooksAction, AddNote } from '../actions';
+import { EnthusiasmAction, SetNotebooksLocation, NotebooksAction, NoteAction } from '../actions';
 import { StoreState } from '../types/index';
 import { 
   INCREMENT_ENTHUSIASM, 
@@ -6,7 +6,8 @@ import {
   SET_NOTEBOOKS_LOCATION, 
   GET_NOTEBOOKS, 
   ADD_NOTEBOOK,
-  ADD_NOTE } from '../constants/index';
+  ADD_NOTE,
+  LOAD_NOTES } from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -40,10 +41,12 @@ export function notebooks(state: StoreState, action: NotebooksAction): StoreStat
     }
 }
 
-export function notes(state: StoreState, action: AddNote): StoreState {
+export function notes(state: StoreState, action: NoteAction): StoreState {
   switch (action.type) {
     case ADD_NOTE:
       return [...state as StoreState[], action.note] as StoreState;
+    case LOAD_NOTES:
+      return [...action.notes] as StoreState;
     default:
       return state || [] as StoreState;
   }

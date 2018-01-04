@@ -59,6 +59,12 @@ class NotebookManager {
             });
         });
     }
+    /**
+     * Gets date when note file got created
+     * @param  {string} location
+     * @param  {string[]} notes
+     * @returns {noteName: {created_at: date}}
+     */
     static getNotesCreationDate(location, notes) {
         return new Promise(resolve => {
             let data = {};

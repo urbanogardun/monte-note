@@ -150,19 +150,15 @@ ipcMain.on(ADD_NOTE, (event: any, args: any) => {
 
 ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
 
-  console.log('GET NOTES FOR NOTEBOOK: ' + notebook);
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
-    console.log('location is: ' + location);
     NotebookManager.getNotes(`${location}\\${notebook}`)
     .then((notes: string[]) => {
       NotebookManager.getNotesCreationDate(`${location}\\${notebook}`, notes)
       .then((result: any) => {
         notes = NotebookManager.orderNotesBy(result, 'created_at');
-        console.log('ORDERED NOTES BY CREATED_AT: ' + notes);
+        event.sender.send(GET_NOTES, notes);
       });
-      // NotebookManager
-      // event.sender.send(GET_NOTES, notes);
     });
   });
 

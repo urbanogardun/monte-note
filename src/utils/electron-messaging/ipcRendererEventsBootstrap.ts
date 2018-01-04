@@ -2,7 +2,7 @@ import { IpcRenderer, Event } from 'electron';
 import { NOTEBOOK_SAVE_DIRECTORY, GET_NOTEBOOKS } from '../../utils/constants';
 import reduxStore from '../../store/index';
 import * as actions from '../../actions/';
-import { ADD_NOTEBOOK, LOAD_SETTINGS, ADD_NOTE } from '../../constants/index';
+import { ADD_NOTEBOOK, LOAD_SETTINGS, ADD_NOTE, GET_NOTES } from '../../constants/index';
     
 let ipcRenderer: IpcRenderer;
 
@@ -53,6 +53,10 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on(ADD_NOTE, (event: Event, arg: any): void => {
             reduxStore.dispatch(actions.addNote(arg));
+        });
+
+        ipcRenderer.on(GET_NOTES, (event: Event, notes: string[]): void => {
+            reduxStore.dispatch(actions.loadNotes(notes));
         });
 
     } catch (error) {

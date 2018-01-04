@@ -28,9 +28,16 @@ export interface AddNote {
     note: string;
 }
 
+export interface LoadNotes {
+    type: constants.LOAD_NOTES;
+    notes: string[];
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
+
+export type NoteAction = AddNote | LoadNotes;
 
 export function incrementEnthusiasm(): IncrementEnthusiasm {
     return {
@@ -69,5 +76,12 @@ export function addNote(note: string): AddNote {
     return {
         type: constants.ADD_NOTE,
         note
+    };
+}
+
+export function loadNotes(notes: string[]): LoadNotes {
+    return {
+        type: constants.LOAD_NOTES,
+        notes
     };
 }

@@ -27,3 +27,6 @@ export type ADD_NOTE = typeof ADD_NOTE;
 
 export const GET_NOTES = 'GET_NOTES';
 export type GET_NOTES = typeof GET_NOTES;
+
+export const LOAD_NOTES = 'LOAD_NOTES';
+export type LOAD_NOTES = typeof LOAD_NOTES;

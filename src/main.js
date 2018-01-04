@@ -124,21 +124,15 @@ electron_1.ipcMain.on(index_1.ADD_NOTE, (event, args) => {
     });
 });
 electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
-    console.log('GET NOTES FOR NOTEBOOK: ' + notebook);
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
-        console.log('location is: ' + location);
         notebookManager_1.default.getNotes(`${location}\\${notebook}`)
             .then((notes) => {
-            console.log('NOTES ARE: ' + notes);
             notebookManager_1.default.getNotesCreationDate(`${location}\\${notebook}`, notes)
                 .then((result) => {
-                // console.log('CREATION DATE OF NOTES: ' + JSON.stringify(result));
                 notes = notebookManager_1.default.orderNotesBy(result, 'created_at');
-                console.log('ORDERED NOTES BY CREATED_AT: ' + notes);
+                event.sender.send(index_1.GET_NOTES, notes);
             });
-            // NotebookManager
-            // event.sender.send(GET_NOTES, notes);
         });
     });
 });
