@@ -156,11 +156,8 @@ ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
     console.log('location is: ' + location);
     NotebookManager.getNotes(`${location}\\${notebook}`)
     .then((notes: string[]) => {
-
-      console.log('NOTES ARE: ' + notes);
       NotebookManager.getNotesCreationDate(`${location}\\${notebook}`, notes)
       .then((result: any) => {
-        // console.log('CREATION DATE OF NOTES: ' + JSON.stringify(result));
         notes = NotebookManager.orderNotesBy(result, 'created_at');
         console.log('ORDERED NOTES BY CREATED_AT: ' + notes);
       });

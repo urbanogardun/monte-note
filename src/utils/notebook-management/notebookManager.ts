@@ -60,6 +60,12 @@ export class NotebookManager {
         });
     }
 
+    /**
+     * Gets date when note file got created
+     * @param  {string} location
+     * @param  {string[]} notes
+     * @returns {noteName: {created_at: date}}
+     */
     static getNotesCreationDate(location: string, notes: string[]) {
         return new Promise(resolve => {
             let data = {};
