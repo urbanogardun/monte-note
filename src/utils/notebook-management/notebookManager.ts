@@ -51,6 +51,15 @@ export class NotebookManager {
         });
     }
 
+    static getNotes(location: string) {
+        return new Promise(resolve => {
+            fs.readdir(`${location}`, (err: Error, files: string[]) => {
+                files = files.filter((file: string) => { return file.endsWith('.html'); });
+                resolve(files);
+            });
+        });
+    }
+
     constructor() {
         // NotebookManager.directoryToSaveNotebooksAt = saveDir;
         // this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);

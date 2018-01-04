@@ -86,6 +86,15 @@ test('creates note page file', done => {
   });
 });
 
+test('gets all note files in a directory of a notebook', done => {
+  let notebookLocation = 'C:\\notebooks\\test-nbook-1';
+  NotebookManager.getNotes(notebookLocation)
+  .then((notes: string[]) => {
+    done();
+    expect(notes).toHaveLength(2);
+  });
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

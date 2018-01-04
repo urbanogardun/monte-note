@@ -123,5 +123,8 @@ electron_1.ipcMain.on(index_1.ADD_NOTE, (event, args) => {
         });
     });
 });
+electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
+    console.log('GET NOTES FOR NOTEBOOK: ' + notebook);
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

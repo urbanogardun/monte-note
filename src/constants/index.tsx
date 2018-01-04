@@ -24,3 +24,6 @@ export type LOAD_SETTINGS = typeof LOAD_SETTINGS;
 
 export const ADD_NOTE = 'ADD_NOTE';
 export type ADD_NOTE = typeof ADD_NOTE;
+
+export const GET_NOTES = 'GET_NOTES';
+export type GET_NOTES = typeof GET_NOTES;

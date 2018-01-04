@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import NotebookManager from './utils/notebook-management/notebookManager';
-import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK, GET_NOTEBOOKS, LOAD_SETTINGS, ADD_NOTE } from './constants/index';
+import { CHOOSE_LOCATION_FOR_NOTEBOOKS, ADD_NOTEBOOK, GET_NOTEBOOKS, LOAD_SETTINGS, ADD_NOTE, GET_NOTES } from './constants/index';
 // import Db from './db/index';
 import DbMessager from './utils/dbMessager';
 
@@ -145,6 +145,12 @@ ipcMain.on(ADD_NOTE, (event: any, args: any) => {
 
     });
   });
+
+});
+
+ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
+
+  console.log('GET NOTES FOR NOTEBOOK: ' + notebook);
 
 });
 
