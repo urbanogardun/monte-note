@@ -118,7 +118,11 @@ electron_1.ipcMain.on(index_1.ADD_NOTE, (event, args) => {
         notebookManager_1.default.addNote(`${location}\\${notebook}`, noteName)
             .then((result) => {
             if (result) {
-                event.sender.send(index_1.ADD_NOTE, noteName);
+                dbMessager.setLastOpenedNote(notebook, noteName)
+                    .then((res) => {
+                    event.sender.send(index_1.UPDATE_NOTE_STATE, args);
+                    event.sender.send(index_1.ADD_NOTE, noteName);
+                });
             }
         });
     });
@@ -136,11 +140,13 @@ electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
             });
         });
     });
+    // TODO: Implement dbMessager.getLastOpenedNote which will get
+    // last opened note and send it when we click on notebook to which
+    // we want to go - use this method in this ipcMain event listener
 });
 electron_1.ipcMain.on(index_1.UPDATE_NOTE_STATE, (event, args) => {
     let noteName = args.noteName;
     let notebook = args.notebookName;
-    console.log('UPDATE DB for notebook entry with lastOpened value being a note');
     dbMessager.setLastOpenedNote(notebook, noteName)
         .then((result) => {
         event.sender.send(index_1.UPDATE_NOTE_STATE, args);

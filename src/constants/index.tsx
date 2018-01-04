@@ -33,3 +33,6 @@ export type LOAD_NOTES = typeof LOAD_NOTES;
 
 export const UPDATE_NOTE_STATE = 'UPDATE_NOTE_STATE';
 export type UPDATE_NOTE_STATE = typeof UPDATE_NOTE_STATE;
+
+export const LAST_OPENED_NOTE = 'LAST_OPENED_NOTE';
+export type LAST_OPENED_NOTE = typeof LAST_OPENED_NOTE;

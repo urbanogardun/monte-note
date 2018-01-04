@@ -33,11 +33,18 @@ export interface LoadNotes {
     notes: string[];
 }
 
+export interface LastOpenedNote {
+    type: constants.LAST_OPENED_NOTE;
+    note: string;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
 
 export type NoteAction = AddNote | LoadNotes;
+
+export type LastOpenedNoteAction = LastOpenedNote;
 
 export function incrementEnthusiasm(): IncrementEnthusiasm {
     return {
@@ -83,5 +90,12 @@ export function loadNotes(notes: string[]): LoadNotes {
     return {
         type: constants.LOAD_NOTES,
         notes
+    };
+}
+
+export function lastOpenedNote(note: string): LastOpenedNote {
+    return {
+        type: constants.LAST_OPENED_NOTE,
+        note
     };
 }

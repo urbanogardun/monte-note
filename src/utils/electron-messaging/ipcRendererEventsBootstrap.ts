@@ -61,7 +61,7 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on(UPDATE_NOTE_STATE, (event: Event, data: any): void => {
             console.log('Notebook updated with last opened: ' + JSON.stringify(data));
-            // reduxStore.dispatch
+            reduxStore.dispatch(actions.lastOpenedNote(data.noteName));
         });
 
     } catch (error) {

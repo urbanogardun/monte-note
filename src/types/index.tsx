@@ -3,4 +3,5 @@ export interface StoreState {
     notebooksLocation?: string;
     notebooks?: string[];
     notes?: string[];
+    lastOpenedNote?: string;
 }
