@@ -82,3 +82,14 @@ test('gets item from the settings object', done => {
         expect(value).toEqual('');
     });
 });
+
+test('sets lastOpenedNote value for a notebook', done => {
+    let notebookName = 'testNotebook';
+    let lastOpenedNote = 'test-note-23';
+
+    dbMessager.setLastOpenedNote(notebookName, lastOpenedNote)
+    .then((result: boolean) => {
+        done();
+        expect(result).toEqual(true);
+    });
+});

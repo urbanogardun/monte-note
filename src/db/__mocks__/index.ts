@@ -27,9 +27,7 @@ export class Db {
                 return;
             }
         }, update: (searchQuery: any, toUpdate: any, options: any, callback: any) => {
-            // console.log(Db.notebookList);
             Db.notebookList = [...Db.notebookList, 'ex-nb-1', 'ex-nb-2', 'ex-nb-3'];
-            // return Db.notebookList;
             callback('', '');
         }, insert: (query: string) => {
             return true;
@@ -38,6 +36,8 @@ export class Db {
                 callback(null, {notebooksLocation: ''});
             } else if (query.name === 'notebooks') {
                 callback(null, {notebooks: ['book-1', 'book-2', 'book-3']});
+            } else if ('notebook' in query) {
+                callback(null, {});
             } else {
                 callback();
             }

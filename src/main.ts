@@ -174,10 +174,14 @@ ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
 });
 
 ipcMain.on(UPDATE_NOTE_STATE, (event: any, args: any) => {
-  // let noteName = args.noteName;
-  // let notebook = args.notebookName;
+  let noteName = args.noteName;
+  let notebook = args.notebookName;
 
   console.log('UPDATE DB for notebook entry with lastOpened value being a note');
+  dbMessager.setLastOpenedNote(notebook, noteName)
+  .then((result: boolean) => {
+    event.sender.send(UPDATE_NOTE_STATE, args);
+  });
 });
 
 // In this file you can include the rest of your app's specific main process

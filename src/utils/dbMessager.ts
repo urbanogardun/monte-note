@@ -125,6 +125,36 @@ export class DbMessager {
             });
         });
     }
+    
+    /**
+     * Logs name of the note that was last opened in a notebook
+     * @param  {string} notebook
+     * @param  {string} note
+     * @returns {boolean}
+     */
+    setLastOpenedNote(notebook: string, note: string) {
+        return new Promise(resolve => {
+            this.db.findOne({ notebook: notebook }, (error: Error, document: any) => {
+                if (document) {
+                    this.db.update({ notebook: notebook }, { $set: { lastOpenedNote: note } }, {}, (err: Error) => {
+                        if (err) {
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                } else {
+                    this.db.insert({ notebook: notebook, lastOpenedNote: note }, (err: Error) => {
+                        if (err) {
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                }
+            });
+        });
+    }
 
     messageDb() {
         console.log('LOLOLOLO');

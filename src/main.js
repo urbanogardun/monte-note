@@ -138,9 +138,13 @@ electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
     });
 });
 electron_1.ipcMain.on(index_1.UPDATE_NOTE_STATE, (event, args) => {
-    // let noteName = args.noteName;
-    // let notebook = args.notebookName;
+    let noteName = args.noteName;
+    let notebook = args.notebookName;
     console.log('UPDATE DB for notebook entry with lastOpened value being a note');
+    dbMessager.setLastOpenedNote(notebook, noteName)
+        .then((result) => {
+        event.sender.send(index_1.UPDATE_NOTE_STATE, args);
+    });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 
