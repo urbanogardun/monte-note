@@ -68,7 +68,6 @@ class NotebookManager {
                 .forEach((note, index) => {
                 fs.stat(note, (err, stats) => {
                     itemsProcessed++;
-                    console.log(JSON.stringify(stats));
                     data[notes[index]] = { created_at: stats.ctime };
                     if (itemsProcessed === notes.length) {
                         resolve(data);
@@ -76,6 +75,25 @@ class NotebookManager {
                 });
             });
         });
+    }
+    /**
+     * Orders notes by a property key in ascending order
+     * @param  {any} notes - format should be { noteName: {property1: value}}
+     * @param  {string} orderBy
+     * @returns string[]
+     */
+    static orderNotesBy(notes, orderBy) {
+        let sortable = [];
+        for (const note in notes) {
+            if (notes.hasOwnProperty(note)) {
+                sortable.push([note, notes[note].created_at]);
+            }
+        }
+        sortable.sort((a, b) => {
+            return new Date(a[1]) - new Date(b[1]);
+        });
+        notes = sortable.map((note) => { return note[0]; });
+        return notes;
     }
     getNotebooksLocation() {
         return new Promise(resolve => {

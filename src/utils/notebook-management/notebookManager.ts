@@ -80,6 +80,29 @@ export class NotebookManager {
         });
     }
 
+    /**
+     * Orders notes by a property key in ascending order
+     * @param  {any} notes - format should be { noteName: {property1: value}}
+     * @param  {string} orderBy
+     * @returns string[]
+     */
+    static orderNotesBy(notes: any, orderBy: string): string[] {
+        let sortable = [];
+        for (const note in notes) {
+            if (notes.hasOwnProperty(note)) {
+                sortable.push([note, notes[note].created_at]);
+            }
+        }
+
+        sortable.sort((a: any[], b: any[]) => {
+            return (new Date(a[1]) as any) - (new Date(b[1]) as any);
+        });
+
+        notes = sortable.map((note: any) => { return note[0]; });
+        
+        return notes;
+    }
+
     constructor() {
         // NotebookManager.directoryToSaveNotebooksAt = saveDir;
         // this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);

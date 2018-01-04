@@ -133,7 +133,9 @@ electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
             console.log('NOTES ARE: ' + notes);
             notebookManager_1.default.getNotesCreationDate(`${location}\\${notebook}`, notes)
                 .then((result) => {
-                console.log('CREATION DATE OF NOTES: ' + JSON.stringify(result));
+                // console.log('CREATION DATE OF NOTES: ' + JSON.stringify(result));
+                notes = notebookManager_1.default.orderNotesBy(result, 'created_at');
+                console.log('ORDERED NOTES BY CREATED_AT: ' + notes);
             });
             // NotebookManager
             // event.sender.send(GET_NOTES, notes);

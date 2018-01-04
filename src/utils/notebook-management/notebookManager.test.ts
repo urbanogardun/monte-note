@@ -106,6 +106,20 @@ test('gets created date for files in array', done => {
   });
 });
 
+test('sorts notebooks object by a property value that we specify', () => {
+  let notesObj = {
+    'biggie.html': {'created_at' : '2018-01-03T20:48:45.829Z'},
+    'bureks.html' : {'created_at' : '2018-01-03T20:58:53.438Z'},
+    'coffee.html' : {'created_at' : '2018-01-03T19:27:05.350Z'},
+    'fishie-2.html' : {'created_at' : '2018-01-04T11:40:56.495Z'},
+    'fishies.html' : {'created_at' : '2018-01-03T20:58:47.675Z'}
+  };
+
+  let result = NotebookManager.orderNotesBy(notesObj, 'created_at');
+
+  expect(result[4]).toEqual('fishie-2.html');
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });
