@@ -60,6 +60,26 @@ export class NotebookManager {
         });
     }
 
+    static getNotesCreationDate(location: string, notes: string[]) {
+        return new Promise(resolve => {
+            let data = {};
+            let itemsProcessed = 0;
+
+            // Sets each file to have an absolute path before getting stats
+            notes.map((file: string) => { return path.join(location, file); })
+            .forEach((note: string, index: number) => {
+                fs.stat(note, (err: Error, stats: any) => {
+                    itemsProcessed++;
+                    data[notes[index]] = {created_at: stats.ctime};
+                    
+                    if (itemsProcessed === notes.length) {
+                        resolve(data);
+                    }
+                });
+            });
+        });
+    }
+
     constructor() {
         // NotebookManager.directoryToSaveNotebooksAt = saveDir;
         // this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);

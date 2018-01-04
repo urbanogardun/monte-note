@@ -51,6 +51,32 @@ class NotebookManager {
             }
         });
     }
+    static getNotes(location) {
+        return new Promise(resolve => {
+            fs.readdir(`${location}`, (err, files) => {
+                files = files.filter((file) => { return file.endsWith('.html'); });
+                resolve(files);
+            });
+        });
+    }
+    static getNotesCreationDate(location, notes) {
+        return new Promise(resolve => {
+            let data = {};
+            let itemsProcessed = 0;
+            // Sets each file to have an absolute path before getting stats
+            notes.map((file) => { return path.join(location, file); })
+                .forEach((note, index) => {
+                fs.stat(note, (err, stats) => {
+                    itemsProcessed++;
+                    console.log(JSON.stringify(stats));
+                    data[notes[index]] = { created_at: stats.ctime };
+                    if (itemsProcessed === notes.length) {
+                        resolve(data);
+                    }
+                });
+            });
+        });
+    }
     getNotebooksLocation() {
         return new Promise(resolve => {
             this.DbConnection.getNotebooksLocation()

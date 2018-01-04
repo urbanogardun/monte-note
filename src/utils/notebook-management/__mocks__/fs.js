@@ -44,6 +44,13 @@ function readdir(path, callback) {
     );
 }
 
+function stat(path, callback) {
+    // Use setTimeout to simulate async function
+    setTimeout(() => {
+        callback('', {ctime: 1318289051000.1});
+    }, 100);
+}
+
 fs.mkdir = mkdir;
 fs.existsSync = existsSync;
 fs.mkdirSync = mkdirSync;
@@ -52,6 +59,7 @@ fs.statSync = statSync;
 fs.isDirectory = isDirectory;
 fs.writeFile = writeFile;
 fs.readdir = readdir;
+fs.stat = stat;
 fs.__setNotebookList = __setNotebookList;
 
 module.exports = fs;

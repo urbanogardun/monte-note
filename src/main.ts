@@ -151,6 +151,21 @@ ipcMain.on(ADD_NOTE, (event: any, args: any) => {
 ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
 
   console.log('GET NOTES FOR NOTEBOOK: ' + notebook);
+  dbMessager.getFromSettings('notebooksLocation')
+  .then((location: string) => {
+    console.log('location is: ' + location);
+    NotebookManager.getNotes(`${location}\\${notebook}`)
+    .then((notes: string[]) => {
+
+      console.log('NOTES ARE: ' + notes);
+      NotebookManager.getNotesCreationDate(`${location}\\${notebook}`, notes)
+      .then((result: any) => {
+        console.log('CREATION DATE OF NOTES: ' + JSON.stringify(result));
+      });
+      // NotebookManager
+      // event.sender.send(GET_NOTES, notes);
+    });
+  });
 
 });
 
