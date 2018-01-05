@@ -78,14 +78,6 @@ ipcMain.on('is-location-for-notebooks-set', (event: any, args: any) => {
 ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
   let location = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
 
-  // notebookManager = new NotebookManager(notebooksDirectory as string);
-  // notebookManager.setNotebooksLocation(location as string)
-  // .then((result: boolean) => {
-  //   if (result) {
-  //     event.sender.send('location-for-notebooks', location);
-  //   }
-  // });
-  console.log('location is: ' + location);
   dbMessager.updateSettings('notebooksLocation', location as string)
   .then((result: boolean) => {
     if (result) {
@@ -96,8 +88,6 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
 });
 
 ipcMain.on(ADD_NOTEBOOK, (event: any, notebookName: any) => {
-  console.log('ADD NOTEBOOK: ' + notebookName);
-
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
     if (location) {
@@ -113,7 +103,6 @@ ipcMain.on(ADD_NOTEBOOK, (event: any, notebookName: any) => {
 });
 
 ipcMain.on(GET_NOTEBOOKS, (event: any, args: any) => {
-  console.log('GET THE NOTEBOOKS FROM DB.');
   // Bootstrap db with notebooks entry
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
@@ -128,8 +117,6 @@ ipcMain.on(GET_NOTEBOOKS, (event: any, args: any) => {
 
 ipcMain.on(LOAD_SETTINGS, (event: any) => {
 
-  console.log('Query DB to get the application settings.');
-
   dbMessager.loadSettings()
   .then((settings: any) => {
     event.sender.send(LOAD_SETTINGS, settings);
@@ -143,7 +130,6 @@ ipcMain.on(ADD_NOTE, (event: any, args: any) => {
 
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
-    console.log('location is: ' + location);
     NotebookManager.addNote(`${location}\\${notebook}`, noteName)
     .then((result: boolean) => {
 
@@ -161,7 +147,6 @@ ipcMain.on(ADD_NOTE, (event: any, args: any) => {
 });
 
 ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
-
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
     NotebookManager.getNotes(`${location}\\${notebook}`)
@@ -170,6 +155,7 @@ ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
       .then((result: any) => {
         notes = NotebookManager.orderNotesBy(result, 'created_at');
         notes = NotebookManager.formatNotes(notes);
+
         event.sender.send(GET_NOTES, notes);
 
         dbMessager.getLastOpenedNote(notebook)

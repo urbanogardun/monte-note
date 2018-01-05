@@ -30,8 +30,8 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(GET_NOTEBOOKS, (event: Event, arg: string[]): void => {
-            console.log('NOTEBOOKS ARE: ');
-            console.log(arg);
+            // console.log('NOTEBOOKS ARE: ');
+            // console.log(arg);
             if (arg) {
                 reduxStore.dispatch(actions.getNotebooks(arg));
             }
@@ -48,7 +48,7 @@ export function ipcRendererEventsBootstrap() {
             // TODO:
             // Parse the received settings file and dispatch parts of it
             // using appropriate actions
-            console.log('SETTINGS ARE: ' + JSON.stringify(arg));
+            // console.log('SETTINGS ARE: ' + JSON.stringify(arg));
         });
 
         ipcRenderer.on(ADD_NOTE, (event: Event, arg: any): void => {
@@ -60,7 +60,7 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(UPDATE_NOTE_STATE, (event: Event, data: any): void => {
-            console.log('Notebook updated with last opened: ' + JSON.stringify(data));
+            // console.log('Notebook updated with last opened: ' + JSON.stringify(data));
             reduxStore.dispatch(actions.lastOpenedNote(data.noteName));
         });
 

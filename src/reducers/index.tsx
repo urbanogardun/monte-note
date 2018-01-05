@@ -47,7 +47,11 @@ export function notes(state: StoreState, action: NoteAction): StoreState {
     case ADD_NOTE:
       return [...state as StoreState[], action.note] as StoreState;
     case LOAD_NOTES:
-      return [...action.notes] as StoreState;
+      if (action.notes.length) {
+        return [...action.notes] as StoreState;
+      } else {
+        return [] as StoreState;
+      }
     default:
       return state || [] as StoreState;
   }

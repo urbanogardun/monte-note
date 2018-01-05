@@ -8,6 +8,7 @@ import '../../assets/css/quill.snow.css';
 
 export interface Props {
     location: any;
+    lastOpenedNote?: string;
 }
 
 export interface State {
@@ -44,11 +45,14 @@ export class Notebook extends React.Component<Props, State> {
     }
 
     componentWillMount() {
+        console.log('notebookName: ' + this.state.notebookName);
         ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES, this.state.notebookName);
     }
 
     render() {
         // Gets notebook name from the path url
+        console.log('PROPS FOR CURRENT NOTEBOOK PAGE: ');
+        console.log(this.props.lastOpenedNote);
         return (
             <div className="container-fluid">
                 <div className="row">

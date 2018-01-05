@@ -71,6 +71,10 @@ export class NotebookManager {
             let data = {};
             let itemsProcessed = 0;
 
+            if (notes.length === 0) {
+                resolve([]);
+            }
+
             // Sets each file to have an absolute path before getting stats
             notes.map((file: string) => { return path.join(location, file); })
             .forEach((note: string, index: number) => {

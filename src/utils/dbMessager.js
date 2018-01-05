@@ -161,7 +161,7 @@ class DbMessager {
                     resolve(document.lastOpenedNote);
                 }
                 else {
-                    resolve(undefined);
+                    resolve(null);
                 }
             });
         });

@@ -69,6 +69,9 @@ class NotebookManager {
         return new Promise(resolve => {
             let data = {};
             let itemsProcessed = 0;
+            if (notes.length === 0) {
+                resolve([]);
+            }
             // Sets each file to have an absolute path before getting stats
             notes.map((file) => { return path.join(location, file); })
                 .forEach((note, index) => {

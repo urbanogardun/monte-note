@@ -168,7 +168,7 @@ export class DbMessager {
                 if (document) {
                     resolve(document.lastOpenedNote);
                 } else {
-                    resolve(undefined);
+                    resolve(null as any);
                 }
             });
         });

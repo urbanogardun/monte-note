@@ -59,14 +59,6 @@ electron_1.ipcMain.on('is-location-for-notebooks-set', (event, args) => {
 });
 electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
     let location = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
-    // notebookManager = new NotebookManager(notebooksDirectory as string);
-    // notebookManager.setNotebooksLocation(location as string)
-    // .then((result: boolean) => {
-    //   if (result) {
-    //     event.sender.send('location-for-notebooks', location);
-    //   }
-    // });
-    console.log('location is: ' + location);
     dbMessager.updateSettings('notebooksLocation', location)
         .then((result) => {
         if (result) {
@@ -75,7 +67,6 @@ electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
     });
 });
 electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, notebookName) => {
-    console.log('ADD NOTEBOOK: ' + notebookName);
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
         if (location) {
@@ -90,7 +81,6 @@ electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, notebookName) => {
     });
 });
 electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
-    console.log('GET THE NOTEBOOKS FROM DB.');
     // Bootstrap db with notebooks entry
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
@@ -103,7 +93,6 @@ electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
     });
 });
 electron_1.ipcMain.on(index_1.LOAD_SETTINGS, (event) => {
-    console.log('Query DB to get the application settings.');
     dbMessager.loadSettings()
         .then((settings) => {
         event.sender.send(index_1.LOAD_SETTINGS, settings);
@@ -114,7 +103,6 @@ electron_1.ipcMain.on(index_1.ADD_NOTE, (event, args) => {
     let notebook = args.notebookName;
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
-        console.log('location is: ' + location);
         notebookManager_1.default.addNote(`${location}\\${notebook}`, noteName)
             .then((result) => {
             if (result) {

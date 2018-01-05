@@ -72,7 +72,7 @@ export class Sidebar extends React.Component<Props, State> {
         let data = {notebookName: this.props.notebookName, noteName: name};
         ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
     }
-    
+
     render() {
         return (
             <div className="col-sm-2 sidebar">

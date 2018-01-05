@@ -1,4 +1,4 @@
-import Sidebar from '../../components/NotebookPage/Sidebar/index';
+import Notebook from '../../components/NotebookPage/index';
 import * as actions from '../../actions/';
 import { StoreState } from '../../types/index';
 import { connect, Dispatch } from 'react-redux';
@@ -7,11 +7,9 @@ export function mergeProps(stateProps: Object, dispatchProps: Object, ownProps: 
     return Object.assign({}, ownProps, stateProps, dispatchProps);
 }
 
-export function mapStateToProps({ notes, lastOpenedNote }: StoreState) {
-    console.log(notes);
-    // console.log('lastOpenedNote: ' + lastOpenedNote);
+export function mapStateToProps({ lastOpenedNote }: StoreState) {
+    // console.log('lastOpenedNote Notebook component: ' + lastOpenedNote);
     return {
-        notes,
         lastOpenedNote
     };
 }
@@ -23,4 +21,4 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>)
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Notebook);
