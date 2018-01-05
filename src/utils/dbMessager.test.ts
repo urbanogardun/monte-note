@@ -93,3 +93,13 @@ test('sets lastOpenedNote value for a notebook', done => {
         expect(result).toEqual(true);
     });
 });
+
+test('gets last opened note of a notebook from db', done => {
+    let notebookName = 'testNotebook';
+
+    dbMessager.getLastOpenedNote(notebookName)
+    .then((note: string) => {
+        done();
+        expect(note).toEqual('test-note-23');
+    });
+});

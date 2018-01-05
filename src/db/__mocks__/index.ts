@@ -37,7 +37,7 @@ export class Db {
             } else if (query.name === 'notebooks') {
                 callback(null, {notebooks: ['book-1', 'book-2', 'book-3']});
             } else if ('notebook' in query) {
-                callback(null, {});
+                callback(null, {lastOpenedNote: 'test-note-23'});
             } else {
                 callback();
             }
