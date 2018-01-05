@@ -171,6 +171,16 @@ ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
         notes = NotebookManager.orderNotesBy(result, 'created_at');
         notes = NotebookManager.formatNotes(notes);
         event.sender.send(GET_NOTES, notes);
+
+        dbMessager.getLastOpenedNote(notebook)
+        .then((note: string) => {
+          let data = {
+            notebook: notebook,
+            noteName: note
+          };
+          event.sender.send(UPDATE_NOTE_STATE, data);
+        });
+
       });
     });
   });

@@ -137,6 +137,14 @@ electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
                 notes = notebookManager_1.default.orderNotesBy(result, 'created_at');
                 notes = notebookManager_1.default.formatNotes(notes);
                 event.sender.send(index_1.GET_NOTES, notes);
+                dbMessager.getLastOpenedNote(notebook)
+                    .then((note) => {
+                    let data = {
+                        notebook: notebook,
+                        noteName: note
+                    };
+                    event.sender.send(index_1.UPDATE_NOTE_STATE, data);
+                });
             });
         });
     });

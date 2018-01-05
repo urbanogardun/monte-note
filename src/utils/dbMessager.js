@@ -149,6 +149,23 @@ class DbMessager {
             });
         });
     }
+    /**
+     * Returns name of note that was last opened inside a notebook
+     * @param  {string} notebook
+     * @returns {string}
+     */
+    getLastOpenedNote(notebook) {
+        return new Promise(resolve => {
+            this.db.findOne({ notebook: notebook }, (error, document) => {
+                if (document) {
+                    resolve(document.lastOpenedNote);
+                }
+                else {
+                    resolve(undefined);
+                }
+            });
+        });
+    }
     messageDb() {
         console.log('LOLOLOLO');
         this.db.find({ name: 'notebooks' }, function (err, docs) {
