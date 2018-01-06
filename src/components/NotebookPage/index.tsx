@@ -48,10 +48,10 @@ export class Notebook extends React.Component<Props, State> {
 
             let noteName = this.props.lastOpenedNote;
             let notebookName = this.state.notebookName;
+            let editor = document.querySelector('.ql-editor') as Element;
+            let noteData = editor.innerHTML;
 
             function updateNote() {
-                console.log('Update note');
-                let noteData = document.querySelector('.ql-editor') as Element;
                 let data = {
                     noteName: noteName,
                     notebookName: notebookName,
@@ -67,6 +67,7 @@ export class Notebook extends React.Component<Props, State> {
     }
 
     componentWillUpdate(nextProps: Props) {
+        // Enables/disables Quill editor if any notes exist in a notebook
         if (!nextProps.lastOpenedNote) {
             this.quill.disable();
         } else {
