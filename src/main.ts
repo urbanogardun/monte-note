@@ -155,9 +155,8 @@ ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
       .then((result: any) => {
         notes = NotebookManager.orderNotesBy(result, 'created_at');
         notes = NotebookManager.formatNotes(notes);
-
+        
         event.sender.send(GET_NOTES, notes);
-
         dbMessager.getLastOpenedNote(notebook)
         .then((note: string) => {
           let data = {
@@ -170,11 +169,6 @@ ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
       });
     });
   });
-
-  // TODO: Implement dbMessager.getLastOpenedNote which will get
-  // last opened note and send it when we click on notebook to which
-  // we want to go - use this method in this ipcMain event listener
-
 });
 
 ipcMain.on(UPDATE_NOTE_STATE, (event: any, args: any) => {

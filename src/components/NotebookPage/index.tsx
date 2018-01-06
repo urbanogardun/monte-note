@@ -13,19 +13,23 @@ export interface Props {
 
 export interface State {
     notebookName: string;
+    lastOpenedNote: string;
 }
 
 export class Notebook extends React.Component<Props, State> {
+
+    quill: Quill;
 
     constructor(props: Props) {
         super(props);
         this.state = {
             notebookName: this.props.location.pathname.split('/').pop(),
+            lastOpenedNote: this.props.lastOpenedNote as string,
         };
     }
 
     componentDidMount() {
-        var quill = new Quill('#editor-container', {
+        this.quill = new Quill('#editor-container', {
             modules: {
               toolbar: [
                 ['bold', 'italic', 'underline'],
@@ -36,7 +40,7 @@ export class Notebook extends React.Component<Props, State> {
             theme: 'snow'  // or 'bubble'
         });
 
-        quill.on('text-change', (delta: DeltaStatic, oldContents: DeltaStatic) => {
+        this.quill.on('text-change', (delta: DeltaStatic, oldContents: DeltaStatic) => {
             console.log('text changed!');
             console.log('CONTENT OF EDITOR: ');
             let content = document.querySelector('.ql-editor') as Element;
@@ -45,14 +49,19 @@ export class Notebook extends React.Component<Props, State> {
     }
 
     componentWillMount() {
-        console.log('notebookName: ' + this.state.notebookName);
         ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES, this.state.notebookName);
     }
 
+    componentWillUpdate(nextProps: Props) {
+        if (!nextProps.lastOpenedNote) {
+            this.quill.disable();
+        } else {
+            this.quill.enable();
+            this.quill.focus();
+        }
+    }
+
     render() {
-        // Gets notebook name from the path url
-        console.log('PROPS FOR CURRENT NOTEBOOK PAGE: ');
-        console.log(this.props.lastOpenedNote);
         return (
             <div className="container-fluid">
                 <div className="row">

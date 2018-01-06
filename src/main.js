@@ -131,6 +131,7 @@ electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
                         notebook: notebook,
                         noteName: note
                     };
+                    console.log('last opened note is: ' + note);
                     event.sender.send(index_1.UPDATE_NOTE_STATE, data);
                 });
             });
