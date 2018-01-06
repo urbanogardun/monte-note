@@ -5,6 +5,7 @@ const notebookManager_1 = require("./utils/notebook-management/notebookManager")
 const index_1 = require("./constants/index");
 // import Db from './db/index';
 const dbMessager_1 = require("./utils/dbMessager");
+var path = require('path');
 // let db = new Db().getDb() as Nedb;
 let mainWindow;
 // let notebookManager: NotebookManager;
@@ -146,8 +147,23 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE_STATE, (event, args) => {
     });
 });
 electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
-    console.log('WRITE NOTE CONTENT TO FILE');
-    console.log(JSON.stringify(data));
+    // console.log('WRITE NOTE CONTENT TO FILE');
+    // console.log(JSON.stringify(data));
+    let noteName = data.noteName;
+    let notebookName = data.notebookName;
+    let notebookData = data.noteData;
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        if (location) {
+            let absolutePathToNote = path.join(location, notebookName, noteName + '.html');
+            notebookManager_1.default.updateNoteData(absolutePathToNote, notebookData)
+                .then((result) => {
+                if (result) {
+                    console.log('Note content updated successfully');
+                }
+            });
+        }
+    });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

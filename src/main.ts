@@ -12,6 +12,7 @@ import {
  } from './constants/index';
 // import Db from './db/index';
 import DbMessager from './utils/dbMessager';
+var path = require('path');
 
 // let db = new Db().getDb() as Nedb;
 let mainWindow: Electron.BrowserWindow;
@@ -185,16 +186,25 @@ ipcMain.on(UPDATE_NOTE_STATE, (event: any, args: any) => {
 ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
   // console.log('WRITE NOTE CONTENT TO FILE');
   // console.log(JSON.stringify(data));
-  // let noteName = data.noteName;
-  // let notebookName = data.notebookName;
-  // let notebookData = data.noteData;
+  let noteName = data.noteName;
+  let notebookName = data.notebookName;
+  let notebookData = data.noteData;
 
-  // dbMessager.updateNote(notebookName, noteName, notebookData)
-  // .then((result: boolean) {
-  //   if (result) {
-  //     console.log('Note content updated successfully');
-  //   }
-  // });
+  dbMessager.getFromSettings('notebooksLocation')
+  .then((location: string) => {
+    if (location) {
+
+      let absolutePathToNote = path.join(location, notebookName, noteName + '.html');
+
+      NotebookManager.updateNoteData(absolutePathToNote, notebookData)
+      .then((result: boolean) => {
+        if (result) {
+          console.log('Note content updated successfully');
+        }
+      });
+    
+    }
+  });
 
 });
 

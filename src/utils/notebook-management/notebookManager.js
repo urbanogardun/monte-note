@@ -121,6 +121,18 @@ class NotebookManager {
         });
         return formattedNotes;
     }
+    static updateNoteData(noteLocation, noteData) {
+        return new Promise(resolve => {
+            fs.writeFile(noteLocation, noteData, (err) => {
+                if (err) {
+                    resolve(false);
+                }
+                else {
+                    resolve(true);
+                }
+            });
+        });
+    }
     getNotebooksLocation() {
         return new Promise(resolve => {
             this.DbConnection.getNotebooksLocation()

@@ -132,6 +132,18 @@ export class NotebookManager {
         return formattedNotes;
     }
 
+    static updateNoteData(noteLocation: string, noteData: any) {
+        return new Promise(resolve => {
+            fs.writeFile(noteLocation, noteData, (err: Error) => {
+                if (err) {
+                    resolve(false);
+                } else {
+                    resolve(true);
+                }
+            });
+        });
+    }
+
     constructor() {
         // NotebookManager.directoryToSaveNotebooksAt = saveDir;
         // this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);

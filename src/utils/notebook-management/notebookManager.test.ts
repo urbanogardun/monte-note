@@ -134,6 +134,18 @@ test('pretty formats note list', () => {
   expect(result).toEqual(['fishie-2', 'coffee', 'bikes']);
 });
 
+test('writes data to note', done => {
+  let absolutePathToNote = 'C:\\notebooks\\test-nbook-1\\testNote.html';
+  let noteData = '<h1>Test Content</h1>';
+
+  NotebookManager.updateNoteData(absolutePathToNote, noteData)
+  .then((result: boolean) => {
+    done();
+    expect(result).toEqual(true);
+  });
+
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });
