@@ -39,3 +39,6 @@ export type LAST_OPENED_NOTE = typeof LAST_OPENED_NOTE;
 
 export const UPDATE_NOTE = 'UPDATE_NOTE';
 export type UPDATE_NOTE = typeof UPDATE_NOTE;
+
+export const LOAD_CONTENT_INTO_NOTE = 'LOAD_CONTENT_INTO_NOTE';
+export type LOAD_CONTENT_INTO_NOTE = typeof LOAD_CONTENT_INTO_NOTE;

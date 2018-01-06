@@ -133,6 +133,13 @@ class NotebookManager {
             });
         });
     }
+    static getNoteData(noteLocation) {
+        return new Promise(resolve => {
+            fs.readFile(noteLocation, 'utf8', (err, data) => {
+                resolve(data);
+            });
+        });
+    }
     getNotebooksLocation() {
         return new Promise(resolve => {
             this.DbConnection.getNotebooksLocation()

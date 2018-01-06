@@ -9,6 +9,7 @@ import '../../assets/css/quill.snow.css';
 export interface Props {
     location: any;
     lastOpenedNote?: string;
+    noteContent?: string;
 }
 
 export interface State {
@@ -67,6 +68,10 @@ export class Notebook extends React.Component<Props, State> {
     }
 
     componentWillUpdate(nextProps: Props) {
+        // Load saved content from note file into Quill editor
+        let editor = document.querySelector('.ql-editor') as Element;
+        editor.innerHTML = nextProps.noteContent as string;
+
         // Enables/disables Quill editor if any notes exist in a notebook
         if (!nextProps.lastOpenedNote) {
             this.quill.disable();

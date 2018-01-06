@@ -133,6 +133,13 @@ electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
                         noteName: note
                     };
                     event.sender.send(index_1.UPDATE_NOTE_STATE, data);
+                    if (note) {
+                        let absolutePathToNote = path.join(location, notebook, note + '.html');
+                        notebookManager_1.default.getNoteData(absolutePathToNote)
+                            .then((noteData) => {
+                            event.sender.send(index_1.LOAD_CONTENT_INTO_NOTE, noteData);
+                        });
+                    }
                 });
             });
         });

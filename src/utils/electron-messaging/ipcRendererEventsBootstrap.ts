@@ -2,7 +2,14 @@ import { IpcRenderer, Event } from 'electron';
 import { NOTEBOOK_SAVE_DIRECTORY, GET_NOTEBOOKS } from '../../utils/constants';
 import reduxStore from '../../store/index';
 import * as actions from '../../actions/';
-import { ADD_NOTEBOOK, LOAD_SETTINGS, ADD_NOTE, GET_NOTES, UPDATE_NOTE_STATE } from '../../constants/index';
+import { 
+    ADD_NOTEBOOK, 
+    LOAD_SETTINGS, 
+    ADD_NOTE, 
+    GET_NOTES, 
+    UPDATE_NOTE_STATE, 
+    LOAD_CONTENT_INTO_NOTE 
+} from '../../constants/index';
     
 let ipcRenderer: IpcRenderer;
 
@@ -62,6 +69,10 @@ export function ipcRendererEventsBootstrap() {
         ipcRenderer.on(UPDATE_NOTE_STATE, (event: Event, data: any): void => {
             // console.log('Notebook updated with last opened: ' + JSON.stringify(data));
             reduxStore.dispatch(actions.lastOpenedNote(data.noteName));
+        });
+
+        ipcRenderer.on(LOAD_CONTENT_INTO_NOTE, (event: Event, data: string): void => {
+            reduxStore.dispatch(actions.loadContentIntoNote(data));
         });
 
     } catch (error) {

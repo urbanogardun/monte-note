@@ -38,6 +38,11 @@ export interface LastOpenedNote {
     note: string;
 }
 
+export interface LoadContentIntoNote {
+    type: constants.LOAD_CONTENT_INTO_NOTE;
+    content: string;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -97,5 +102,12 @@ export function lastOpenedNote(note: string): LastOpenedNote {
     return {
         type: constants.LAST_OPENED_NOTE,
         note
+    };
+}
+
+export function loadContentIntoNote(content: string): LoadContentIntoNote {
+    return {
+        type: constants.LOAD_CONTENT_INTO_NOTE,
+        content
     };
 }

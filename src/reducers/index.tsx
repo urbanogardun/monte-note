@@ -1,4 +1,9 @@
-import { EnthusiasmAction, SetNotebooksLocation, NotebooksAction, NoteAction, LastOpenedNoteAction } from '../actions';
+import { EnthusiasmAction, 
+  SetNotebooksLocation, 
+  NotebooksAction, 
+  NoteAction, 
+  LastOpenedNoteAction, 
+  LoadContentIntoNote } from '../actions';
 import { StoreState } from '../types/index';
 import { 
   INCREMENT_ENTHUSIASM, 
@@ -8,7 +13,8 @@ import {
   ADD_NOTEBOOK,
   ADD_NOTE,
   LOAD_NOTES,
-  LAST_OPENED_NOTE } from '../constants/index';
+  LAST_OPENED_NOTE,
+  LOAD_CONTENT_INTO_NOTE } from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -70,8 +76,17 @@ export function lastOpenedNote(state: StoreState, action: LastOpenedNoteAction):
   }
 }
 
+export function noteContent(state: StoreState, action: LoadContentIntoNote): StoreState {
+  switch (action.type) {
+    case LOAD_CONTENT_INTO_NOTE:
+      return action.content as StoreState;
+    default:
+      return '' as StoreState;
+  }
+}
+
 const rootReducers: Reducer<StoreState> = combineReducers(
-  { enthusiasmLevel, notebooksLocation, notebooks, notes, lastOpenedNote }
+  { enthusiasmLevel, notebooksLocation, notebooks, notes, lastOpenedNote, noteContent }
 );
 
 export default rootReducers;

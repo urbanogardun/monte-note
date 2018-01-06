@@ -8,7 +8,8 @@ import {
   ADD_NOTE, 
   GET_NOTES,
   UPDATE_NOTE_STATE,
-  UPDATE_NOTE
+  UPDATE_NOTE,
+  LOAD_CONTENT_INTO_NOTE
  } from './constants/index';
 // import Db from './db/index';
 import DbMessager from './utils/dbMessager';
@@ -166,6 +167,14 @@ ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
             noteName: note
           };
           event.sender.send(UPDATE_NOTE_STATE, data);
+
+          if (note) {
+            let absolutePathToNote = path.join(location, notebook, note + '.html');
+            NotebookManager.getNoteData(absolutePathToNote)
+            .then((noteData: string) => {
+              event.sender.send(LOAD_CONTENT_INTO_NOTE, noteData);
+            });
+          }
         });
 
       });
