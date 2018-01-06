@@ -19,6 +19,7 @@ export interface State {
 export class Notebook extends React.Component<Props, State> {
 
     quill: Quill;
+    timeout: any;
 
     constructor(props: Props) {
         super(props);
@@ -41,10 +42,25 @@ export class Notebook extends React.Component<Props, State> {
         });
 
         this.quill.on('text-change', (delta: DeltaStatic, oldContents: DeltaStatic) => {
-            console.log('text changed!');
-            console.log('CONTENT OF EDITOR: ');
-            let content = document.querySelector('.ql-editor') as Element;
-            console.log(content.innerHTML as string);
+            
+            clearTimeout(this.timeout);
+            this.timeout = setTimeout(updateNote, 60000);
+
+            function updateNote() {
+                console.log('Update note');
+                // let content = document.querySelector('.ql-editor') as Element;
+                // let data = {
+                //     noteName: this.props.lastOpenedNote,
+                //     notebookName: this.state.notebookName,
+                //     noteData: content
+                // };
+                // ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
+            }
+
+            // console.log('text changed!');
+            // console.log('CONTENT OF EDITOR: ');
+            // let content = document.querySelector('.ql-editor') as Element;
+            // console.log(content.innerHTML as string);
         });
     }
 
@@ -69,6 +85,7 @@ export class Notebook extends React.Component<Props, State> {
                     <div className="col-sm">
                         <Link to="/">Home</Link>
                         <h4>Notebook: {this.state.notebookName}</h4>
+                        <h4>Editing Note: {this.props.lastOpenedNote}</h4>
                         <div id="editor-container" />
                     </div>
                 </div>

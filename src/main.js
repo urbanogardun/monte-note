@@ -131,15 +131,11 @@ electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
                         notebook: notebook,
                         noteName: note
                     };
-                    console.log('last opened note is: ' + note);
                     event.sender.send(index_1.UPDATE_NOTE_STATE, data);
                 });
             });
         });
     });
-    // TODO: Implement dbMessager.getLastOpenedNote which will get
-    // last opened note and send it when we click on notebook to which
-    // we want to go - use this method in this ipcMain event listener
 });
 electron_1.ipcMain.on(index_1.UPDATE_NOTE_STATE, (event, args) => {
     let noteName = args.noteName;
