@@ -2,7 +2,7 @@ import * as React from 'react';
 import Sidebar from '../../containers/NotebookPage/Sidebar';
 import { Link } from 'react-router-dom';
 import ElectronMessager from '../../utils/electron-messaging/electronMessager';
-import { GET_NOTES } from '../../constants/index';
+import { GET_NOTES, UPDATE_NOTE } from '../../constants/index';
 import Quill, { DeltaStatic } from 'quill';
 import '../../assets/css/quill.snow.css';
 
@@ -46,21 +46,19 @@ export class Notebook extends React.Component<Props, State> {
             clearTimeout(this.timeout);
             this.timeout = setTimeout(updateNote, 60000);
 
+            let noteName = this.props.lastOpenedNote;
+            let notebookName = this.state.notebookName;
+
             function updateNote() {
                 console.log('Update note');
-                // let content = document.querySelector('.ql-editor') as Element;
-                // let data = {
-                //     noteName: this.props.lastOpenedNote,
-                //     notebookName: this.state.notebookName,
-                //     noteData: content
-                // };
-                // ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
+                let noteData = document.querySelector('.ql-editor') as Element;
+                let data = {
+                    noteName: noteName,
+                    notebookName: notebookName,
+                    noteData: noteData
+                };
+                ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
             }
-
-            // console.log('text changed!');
-            // console.log('CONTENT OF EDITOR: ');
-            // let content = document.querySelector('.ql-editor') as Element;
-            // console.log(content.innerHTML as string);
         });
     }
 

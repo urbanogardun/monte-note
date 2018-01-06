@@ -145,5 +145,9 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE_STATE, (event, args) => {
         event.sender.send(index_1.UPDATE_NOTE_STATE, args);
     });
 });
+electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
+    console.log('WRITE NOTE CONTENT TO FILE');
+    console.log(JSON.stringify(data));
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

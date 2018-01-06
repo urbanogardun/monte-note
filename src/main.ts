@@ -7,7 +7,8 @@ import {
   LOAD_SETTINGS, 
   ADD_NOTE, 
   GET_NOTES,
-  UPDATE_NOTE_STATE
+  UPDATE_NOTE_STATE,
+  UPDATE_NOTE
  } from './constants/index';
 // import Db from './db/index';
 import DbMessager from './utils/dbMessager';
@@ -179,6 +180,22 @@ ipcMain.on(UPDATE_NOTE_STATE, (event: any, args: any) => {
   .then((result: boolean) => {
     event.sender.send(UPDATE_NOTE_STATE, args);
   });
+});
+
+ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
+  // console.log('WRITE NOTE CONTENT TO FILE');
+  // console.log(JSON.stringify(data));
+  // let noteName = data.noteName;
+  // let notebookName = data.notebookName;
+  // let notebookData = data.noteData;
+
+  // dbMessager.updateNote(notebookName, noteName, notebookData)
+  // .then((result: boolean) {
+  //   if (result) {
+  //     console.log('Note content updated successfully');
+  //   }
+  // });
+
 });
 
 // In this file you can include the rest of your app's specific main process
