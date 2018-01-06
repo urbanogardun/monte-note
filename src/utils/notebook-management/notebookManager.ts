@@ -144,6 +144,14 @@ export class NotebookManager {
         });
     }
 
+    static getNoteData(noteLocation: string) {
+        return new Promise(resolve => {
+            fs.readFile(noteLocation, 'utf8', (err: Error, data: any) => {
+                resolve(data);
+            });
+        });
+    }
+
     constructor() {
         // NotebookManager.directoryToSaveNotebooksAt = saveDir;
         // this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);

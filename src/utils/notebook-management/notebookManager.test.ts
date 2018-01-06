@@ -146,6 +146,16 @@ test('writes data to note', done => {
 
 });
 
+test('gets data from note', done => {
+  let absolutePathToNote = 'C:\\notebooks\\test-nbook-1\\testNote.html';
+
+  NotebookManager.getNoteData(absolutePathToNote)
+  .then((result: string) => {
+    done();
+    expect(result).toBeTruthy();
+  });
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

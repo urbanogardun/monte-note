@@ -51,6 +51,10 @@ function stat(path, callback) {
     }, 100);
 }
 
+function readFile(location, encoding, callback) {
+    callback('', 'test-data');
+}
+
 fs.mkdir = mkdir;
 fs.existsSync = existsSync;
 fs.mkdirSync = mkdirSync;
@@ -60,6 +64,7 @@ fs.isDirectory = isDirectory;
 fs.writeFile = writeFile;
 fs.readdir = readdir;
 fs.stat = stat;
+fs.readFile = readFile;
 fs.__setNotebookList = __setNotebookList;
 
 module.exports = fs;
