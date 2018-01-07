@@ -98,7 +98,7 @@ export function loadNotes(notes: string[]): LoadNotes {
     };
 }
 
-export function lastOpenedNote(note: string): LastOpenedNote {
+export function loadLastOpenedNote(note: string): LastOpenedNote {
     return {
         type: constants.LAST_OPENED_NOTE,
         note

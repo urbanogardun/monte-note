@@ -51,7 +51,7 @@ export function notebooks(state: StoreState, action: NotebooksAction): StoreStat
 export function notes(state: StoreState, action: NoteAction): StoreState {
   switch (action.type) {
     case ADD_NOTE:
-      return [...state as StoreState[], action.note] as StoreState;
+      return [...state.notes as StoreState[], action.note] as StoreState;
     case LOAD_NOTES:
       if (action.notes.length) {
         return [...action.notes] as StoreState;
