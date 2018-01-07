@@ -11,7 +11,7 @@ import 'jquery';
 
 import reduxStore from './store/index';
 import { Route } from 'react-router';
-import Notebook from './containers/NotebookPage/index';
+import Notebook from './components/NotebookPage/index';
 
 ReactDOM.render(
   <Provider store={reduxStore}>
