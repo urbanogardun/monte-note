@@ -126,21 +126,21 @@ electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
                 notes = notebookManager_1.default.orderNotesBy(result, 'created_at');
                 notes = notebookManager_1.default.formatNotes(notes);
                 event.sender.send(index_1.GET_NOTES, notes);
-                dbMessager.getLastOpenedNote(notebook)
-                    .then((note) => {
-                    let data = {
-                        notebook: notebook,
-                        noteName: note
-                    };
-                    event.sender.send(index_1.UPDATE_NOTE_STATE, data);
-                    if (note) {
-                        let absolutePathToNote = path.join(location, notebook, note + '.html');
-                        notebookManager_1.default.getNoteData(absolutePathToNote)
-                            .then((noteData) => {
-                            event.sender.send(index_1.LOAD_CONTENT_INTO_NOTE, noteData);
-                        });
-                    }
-                });
+                // dbMessager.getLastOpenedNote(notebook)
+                // .then((note: string) => {
+                //   let data = {
+                //     notebook: notebook,
+                //     noteName: note
+                //   };
+                //   event.sender.send(UPDATE_NOTE_STATE, data);
+                //   if (note) {
+                //     let absolutePathToNote = path.join(location, notebook, note + '.html');
+                //     NotebookManager.getNoteData(absolutePathToNote)
+                //     .then((noteData: string) => {
+                //       event.sender.send(LOAD_CONTENT_INTO_NOTE, noteData);
+                //     });
+                //   }
+                // });
             });
         });
     });

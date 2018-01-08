@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { ADD_NOTE, UPDATE_NOTE_STATE } from '../../../constants/index';
+import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES } from '../../../constants/index';
 
 export interface Props {
     location?: any;
@@ -20,6 +20,7 @@ export class Sidebar extends React.Component<Props, State> {
             showInput: 'hidden',
             inputValue: '',
         };
+        ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES, this.props.notebookName);
     }
 
     showInput() {

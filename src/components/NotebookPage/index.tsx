@@ -1,7 +1,5 @@
 import * as React from 'react';
 import Sidebar from '../../containers/NotebookPage/Sidebar';
-import ElectronMessager from '../../utils/electron-messaging/electronMessager';
-import { GET_NOTES } from '../../constants/index';
 import '../../assets/css/quill.snow.css';
 import Editor from '../../containers/NotebookPage/Editor';
 
@@ -24,10 +22,6 @@ export class Notebook extends React.Component<Props, State> {
             notebookName: this.props.location.pathname.split('/').pop(),
             lastOpenedNote: this.props.lastOpenedNote as string,
         };
-    }
-
-    componentWillMount() {
-        ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES, this.state.notebookName);
     }
 
     render() {
