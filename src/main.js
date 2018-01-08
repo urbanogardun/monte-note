@@ -145,6 +145,18 @@ electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
         });
     });
 });
+electron_1.ipcMain.on(index_1.GET_NOTE_CONTENT, (event, data) => {
+    let notebook = data.notebook;
+    let note = data.note;
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        let absolutePathToNote = path.join(location, notebook, note + '.html');
+        notebookManager_1.default.getNoteData(absolutePathToNote)
+            .then((noteData) => {
+            event.sender.send(index_1.LOAD_CONTENT_INTO_NOTE, noteData);
+        });
+    });
+});
 electron_1.ipcMain.on(index_1.GET_NAME_OF_LAST_OPENED_NOTE, (event, notebook) => {
     dbMessager.getLastOpenedNote(notebook)
         .then((note) => {

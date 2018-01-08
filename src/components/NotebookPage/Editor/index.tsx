@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { UPDATE_NOTE, GET_NAME_OF_LAST_OPENED_NOTE } from '../../../constants/index';
+import { UPDATE_NOTE, GET_NAME_OF_LAST_OPENED_NOTE, GET_NOTE_CONTENT } from '../../../constants/index';
 import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
 
@@ -42,15 +42,17 @@ export class Editor extends React.Component<Props, State> {
             theme: 'snow'  // or 'bubble'
         });
 
-        this.quill.on('text-change', (delta: DeltaStatic, oldContents: DeltaStatic) => {
+        this.quill.on('text-change', (delta: DeltaStatic, oldContents: DeltaStatic, source: any) => {
             
-            clearTimeout(this.timeout);
-            this.timeout = setTimeout(updateNote, 60000);
-
             let noteName = this.props.lastOpenedNote;
             let notebookName = this.state.notebookName;
             let editor = document.querySelector('.ql-editor') as Element;
             let noteData = editor.innerHTML;
+            
+            if (source === 'user') {
+                clearTimeout(this.timeout);
+                this.timeout = setTimeout(updateNote, 60000);
+            }
 
             function updateNote() {
                 let data = {
@@ -65,29 +67,39 @@ export class Editor extends React.Component<Props, State> {
 
     componentWillReceiveProps(nextProps: Props) {
         if ((this.state.lastOpenedNote === null) || (this.state.lastOpenedNote !== nextProps.lastOpenedNote)) {
-            console.log('last opened note is: ' + nextProps.lastOpenedNote);
+            // console.log('last opened note is: ' + nextProps.lastOpenedNote);
             this.setState({lastOpenedNote: nextProps.lastOpenedNote as string});
 
-            // let data = {
-            //     notebook: this.state.notebookName,
-            //     note: this.state.lastOpenedNote
-            // };
-            // ElectronMessager.sendMessageWithIpcRenderer(GET_NOTE_CONTENT, data);
+            let data = {
+                notebook: this.state.notebookName,
+                note: nextProps.lastOpenedNote
+            };
+            ElectronMessager.sendMessageWithIpcRenderer(GET_NOTE_CONTENT, data);
         }
+    }
+
+    shouldComponentUpdate(nextProps: Props, nextState: State) {
+        if (nextProps.noteContent !== 'GETTING_NOTE_CONTENT') {
+            return true;
+        }
+        return false;
     }
 
     componentWillUpdate(nextProps: Props) {
         // Load saved content from note file into Quill editor
-        let editor = document.querySelector('.ql-editor') as Element;
-        editor.innerHTML = nextProps.noteContent as string;
+        // let editor = document.querySelector('.ql-editor') as Element;
+        // editor.innerHTML = nextProps.noteContent as string;
+        console.log('component updated.');
+        this.quill.deleteText(0, this.quill.getLength());
+        this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.noteContent as string, 'api');
 
-        // Enables/disables Quill editor if any notes exist in a notebook
-        if (!nextProps.lastOpenedNote) {
-            this.quill.disable();
-        } else {
-            this.quill.enable();
-            this.quill.focus();
-        }
+        // // Enables/disables Quill editor if any notes exist in a notebook
+        // if (!nextProps.lastOpenedNote) {
+        //     this.quill.disable();
+        // } else {
+        //     this.quill.enable();
+        //     this.quill.focus();
+        // }
     }
 
     render() {
