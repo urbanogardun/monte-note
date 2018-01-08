@@ -67,7 +67,6 @@ export class Editor extends React.Component<Props, State> {
 
     componentWillReceiveProps(nextProps: Props) {
         if ((this.state.lastOpenedNote === null) || (this.state.lastOpenedNote !== nextProps.lastOpenedNote)) {
-            // console.log('last opened note is: ' + nextProps.lastOpenedNote);
             this.setState({lastOpenedNote: nextProps.lastOpenedNote as string});
 
             let data = {
@@ -79,17 +78,14 @@ export class Editor extends React.Component<Props, State> {
     }
 
     shouldComponentUpdate(nextProps: Props, nextState: State) {
-        if (nextProps.noteContent !== 'GETTING_NOTE_CONTENT') {
-            return true;
+        if (nextProps.noteContent === 'GETTING_NOTE_CONTENT') {
+            return false;
         }
-        return false;
+        return true;
     }
 
     componentWillUpdate(nextProps: Props) {
         // Load saved content from note file into Quill editor
-        // let editor = document.querySelector('.ql-editor') as Element;
-        // editor.innerHTML = nextProps.noteContent as string;
-        console.log('component updated.');
         this.quill.deleteText(0, this.quill.getLength());
         this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.noteContent as string, 'api');
 
