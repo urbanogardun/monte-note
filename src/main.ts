@@ -9,7 +9,8 @@ import {
   GET_NOTES,
   UPDATE_NOTE_STATE,
   UPDATE_NOTE,
-  LOAD_CONTENT_INTO_NOTE
+  GET_NAME_OF_LAST_OPENED_NOTE
+  // LOAD_CONTENT_INTO_NOTE
  } from './constants/index';
 // import Db from './db/index';
 import DbMessager from './utils/dbMessager';
@@ -180,6 +181,13 @@ ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
 
       });
     });
+  });
+});
+
+ipcMain.on(GET_NAME_OF_LAST_OPENED_NOTE, (event: any, notebook: any) => {
+  dbMessager.getLastOpenedNote(notebook)
+  .then((note: string) => {
+    event.sender.send(GET_NAME_OF_LAST_OPENED_NOTE, note);
   });
 });
 

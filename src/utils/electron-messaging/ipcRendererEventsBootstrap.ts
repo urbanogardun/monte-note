@@ -8,7 +8,8 @@ import {
     ADD_NOTE, 
     GET_NOTES, 
     UPDATE_NOTE_STATE, 
-    LOAD_CONTENT_INTO_NOTE 
+    LOAD_CONTENT_INTO_NOTE,
+    GET_NAME_OF_LAST_OPENED_NOTE
 } from '../../constants/index';
     
 let ipcRenderer: IpcRenderer;
@@ -73,6 +74,12 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on(LOAD_CONTENT_INTO_NOTE, (event: Event, data: string): void => {
             reduxStore.dispatch(actions.loadContentIntoNote(data));
+        });
+
+        ipcRenderer.on(GET_NAME_OF_LAST_OPENED_NOTE, (event: Event, note: string): void => {
+            // console.log('name of last opened note is: ' + note);
+            // reduxStore.dispatch()
+            reduxStore.dispatch(actions.loadLastOpenedNote(note));
         });
 
     } catch (error) {

@@ -145,6 +145,12 @@ electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
         });
     });
 });
+electron_1.ipcMain.on(index_1.GET_NAME_OF_LAST_OPENED_NOTE, (event, notebook) => {
+    dbMessager.getLastOpenedNote(notebook)
+        .then((note) => {
+        event.sender.send(index_1.GET_NAME_OF_LAST_OPENED_NOTE, note);
+    });
+});
 electron_1.ipcMain.on(index_1.UPDATE_NOTE_STATE, (event, args) => {
     let noteName = args.noteName;
     let notebook = args.notebookName;

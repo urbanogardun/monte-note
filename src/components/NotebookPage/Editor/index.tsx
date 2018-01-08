@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { UPDATE_NOTE } from '../../../constants/index';
+import { UPDATE_NOTE, GET_NAME_OF_LAST_OPENED_NOTE } from '../../../constants/index';
 import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
 
@@ -13,7 +13,7 @@ export interface Props {
 
 export interface State {
     notebookName: string;
-    lastOpenedNote: string;
+    lastOpenedNote: string | null;
 }
 
 export class Editor extends React.Component<Props, State> {
@@ -25,8 +25,9 @@ export class Editor extends React.Component<Props, State> {
         super(props);
         this.state = {
             notebookName: this.props.notebookName,
-            lastOpenedNote: this.props.lastOpenedNote as string,
+            lastOpenedNote: null,
         };
+        ElectronMessager.sendMessageWithIpcRenderer(GET_NAME_OF_LAST_OPENED_NOTE, this.props.notebookName);
     }
 
     componentDidMount() {
@@ -60,6 +61,19 @@ export class Editor extends React.Component<Props, State> {
                 ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
             }
         });
+    }
+
+    componentWillReceiveProps(nextProps: Props) {
+        if ((this.state.lastOpenedNote === null) || (this.state.lastOpenedNote !== nextProps.lastOpenedNote)) {
+            console.log('last opened note is: ' + nextProps.lastOpenedNote);
+            this.setState({lastOpenedNote: nextProps.lastOpenedNote as string});
+
+            // let data = {
+            //     notebook: this.state.notebookName,
+            //     note: this.state.lastOpenedNote
+            // };
+            // ElectronMessager.sendMessageWithIpcRenderer(GET_NOTE_CONTENT, data);
+        }
     }
 
     componentWillUpdate(nextProps: Props) {
