@@ -31,12 +31,13 @@ export class Editor extends React.Component<Props, State> {
     }
 
     componentDidMount() {
+        
         this.quill = new Quill('#editor-container', {
             modules: {
-              toolbar: [
+                toolbar: [
                 ['bold', 'italic', 'underline'],
                 ['image', 'code-block']
-              ]
+                ]
             },
             placeholder: 'Take notes...',
             theme: 'snow'  // or 'bubble'
@@ -63,9 +64,17 @@ export class Editor extends React.Component<Props, State> {
                 ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
             }
         });
+
     }
 
     componentWillReceiveProps(nextProps: Props) {
+        if (nextProps.lastOpenedNote === 'NO_LAST_OPENED_NOTE') {
+            this.quill.disable();
+        } else {
+            this.quill.enable();
+            this.quill.focus();
+        }
+
         if ((this.state.lastOpenedNote === null) || (this.state.lastOpenedNote !== nextProps.lastOpenedNote)) {
             this.setState({lastOpenedNote: nextProps.lastOpenedNote as string});
 
@@ -86,16 +95,12 @@ export class Editor extends React.Component<Props, State> {
 
     componentWillUpdate(nextProps: Props) {
         // Load saved content from note file into Quill editor
-        this.quill.deleteText(0, this.quill.getLength());
-        this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.noteContent as string, 'api');
-
-        // // Enables/disables Quill editor if any notes exist in a notebook
-        // if (!nextProps.lastOpenedNote) {
-        //     this.quill.disable();
-        // } else {
-        //     this.quill.enable();
-        //     this.quill.focus();
-        // }
+        if (this.quill) {
+            this.quill.deleteText(0, this.quill.getLength());
+            this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.noteContent as string, 'api');
+            // Sets cursor to the end of note content
+            this.quill.setSelection(this.quill.getLength(), this.quill.getLength());
+        }
     }
 
     render() {
