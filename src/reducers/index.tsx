@@ -51,7 +51,7 @@ export function notebooks(state: StoreState, action: NotebooksAction): StoreStat
 export function notes(state: StoreState, action: NoteAction): StoreState {
   switch (action.type) {
     case ADD_NOTE:
-      return [...state.notes as StoreState[], action.note] as StoreState;
+      return [...state as StoreState[], action.note] as StoreState;
     case LOAD_NOTES:
       if (action.notes.length) {
         return [...action.notes] as StoreState;
@@ -69,7 +69,7 @@ export function lastOpenedNote(state: StoreState, action: LastOpenedNoteAction):
       if (action.note) {
         return action.note as StoreState;
       } else {
-        return '' as StoreState;
+        return 'NO_LAST_OPENED_NOTE' as StoreState;
       }
     default:
       return state || '' as StoreState;
