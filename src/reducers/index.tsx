@@ -81,7 +81,7 @@ export function noteContent(state: StoreState, action: LoadContentIntoNote): Sto
     case LOAD_CONTENT_INTO_NOTE:
       return action.content as StoreState;
     default:
-      return 'GETTING_NOTE_CONTENT' as StoreState;
+      return '' as StoreState;
   }
 }
 

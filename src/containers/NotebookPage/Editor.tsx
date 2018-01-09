@@ -8,6 +8,8 @@ export function mergeProps(stateProps: Object, dispatchProps: Object, ownProps: 
 }
 
 export function mapStateToProps({ lastOpenedNote, noteContent }: StoreState) {
+    // console.log(noteContent);
+    // console.log(lastOpenedNote);
     return {
         lastOpenedNote,
         noteContent

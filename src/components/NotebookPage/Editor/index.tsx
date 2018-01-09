@@ -31,7 +31,20 @@ export class Editor extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        
+        // After this component gets initialized for the first time it will
+        // receive props whose value will stay the same the next time the
+        // component gets mounted - this means if we go to a notebook, the first
+        // time content of the last opened note will get loaded, but on the 2nd
+        // run it won't. Code below explicitly requests note data for this case.
+        let lastOpenedNote = this.props.lastOpenedNote as string;
+        if (lastOpenedNote.length) {
+            let data = {
+                notebook: this.state.notebookName,
+                note: lastOpenedNote
+            };
+            ElectronMessager.sendMessageWithIpcRenderer(GET_NOTE_CONTENT, data);
+        }
+
         this.quill = new Quill('#editor-container', {
             modules: {
                 toolbar: [
@@ -86,21 +99,16 @@ export class Editor extends React.Component<Props, State> {
         }
     }
 
-    shouldComponentUpdate(nextProps: Props, nextState: State) {
-        if (nextProps.noteContent === 'GETTING_NOTE_CONTENT') {
-            return false;
-        }
-        return true;
-    }
-
     componentWillUpdate(nextProps: Props) {
         // Load saved content from note file into Quill editor
-        if (this.quill) {
-            this.quill.deleteText(0, this.quill.getLength());
-            this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.noteContent as string, 'api');
-            // Sets cursor to the end of note content
-            this.quill.setSelection(this.quill.getLength(), this.quill.getLength());
-        }
+        this.quill.deleteText(0, this.quill.getLength());
+        this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.noteContent as string, 'api');
+        // Sets cursor to the end of note content
+        this.quill.setSelection(this.quill.getLength(), this.quill.getLength());
+    }
+
+    componentWillUnmount() {
+        clearTimeout(this.timeout);
     }
 
     render() {

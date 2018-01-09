@@ -24,6 +24,10 @@ export class Notebook extends React.Component<Props, State> {
         };
     }
 
+    componentWillMount() {
+        this.forceUpdate();
+    }
+
     render() {
         return (
             <div className="container-fluid">
