@@ -1,16 +1,19 @@
 import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES } from '../../../constants/index';
+import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE } from '../../../constants/index';
 
 export interface Props {
     location?: any;
     notebookName: string;
     notes?: string[];
+    noteContent?: string;
+    lastOpenedNote?: string;
 }
 
 export interface State {
     showInput: string;
     inputValue: string;
+    lastOpenedNote: string;
 }
 
 export class Sidebar extends React.Component<Props, State> {
@@ -19,6 +22,7 @@ export class Sidebar extends React.Component<Props, State> {
         this.state = {
             showInput: 'hidden',
             inputValue: '',
+            lastOpenedNote: ''
         };
         ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES, this.props.notebookName);
     }
@@ -70,8 +74,29 @@ export class Sidebar extends React.Component<Props, State> {
     }
 
     updateLastOpenedNote(name: string) {
+        this.setState({lastOpenedNote: this.props.lastOpenedNote as string});
         let data = {notebookName: this.props.notebookName, noteName: name};
         ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
+    }
+
+    componentWillReceiveProps(nextProps: Props) {
+        if ( (nextProps.noteContent !== 'GETTING_NOTE_CONTENT') && (this.state.lastOpenedNote) ) {
+            if ( (this.state.lastOpenedNote) !== (nextProps.lastOpenedNote) ) {
+                let editor = document.querySelector('.ql-editor') as Element;
+                let noteData = editor.innerHTML;
+                let data = {
+                    noteName: this.state.lastOpenedNote,
+                    notebookName: this.props.notebookName,
+                    noteData: noteData
+                };
+                ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
+            }
+
+        }
+    }
+
+    componentWillUnmount() {
+        console.log("We're exiting notebook page. Save content of current note to db.");
     }
 
     render() {
