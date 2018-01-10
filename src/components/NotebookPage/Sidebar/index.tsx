@@ -8,6 +8,8 @@ export interface Props {
     notes?: string[];
     noteContent?: string;
     lastOpenedNote?: string;
+    updateNotes?: (notes: string[]) => void;
+    updateLastOpenedNote?: (note: string) => void;
 }
 
 export interface State {
@@ -86,6 +88,33 @@ export class Sidebar extends React.Component<Props, State> {
         ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
     }
 
+    deleteNote(name: string) {
+        let data = {
+            noteName: name,
+            notebookName: this.props.notebookName,
+            noteData: this.props.noteContent,
+            updateNoteContent: true
+        };
+        // If note we are about to delete is not currently opened one,
+        // don't bother with updating content of note
+        if (this.props.lastOpenedNote !== name) {
+            data.noteData = '';
+            data.updateNoteContent = false;
+        }
+        // ElectronMessager.sendMessageWithIpcRenderer(DELETE_NOTE, data);
+
+        // Removes note from app state & sets last opened note to be the last
+        // note from the notes array
+        let newNotes = removeNote(this.props.notes as string[], name);
+        let updateNotes = this.props.updateNotes as Function;
+        updateNotes(newNotes);
+
+        if (this.props.lastOpenedNote !== name) {
+            let updateLastOpenedNote = this.props.updateLastOpenedNote as Function;
+            updateLastOpenedNote(newNotes.pop());
+        }
+    }
+
     componentWillReceiveProps(nextProps: Props) {
         // Saves current note data when we navigate to another note
         if ( (nextProps.noteContent !== '') && (this.state.lastOpenedNote) ) {
@@ -143,7 +172,12 @@ export class Sidebar extends React.Component<Props, State> {
 
                 <ul>
                     {(this.props.notes as string[]).map((name: string, index: number) => {
-                        return <li onClick={() => this.updateLastOpenedNote(name)} key={index}>{name}</li>;
+                        return (
+                        <div key={name}>
+                            <li onClick={() => this.updateLastOpenedNote(name)}>{name}</li>
+                            <span onClick={() => this.deleteNote(name)}> X</span>
+                        </div>
+                        );
                     })}
                 </ul>
 
@@ -153,3 +187,8 @@ export class Sidebar extends React.Component<Props, State> {
 }
 
 export default Sidebar;
+
+// Helpers
+function removeNote(notesList: string[], noteName: string): string[] {
+    return notesList.filter((note: string) => { return note !== noteName ? true : false; } );
+}

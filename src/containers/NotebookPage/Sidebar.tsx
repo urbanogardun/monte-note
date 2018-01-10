@@ -19,6 +19,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>)
     return {
         onIncrement: () => dispatch(actions.decrementEnthusiasm()),
         onDecrement: () => dispatch(actions.decrementEnthusiasm()),
+        updateNotes: (notes: string[]) => dispatch(actions.loadNotes(notes)),
+        updateLastOpenedNote: (note: string) => dispatch(actions.loadLastOpenedNote(note))
     };
 }
 
