@@ -10,6 +10,7 @@ export interface Props {
     lastOpenedNote?: string;
     updateNotes?: (notes: string[]) => void;
     updateLastOpenedNote?: (note: string) => void;
+    updateNoteContent?: (content: string) => void;
 }
 
 export interface State {
@@ -111,10 +112,13 @@ export class Sidebar extends React.Component<Props, State> {
         let updateNotes = this.props.updateNotes as Function;
         updateNotes(newNotes);
 
-        if (this.props.lastOpenedNote !== name) {
+        if (this.props.lastOpenedNote === name) {
             let updateLastOpenedNote = this.props.updateLastOpenedNote as Function;
             updateLastOpenedNote(newNotes.pop());
         }
+        
+        let updateNoteContent = this.props.updateNoteContent as Function;
+        updateNoteContent(this.props.noteContent);
     }
 
     componentWillReceiveProps(nextProps: Props) {

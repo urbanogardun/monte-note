@@ -20,7 +20,8 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>)
         onIncrement: () => dispatch(actions.decrementEnthusiasm()),
         onDecrement: () => dispatch(actions.decrementEnthusiasm()),
         updateNotes: (notes: string[]) => dispatch(actions.loadNotes(notes)),
-        updateLastOpenedNote: (note: string) => dispatch(actions.loadLastOpenedNote(note))
+        updateLastOpenedNote: (note: string) => dispatch(actions.loadLastOpenedNote(note)),
+        updateNoteContent: (content: string) => dispatch(actions.loadContentIntoNote(content))
     };
 }
 
