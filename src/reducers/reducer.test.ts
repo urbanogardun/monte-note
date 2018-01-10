@@ -51,7 +51,7 @@ it('returns list of notebooks', () => {
 it('adds a note', () => {
     let noteToAdd = 'note-test';
 
-    let result = notes(storeState, addNote(noteToAdd));
+    let result = notes(storeState.notes as StoreState, addNote(noteToAdd));
 
     expect(result).toContain(noteToAdd);
 });
