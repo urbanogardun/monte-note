@@ -78,14 +78,16 @@ export class Sidebar extends React.Component<Props, State> {
     }
 
     updateLastOpenedNote(name: string) {
-        let editor = document.querySelector('.ql-editor') as Element;
-        let noteData = editor.innerHTML;
-        this.setState(
-            {lastOpenedNote: this.props.lastOpenedNote as string,
-            noteContent: noteData}
-        );
-        let data = {notebookName: this.props.notebookName, noteName: name};
-        ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
+        if (this.props.lastOpenedNote !== name) {
+            let editor = document.querySelector('.ql-editor') as Element;
+            let noteData = editor.innerHTML;
+            this.setState(
+                {lastOpenedNote: this.props.lastOpenedNote as string,
+                noteContent: noteData}
+            );
+            let data = {notebookName: this.props.notebookName, noteName: name};
+            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
+        }
     }
 
     deleteNote(name: string) {
