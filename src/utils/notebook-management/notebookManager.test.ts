@@ -1,5 +1,5 @@
 jest.mock('../dbMessager');
-jest.mock('fs');
+jest.mock('fs-extra');
 import NotebookManager from './notebookManager';
 import { DbMessager } from '../dbMessager';
 
@@ -17,7 +17,7 @@ beforeAll(done => {
 
 beforeEach(() => {
   const NOTEBOOK_LIST = [testNotebook, testNotebook];
-  require('fs').__setNotebookList(NOTEBOOK_LIST);
+  require('fs-extra').__setNotebookList(NOTEBOOK_LIST);
 });
 
 test('gets notebook directory location', done => {
@@ -154,6 +154,19 @@ test('gets data from note', done => {
     done();
     expect(result).toBeTruthy();
   });
+});
+
+test('moves note to trash can', done => {
+  let noteName = 'testNote.html';
+  let notebookname = 'test-nbook-1';
+  let notebooksLocation = 'C:\\notebooks';
+
+  NotebookManager.trashNote(notebooksLocation, notebookname, noteName)
+  .then((result: boolean) => {
+    done();
+    expect(result).toEqual(true);
+  });
+
 });
 
 afterEach(() => {

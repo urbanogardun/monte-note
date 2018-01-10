@@ -1,4 +1,4 @@
-const fs = jest.genMockFromModule('fs');
+const fs = jest.genMockFromModule('fs-extra');
 
 // Mocks file list
 let notebookList = [];
@@ -55,6 +55,12 @@ function readFile(location, encoding, callback) {
     callback('', 'test-data');
 }
 
+function move(oldPath, newPath) {
+    return new Promise(resolve => {
+        resolve(true);
+    });
+}
+
 fs.mkdir = mkdir;
 fs.existsSync = existsSync;
 fs.mkdirSync = mkdirSync;
@@ -66,5 +72,6 @@ fs.readdir = readdir;
 fs.stat = stat;
 fs.readFile = readFile;
 fs.__setNotebookList = __setNotebookList;
+fs.move = move;
 
 module.exports = fs;

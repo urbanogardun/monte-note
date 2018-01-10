@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 import DbMessager from '../dbMessager';
 
@@ -148,6 +148,26 @@ export class NotebookManager {
         return new Promise(resolve => {
             fs.readFile(noteLocation, 'utf8', (err: Error, data: any) => {
                 resolve(data);
+            });
+        });
+    }
+    
+    /**
+     * Moves note to trashcan directory
+     * @param  {string} notebooksLocation
+     * @param  {string} notebookName
+     * @param  {string} noteName
+     */
+    static trashNote(notebooksLocation: string, notebookName: string, noteName: string) {
+        let oldPath = path.join(notebooksLocation, notebookName, noteName);
+        let newPath = path.join(notebooksLocation, '.trashcan', notebookName, noteName);
+        return new Promise(resolve => {
+            fs.move(oldPath, newPath)
+            .then(() => {
+                resolve(true);
+            })
+            .catch((err: Error) => {
+                resolve(false);
             });
         });
     }
