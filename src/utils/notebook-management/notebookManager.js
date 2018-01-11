@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const fs = require('fs');
+const fs = require('fs-extra');
 const path = require('path');
 const dbMessager_1 = require("../dbMessager");
 class NotebookManager {
@@ -137,6 +137,25 @@ class NotebookManager {
         return new Promise(resolve => {
             fs.readFile(noteLocation, 'utf8', (err, data) => {
                 resolve(data);
+            });
+        });
+    }
+    /**
+     * Moves note to trashcan directory
+     * @param  {string} notebooksLocation
+     * @param  {string} notebookName
+     * @param  {string} noteName
+     */
+    static trashNote(notebooksLocation, notebookName, noteName) {
+        let oldPath = path.join(notebooksLocation, notebookName, noteName);
+        let newPath = path.join(notebooksLocation, '.trashcan', notebookName, noteName);
+        return new Promise(resolve => {
+            fs.move(oldPath, newPath)
+                .then(() => {
+                resolve(true);
+            })
+                .catch((err) => {
+                resolve(false);
             });
         });
     }
