@@ -204,6 +204,24 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
                     notebookManager_1.default.trashNote(location, notebook, note + '.html')
                         .then((res) => {
                         event.sender.send(index_1.DELETE_NOTE, res);
+                        let notebookLocation = path.join(location, notebook);
+                        notebookManager_1.default.getNotes(notebookLocation)
+                            .then((notes) => {
+                            notebookManager_1.default.getNotesCreationDate(notebookLocation, notes)
+                                .then((response) => {
+                                notes = notebookManager_1.default.orderNotesBy(response, 'created_at');
+                                notes = notebookManager_1.default.formatNotes(notes);
+                                console.log(notes);
+                                let lastCreatedNote = notes.pop();
+                                console.log(lastCreatedNote);
+                                if (lastCreatedNote) {
+                                    dbMessager.setLastOpenedNote(notebook, lastCreatedNote);
+                                }
+                                else {
+                                    dbMessager.setLastOpenedNote(notebook, '');
+                                }
+                            });
+                        });
                     });
                 }
             });
@@ -215,6 +233,11 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
             });
         }
     });
+    // TODO: After successful delete
+    // If we updated a note & deleted it, that means we also need to updated lastOpenedNote
+    // Get a list of all notes in dir
+    // Sort them by date created
+    // Get last item
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

@@ -259,6 +259,25 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
           NotebookManager.trashNote(location, notebook, note + '.html')
           .then((res: boolean) => {
             event.sender.send(DELETE_NOTE, res);
+
+            let notebookLocation = path.join(location, notebook);
+            NotebookManager.getNotes(notebookLocation)
+            .then((notes: string[]) => {
+              NotebookManager.getNotesCreationDate(notebookLocation, notes)
+              .then((response: any) => {
+                notes = NotebookManager.orderNotesBy(response, 'created_at');
+                notes = NotebookManager.formatNotes(notes) as string[];
+
+                let lastCreatedNote = notes.pop();
+                if (lastCreatedNote) {
+                  dbMessager.setLastOpenedNote(notebook, lastCreatedNote);
+                } else {
+                  dbMessager.setLastOpenedNote(notebook, '');
+                }
+
+              });
+            });
+
           });
         }
       });
@@ -270,6 +289,12 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
     }
 
   });
+
+  // TODO: After successful delete
+  // If we updated a note & deleted it, that means we also need to updated lastOpenedNote
+  // Get a list of all notes in dir
+  // Sort them by date created
+  // Get last item
   
 });
 
