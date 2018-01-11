@@ -96,6 +96,7 @@ export class Sidebar extends React.Component<Props, State> {
             noteName: name,
             notebookName: this.props.notebookName,
             noteData: '',
+            updateNoteData: false
         };
 
         // Removes note from app state & sets last opened note to be the last
@@ -104,22 +105,21 @@ export class Sidebar extends React.Component<Props, State> {
         let updateNotes = this.props.updateNotes as Function;
         updateNotes(newNotes);
 
-        // When deleting a currently opened note, save current note data before
-        // deleting it
+        // When deleting a currently opened note, get current note data from
+        // editor
         if (this.props.lastOpenedNote === name) {
             let editor = document.querySelector('.ql-editor') as Element;
             let noteData = editor.innerHTML;
             data.noteData = noteData;
+            data.updateNoteData = true;
             let updateLastOpenedNote = this.props.updateLastOpenedNote as Function;
-            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
             updateLastOpenedNote(newNotes.pop());
         }
         
         let updateNoteContent = this.props.updateNoteContent as Function;
         updateNoteContent(this.props.noteContent);
 
-        let noteToDelete = {note: data.noteName, notebook: data.notebookName};
-        ElectronMessager.sendMessageWithIpcRenderer(DELETE_NOTE, noteToDelete);
+        ElectronMessager.sendMessageWithIpcRenderer(DELETE_NOTE, data);
     }
 
     componentWillReceiveProps(nextProps: Props) {
