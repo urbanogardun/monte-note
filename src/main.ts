@@ -244,8 +244,33 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
 });
 
 ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
+  let note = data.noteName;
+  let notebook = data.notebookName;
+
   console.log('DELETE NOTE');
-  console.log(data);
+  dbMessager.getFromSettings('notebooksLocation')
+  .then((location: string) => {
+
+    let noteLocation = path.join(location, notebook, note + '.html');
+    if (data.updateNoteData) {
+      NotebookManager.updateNoteData(noteLocation, data.noteData)
+      .then((result: boolean) => {
+        if (result) {
+          NotebookManager.trashNote(location, notebook, note + '.html')
+          .then((res: boolean) => {
+            event.sender.send(DELETE_NOTE, res);
+          });
+        }
+      });
+    } else {
+      NotebookManager.trashNote(location, notebook, note)
+      .then((res: boolean) => {
+        event.sender.send(DELETE_NOTE, res);
+      });
+    }
+
+  });
+  
 });
 
 // In this file you can include the rest of your app's specific main process

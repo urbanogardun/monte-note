@@ -9,7 +9,8 @@ import {
     GET_NOTES, 
     UPDATE_NOTE_STATE, 
     LOAD_CONTENT_INTO_NOTE,
-    GET_NAME_OF_LAST_OPENED_NOTE
+    GET_NAME_OF_LAST_OPENED_NOTE,
+    DELETE_NOTE
 } from '../../constants/index';
     
 let ipcRenderer: IpcRenderer;
@@ -80,6 +81,10 @@ export function ipcRendererEventsBootstrap() {
             // console.log('name of last opened note is: ' + note);
             // reduxStore.dispatch()
             reduxStore.dispatch(actions.loadLastOpenedNote(note));
+        });
+
+        ipcRenderer.on(DELETE_NOTE, (event: Event, result: boolean): void => {
+            console.log('Note deleted: ' + result);
         });
 
     } catch (error) {

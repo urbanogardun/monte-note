@@ -191,8 +191,30 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
     });
 });
 electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
+    let note = data.noteName;
+    let notebook = data.notebookName;
     console.log('DELETE NOTE');
-    console.log(data);
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        let noteLocation = path.join(location, notebook, note + '.html');
+        if (data.updateNoteData) {
+            notebookManager_1.default.updateNoteData(noteLocation, data.noteData)
+                .then((result) => {
+                if (result) {
+                    notebookManager_1.default.trashNote(location, notebook, note + '.html')
+                        .then((res) => {
+                        event.sender.send(index_1.DELETE_NOTE, res);
+                    });
+                }
+            });
+        }
+        else {
+            notebookManager_1.default.trashNote(location, notebook, note)
+                .then((res) => {
+                event.sender.send(index_1.DELETE_NOTE, res);
+            });
+        }
+    });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 
