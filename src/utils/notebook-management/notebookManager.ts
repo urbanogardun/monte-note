@@ -80,7 +80,7 @@ export class NotebookManager {
             .forEach((note: string, index: number) => {
                 fs.stat(note, (err: Error, stats: any) => {
                     itemsProcessed++;
-                    data[notes[index]] = {created_at: stats.ctime};
+                    data[notes[index]] = {created_at: stats.birthtime};
                     
                     if (itemsProcessed === notes.length) {
                         resolve(data);

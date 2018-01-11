@@ -211,9 +211,7 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
                                 .then((response) => {
                                 notes = notebookManager_1.default.orderNotesBy(response, 'created_at');
                                 notes = notebookManager_1.default.formatNotes(notes);
-                                console.log(notes);
                                 let lastCreatedNote = notes.pop();
-                                console.log(lastCreatedNote);
                                 if (lastCreatedNote) {
                                     dbMessager.setLastOpenedNote(notebook, lastCreatedNote);
                                 }

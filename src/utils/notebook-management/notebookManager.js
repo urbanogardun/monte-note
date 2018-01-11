@@ -77,7 +77,7 @@ class NotebookManager {
                 .forEach((note, index) => {
                 fs.stat(note, (err, stats) => {
                     itemsProcessed++;
-                    data[notes[index]] = { created_at: stats.ctime };
+                    data[notes[index]] = { created_at: stats.birthtime };
                     if (itemsProcessed === notes.length) {
                         resolve(data);
                     }
