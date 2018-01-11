@@ -1,10 +1,9 @@
-// import * as React from 'react';
-// import * as enzyme from 'enzyme';
-// import NotebooksList from './NotebooksList';
+import * as React from 'react';
+import * as enzyme from 'enzyme';
+import NotebooksList from './NotebooksList';
 
-// const wrapper = enzyme.shallow(<NotebooksList notebooks={['book-1', 'book-2']} />);
-// const instance = wrapper.instance() as NotebooksList; // explicitly declare type
+const wrapper = enzyme.shallow(<NotebooksList notebooks={['book-1', 'book-2']} />);
 
 it('renders list of notebooks', () => {
-  expect(true).toEqual(true);
+  expect(wrapper.find('ul').children().length).toEqual(2);
 });

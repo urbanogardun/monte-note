@@ -14,7 +14,6 @@ import {
   LOAD_CONTENT_INTO_NOTE,
   DELETE_NOTE
  } from './constants/index';
-// import Db from './db/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
 
