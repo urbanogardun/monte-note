@@ -48,3 +48,6 @@ export type GET_NAME_OF_LAST_OPENED_NOTE = typeof GET_NAME_OF_LAST_OPENED_NOTE;
 
 export const GET_NOTE_CONTENT = 'GET_NOTE_CONTENT';
 export type GET_NOTE_CONTENT = typeof GET_NOTE_CONTENT;
+
+export const DELETE_NOTE = 'DELETE_NOTE';
+export type DELETE_NOTE = typeof DELETE_NOTE;

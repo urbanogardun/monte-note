@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE } from '../../../constants/index';
+import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE, DELETE_NOTE } from '../../../constants/index';
 
 export interface Props {
     location?: any;
@@ -117,6 +117,9 @@ export class Sidebar extends React.Component<Props, State> {
         
         let updateNoteContent = this.props.updateNoteContent as Function;
         updateNoteContent(this.props.noteContent);
+
+        let noteToDelete = {note: data.noteName, notebook: data.notebookName};
+        ElectronMessager.sendMessageWithIpcRenderer(DELETE_NOTE, noteToDelete);
     }
 
     componentWillReceiveProps(nextProps: Props) {

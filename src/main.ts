@@ -11,7 +11,8 @@ import {
   UPDATE_NOTE,
   GET_NAME_OF_LAST_OPENED_NOTE,
   GET_NOTE_CONTENT,
-  LOAD_CONTENT_INTO_NOTE
+  LOAD_CONTENT_INTO_NOTE,
+  DELETE_NOTE
  } from './constants/index';
 // import Db from './db/index';
 import DbMessager from './utils/dbMessager';
@@ -240,6 +241,11 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
     }
   });
 
+});
+
+ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
+  console.log('DELETE NOTE');
+  console.log(data);
 });
 
 // In this file you can include the rest of your app's specific main process

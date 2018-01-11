@@ -190,5 +190,9 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
         }
     });
 });
+electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
+    console.log('DELETE NOTE');
+    console.log(data);
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 
