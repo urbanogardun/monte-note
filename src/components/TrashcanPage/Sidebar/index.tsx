@@ -13,6 +13,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
     }
 
     render() {
+        console.log(this.props);
         return (
             <div className="col-2 trashcan sidebar">
                 <Link className="home-sidebar" to="/">
@@ -39,11 +40,16 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                 </div>
                                 <div className="collapse notes-sidebar" id={notebook}>
                                     <ul className="list-group notes">
-                                        <li className="list-group-item sidebar-note">Cras justo odio</li>
-                                        <li className="list-group-item sidebar-note">Dapibus ac facilisis in</li>
-                                        <li className="list-group-item sidebar-note">Morbi leo risus</li>
-                                        <li className="list-group-item sidebar-note">Porta ac consectetur ac</li>
-                                        <li className="list-group-item sidebar-note">Vestibulum at eros</li>
+                                        {(this.props.trash[notebook].map((note: string) => {
+                                            return (
+                                                <li 
+                                                    key={note} 
+                                                    className="list-group-item sidebar-note"
+                                                >
+                                                {note}
+                                                </li>
+                                            );
+                                        }))}
                                     </ul>
                                 </div>
                             </div>
