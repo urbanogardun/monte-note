@@ -12,7 +12,7 @@ a.home-sidebar {
 .sidebar {
     padding: 0px;
     padding-top: 50px;
-    height: 100%;
+    height: 100vh;
     min-width: 200px;
 }
 
