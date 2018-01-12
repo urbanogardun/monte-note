@@ -43,6 +43,11 @@ export interface LoadContentIntoNote {
     content: string;
 }
 
+export interface LoadTrash {
+    type: constants.LOAD_TRASH;
+    content: any;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -108,6 +113,13 @@ export function loadLastOpenedNote(note: string): LastOpenedNote {
 export function loadContentIntoNote(content: string): LoadContentIntoNote {
     return {
         type: constants.LOAD_CONTENT_INTO_NOTE,
+        content
+    };
+}
+
+export function loadTrash(content: any): LoadTrash {
+    return {
+        type: constants.LOAD_TRASH,
         content
     };
 }

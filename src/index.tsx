@@ -13,7 +13,7 @@ import 'jquery';
 import reduxStore from './store/index';
 import { Route } from 'react-router';
 import Notebook from './components/NotebookPage/index';
-import Trashcan from './components/TrashcanPage/index';
+import Trashcan from './containers/TrashcanPage/index';
 
 ReactDOM.render(
   <Provider store={reduxStore}>

@@ -89,8 +89,7 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(GET_TRASH, (event: Event, data: object) => {
-            console.log('Received trash content');
-            console.log(data);
+            reduxStore.dispatch(actions.loadTrash(data));
         });
 
     } catch (error) {
