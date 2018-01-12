@@ -197,7 +197,7 @@ export class NotebookManager {
 
                 for (let i = 0; i < notebooks.length; i++) {
                     const notebook = notebooks[i];
-                    data[notebook] = notes[i];
+                    data[notebook] = NotebookManager.formatNotes(notes[i]);
                 }
 
                 resolve(data);

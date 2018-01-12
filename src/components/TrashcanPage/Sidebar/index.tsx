@@ -35,7 +35,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                     aria-expanded="false"
                                 >
                                     {notebook}
-                                <span className="oi oi-chevron-bottom expand-notebook" />
+                                    <span className="oi oi-chevron-bottom expand-notebook" />
                                     <span className="oi oi-chevron-left expand-notebook" />
                                 </div>
                                 <div className="collapse notes-sidebar" id={notebook}>
