@@ -51,3 +51,6 @@ export type GET_NOTE_CONTENT = typeof GET_NOTE_CONTENT;
 
 export const DELETE_NOTE = 'DELETE_NOTE';
 export type DELETE_NOTE = typeof DELETE_NOTE;
+
+export const GET_TRASH = 'GET_TRASH';
+export type GET_TRASH = typeof GET_TRASH;

@@ -2,6 +2,8 @@ import * as React from 'react';
 import TrashcanEditor from './Editor/index';
 import TrashcanSidebar from './Sidebar/index';
 import './index.css';
+import electronMessager from '../../utils/electron-messaging/electronMessager';
+import { GET_TRASH } from '../../constants/index';
 
 export interface Props {}
 
@@ -11,6 +13,10 @@ export class Trashcan extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
+    }
+
+    componentWillMount() {
+        electronMessager.sendMessageWithIpcRenderer(GET_TRASH);
     }
 
     render() {

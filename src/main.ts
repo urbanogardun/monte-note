@@ -12,7 +12,8 @@ import {
   GET_NAME_OF_LAST_OPENED_NOTE,
   GET_NOTE_CONTENT,
   LOAD_CONTENT_INTO_NOTE,
-  DELETE_NOTE
+  DELETE_NOTE,
+  GET_TRASH
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -288,13 +289,20 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
     }
 
   });
-
   // TODO: After successful delete
   // If we updated a note & deleted it, that means we also need to updated lastOpenedNote
   // Get a list of all notes in dir
   // Sort them by date created
   // Get last item
   
+});
+
+ipcMain.on(GET_TRASH, (event: any, args: any) => {
+  console.log('GET TRASH for Trashcan component!');
+
+  // Get notebooks from trashcan
+  // For each notebook in trashcan, get notes in trashcan
+  // Return object {notebook: [note1, note2], notebook2: [note1]}
 });
 
 // In this file you can include the rest of your app's specific main process

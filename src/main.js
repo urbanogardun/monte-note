@@ -236,5 +236,8 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
     // Sort them by date created
     // Get last item
 });
+electron_1.ipcMain.on(index_1.GET_TRASH, (event, args) => {
+    console.log('GET TRASH for Trashcan component!');
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 
