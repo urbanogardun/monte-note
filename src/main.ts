@@ -298,11 +298,13 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
 });
 
 ipcMain.on(GET_TRASH, (event: any, args: any) => {
-  console.log('GET TRASH for Trashcan component!');
-
-  // Get notebooks from trashcan
-  // For each notebook in trashcan, get notes in trashcan
-  // Return object {notebook: [note1, note2], notebook2: [note1]}
+  dbMessager.getFromSettings('notebooksLocation')
+  .then((location: string) => {
+    NotebookManager.getTrash(location)
+    .then((data: object) => {
+      event.sender.send(GET_TRASH, data);
+    });
+  });
 });
 
 // In this file you can include the rest of your app's specific main process

@@ -237,7 +237,13 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
     // Get last item
 });
 electron_1.ipcMain.on(index_1.GET_TRASH, (event, args) => {
-    console.log('GET TRASH for Trashcan component!');
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        notebookManager_1.default.getTrash(location)
+            .then((data) => {
+            event.sender.send(index_1.GET_TRASH, data);
+        });
+    });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

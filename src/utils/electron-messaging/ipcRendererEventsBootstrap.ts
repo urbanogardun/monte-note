@@ -10,7 +10,8 @@ import {
     UPDATE_NOTE_STATE, 
     LOAD_CONTENT_INTO_NOTE,
     GET_NAME_OF_LAST_OPENED_NOTE,
-    DELETE_NOTE
+    DELETE_NOTE,
+    GET_TRASH
 } from '../../constants/index';
     
 let ipcRenderer: IpcRenderer;
@@ -85,6 +86,11 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on(DELETE_NOTE, (event: Event, result: boolean): void => {
             console.log('Note deleted: ' + result);
+        });
+
+        ipcRenderer.on(GET_TRASH, (event: Event, data: object) => {
+            console.log('Received trash content');
+            console.log(data);
         });
 
     } catch (error) {
