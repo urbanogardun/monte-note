@@ -169,6 +169,18 @@ test('moves note to trash can', done => {
 
 });
 
+test('gets notes mapped to corresponding notebooks from .trashcan directory', done => {
+  let notebooksLocation = 'C:\\notebooks\\';
+  let trashedNotebook = 'chemistry';
+
+  NotebookManager.getTrash(notebooksLocation)
+  .then((result: object) => {
+    done();
+    expect(result).toHaveProperty(trashedNotebook);
+  });
+
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

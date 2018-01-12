@@ -172,6 +172,40 @@ export class NotebookManager {
         });
     }
 
+    /**
+     * Gets trashed notes mapped to their corresponding notebooks
+     * @param  {string} notebooksLocation - location where notebooks get saved
+     */
+    static getTrash(notebooksLocation: string) {
+        return new Promise(resolve => {
+            let pathToTrash = path.join(notebooksLocation, '.trashcan');
+            // Get all notebooks in trashcan
+            let notebooks = NotebookManager.getNotebooks(pathToTrash);
+
+            // Collect trashed notes for each notebook in trashcan
+            let promisesToResolve: any = [];
+
+            for (let i = 0; i < notebooks.length; i++) {
+                const notebook = path.join(pathToTrash, notebooks[i]);
+                promisesToResolve.push(NotebookManager.getNotes(notebook));
+            }
+
+            // Map trashed notes to their corresponding notebooks
+            let data = {};
+            Promise.all(promisesToResolve)
+            .then((notes: any) => {
+
+                for (let i = 0; i < notebooks.length; i++) {
+                    const notebook = notebooks[i];
+                    data[notebook] = notes[i];
+                }
+
+                resolve(data);
+            });
+
+        });
+    }
+
     constructor() {
         // NotebookManager.directoryToSaveNotebooksAt = saveDir;
         // this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);
