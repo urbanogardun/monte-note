@@ -1,0 +1,86 @@
+/* Trashcan sidebar */
+
+a.home-sidebar {
+    text-decoration: none;
+    color: inherit;
+}
+
+.trashcan-container {
+    min-width: 800px;
+}
+
+.sidebar {
+    padding: 0px;
+    padding-top: 50px;
+    height: 100%;
+    min-width: 200px;
+}
+
+section.notebooks {
+    margin-top: 20px;
+}
+
+.sidebar, ul.notes, li.sidebar-note {
+    background-color: #282E3F;
+    color: #9EA6C2;
+}
+
+div.notebook-name-sidebar {
+    text-transform: capitalize;
+    text-align: left;
+    font-size: 1em;
+    padding: 10px;
+    padding-right: 20px;
+    cursor: pointer;
+}
+
+li.sidebar-note {
+    cursor: pointer;
+}
+
+li.list-group-item {
+    border: none;
+}
+
+.expand-notebook {
+    float: right;
+}
+
+li:hover {
+    color: #fff;
+    background-color: #1E2230;
+}
+
+div.notebook-name-sidebar {
+    height: 44px;
+}
+
+span.expand-notebook {
+    line-height: 22px;
+    vertical-align: middle;
+}
+
+div.notebook-name-sidebar:hover {
+    background-color: #1E2230;
+    color: #fff;
+}
+
+div.notebook-name-sidebar[aria-expanded=true] {
+    color: #fff;
+}
+
+div[aria-expanded=true] .oi-chevron-left {
+    display: none;
+}
+
+div[aria-expanded=false] .oi-chevron-left {
+    display: inline;
+}
+
+div[aria-expanded=true] .oi-chevron-bottom {
+    display: inline;
+}
+
+div[aria-expanded=false] .oi-chevron-bottom {
+    display: none;
+}

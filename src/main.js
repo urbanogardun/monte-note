@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
 const notebookManager_1 = require("./utils/notebook-management/notebookManager");
 const index_1 = require("./constants/index");
-// import Db from './db/index';
 const dbMessager_1 = require("./utils/dbMessager");
 var path = require('path');
 // let db = new Db().getDb() as Nedb;

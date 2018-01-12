@@ -31,7 +31,11 @@ export class NotebooksList extends React.Component<Props, State> {
                 <Link to="/notebooks/about">Link to Notebook</Link>
                 <ul>
                     {(this.props.notebooks as string[]).map((name: string, index: number) => {
-                        return <Link to={`/notebooks/${name}`} key={name}><li>{name}</li></Link>;
+                        if (name === '.trashcan') {
+                            return <Link to={`/trashcan`} key={name}><li>{name}</li></Link>;
+                        } else {
+                            return <Link to={`/notebooks/${name}`} key={name}><li>{name}</li></Link>;
+                        }
                     })}
                 </ul>
             </div>
