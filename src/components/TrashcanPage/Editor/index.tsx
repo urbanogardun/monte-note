@@ -18,11 +18,24 @@ export class TrashcanEditor extends React.Component<Props, State> {
     componentDidMount() {
         this.quill = new Quill('#quill-container', {
             modules: {
-                toolbar: []
+                toolbar: [
+                    ['omega']
+                ]
             },
             theme: 'snow'  // or 'bubble',
         });
         this.quill.disable();
+
+        let toolbar = this.quill.getModule('toolbar');
+        toolbar.addHandler('omega');
+
+        // Adds text on hover & custom icon to button
+        let customButton = document.querySelector('.ql-omega') as Element;
+        customButton.setAttribute('title', 'Restore note');
+        customButton.innerHTML = '<span class="oi oi-loop-square quill-custom-button"></span>';
+        customButton.addEventListener('click', function() {
+            console.log('Restore note');
+        });
     }
 
     componentWillUpdate(nextProps: Props) {

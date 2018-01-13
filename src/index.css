@@ -1,3 +1,7 @@
 html, body, div#root, div#app, div.trashcan, div.row, div.trashcan-container {
   height: 100%;
 }
+
+.quill-custom-button {
+  vertical-align: top;
+}
