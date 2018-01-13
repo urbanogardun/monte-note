@@ -14,7 +14,8 @@ import {
   LOAD_CONTENT_INTO_NOTE,
   DELETE_NOTE,
   GET_TRASH,
-  GET_NOTE_FROM_TRASH
+  GET_NOTE_FROM_TRASH,
+  RESTORE_NOTE_FROM_TRASH
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -323,6 +324,20 @@ ipcMain.on(GET_NOTE_FROM_TRASH, (event: any, data: any) => {
         data: noteData
       };
       event.sender.send(GET_NOTE_FROM_TRASH, noteInfo);
+    });
+  });
+});
+
+ipcMain.on(RESTORE_NOTE_FROM_TRASH, (event: any, data: any) => {
+  let note = data.note;
+  let notebook = data.notebook;
+
+  console.log(`Restore note: ${note} from notebook: ${notebook}`);
+  dbMessager.getFromSettings('notebooksLocation')
+  .then((location: string) => {
+    NotebookManager.restoreNoteFromTrash(location, notebook, note + '.html')
+    .then((result: boolean) => {
+      event.sender.send(RESTORE_NOTE_FROM_TRASH, result);
     });
   });
 });

@@ -262,5 +262,17 @@ electron_1.ipcMain.on(index_1.GET_NOTE_FROM_TRASH, (event, data) => {
         });
     });
 });
+electron_1.ipcMain.on(index_1.RESTORE_NOTE_FROM_TRASH, (event, data) => {
+    let note = data.note;
+    let notebook = data.notebook;
+    console.log(`Restore note: ${note} from notebook: ${notebook}`);
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        notebookManager_1.default.restoreNoteFromTrash(location, notebook, note + '.html')
+            .then((result) => {
+            event.sender.send(index_1.RESTORE_NOTE_FROM_TRASH, result);
+        });
+    });
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

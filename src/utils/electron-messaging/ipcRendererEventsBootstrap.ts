@@ -12,7 +12,8 @@ import {
     GET_NAME_OF_LAST_OPENED_NOTE,
     DELETE_NOTE,
     GET_TRASH,
-    GET_NOTE_FROM_TRASH
+    GET_NOTE_FROM_TRASH,
+    RESTORE_NOTE_FROM_TRASH
 } from '../../constants/index';
     
 let ipcRenderer: IpcRenderer;
@@ -98,6 +99,11 @@ export function ipcRendererEventsBootstrap() {
             reduxStore.dispatch(actions.loadContentIntoNote(args.data));
             reduxStore.dispatch(actions.loadLastOpenedTrashNote(args.note));
             reduxStore.dispatch(actions.loadLastOpenedTrashNotebook(args.notebook));
+        });
+
+        ipcRenderer.on(RESTORE_NOTE_FROM_TRASH, (event: Event, result: boolean): void => {
+            console.log('RESTORED NOTE!');
+            console.log(result);
         });
 
     } catch (error) {

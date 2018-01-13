@@ -181,6 +181,19 @@ test('gets notes mapped to corresponding notebooks from .trashcan directory', do
 
 });
 
+test('restores note from .trashcan directory', done => {
+  let noteName = 'testNote.html';
+  let notebookname = 'test-nbook-1';
+  let notebooksLocation = 'C:\\notebooks';
+
+  NotebookManager.restoreNoteFromTrash(notebooksLocation, notebookname, noteName)
+  .then((result: boolean) => {
+    done();
+    expect(result).toEqual(true);
+  });
+
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

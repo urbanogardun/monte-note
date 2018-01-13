@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Quill from 'quill';
-// import electronMessager from '../../../utils/electron-messaging/electronMessager';
+import electronMessager from '../../../utils/electron-messaging/electronMessager';
+import { RESTORE_NOTE_FROM_TRASH } from '../../../constants/index';
 
 export interface Props {
     noteContent?: string;
@@ -55,7 +56,12 @@ export class TrashcanEditor extends React.Component<Props, State> {
         // Ping ipcMain with notebook name & note name
         // Restore the note based on that data
         // Update app state (remove note that got restored from trashcan items)
+        let data = {
+            note: this.props.note,
+            notebook: this.props.notebook
+        };
         console.log(this.props);
+        electronMessager.sendMessageWithIpcRenderer(RESTORE_NOTE_FROM_TRASH, data);
     }
 
     componentWillUpdate(nextProps: Props) {

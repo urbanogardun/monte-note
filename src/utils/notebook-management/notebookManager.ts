@@ -172,6 +172,20 @@ export class NotebookManager {
         });
     }
 
+    static restoreNoteFromTrash(notebooksLocation: string, notebookName: string, noteName: string) {
+        let oldPath = path.join(notebooksLocation, '.trashcan', notebookName, noteName);
+        let newPath = path.join(notebooksLocation, notebookName, noteName);
+        return new Promise(resolve => {
+            fs.move(oldPath, newPath)
+            .then(() => {
+                resolve(true);
+            })
+            .catch((err: Error) => {
+                resolve(false);
+            });
+        });
+    }
+
     /**
      * Gets trashed notes mapped to their corresponding notebooks
      * @param  {string} notebooksLocation - location where notebooks get saved
