@@ -83,7 +83,10 @@ export class TrashcanEditor extends React.Component<Props, State> {
     componentWillUpdate(nextProps: Props) {
         // Anytime we switch between notes, load note content inside editor
         this.quill.deleteText(0, this.quill.getLength());
-        this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.noteContent as string, 'api');
+        // Don't load content into editor unless user clicked on a trashed note
+        if ( (nextProps.notebook !== '') && (nextProps.note !== '') ) {
+            this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.noteContent as string, 'api');
+        }
     }
 
     render() {
