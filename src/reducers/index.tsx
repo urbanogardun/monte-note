@@ -83,7 +83,7 @@ export function noteContent(state: StoreState, action: LoadContentIntoNote): Sto
     case LOAD_CONTENT_INTO_NOTE:
       return action.content as StoreState;
     default:
-      return '' as StoreState;
+      return state || '' as StoreState;
   }
 }
 
@@ -92,7 +92,7 @@ export function trash(state: StoreState, action: LoadTrash): StoreState {
     case LOAD_TRASH:
       return action.content as StoreState;
     default:
-      return {} as StoreState;
+      return state || {} as StoreState;
   }
 }
 

@@ -22,6 +22,7 @@ export class Trashcan extends React.Component<Props, State> {
     }
 
     render() {
+        console.log(this.props);
         return (
             <div className="container-fluid trashcan-container">
                 <div className="row">

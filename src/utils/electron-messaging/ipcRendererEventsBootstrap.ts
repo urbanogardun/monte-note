@@ -94,7 +94,8 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(GET_NOTE_FROM_TRASH, (event: Event, data: string): void => {
-            console.log(data);
+            // reduxStore.dispatch(actions.loadNoteFromTrash(data));
+            reduxStore.dispatch(actions.loadContentIntoNote(data));
         });
 
     } catch (error) {
