@@ -17,7 +17,8 @@ import {
   LAST_OPENED_NOTE,
   LOAD_CONTENT_INTO_NOTE,
   LOAD_TRASH,
-  LOAD_LAST_OPENED_TRASH_NOTE } from '../constants/index';
+  LOAD_LAST_OPENED_TRASH_NOTE,
+  LOAD_LAST_OPENED_TRASH_NOTEBOOK } from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -102,12 +103,31 @@ export function lastOpenedTrashNote(state: StoreState, action: TrashAction): Sto
     case LOAD_LAST_OPENED_TRASH_NOTE:
       return action.note as StoreState;
     default:
-      return '' as StoreState;
+      return state || '' as StoreState;
+  }
+}
+
+export function lastOpenedTrashNotebook(state: StoreState, action: TrashAction): StoreState {
+  switch (action.type) {
+    case LOAD_LAST_OPENED_TRASH_NOTEBOOK:
+      return action.notebook as StoreState;
+    default:
+      return state || '' as StoreState;
   }
 }
 
 const rootReducers: Reducer<StoreState> = combineReducers(
-  { enthusiasmLevel, notebooksLocation, notebooks, notes, lastOpenedNote, noteContent, trash, lastOpenedTrashNote }
+  { 
+    enthusiasmLevel, 
+    notebooksLocation, 
+    notebooks, 
+    notes, 
+    lastOpenedNote, 
+    noteContent, 
+    trash, 
+    lastOpenedTrashNote, 
+    lastOpenedTrashNotebook 
+  }
 );
 
 export default rootReducers;

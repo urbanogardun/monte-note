@@ -7,4 +7,5 @@ export interface StoreState {
     noteContent?: string;
     trash?: any;
     lastOpenedTrashNote?: string;
+    lastOpenedTrashNotebook?: string;
 }

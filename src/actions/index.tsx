@@ -53,6 +53,11 @@ export interface LoadLastOpenedTrashNote {
     note: string;
 }
 
+export interface LoadLastOpenedTrashNotebook {
+    type: constants.LOAD_LAST_OPENED_TRASH_NOTEBOOK;
+    notebook: string;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -61,7 +66,7 @@ export type NoteAction = AddNote | LoadNotes;
 
 export type LastOpenedNoteAction = LastOpenedNote;
 
-export type TrashAction = LoadTrash | LoadLastOpenedTrashNote;
+export type TrashAction = LoadTrash | LoadLastOpenedTrashNote | LoadLastOpenedTrashNotebook;
 
 export function incrementEnthusiasm(): IncrementEnthusiasm {
     return {
@@ -135,5 +140,12 @@ export function loadLastOpenedTrashNote(note: string): LoadLastOpenedTrashNote {
     return {
         type: constants.LOAD_LAST_OPENED_TRASH_NOTE,
         note
+    };
+}
+
+export function loadLastOpenedTrashNotebook(notebook: string): LoadLastOpenedTrashNotebook {
+    return {
+        type: constants.LOAD_LAST_OPENED_TRASH_NOTEBOOK,
+        notebook
     };
 }

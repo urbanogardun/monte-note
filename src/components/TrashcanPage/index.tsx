@@ -9,6 +9,7 @@ export interface Props {
     trash: object;
     noteContent: string;
     lastOpenedTrashNote: string;
+    lastOpenedTrashNotebook: string;
 }
 
 export interface State {}
@@ -31,6 +32,7 @@ export class Trashcan extends React.Component<Props, State> {
                     <TrashcanEditor 
                         noteContent={this.props.noteContent} 
                         note={this.props.lastOpenedTrashNote} 
+                        notebook={this.props.lastOpenedTrashNotebook}
                     />
                 </div>
             </div>
