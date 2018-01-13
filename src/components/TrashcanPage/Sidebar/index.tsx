@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import electronMessager from '../../../utils/electron-messaging/electronMessager';
+import { GET_NOTE_FROM_TRASH } from '../../../constants/index';
 
 export interface Props {
     trash: object;
@@ -12,8 +14,15 @@ export class TrashcanSidebar extends React.Component<Props, State> {
         super(props);
     }
 
+    getNoteFromTrash(notebook: string, note: string) {
+        let data = {
+            notebook: notebook,
+            note: note
+        };
+        electronMessager.sendMessageWithIpcRenderer(GET_NOTE_FROM_TRASH, data);
+    }
+
     render() {
-        console.log(this.props);
         return (
             <div className="col-2 trashcan sidebar">
                 <Link className="home-sidebar" to="/">
@@ -45,6 +54,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                                 <li 
                                                     key={note} 
                                                     className="list-group-item sidebar-note"
+                                                    onClick={() => { this.getNoteFromTrash(notebook, note); }}
                                                 >
                                                 {note}
                                                 </li>

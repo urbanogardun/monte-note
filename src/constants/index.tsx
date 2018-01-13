@@ -57,3 +57,6 @@ export type GET_TRASH = typeof GET_TRASH;
 
 export const LOAD_TRASH = 'LOAD_TRASH';
 export type LOAD_TRASH = typeof LOAD_TRASH;
+
+export const GET_NOTE_FROM_TRASH = 'GET_NOTE_FROM_TRASH';
+export type GET_NOTE_FROM_TRASH = typeof GET_NOTE_FROM_TRASH;
