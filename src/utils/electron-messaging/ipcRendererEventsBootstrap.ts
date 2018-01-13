@@ -11,7 +11,8 @@ import {
     LOAD_CONTENT_INTO_NOTE,
     GET_NAME_OF_LAST_OPENED_NOTE,
     DELETE_NOTE,
-    GET_TRASH
+    GET_TRASH,
+    GET_NOTE_FROM_TRASH
 } from '../../constants/index';
     
 let ipcRenderer: IpcRenderer;
@@ -90,6 +91,10 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on(GET_TRASH, (event: Event, data: object) => {
             reduxStore.dispatch(actions.loadTrash(data));
+        });
+
+        ipcRenderer.on(GET_NOTE_FROM_TRASH, (event: Event, data: string): void => {
+            console.log(data);
         });
 
     } catch (error) {

@@ -245,5 +245,17 @@ electron_1.ipcMain.on(index_1.GET_TRASH, (event, args) => {
         });
     });
 });
+electron_1.ipcMain.on(index_1.GET_NOTE_FROM_TRASH, (event, data) => {
+    let note = data.note;
+    let notebook = data.notebook;
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        let absolutePathToNote = path.join(location, '.trashcan', notebook, note + '.html');
+        notebookManager_1.default.getNoteData(absolutePathToNote)
+            .then((noteData) => {
+            event.sender.send(index_1.GET_NOTE_FROM_TRASH, noteData);
+        });
+    });
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 
