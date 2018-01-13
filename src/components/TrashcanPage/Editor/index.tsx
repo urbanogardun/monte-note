@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Quill from 'quill';
+// import electronMessager from '../../../utils/electron-messaging/electronMessager';
 
 export interface Props {
     noteContent?: string;
@@ -33,9 +34,23 @@ export class TrashcanEditor extends React.Component<Props, State> {
         let customButton = document.querySelector('.ql-omega') as Element;
         customButton.setAttribute('title', 'Restore note');
         customButton.innerHTML = '<span class="oi oi-loop-square quill-custom-button"></span>';
-        customButton.addEventListener('click', function() {
-            console.log('Restore note');
-        });
+        // customButton.addEventListener('click', function() {
+        //     console.log('Restore note');
+        //     // electronMessager.sendMessageWithIpcRenderer(RESTORE_NOTE, data);
+        // });
+        // customButton.addEventListener('click', this.restoreNote);
+        customButton.addEventListener('click', this.restoreNote.bind(this));
+    }
+
+    componentWillUnmount() {
+        let customButton = document.querySelector('.ql-omega') as Element;
+        customButton.removeEventListener('click', this.restoreNote);
+    }
+
+    restoreNote() {
+        // TODO:
+        // Pass to this component notebook name & note names
+        console.log(this.props);
     }
 
     componentWillUpdate(nextProps: Props) {
