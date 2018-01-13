@@ -4,7 +4,7 @@ import { EnthusiasmAction,
   NoteAction, 
   LastOpenedNoteAction, 
   LoadContentIntoNote, 
-  LoadTrash } from '../actions';
+  TrashAction } from '../actions';
 import { StoreState } from '../types/index';
 import { 
   INCREMENT_ENTHUSIASM, 
@@ -16,7 +16,8 @@ import {
   LOAD_NOTES,
   LAST_OPENED_NOTE,
   LOAD_CONTENT_INTO_NOTE,
-  LOAD_TRASH } from '../constants/index';
+  LOAD_TRASH,
+  LOAD_LAST_OPENED_TRASH_NOTE } from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -87,7 +88,7 @@ export function noteContent(state: StoreState, action: LoadContentIntoNote): Sto
   }
 }
 
-export function trash(state: StoreState, action: LoadTrash): StoreState {
+export function trash(state: StoreState, action: TrashAction): StoreState {
   switch (action.type) {
     case LOAD_TRASH:
       return action.content as StoreState;
@@ -96,8 +97,17 @@ export function trash(state: StoreState, action: LoadTrash): StoreState {
   }
 }
 
+export function lastOpenedTrashNote(state: StoreState, action: TrashAction): StoreState {
+  switch (action.type) {
+    case LOAD_LAST_OPENED_TRASH_NOTE:
+      return action.note as StoreState;
+    default:
+      return '' as StoreState;
+  }
+}
+
 const rootReducers: Reducer<StoreState> = combineReducers(
-  { enthusiasmLevel, notebooksLocation, notebooks, notes, lastOpenedNote, noteContent, trash }
+  { enthusiasmLevel, notebooksLocation, notebooks, notes, lastOpenedNote, noteContent, trash, lastOpenedTrashNote }
 );
 
 export default rootReducers;

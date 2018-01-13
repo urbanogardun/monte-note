@@ -48,6 +48,11 @@ export interface LoadTrash {
     content: any;
 }
 
+export interface LoadLastOpenedTrashNote {
+    type: constants.LOAD_LAST_OPENED_TRASH_NOTE;
+    note: string;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -55,6 +60,8 @@ export type NotebooksAction = GetNotebooks | AddNotebook;
 export type NoteAction = AddNote | LoadNotes;
 
 export type LastOpenedNoteAction = LastOpenedNote;
+
+export type TrashAction = LoadTrash | LoadLastOpenedTrashNote;
 
 export function incrementEnthusiasm(): IncrementEnthusiasm {
     return {
@@ -121,5 +128,12 @@ export function loadTrash(content: any): LoadTrash {
     return {
         type: constants.LOAD_TRASH,
         content
+    };
+}
+
+export function loadLastOpenedTrashNote(note: string): LoadLastOpenedTrashNote {
+    return {
+        type: constants.LOAD_LAST_OPENED_TRASH_NOTE,
+        note
     };
 }

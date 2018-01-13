@@ -7,10 +7,11 @@ export function mergeProps(stateProps: Object, dispatchProps: Object, ownProps: 
     return Object.assign({}, ownProps, stateProps, dispatchProps);
 }
 
-export function mapStateToProps({ trash, noteContent }: StoreState) {
+export function mapStateToProps({ trash, noteContent, lastOpenedTrashNote }: StoreState) {
     return {
         trash,
-        noteContent
+        noteContent,
+        lastOpenedTrashNote
     };
 }
 

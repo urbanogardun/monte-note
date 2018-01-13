@@ -4,6 +4,8 @@ import Quill from 'quill';
 
 export interface Props {
     noteContent?: string;
+    notebook?: string;
+    note?: string;
 }
 
 export interface State { }
@@ -50,6 +52,9 @@ export class TrashcanEditor extends React.Component<Props, State> {
     restoreNote() {
         // TODO:
         // Pass to this component notebook name & note names
+        // Ping ipcMain with notebook name & note name
+        // Restore the note based on that data
+        // Update app state (remove note that got restored from trashcan items)
         console.log(this.props);
     }
 

@@ -317,7 +317,12 @@ ipcMain.on(GET_NOTE_FROM_TRASH, (event: any, data: any) => {
     let absolutePathToNote = path.join(location, '.trashcan', notebook, note + '.html');
     NotebookManager.getNoteData(absolutePathToNote)
     .then((noteData: string) => {
-      event.sender.send(GET_NOTE_FROM_TRASH, noteData);
+      let noteInfo = {
+        note: note,
+        notebook: notebook,
+        data: noteData
+      };
+      event.sender.send(GET_NOTE_FROM_TRASH, noteInfo);
     });
   });
 });

@@ -93,9 +93,10 @@ export function ipcRendererEventsBootstrap() {
             reduxStore.dispatch(actions.loadTrash(data));
         });
 
-        ipcRenderer.on(GET_NOTE_FROM_TRASH, (event: Event, data: string): void => {
+        ipcRenderer.on(GET_NOTE_FROM_TRASH, (event: Event, args: any): void => {
             // reduxStore.dispatch(actions.loadNoteFromTrash(data));
-            reduxStore.dispatch(actions.loadContentIntoNote(data));
+            reduxStore.dispatch(actions.loadContentIntoNote(args.data));
+            reduxStore.dispatch(actions.loadLastOpenedTrashNote(args.note));
         });
 
     } catch (error) {

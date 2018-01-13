@@ -253,7 +253,12 @@ electron_1.ipcMain.on(index_1.GET_NOTE_FROM_TRASH, (event, data) => {
         let absolutePathToNote = path.join(location, '.trashcan', notebook, note + '.html');
         notebookManager_1.default.getNoteData(absolutePathToNote)
             .then((noteData) => {
-            event.sender.send(index_1.GET_NOTE_FROM_TRASH, noteData);
+            let noteInfo = {
+                note: note,
+                notebook: notebook,
+                data: noteData
+            };
+            event.sender.send(index_1.GET_NOTE_FROM_TRASH, noteInfo);
         });
     });
 });

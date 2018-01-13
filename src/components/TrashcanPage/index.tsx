@@ -8,6 +8,7 @@ import { GET_TRASH } from '../../constants/index';
 export interface Props {
     trash: object;
     noteContent: string;
+    lastOpenedTrashNote: string;
 }
 
 export interface State {}
@@ -27,7 +28,10 @@ export class Trashcan extends React.Component<Props, State> {
             <div className="container-fluid trashcan-container">
                 <div className="row">
                     <TrashcanSidebar trash={this.props.trash} />
-                    <TrashcanEditor noteContent={this.props.noteContent} />
+                    <TrashcanEditor 
+                        noteContent={this.props.noteContent} 
+                        note={this.props.lastOpenedTrashNote} 
+                    />
                 </div>
             </div>
         );
