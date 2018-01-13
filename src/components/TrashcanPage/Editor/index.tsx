@@ -7,6 +7,8 @@ export interface Props {
     noteContent?: string;
     notebook?: string;
     note?: string;
+    trash?: any;
+    updateTrash?: Function;
 }
 
 export interface State { }
@@ -60,7 +62,21 @@ export class TrashcanEditor extends React.Component<Props, State> {
             note: this.props.note,
             notebook: this.props.notebook
         };
-        console.log(this.props);
+        // console.log(this.props);
+        // Update trash
+        let updateTrash = this.props.updateTrash as Function;
+        let newTrash = Object.assign({}, this.props.trash);
+        for (const notebook in this.props.trash) {
+            if (this.props.trash.hasOwnProperty(notebook)) {
+                let notes = this.props.trash[notebook];
+                notes = notes.filter((note: string) => { return note !== this.props.note; });
+                this.props.trash[notebook] = notes;
+                newTrash[notebook] = notes;
+                break;
+            }
+        }
+        updateTrash(newTrash);
+        this.quill.deleteText(0, this.quill.getLength());
         electronMessager.sendMessageWithIpcRenderer(RESTORE_NOTE_FROM_TRASH, data);
     }
 
