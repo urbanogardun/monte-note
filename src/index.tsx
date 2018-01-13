@@ -18,7 +18,7 @@ import Trashcan from './containers/TrashcanPage/index';
 ReactDOM.render(
   <Provider store={reduxStore}>
     <BrowserRouter>
-      <div>
+      <div id="app">
         <Route path="/notebooks/:name" component={Notebook}/>
         <Route path="/trashcan" component={Trashcan}/>
         <Route exact={true} path="/" component={App} />

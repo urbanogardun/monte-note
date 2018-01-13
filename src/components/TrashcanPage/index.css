@@ -12,8 +12,12 @@ a.home-sidebar {
 .sidebar {
     padding: 0px;
     padding-top: 50px;
-    height: 100vh;
     min-width: 200px;
+}
+
+.trashcan.main-content {
+    display:block;
+    overflow:auto;
 }
 
 section.notebooks {
