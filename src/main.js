@@ -24,6 +24,9 @@ function createWindow() {
     mainWindow.loadURL('http://localhost:3000');
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
+    mainWindow.on('close', () => {
+        mainWindow.webContents.send(index_1.EXIT_APP_SAVE_CONTENT);
+    });
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {
         // Dereference the window object, usually you would store windows

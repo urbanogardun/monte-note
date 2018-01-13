@@ -13,8 +13,11 @@ import {
     DELETE_NOTE,
     GET_TRASH,
     GET_NOTE_FROM_TRASH,
-    RESTORE_NOTE_FROM_TRASH
+    RESTORE_NOTE_FROM_TRASH,
+    UPDATE_NOTE,
+    EXIT_APP_SAVE_CONTENT
 } from '../../constants/index';
+import ElectronMessager from '../electron-messaging/electronMessager';
     
 let ipcRenderer: IpcRenderer;
 
@@ -104,6 +107,28 @@ export function ipcRendererEventsBootstrap() {
         ipcRenderer.on(RESTORE_NOTE_FROM_TRASH, (event: Event, result: boolean): void => {
             console.log('RESTORED NOTE!');
             console.log(result);
+        });
+
+        ipcRenderer.on(EXIT_APP_SAVE_CONTENT, (event: Event, message: string): void => {
+
+            // Save current note content if on notebook page
+            if (window.location.pathname.includes('/notebooks/') 
+            && (!window.location.pathname.includes('/notebooks/.trashcan'))) {
+
+                let editor = document.querySelector('.ql-editor') as Element;
+                let noteData = editor.innerHTML;
+                let store = reduxStore.getState();
+                let note = store.lastOpenedNote;
+                let notebook = window.location.pathname.split('/').pop();
+    
+                let data = {
+                    noteName: note,
+                    notebookName: notebook,
+                    noteData: noteData
+                };
+                ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
+            }
+
         });
 
     } catch (error) {

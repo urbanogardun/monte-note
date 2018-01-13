@@ -15,7 +15,8 @@ import {
   DELETE_NOTE,
   GET_TRASH,
   GET_NOTE_FROM_TRASH,
-  RESTORE_NOTE_FROM_TRASH
+  RESTORE_NOTE_FROM_TRASH,
+  EXIT_APP_SAVE_CONTENT
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -43,6 +44,10 @@ function createWindow() {
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
+  mainWindow.on('close', () => {
+    mainWindow.webContents.send(EXIT_APP_SAVE_CONTENT);
+  });
+
   // Emitted when the window is closed.
   mainWindow.on('closed', () => {
     // Dereference the window object, usually you would store windows
@@ -65,6 +70,7 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+
 });
 
 app.on('activate', () => {
@@ -73,6 +79,7 @@ app.on('activate', () => {
   if (mainWindow === null) {
     createWindow();
   }
+
 });
 
 ipcMain.on('get-global-packages', () => {
