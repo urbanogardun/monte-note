@@ -2,7 +2,16 @@ import * as React from 'react';
 import * as enzyme from 'enzyme';
 import Sidebar from './index';
 
-const sidebar = enzyme.mount(<Sidebar notebookName="test-notebook" notes={['note-1']} />);
+const sidebar = enzyme.mount(
+<Sidebar 
+    notebookName="test-notebook" 
+    notes={['note-1']}
+    noteContent={'<p>Test content</p>'}
+    lastOpenedNote="note-1"
+    updateNotes={() => { return; }}
+    updateLastOpenedNote={() => { return; }}
+    updateNoteContent={() => { return; }}
+/>);
 const instance = sidebar.instance() as Sidebar; // explicitly declare type
 
 it('renders the sidebar', () => {

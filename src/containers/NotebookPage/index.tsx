@@ -1,4 +1,4 @@
-import Sidebar from '../../components/NotebookPage/Sidebar/index';
+import Notebook from '../../components/NotebookPage/index';
 import * as actions from '../../actions/';
 import { StoreState } from '../../types/index';
 import { connect, Dispatch } from 'react-redux';
@@ -25,4 +25,4 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>)
     };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Sidebar);
+export default connect(mapStateToProps, mapDispatchToProps, mergeProps)(Notebook);

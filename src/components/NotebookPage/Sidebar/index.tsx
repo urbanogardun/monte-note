@@ -6,12 +6,12 @@ import { Link } from 'react-router-dom';
 export interface Props {
     location?: any;
     notebookName: string;
-    notes?: string[];
-    noteContent?: string;
-    lastOpenedNote?: string;
-    updateNotes?: (notes: string[]) => void;
-    updateLastOpenedNote?: (note: string) => void;
-    updateNoteContent?: (content: string) => void;
+    notes: string[];
+    noteContent: string;
+    lastOpenedNote: string;
+    updateNotes: Function;
+    updateLastOpenedNote: Function;
+    updateNoteContent: Function;
 }
 
 export interface State {
