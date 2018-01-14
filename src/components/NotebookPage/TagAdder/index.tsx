@@ -3,6 +3,7 @@ import * as React from 'react';
 export interface Props {
     notebookName: string;
     lastOpenedNote: string;
+    addTagToNote: Function;
 }
 
 export interface State {
@@ -22,10 +23,8 @@ export class TagAdder extends React.Component<Props, State> {
     handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'Enter') {
             console.log(`Add tag for note: ${this.props.lastOpenedNote} in notebook: ${this.props.notebookName}`);
-            // console.log(this.state);
-            // let note = this.prepareNote(this.state.inputValue as string);
-            // this.addNote(note);
-            // this.resetComponentState();
+            console.log('Tag value is: ' + this.state.tag);
+            this.props.addTagToNote(this.state.tag);
         }
     }
 

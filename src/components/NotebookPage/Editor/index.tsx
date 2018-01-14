@@ -9,6 +9,7 @@ export interface Props {
     notebookName: string;
     lastOpenedNote: string;
     noteContent: string;
+    addTagToNote: Function;
 }
 
 export interface State {
@@ -120,6 +121,7 @@ export class Editor extends React.Component<Props, State> {
                 <TagAdder
                     notebookName={this.state.notebookName}
                     lastOpenedNote={this.props.lastOpenedNote}
+                    addTagToNote={this.props.addTagToNote}
                 />
                 <div id="quill-container" />
             </div>

@@ -13,6 +13,7 @@ export interface Props {
     updateNotes: Function;
     updateLastOpenedNote: Function;
     updateNoteContent: Function;
+    addTagToNote: Function;
 }
 
 export interface State {
@@ -45,6 +46,7 @@ export class Notebook extends React.Component<Props, State> {
                         notebookName={this.state.notebookName}
                         lastOpenedNote={this.props.lastOpenedNote}
                         noteContent={this.props.noteContent}
+                        addTagToNote={this.props.addTagToNote}
                     />
                 </div>
             </div>
