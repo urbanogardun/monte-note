@@ -2,6 +2,7 @@ import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
 import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE, DELETE_NOTE } from '../../../constants/index';
 import { Link } from 'react-router-dom';
+var striptags = require('striptags');
 
 export interface Props {
     location?: any;
@@ -126,13 +127,14 @@ export class Sidebar extends React.Component<Props, State> {
     componentWillReceiveProps(nextProps: Props) {
         // Saves current note data when we navigate to another note
         if ( (nextProps.noteContent !== '') && (this.state.lastOpenedNote) ) {
-            if ( (this.state.lastOpenedNote) !== (nextProps.lastOpenedNote) ) {
+            if ( (this.props.lastOpenedNote) !== (nextProps.lastOpenedNote) ) {
                 let data = {
                     noteName: this.state.lastOpenedNote,
                     notebookName: this.props.notebookName,
                     noteData: this.state.noteContent
                 };
                 ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
+                console.log(striptags(data.noteData));
             }
         }
     }

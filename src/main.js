@@ -77,7 +77,6 @@ electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, notebookName) => {
                 .then((result) => {
                 if (result) {
                     dbMessager.addNotebook(notebookName);
-                    dbMessager.createNotebook(notebookName);
                     event.sender.send(index_1.ADD_NOTEBOOK, notebookName);
                 }
             });
