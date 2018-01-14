@@ -29,8 +29,8 @@ export class Db {
         }, update: (searchQuery: any, toUpdate: any, options: any, callback: any) => {
             Db.notebookList = [...Db.notebookList, 'ex-nb-1', 'ex-nb-2', 'ex-nb-3'];
             callback('', '');
-        }, insert: (query: string) => {
-            return true;
+        }, insert: (query: string, callback: any) => {
+            callback('');
         }, findOne: (query: any, callback: any) => {
             if (query.name === 'applicationSettings') {
                 callback(null, {notebooksLocation: ''});

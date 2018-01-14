@@ -20,6 +20,17 @@ export class DbMessager {
         });
     }
 
+    createNotebook(name: string): any {
+        return new Promise((resolve) => {
+            this.db.insert( {notebook: name, notes: [] }, (err: Error) => {
+                if (err) {
+                    resolve(false);
+                }
+                resolve(true);
+            });
+        });
+    }
+
     getNotebooksLocation(): any {
         return new Promise(resolve => {
             this.db.findOne({ name: 'notebooksLocation' }, (err: Error, doc: any) => {
@@ -156,7 +167,6 @@ export class DbMessager {
         });
     }
 
-    
     /**
      * Returns name of note that was last opened inside a notebook
      * @param  {string} notebook

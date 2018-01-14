@@ -103,3 +103,13 @@ test('gets last opened note of a notebook from db', done => {
         expect(note).toEqual('test-note-23');
     });
 });
+
+test('creates document for a specific notebook', done => {
+    let notebookName = 'testNotebook';
+
+    dbMessager.createNotebook(notebookName)
+    .then((result: boolean) => {
+        done();
+        expect(result).toEqual(true);
+    });
+});

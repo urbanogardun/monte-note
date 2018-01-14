@@ -33,6 +33,12 @@ export class DbMessager {
             resolve(true);
         });
     }
+
+    createNotebook(name: string) {
+        return new Promise(resolve => {
+            resolve(true);
+        });
+    }
 }
 
 export default DbMessager;
