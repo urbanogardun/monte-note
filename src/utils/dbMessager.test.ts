@@ -114,11 +114,23 @@ test('creates document for a specific notebook', done => {
     });
 });
 
-test('adds note to notebook document', done => {
+// test('adds note to notebook document', done => {
+//     let notebookName = 'testNotebook';
+//     let noteName = 'test-note';
+
+//     dbMessager.addNoteToNotebook(notebookName, noteName)
+//     .then((result: boolean) => {
+//         done();
+//         expect(result).toEqual(true);
+//     });
+// });
+
+test('adds stripped from HTML text to corresponding note inside notebook', done => {
     let notebookName = 'testNotebook';
     let noteName = 'test-note';
+    let noteContent = 'TEST CONTENT OF NOTE';
 
-    dbMessager.addNoteToNotebook(notebookName, noteName)
+    dbMessager.addNoteContentToNote(notebookName, noteName, noteContent)
     .then((result: boolean) => {
         done();
         expect(result).toEqual(true);

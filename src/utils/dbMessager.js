@@ -26,19 +26,49 @@ class DbMessager {
             });
         });
     }
-    addNoteToNotebook(notebook, note) {
+    /**
+     * Saves/updates note content that is stripped from HTML tags
+     * @param  {any} data
+     */
+    saveNoteContent(data) {
         return new Promise((resolve) => {
-            let noteData = {
-                name: note,
-                tags: [],
-                noteContent: ''
+            let notebookName = data.notebook;
+            let noteName = data.note;
+            let noteContent = data.data;
+            let docToSave = {
+                notebookName: notebookName,
+                noteName: noteName,
+                documentFor: 'NOTE_DATA'
             };
-            this.db.update({ notebook: notebook }, { $push: { notes: noteData } }, {}, (err) => {
-                if (err) {
-                    resolve(false);
+            this.db.findOne(docToSave, (err, doc) => {
+                if (doc) {
+                    this.db.update(docToSave, { $set: { noteContent: noteContent } }, {}, () => {
+                        resolve(true);
+                    });
                 }
-                resolve(true);
+                else {
+                    this.db.insert({
+                        notebookName: notebookName,
+                        noteName: noteName,
+                        documentFor: 'NOTE_DATA',
+                        noteContent: noteContent
+                    }, () => {
+                        resolve(true);
+                    });
+                }
             });
+        });
+    }
+    getNoteContent(notebook, note) {
+        return new Promise((resolve) => {
+            this.db.findOne({ notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA' }, (err, doc) => {
+                resolve(doc);
+            });
+        });
+    }
+    addNoteContentToNote(notebook, note, noteContent) {
+        return new Promise((resolve) => {
+            // this.db.update({ notebook: notebook }, { $set: { "notes." } })
         });
     }
     getNotebook(notebook) {
@@ -169,7 +199,7 @@ class DbMessager {
                     });
                 }
                 else {
-                    this.db.insert({ notebook: notebook, lastOpenedNote: note, notes: [] }, (err) => {
+                    this.db.insert({ notebook: notebook, lastOpenedNote: note }, (err) => {
                         if (err) {
                             resolve(false);
                         }

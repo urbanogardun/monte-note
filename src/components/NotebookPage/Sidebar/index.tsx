@@ -131,10 +131,10 @@ export class Sidebar extends React.Component<Props, State> {
                 let data = {
                     noteName: this.state.lastOpenedNote,
                     notebookName: this.props.notebookName,
-                    noteData: this.state.noteContent
+                    noteData: this.state.noteContent,
+                    noteDataTextOnly: striptags(this.state.noteContent)
                 };
                 ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
-                console.log(striptags(data.noteData));
             }
         }
     }

@@ -151,7 +151,6 @@ ipcMain.on(ADD_NOTE, (event: any, args: any) => {
     .then((result: boolean) => {
 
       if (result) {
-        dbMessager.addNoteToNotebook(notebook, noteName);
         dbMessager.setLastOpenedNote(notebook, noteName)
         .then((res: boolean) => {
           event.sender.send(UPDATE_NOTE_STATE, args);
@@ -235,7 +234,8 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
   // console.log(JSON.stringify(data));
   let noteName = data.noteName;
   let notebookName = data.notebookName;
-  let notebookData = data.noteData;
+  let noteData = data.noteData;
+  let noteDataTextOnly = data.noteDataTextOnly;
 
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
@@ -243,10 +243,16 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
 
       let absolutePathToNote = path.join(location, notebookName, noteName + '.html');
 
-      NotebookManager.updateNoteData(absolutePathToNote, notebookData)
+      NotebookManager.updateNoteData(absolutePathToNote, noteData)
       .then((result: boolean) => {
         if (result) {
           console.log('Note content updated successfully');
+          let noteDataToSave = {
+            note: noteName,
+            notebook: notebookName,
+            data: noteDataTextOnly
+          };
+          dbMessager.saveNoteContent(noteDataToSave);
         }
       });
     
@@ -355,7 +361,8 @@ ipcMain.on(RESTORE_NOTE_FROM_TRASH, (event: any, data: any) => {
 ipcMain.on(ADD_TAG_TO_NOTE, (event: any, data: any) => {
   console.log('Add tag to note');
   let notebook = data.notebook;
-  dbMessager.getNotebook(notebook)
+  let note = data.note;
+  dbMessager.getNoteContent(notebook, note)
   .then((result: any) => {
     console.log(result);
   });

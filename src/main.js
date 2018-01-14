@@ -109,7 +109,6 @@ electron_1.ipcMain.on(index_1.ADD_NOTE, (event, args) => {
         notebookManager_1.default.addNote(`${location}\\${notebook}`, noteName)
             .then((result) => {
             if (result) {
-                dbMessager.addNoteToNotebook(notebook, noteName);
                 dbMessager.setLastOpenedNote(notebook, noteName)
                     .then((res) => {
                     event.sender.send(index_1.UPDATE_NOTE_STATE, args);
@@ -179,15 +178,22 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
     // console.log(JSON.stringify(data));
     let noteName = data.noteName;
     let notebookName = data.notebookName;
-    let notebookData = data.noteData;
+    let noteData = data.noteData;
+    let noteDataTextOnly = data.noteDataTextOnly;
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
         if (location) {
             let absolutePathToNote = path.join(location, notebookName, noteName + '.html');
-            notebookManager_1.default.updateNoteData(absolutePathToNote, notebookData)
+            notebookManager_1.default.updateNoteData(absolutePathToNote, noteData)
                 .then((result) => {
                 if (result) {
                     console.log('Note content updated successfully');
+                    let noteDataToSave = {
+                        note: noteName,
+                        notebook: notebookName,
+                        data: noteDataTextOnly
+                    };
+                    dbMessager.saveNoteContent(noteDataToSave);
                 }
             });
         }
@@ -281,7 +287,8 @@ electron_1.ipcMain.on(index_1.RESTORE_NOTE_FROM_TRASH, (event, data) => {
 electron_1.ipcMain.on(index_1.ADD_TAG_TO_NOTE, (event, data) => {
     console.log('Add tag to note');
     let notebook = data.notebook;
-    dbMessager.getNotebook(notebook)
+    let note = data.note;
+    dbMessager.getNoteContent(notebook, note)
         .then((result) => {
         console.log(result);
     });

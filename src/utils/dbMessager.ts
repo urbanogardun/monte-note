@@ -30,22 +30,59 @@ export class DbMessager {
             });
         });
     }
-
-    addNoteToNotebook(notebook: string, note: string): any {
+    
+    /**
+     * Saves/updates note content that is stripped from HTML tags
+     * @param  {any} data
+     */
+    saveNoteContent(data: any): any {
         return new Promise((resolve) => {
+            
+            let notebookName = data.notebook;
+            let noteName = data.note;
+            let noteContent = data.data;
 
-            let noteData = {
-                name: note,
-                tags: [],
-                noteContent: ''
+            let docToSave = {
+                notebookName: notebookName,
+                noteName: noteName,
+                documentFor: 'NOTE_DATA'
             };
 
-            this.db.update({ notebook: notebook }, { $push: { notes: noteData } }, {}, (err: Error) => {
-                if (err) {
-                    resolve(false);
+            this.db.findOne(docToSave, (err: Error, doc: any) => {
+                if (doc) {
+                    this.db.update(docToSave, { $set: {noteContent: noteContent} }, {}, () => {
+                        resolve(true);
+                    });
+                } else {
+                    this.db.insert(
+                    { 
+                        notebookName: notebookName, 
+                        noteName: noteName, 
+                        documentFor: 'NOTE_DATA', 
+                        noteContent: noteContent 
+                    }, 
+                    () => {
+                        resolve(true);
+                    });
                 }
-                resolve(true);
+
             });
+        });
+    }
+
+    getNoteContent(notebook: string, note: string) {
+        return new Promise((resolve) => {
+            this.db.findOne(
+                {notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA'}, (err: Error, doc: any) => {
+                resolve(doc);
+            });
+        });
+    }
+
+    addNoteContentToNote(notebook: string, note: string, noteContent: string): any {
+        return new Promise((resolve) => {
+
+            // this.db.update({ notebook: notebook }, { $set: { "notes." } })
 
         });
     }
@@ -182,7 +219,7 @@ export class DbMessager {
                         }
                     });
                 } else {
-                    this.db.insert({ notebook: notebook, lastOpenedNote: note, notes: [] }, (err: Error) => {
+                    this.db.insert({ notebook: notebook, lastOpenedNote: note }, (err: Error) => {
                         if (err) {
                             resolve(false);
                         } else {
