@@ -1,0 +1,39 @@
+/* Notebook page */
+
+.home-icon {
+    float: right;
+}
+
+.add-tags {
+    margin-top: 16px;
+    margin-bottom: 0px !important;
+}
+
+.tags {
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.tags > span.badge {
+    padding: 8px;
+    margin-top: 10px;
+    border: 1px solid #ced4da;
+    background-color: #fff;
+    color: #868e96;
+    cursor: pointer;
+    /* color: #9EA6C2; */
+    /* background-color: #282E3F; */
+    margin-right: 5px;
+}
+
+span.remove-tag {
+    padding-left: 8px;
+    font-size: 0.8em;
+    position: initial;
+    top: 0px;
+}
+
+span.tag-name:hover {
+    color: #fff;
+    background-color: #868e96;
+}

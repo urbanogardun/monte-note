@@ -2,6 +2,7 @@ import * as React from 'react';
 import Sidebar from '../../containers/NotebookPage/Sidebar';
 import '../../assets/css/quill.snow.css';
 import Editor from '../../containers/NotebookPage/Editor';
+import './index.css';
 
 export interface Props {
     location: any;
@@ -30,7 +31,7 @@ export class Notebook extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="container-fluid">
+            <div className="container-fluid notebook-container">
                 <div className="row">
                     <Sidebar notebookName={this.state.notebookName} />
                     <Editor notebookName={this.state.notebookName} />

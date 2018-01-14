@@ -20,10 +20,6 @@ a.home-sidebar {
     overflow:auto;
 }
 
-section.notebooks {
-    margin-top: 20px;
-}
-
 .sidebar, ul.notes, li.sidebar-note {
     background-color: #282E3F;
     color: #9EA6C2;

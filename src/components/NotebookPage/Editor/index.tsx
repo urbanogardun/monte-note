@@ -45,7 +45,7 @@ export class Editor extends React.Component<Props, State> {
             ElectronMessager.sendMessageWithIpcRenderer(GET_NOTE_CONTENT, data);
         }
 
-        this.quill = new Quill('#editor-container', {
+        this.quill = new Quill('#quill-container', {
             modules: {
                 toolbar: [
                 ['bold', 'italic', 'underline'],
@@ -113,11 +113,11 @@ export class Editor extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="col-sm">
+            <div className="col-sm trashcan main-content">
                 <Link to="/">Home</Link>
                 <h4>Notebook: {this.state.notebookName}</h4>
                 <h4>Editing Note: {this.props.lastOpenedNote}</h4>
-                <div id="editor-container" />
+                <div id="quill-container" />
             </div>
         );
     }

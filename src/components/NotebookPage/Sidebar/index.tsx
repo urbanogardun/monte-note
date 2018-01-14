@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
 import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE, DELETE_NOTE } from '../../../constants/index';
+import { Link } from 'react-router-dom';
 
 export interface Props {
     location?: any;
@@ -150,16 +151,30 @@ export class Sidebar extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="col-sm-2 sidebar">
-                <button 
-                    onClick={() => this.showInput()}
-                    type="button"
-                    className="btn btn-secondary btn-sm add-note"
-                >
-                    Add Note
-                </button>
-
-                <div className={`input-group input-group-sm ${this.state.showInput}`}>
+            <div className="col-sm-2 trashcan sidebar">
+                <section className="links">
+                    <ul className="list-group notes">
+                        <Link className="home-sidebar" to="/">
+                            <li 
+                                className="notebook-name-sidebar list-group-item sidebar-note"
+                            >
+                                Home
+                                <span className="oi oi-home home-icon"/>
+                            </li>
+                        </Link>
+                    </ul>
+                </section>
+                <section className="links">
+                    <ul className="list-group notes">
+                        <li 
+                            className="list-group-item sidebar-note"
+                            onClick={() => this.showInput()}
+                        >
+                            Add Note 
+                            <span className="oi oi-home home-icon"/>
+                        </li>
+                    </ul>
+                    <div className={`input-group input-group-sm ${this.state.showInput}`}>
                     <input 
                         value={this.state.inputValue}
                         onChange={e => this.updateInputValue(e)}
@@ -173,21 +188,24 @@ export class Sidebar extends React.Component<Props, State> {
                         aria-label="Note" 
                         aria-describedby="sizing-addon2"
                     />
-                </div>
-
-                <h3>Notes List</h3>
-
-                <ul>
-                    {(this.props.notes as string[]).map((name: string, index: number) => {
-                        return (
-                        <div key={name}>
-                            <li onClick={() => this.updateLastOpenedNote(name)}>{name}</li>
-                            <span onClick={() => this.deleteNote(name)}> X</span>
-                        </div>
-                        );
-                    })}
-                </ul>
-
+                    </div>
+                </section>
+                <section className="notebooks">
+                    <ul className="list-group notes">
+                        {(this.props.notes as string[]).map((name: string, index: number) => {
+                            return (
+                            <li 
+                                key={name} 
+                                className="list-group-item sidebar-note" 
+                                onClick={() => this.updateLastOpenedNote(name)}
+                            >
+                            {name}
+                            </li>
+                                // <span onClick={() => this.deleteNote(name)}> X</span>
+                            );
+                        })}
+                    </ul>
+                </section>
             </div> 
         );
     }
