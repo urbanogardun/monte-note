@@ -1,4 +1,6 @@
 import * as React from 'react';
+import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
+import { ADD_TAG_TO_NOTE } from '../../../constants/index';
 
 export interface Props {
     notebookName: string;
@@ -24,7 +26,13 @@ export class TagAdder extends React.Component<Props, State> {
         if (e.key === 'Enter') {
             console.log(`Add tag for note: ${this.props.lastOpenedNote} in notebook: ${this.props.notebookName}`);
             console.log('Tag value is: ' + this.state.tag);
-            this.props.addTagToNote(this.state.tag);
+            let data = {
+                notebook: this.props.notebookName,
+                note: this.props.lastOpenedNote,
+                tag: this.state.tag
+            };
+            this.props.addTagToNote(data);
+            ElectronMessager.sendMessageWithIpcRenderer(ADD_TAG_TO_NOTE, data);
         }
     }
 

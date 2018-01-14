@@ -16,6 +16,38 @@ class DbMessager {
             });
         });
     }
+    createNotebook(name) {
+        return new Promise((resolve) => {
+            this.db.insert({ notebook: name, notes: [] }, (err) => {
+                if (err) {
+                    resolve(false);
+                }
+                resolve(true);
+            });
+        });
+    }
+    addNoteToNotebook(notebook, note) {
+        return new Promise((resolve) => {
+            let noteData = {
+                name: note,
+                tags: [],
+                noteContent: ''
+            };
+            this.db.update({ notebook: notebook }, { $push: { notes: noteData } }, {}, (err) => {
+                if (err) {
+                    resolve(false);
+                }
+                resolve(true);
+            });
+        });
+    }
+    getNotebook(notebook) {
+        return new Promise((resolve) => {
+            this.db.findOne({ notebook: notebook }, (err, doc) => {
+                resolve(doc);
+            });
+        });
+    }
     getNotebooksLocation() {
         return new Promise(resolve => {
             this.db.findOne({ name: 'notebooksLocation' }, (err, doc) => {
@@ -137,7 +169,7 @@ class DbMessager {
                     });
                 }
                 else {
-                    this.db.insert({ notebook: notebook, lastOpenedNote: note }, (err) => {
+                    this.db.insert({ notebook: notebook, lastOpenedNote: note, notes: [] }, (err) => {
                         if (err) {
                             resolve(false);
                         }

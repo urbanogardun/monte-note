@@ -77,6 +77,7 @@ electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, notebookName) => {
                 .then((result) => {
                 if (result) {
                     dbMessager.addNotebook(notebookName);
+                    dbMessager.createNotebook(notebookName);
                     event.sender.send(index_1.ADD_NOTEBOOK, notebookName);
                 }
             });
@@ -109,6 +110,7 @@ electron_1.ipcMain.on(index_1.ADD_NOTE, (event, args) => {
         notebookManager_1.default.addNote(`${location}\\${notebook}`, noteName)
             .then((result) => {
             if (result) {
+                dbMessager.addNoteToNotebook(notebook, noteName);
                 dbMessager.setLastOpenedNote(notebook, noteName)
                     .then((res) => {
                     event.sender.send(index_1.UPDATE_NOTE_STATE, args);
@@ -275,6 +277,14 @@ electron_1.ipcMain.on(index_1.RESTORE_NOTE_FROM_TRASH, (event, data) => {
             .then((result) => {
             event.sender.send(index_1.RESTORE_NOTE_FROM_TRASH, result);
         });
+    });
+});
+electron_1.ipcMain.on(index_1.ADD_TAG_TO_NOTE, (event, data) => {
+    console.log('Add tag to note');
+    let notebook = data.notebook;
+    dbMessager.getNotebook(notebook)
+        .then((result) => {
+        console.log(result);
     });
 });
 // In this file you can include the rest of your app's specific main process

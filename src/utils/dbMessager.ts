@@ -31,6 +31,33 @@ export class DbMessager {
         });
     }
 
+    addNoteToNotebook(notebook: string, note: string): any {
+        return new Promise((resolve) => {
+
+            let noteData = {
+                name: note,
+                tags: [],
+                noteContent: ''
+            };
+
+            this.db.update({ notebook: notebook }, { $push: { notes: noteData } }, {}, (err: Error) => {
+                if (err) {
+                    resolve(false);
+                }
+                resolve(true);
+            });
+
+        });
+    }
+
+    getNotebook(notebook: string): any {
+        return new Promise((resolve) => {
+            this.db.findOne({ notebook: notebook }, (err: any, doc: any): any => {
+                resolve(doc);
+            });
+        });
+    }
+
     getNotebooksLocation(): any {
         return new Promise(resolve => {
             this.db.findOne({ name: 'notebooksLocation' }, (err: Error, doc: any) => {
@@ -155,7 +182,7 @@ export class DbMessager {
                         }
                     });
                 } else {
-                    this.db.insert({ notebook: notebook, lastOpenedNote: note }, (err: Error) => {
+                    this.db.insert({ notebook: notebook, lastOpenedNote: note, notes: [] }, (err: Error) => {
                         if (err) {
                             resolve(false);
                         } else {

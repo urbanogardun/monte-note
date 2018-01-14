@@ -16,7 +16,8 @@ import {
   GET_TRASH,
   GET_NOTE_FROM_TRASH,
   RESTORE_NOTE_FROM_TRASH,
-  EXIT_APP_SAVE_CONTENT
+  EXIT_APP_SAVE_CONTENT,
+  ADD_TAG_TO_NOTE
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -110,6 +111,7 @@ ipcMain.on(ADD_NOTEBOOK, (event: any, notebookName: any) => {
       .then((result: boolean) => {
         if (result) {
           dbMessager.addNotebook(notebookName);
+
           event.sender.send(ADD_NOTEBOOK, notebookName);
         }
       });
@@ -149,6 +151,7 @@ ipcMain.on(ADD_NOTE, (event: any, args: any) => {
     .then((result: boolean) => {
 
       if (result) {
+        dbMessager.addNoteToNotebook(notebook, noteName);
         dbMessager.setLastOpenedNote(notebook, noteName)
         .then((res: boolean) => {
           event.sender.send(UPDATE_NOTE_STATE, args);
@@ -346,6 +349,15 @@ ipcMain.on(RESTORE_NOTE_FROM_TRASH, (event: any, data: any) => {
     .then((result: boolean) => {
       event.sender.send(RESTORE_NOTE_FROM_TRASH, result);
     });
+  });
+});
+
+ipcMain.on(ADD_TAG_TO_NOTE, (event: any, data: any) => {
+  console.log('Add tag to note');
+  let notebook = data.notebook;
+  dbMessager.getNotebook(notebook)
+  .then((result: any) => {
+    console.log(result);
   });
 });
 

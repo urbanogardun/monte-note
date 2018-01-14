@@ -113,3 +113,14 @@ test('creates document for a specific notebook', done => {
         expect(result).toEqual(true);
     });
 });
+
+test('adds note to notebook document', done => {
+    let notebookName = 'testNotebook';
+    let noteName = 'test-note';
+
+    dbMessager.addNoteToNotebook(notebookName, noteName)
+    .then((result: boolean) => {
+        done();
+        expect(result).toEqual(true);
+    });
+});
