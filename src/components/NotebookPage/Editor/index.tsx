@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Link } from 'react-router-dom';
+import TagAdder from '../TagAdder/index';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
 import { UPDATE_NOTE, GET_NAME_OF_LAST_OPENED_NOTE, GET_NOTE_CONTENT } from '../../../constants/index';
 import Quill, { DeltaStatic } from 'quill';
@@ -114,9 +114,10 @@ export class Editor extends React.Component<Props, State> {
     render() {
         return (
             <div className="col-sm trashcan main-content">
-                <Link to="/">Home</Link>
+                {/*
                 <h4>Notebook: {this.state.notebookName}</h4>
-                <h4>Editing Note: {this.props.lastOpenedNote}</h4>
+                <h4>Editing Note: {this.props.lastOpenedNote}</h4> */}
+                <TagAdder />
                 <div id="quill-container" />
             </div>
         );
