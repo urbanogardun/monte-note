@@ -2,12 +2,32 @@ import * as React from 'react';
 
 export interface Props {}
 
-export interface State {}
+export interface State {
+    tag: string;
+}
 
 export class TagAdder extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
+        this.state = {
+            tag: ''
+        };
+    }
+
+    // Adds tag on Enter key press
+    handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
+        if (e.key === 'Enter') {
+            console.log('Add tag.');
+            console.log(this.state);
+            // let note = this.prepareNote(this.state.inputValue as string);
+            // this.addNote(note);
+            // this.resetComponentState();
+        }
+    }
+
+    updateInputValue(e: React.ChangeEvent<HTMLInputElement>) {
+        this.setState({tag: e.target.value});
     }
 
     render() {
@@ -18,11 +38,14 @@ export class TagAdder extends React.Component<Props, State> {
                         <button className="btn btn-outline-secondary" type="button">Add</button>
                     </div>
                     <input 
-                        type="text" 
+                        value={this.state.tag}
+                        onChange={e => this.updateInputValue(e)}
+                        type="text"
                         className="form-control" 
                         aria-label="Small" 
                         placeholder="Tag name..." 
                         aria-describedby="inputGroup-sizing-sm"
+                        onKeyPress={(e) => this.handleKeyPress(e)}
                     />
                 </div>
                 <div className="tags">
