@@ -7,8 +7,8 @@ import '../../../assets/css/quill.snow.css';
 
 export interface Props {
     notebookName: string;
-    lastOpenedNote?: string;
-    noteContent?: string;
+    lastOpenedNote: string;
+    noteContent: string;
 }
 
 export interface State {
@@ -117,7 +117,10 @@ export class Editor extends React.Component<Props, State> {
                 {/*
                 <h4>Notebook: {this.state.notebookName}</h4>
                 <h4>Editing Note: {this.props.lastOpenedNote}</h4> */}
-                <TagAdder />
+                <TagAdder
+                    notebookName={this.state.notebookName}
+                    lastOpenedNote={this.props.lastOpenedNote}
+                />
                 <div id="quill-container" />
             </div>
         );

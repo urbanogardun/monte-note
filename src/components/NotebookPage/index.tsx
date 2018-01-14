@@ -1,8 +1,8 @@
 import * as React from 'react';
 // import Sidebar from '../../containers/NotebookPage/Sidebar';
 import Sidebar from './Sidebar/index';
+import Editor from './Editor/index';
 import '../../assets/css/quill.snow.css';
-import Editor from '../../containers/NotebookPage/Editor';
 import './index.css';
 
 export interface Props {
@@ -41,7 +41,11 @@ export class Notebook extends React.Component<Props, State> {
                         updateLastOpenedNote={this.props.updateLastOpenedNote}
                         updateNoteContent={this.props.updateNoteContent}
                     />
-                    <Editor notebookName={this.state.notebookName} />
+                    <Editor 
+                        notebookName={this.state.notebookName}
+                        lastOpenedNote={this.props.lastOpenedNote}
+                        noteContent={this.props.noteContent}
+                    />
                 </div>
             </div>
         );

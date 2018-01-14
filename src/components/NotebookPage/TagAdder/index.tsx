@@ -1,6 +1,9 @@
 import * as React from 'react';
 
-export interface Props {}
+export interface Props {
+    notebookName: string;
+    lastOpenedNote: string;
+}
 
 export interface State {
     tag: string;
@@ -18,8 +21,8 @@ export class TagAdder extends React.Component<Props, State> {
     // Adds tag on Enter key press
     handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'Enter') {
-            console.log('Add tag.');
-            console.log(this.state);
+            console.log(`Add tag for note: ${this.props.lastOpenedNote} in notebook: ${this.props.notebookName}`);
+            // console.log(this.state);
             // let note = this.prepareNote(this.state.inputValue as string);
             // this.addNote(note);
             // this.resetComponentState();
