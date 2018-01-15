@@ -98,6 +98,21 @@ export class DbMessager {
         });
     }
 
+    getNoteTags(notebook: string, note: string) {
+        return new Promise((resolve) => {
+            let docToGet = {notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA'};
+            this.db.findOne(docToGet, (err: Error, doc: any) => {
+
+                if (doc) {
+                    resolve(doc.tags);
+                } else {
+                    resolve([]);
+                }
+
+            });
+        });
+    }
+
     getNoteContent(notebook: string, note: string) {
         return new Promise((resolve) => {
             this.db.findOne(

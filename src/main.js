@@ -306,7 +306,7 @@ electron_1.ipcMain.on(index_1.ADD_TAG_TO_NOTE, (event, data) => {
 });
 electron_1.ipcMain.on(index_1.GET_TAGS_FOR_NOTE, (event, data) => {
     console.log('GET TAGS FOR NOTE: ' + data.note);
-    dbMessager.getNoteContent(data.notebook, data.note)
+    dbMessager.getNoteTags(data.notebook, data.note)
         .then((result) => {
         console.log(result);
     });

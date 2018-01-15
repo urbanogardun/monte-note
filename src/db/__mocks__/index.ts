@@ -39,7 +39,7 @@ export class Db {
             } else if ('notebook' in query) {
                 callback(null, {lastOpenedNote: 'test-note-23'});
             } else if (query.documentFor === 'NOTE_DATA') {
-                callback(null, {noteName: 'test-note'});
+                callback(null, {noteName: 'test-note', tags: ['tag-1', 'tag-2', 'tag-3']});
             } else {
                 callback();
             }

@@ -131,3 +131,14 @@ test('adds note tag to note document', done => {
         expect(result).toEqual(true);
     });
 });
+
+test('gets tags from a note document', done => {
+    let notebookName = 'testNotebook';
+    let noteName = 'test-note';
+    
+    dbMessager.getNoteTags(notebookName, noteName)
+    .then((result: string[]) => {
+        done();
+        expect(result).toEqual(['tag-1', 'tag-2', 'tag-3']);
+    });
+});

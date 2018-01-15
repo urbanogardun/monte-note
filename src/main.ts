@@ -386,7 +386,7 @@ ipcMain.on(ADD_TAG_TO_NOTE, (event: any, data: any) => {
 ipcMain.on(GET_TAGS_FOR_NOTE, (event: any, data: any) => {
   console.log('GET TAGS FOR NOTE: ' + data.note);
 
-  dbMessager.getNoteContent(data.notebook, data.note)
+  dbMessager.getNoteTags(data.notebook, data.note)
   .then((result: any) => {
     console.log(result);
   });

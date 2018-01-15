@@ -80,6 +80,19 @@ class DbMessager {
             });
         });
     }
+    getNoteTags(notebook, note) {
+        return new Promise((resolve) => {
+            let docToGet = { notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA' };
+            this.db.findOne(docToGet, (err, doc) => {
+                if (doc) {
+                    resolve(doc.tags);
+                }
+                else {
+                    resolve([]);
+                }
+            });
+        });
+    }
     getNoteContent(notebook, note) {
         return new Promise((resolve) => {
             this.db.findOne({ notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA' }, (err, doc) => {
