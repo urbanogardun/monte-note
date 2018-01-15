@@ -25,7 +25,8 @@ export class TrashcanEditor extends React.Component<Props, State> {
         this.quill = new Quill('#quill-container', {
             modules: {
                 toolbar: [
-                    ['omega']
+                    ['omega'],
+                    ['delete-note']
                 ]
             },
             theme: 'snow'  // or 'bubble',
@@ -34,22 +35,32 @@ export class TrashcanEditor extends React.Component<Props, State> {
 
         let toolbar = this.quill.getModule('toolbar');
         toolbar.addHandler('omega');
+        toolbar.addHandler('delete-note');
 
         // Adds text on hover & custom icon to button
         let customButton = document.querySelector('.ql-omega') as Element;
         customButton.setAttribute('title', 'Restore note');
         customButton.innerHTML = '<span class="oi oi-loop-square quill-custom-button"></span>';
+
+        // Adds text on hover & custom icon to button
+        let deleteNoteButton = document.querySelector('.ql-delete-note') as Element;
+        deleteNoteButton.setAttribute('title', 'Delete note');
+        deleteNoteButton.innerHTML = '<span class="oi oi-x quill-custom-button"></span>';
         // customButton.addEventListener('click', function() {
         //     console.log('Restore note');
         //     // electronMessager.sendMessageWithIpcRenderer(RESTORE_NOTE, data);
         // });
         // customButton.addEventListener('click', this.restoreNote);
         customButton.addEventListener('click', this.restoreNote.bind(this));
+        deleteNoteButton.addEventListener('click', this.deleteNote.bind(this));
     }
 
     componentWillUnmount() {
         let customButton = document.querySelector('.ql-omega') as Element;
         customButton.removeEventListener('click', this.restoreNote);
+
+        let deleteNoteButton = document.querySelector('.ql-delete-note') as Element;
+        deleteNoteButton.removeEventListener('click', this.deleteNote);
     }
 
     restoreNote() {
@@ -78,6 +89,19 @@ export class TrashcanEditor extends React.Component<Props, State> {
         updateTrash(newTrash);
         this.quill.deleteText(0, this.quill.getLength());
         electronMessager.sendMessageWithIpcRenderer(RESTORE_NOTE_FROM_TRASH, data);
+    }
+
+    deleteNote() {
+        console.log('delete note from drive.');
+        // if (confirm('Are you sure you want to delete this note?')) {
+        //     console.log('Delete it!');
+        // } else {
+        //     console.log('Dont delete it');
+        // }
+
+        // TODO
+        // Delete note document from the drive
+        // if successful, delete note document from DB
     }
 
     componentWillUpdate(nextProps: Props) {
