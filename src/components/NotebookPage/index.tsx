@@ -49,6 +49,10 @@ export class Notebook extends React.Component<Props, State> {
                         noteContent={this.props.noteContent}
                         addTagToNote={this.props.addTagToNote}
                         currentNoteTags={this.props.currentNoteTags}
+                        notes={this.props.notes}
+                        updateNotes={this.props.updateNotes}
+                        updateLastOpenedNote={this.props.updateLastOpenedNote}
+                        updateNoteContent={this.props.updateNoteContent}
                     />
                 </div>
             </div>

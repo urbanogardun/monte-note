@@ -72,11 +72,7 @@ export function notes(state: StoreState, action: NoteAction): StoreState {
 export function lastOpenedNote(state: StoreState, action: LastOpenedNoteAction): StoreState {
   switch (action.type) {
     case LAST_OPENED_NOTE:
-      if (action.note) {
-        return action.note as StoreState;
-      } else {
-        return 'NO_LAST_OPENED_NOTE' as StoreState;
-      }
+      return action.note as StoreState;
     default:
       return state || '' as StoreState;
   }

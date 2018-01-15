@@ -1,9 +1,11 @@
 import * as React from 'react';
 import TagAdder from '../TagAdder/index';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { UPDATE_NOTE, GET_NAME_OF_LAST_OPENED_NOTE, GET_NOTE_CONTENT } from '../../../constants/index';
+import { UPDATE_NOTE, GET_NAME_OF_LAST_OPENED_NOTE, GET_NOTE_CONTENT, DELETE_NOTE } from '../../../constants/index';
 import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
+
+const striptags = require('striptags');
 
 export interface Props {
     notebookName: string;
@@ -11,6 +13,10 @@ export interface Props {
     noteContent: string;
     addTagToNote: Function;
     currentNoteTags: string[];
+    notes: string[];
+    updateNotes: Function;
+    updateLastOpenedNote: Function;
+    updateNoteContent: Function;
 }
 
 export interface State {
@@ -52,7 +58,7 @@ export class Editor extends React.Component<Props, State> {
                 toolbar: [
                 ['bold', 'italic', 'underline'],
                 ['image', 'code-block'],
-                ['omega'],
+                ['trash'],
                 ]
             },
             placeholder: 'Take notes...',
@@ -63,9 +69,10 @@ export class Editor extends React.Component<Props, State> {
         toolbar.addHandler('omega');
 
         // Adds text on hover & custom icon to button
-        let customButton = document.querySelector('.ql-omega') as Element;
+        let customButton = document.querySelector('.ql-trash') as Element;
         customButton.setAttribute('title', 'Restore note');
         customButton.innerHTML = '<span class="oi oi-trash quill-custom-button"></span>';
+        customButton.addEventListener('click', this.deleteNote.bind(this));
 
         this.quill.on('text-change', (delta: DeltaStatic, oldContents: DeltaStatic, source: any) => {
             
@@ -88,6 +95,52 @@ export class Editor extends React.Component<Props, State> {
                 ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
             }
         });
+
+    }
+
+    deleteNote() {
+        // TODO:
+        // Pass to this component notebook name & note names
+        // Ping ipcMain with notebook name & note name
+        // Restore the note based on that data
+        // Update app state (remove note that got restored from trashcan items)
+        // let data = {
+        //     note: this.props.lastOpenedNote,
+        //     notebook: this.props.notebookName
+        // };
+        console.log('Move note to trash');
+        console.log(this.props);
+
+        // TODO:
+        // Get note content from edit
+        // Save to note that content
+        // Strip note content & save it to DB
+        // Move note to trash
+
+        let editor = document.querySelector('.ql-editor') as Element;
+        let noteData = editor.innerHTML;
+
+        let data = {
+            noteName: this.props.lastOpenedNote,
+            notebookName: this.props.notebookName,
+            noteData: noteData,
+            noteDataTextOnly: striptags(noteData),
+            updateNoteData: true
+        };
+
+        // // Removes note from app state & sets last opened note to be the last
+        // // note from the notes array
+        let newNotes = removeNote(this.props.notes as string[], name);
+        let updateNotes = this.props.updateNotes as Function;
+        updateNotes(newNotes);
+
+        let updateLastOpenedNote = this.props.updateLastOpenedNote as Function;
+        updateLastOpenedNote(newNotes.pop());
+
+        let updateNoteContent = this.props.updateNoteContent as Function;
+        updateNoteContent(this.props.noteContent);
+
+        ElectronMessager.sendMessageWithIpcRenderer(DELETE_NOTE, data);
 
     }
 
@@ -120,6 +173,9 @@ export class Editor extends React.Component<Props, State> {
 
     componentWillUnmount() {
         clearTimeout(this.timeout);
+        
+        let customButton = document.querySelector('.ql-trash') as Element;
+        customButton.removeEventListener('click', this.deleteNote);
     }
 
     render() {
@@ -141,3 +197,8 @@ export class Editor extends React.Component<Props, State> {
 }
 
 export default Editor;
+
+// Helpers
+function removeNote(notesList: string[], noteName: string): string[] {
+    return notesList.filter((note: string) => { return note !== noteName ? true : false; } );
+}

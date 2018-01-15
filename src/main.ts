@@ -266,6 +266,7 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
 ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
   let note = data.noteName;
   let notebook = data.notebookName;
+  let noteDataTextOnly =  data.noteDataTextOnly;
 
   console.log('DELETE NOTE');
   dbMessager.getFromSettings('notebooksLocation')
@@ -294,6 +295,13 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
                 } else {
                   dbMessager.setLastOpenedNote(notebook, '');
                 }
+
+                let noteDataToSave = {
+                  note: note,
+                  notebook: notebook,
+                  data: noteDataTextOnly
+                };
+                dbMessager.saveNoteContent(noteDataToSave);
 
               });
             });

@@ -203,6 +203,7 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
 electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
     let note = data.noteName;
     let notebook = data.notebookName;
+    let noteDataTextOnly = data.noteDataTextOnly;
     console.log('DELETE NOTE');
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
@@ -228,6 +229,12 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
                                 else {
                                     dbMessager.setLastOpenedNote(notebook, '');
                                 }
+                                let noteDataToSave = {
+                                    note: note,
+                                    notebook: notebook,
+                                    data: noteDataTextOnly
+                                };
+                                dbMessager.saveNoteContent(noteDataToSave);
                             });
                         });
                     });

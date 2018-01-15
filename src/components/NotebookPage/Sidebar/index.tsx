@@ -195,10 +195,12 @@ export class Sidebar extends React.Component<Props, State> {
                 <section className="notebooks">
                     <ul className="list-group notes">
                         {(this.props.notes as string[]).map((name: string, index: number) => {
+                            let activeNote = name === this.props.lastOpenedNote ? 'notebook-name-sidebar-active' : '';
                             return (
                             <li 
                                 key={name} 
-                                className="list-group-item sidebar-note" 
+                                {...(name === this.props.lastOpenedNote ? '' : '')}
+                                className={`list-group-item sidebar-note ${activeNote}`}
                                 onClick={() => this.updateLastOpenedNote(name)}
                             >
                             {name}
