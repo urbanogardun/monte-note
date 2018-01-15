@@ -92,7 +92,7 @@ export class Sidebar extends React.Component<Props, State> {
     }
 
     addNote(name: string) {
-        if (name) {
+        if ( (name) && (this.props.notes.indexOf(name) === -1) ) {
             this.setState(
                 {lastOpenedNote: name,
                 noteContent: '',
