@@ -43,6 +43,8 @@ export class Db {
             } else {
                 callback();
             }
+        }, remove: (query: any, options: any, callback: any) => {
+            callback('');
         }};
     }
 

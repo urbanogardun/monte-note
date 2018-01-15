@@ -155,13 +155,13 @@ test('create note document', done => {
 
 });
 
-// test('removes note document from db', done => {
-//     let notebookName = 'testNotebook';
-//     let noteName = 'test-note';
+test('removes note document from db', done => {
+    let notebookName = 'testNotebook';
+    let noteName = 'test-note';
 
-//     dbMessager.removeNote(notebookName, noteName)
-//     .then((result: boolean) => {
-//         done();
-//         expect(result).toEqual(true);
-//     });
-// });
+    dbMessager.removeNote(notebookName, noteName)
+    .then((result: boolean) => {
+        done();
+        expect(result).toEqual(true);
+    });
+});

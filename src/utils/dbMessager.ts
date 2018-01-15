@@ -49,6 +49,23 @@ export class DbMessager {
             });
         });
     }
+
+    removeNote(notebook: string, note: string): any {
+        return new Promise((resolve) => {
+            let docToRemove = {
+                notebookName: notebook,
+                noteName: note,
+                documentFor: 'NOTE_DATA'
+            };
+
+            this.db.remove(docToRemove, {}, (err: Error) => {
+                if (err) {
+                    resolve(false);
+                }
+                resolve(true);
+            });
+        });
+    }
     
     /**
      * Saves/updates note content that is stripped from HTML tags
