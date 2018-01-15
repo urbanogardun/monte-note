@@ -121,7 +121,7 @@ export function lastOpenedTrashNotebook(state: StoreState, action: TrashAction):
 export function currentNoteTags(state: StoreState, action: LoadTagsForNote): StoreState {
   switch (action.type) {
     case LOAD_TAGS_FOR_NOTE:
-      return action.tags as StoreState;
+      return [...action.tags] as StoreState;
     default:
       return state || [] as StoreState;
   }

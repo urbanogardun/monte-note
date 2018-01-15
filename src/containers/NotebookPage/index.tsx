@@ -23,7 +23,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>)
         updateNotes: (notes: string[]) => dispatch(actions.loadNotes(notes)),
         updateLastOpenedNote: (note: string) => dispatch(actions.loadLastOpenedNote(note)),
         updateNoteContent: (content: string) => dispatch(actions.loadContentIntoNote(content)),
-        addTagToNote: (tag: string) => dispatch(actions.decrementEnthusiasm())
+        addTagToNote: (tags: string[]) => dispatch(actions.loadTagsForNote(tags))
     };
 }
 

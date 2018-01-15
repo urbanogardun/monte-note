@@ -26,14 +26,16 @@ export class TagAdder extends React.Component<Props, State> {
     // Adds tag on Enter key press
     handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'Enter') {
-            console.log(`Add tag for note: ${this.props.lastOpenedNote} in notebook: ${this.props.notebookName}`);
-            console.log('Tag value is: ' + this.state.tag);
             let data = {
                 notebook: this.props.notebookName,
                 note: this.props.lastOpenedNote,
                 tag: this.state.tag
             };
-            this.props.addTagToNote(data);
+            let notes = this.props.currentNoteTags;
+            notes.push(this.state.tag);
+            // Update list of tags in app state with tag that is about to be added
+            this.props.addTagToNote(notes);
+
             ElectronMessager.sendMessageWithIpcRenderer(ADD_TAG_TO_NOTE, data);
         }
     }
