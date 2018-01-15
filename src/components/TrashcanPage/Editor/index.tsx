@@ -92,21 +92,31 @@ export class TrashcanEditor extends React.Component<Props, State> {
     }
 
     deleteNote() {
-        console.log('delete note from drive.');
-        // if (confirm('Are you sure you want to delete this note?')) {
-        //     console.log('Delete it!');
-        // } else {
-        //     console.log('Dont delete it');
-        // }
-
-        // TODO
-        // Delete note document from the drive
-        // if successful, delete note document from DB
-        let data = {
-            notebook: this.props.notebook,
-            note: this.props.note
-        };
-        electronMessager.sendMessageWithIpcRenderer(REMOVE_NOTE_FROM_DRIVE, data);
+        if (confirm('Are you sure you want to delete this note?')) {
+            // Update trash app state
+            let updateTrash = this.props.updateTrash as Function;
+            let newTrash = Object.assign({}, this.props.trash);
+            for (const notebook in this.props.trash) {
+                if (this.props.trash.hasOwnProperty(notebook)) {
+                    let notes = this.props.trash[notebook];
+                    notes = notes.filter((note: string) => { return note !== this.props.note; });
+                    this.props.trash[notebook] = notes;
+                    newTrash[notebook] = notes;
+                    break;
+                }
+            }
+    
+            updateTrash(newTrash);
+            this.quill.deleteText(0, this.quill.getLength());
+    
+            // Delete note document from the drive
+            // if successful, delete note document from DB
+            let data = {
+                notebook: this.props.notebook,
+                note: this.props.note
+            };
+            electronMessager.sendMessageWithIpcRenderer(REMOVE_NOTE_FROM_DRIVE, data);
+        }
     }
 
     componentWillUpdate(nextProps: Props) {
