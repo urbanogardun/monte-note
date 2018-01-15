@@ -40,6 +40,22 @@ export class Sidebar extends React.Component<Props, State> {
     showInput() {
         let showInput = this.state.showInput === 'visible' ? 'hidden' : 'visible';
         this.setState({showInput: showInput});
+
+        let editor = document.querySelector('.ql-editor') as Element;
+        let noteContentToUpdate = editor.innerHTML;
+
+        // Save note data only if there are notes in notebook
+        if (this.props.notes.length) {
+
+            let noteDataToSave = prepareNoteData(this.props, noteContentToUpdate);
+    
+            // Updates note data only if the data got changed
+            if (noteDataToSave.noteData !== this.props.noteContent) {
+                ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
+            }
+
+        }
+
     }
 
     // Creates notebook on Enter key press
@@ -85,6 +101,14 @@ export class Sidebar extends React.Component<Props, State> {
             let data = {notebookName: this.props.notebookName, noteName: name};
             ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTE, data);
             ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
+
+            // let noteDataToSave = {
+            //     noteName: this.props.lastOpenedNote,
+            //     notebookName: this.props.notebookName,
+            //     noteData: noteContentToUpdate,
+            //     noteDataTextOnly: striptags(noteContentToUpdate)
+            // };
+
         }
     }
 
@@ -94,12 +118,7 @@ export class Sidebar extends React.Component<Props, State> {
         let editor = document.querySelector('.ql-editor') as Element;
         let noteContentToUpdate = editor.innerHTML;
 
-        let noteDataToSave = {
-            noteName: this.props.lastOpenedNote,
-            notebookName: this.props.notebookName,
-            noteData: noteContentToUpdate,
-            noteDataTextOnly: striptags(noteContentToUpdate)
-        };
+        let noteDataToSave = prepareNoteData(this.props, noteContentToUpdate);
 
         let noteToSwitchTo = {
             notebookName: this.props.notebookName, 
@@ -180,3 +199,16 @@ export class Sidebar extends React.Component<Props, State> {
 }
 
 export default Sidebar;
+
+// Helpers
+
+// Creates note data object for sending out to the ipcMain process
+function prepareNoteData(props: Props, noteData: string) {
+    let noteDataToSave = {
+        noteName: props.lastOpenedNote,
+        notebookName: props.notebookName,
+        noteData: noteData,
+        noteDataTextOnly: striptags(noteData)
+    };
+    return noteDataToSave;
+}
