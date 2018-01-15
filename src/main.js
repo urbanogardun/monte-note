@@ -109,6 +109,7 @@ electron_1.ipcMain.on(index_1.ADD_NOTE, (event, args) => {
         notebookManager_1.default.addNote(`${location}\\${notebook}`, noteName)
             .then((result) => {
             if (result) {
+                dbMessager.createNote(notebook, noteName);
                 dbMessager.setLastOpenedNote(notebook, noteName)
                     .then((res) => {
                     event.sender.send(index_1.UPDATE_NOTE_STATE, args);
@@ -307,8 +308,9 @@ electron_1.ipcMain.on(index_1.ADD_TAG_TO_NOTE, (event, data) => {
 electron_1.ipcMain.on(index_1.GET_TAGS_FOR_NOTE, (event, data) => {
     console.log('GET TAGS FOR NOTE: ' + data.note);
     dbMessager.getNoteTags(data.notebook, data.note)
-        .then((result) => {
-        console.log(result);
+        .then((tags) => {
+        // console.log(tags);
+        event.sender.send(index_1.GET_TAGS_FOR_NOTE, tags);
     });
 });
 // In this file you can include the rest of your app's specific main process

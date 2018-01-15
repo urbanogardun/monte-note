@@ -26,6 +26,23 @@ class DbMessager {
             });
         });
     }
+    createNote(notebook, note) {
+        return new Promise((resolve) => {
+            let docToSave = {
+                notebookName: notebook,
+                noteName: note,
+                noteContent: '',
+                tags: [],
+                documentFor: 'NOTE_DATA'
+            };
+            this.db.insert(docToSave, (err) => {
+                if (err) {
+                    resolve(false);
+                }
+                resolve(true);
+            });
+        });
+    }
     /**
      * Saves/updates note content that is stripped from HTML tags
      * @param  {any} data

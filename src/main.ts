@@ -152,6 +152,7 @@ ipcMain.on(ADD_NOTE, (event: any, args: any) => {
     .then((result: boolean) => {
 
       if (result) {
+        dbMessager.createNote(notebook, noteName);
         dbMessager.setLastOpenedNote(notebook, noteName)
         .then((res: boolean) => {
           event.sender.send(UPDATE_NOTE_STATE, args);
@@ -387,8 +388,9 @@ ipcMain.on(GET_TAGS_FOR_NOTE, (event: any, data: any) => {
   console.log('GET TAGS FOR NOTE: ' + data.note);
 
   dbMessager.getNoteTags(data.notebook, data.note)
-  .then((result: any) => {
-    console.log(result);
+  .then((tags: string[]) => {
+    // console.log(tags);
+    event.sender.send(GET_TAGS_FOR_NOTE, tags);
   });
 
 });

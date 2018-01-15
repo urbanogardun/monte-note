@@ -15,7 +15,8 @@ import {
     GET_NOTE_FROM_TRASH,
     RESTORE_NOTE_FROM_TRASH,
     UPDATE_NOTE,
-    EXIT_APP_SAVE_CONTENT
+    EXIT_APP_SAVE_CONTENT,
+    GET_TAGS_FOR_NOTE
 } from '../../constants/index';
 import ElectronMessager from '../electron-messaging/electronMessager';
     
@@ -128,6 +129,12 @@ export function ipcRendererEventsBootstrap() {
                 };
                 ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
             }
+
+        });
+
+        ipcRenderer.on(GET_TAGS_FOR_NOTE, (event: Event, tags: string[]): void => {
+
+            console.log('tags for this note: ' + tags);
 
         });
 

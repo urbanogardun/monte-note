@@ -142,3 +142,15 @@ test('gets tags from a note document', done => {
         expect(result).toEqual(['tag-1', 'tag-2', 'tag-3']);
     });
 });
+
+test('create note document', done => {
+    let notebookName = 'testNotebook';
+    let noteName = 'test-note';
+
+    dbMessager.createNote(notebookName, noteName)
+    .then((result: boolean) => {
+        done();
+        expect(result).toEqual(true);
+    });
+
+});
