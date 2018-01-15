@@ -101,14 +101,6 @@ export class Sidebar extends React.Component<Props, State> {
             let data = {notebookName: this.props.notebookName, noteName: name};
             ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTE, data);
             ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
-
-            // let noteDataToSave = {
-            //     noteName: this.props.lastOpenedNote,
-            //     notebookName: this.props.notebookName,
-            //     noteData: noteContentToUpdate,
-            //     noteDataTextOnly: striptags(noteContentToUpdate)
-            // };
-
         }
     }
 
@@ -132,6 +124,17 @@ export class Sidebar extends React.Component<Props, State> {
 
         // Switch to another note and get that note's content
         ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, noteToSwitchTo);
+    }
+
+    componentWillUnmount() {
+        let editor = document.querySelector('.ql-editor') as Element;
+        let noteContentToUpdate = editor.innerHTML;
+        let noteDataToSave = prepareNoteData(this.props, noteContentToUpdate);
+
+        // Updates note data only if the data got changed
+        if (noteDataToSave.noteData !== this.props.noteContent) {
+            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
+        }
     }
 
     render() {
@@ -188,7 +191,6 @@ export class Sidebar extends React.Component<Props, State> {
                             >
                             {name}
                             </li>
-                                // <span onClick={() => this.deleteNote(name)}> X</span>
                             );
                         })}
                     </ul>
