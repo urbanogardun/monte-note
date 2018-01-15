@@ -1,9 +1,11 @@
 import * as React from 'react';
-// import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-// import { ADD_TAG_TO_NOTE } from '../../../constants/index';
+import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
+import { GET_TAGS_FOR_NOTE } from '../../../constants/index';
 
 export interface Props {
     tags: string[];
+    notebookName: string;
+    noteName: string;
 }
 
 export interface State {
@@ -12,8 +14,21 @@ export interface State {
 
 export class TagList extends React.Component<Props, State> {
 
+    updateTags: boolean = true;
+
     constructor(props: Props) {
         super(props);
+    }
+
+    componentWillUpdate(nextProps: Props) {
+        if ( (this.props.noteName !== nextProps.noteName) && (this.props.notebookName === nextProps.notebookName) ) {
+            // console.log(`Get tags for note: ${nextProps.noteName} from notebook: ${nextProps.notebookName}`);
+            let data = {
+                notebook: nextProps.notebookName,
+                note: nextProps.noteName,
+            };
+            ElectronMessager.sendMessageWithIpcRenderer(GET_TAGS_FOR_NOTE, data);
+        }
     }
 
     render() {

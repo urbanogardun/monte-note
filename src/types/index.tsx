@@ -8,4 +8,5 @@ export interface StoreState {
     trash?: any;
     lastOpenedTrashNote?: string;
     lastOpenedTrashNotebook?: string;
+    currentNoteTags?: string[];
 }

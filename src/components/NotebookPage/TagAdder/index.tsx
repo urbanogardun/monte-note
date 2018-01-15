@@ -59,7 +59,11 @@ export class TagAdder extends React.Component<Props, State> {
                         onKeyPress={(e) => this.handleKeyPress(e)}
                     />
                 </div>
-                <TagList tags={['tag-1', 'tag-2']} />
+                <TagList 
+                    tags={['tag-1', 'tag-2']} 
+                    notebookName={this.props.notebookName}
+                    noteName={this.props.lastOpenedNote}
+                />
             </div>
         );
     }

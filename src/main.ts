@@ -17,7 +17,8 @@ import {
   GET_NOTE_FROM_TRASH,
   RESTORE_NOTE_FROM_TRASH,
   EXIT_APP_SAVE_CONTENT,
-  ADD_TAG_TO_NOTE
+  ADD_TAG_TO_NOTE,
+  GET_TAGS_FOR_NOTE
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -378,6 +379,16 @@ ipcMain.on(ADD_TAG_TO_NOTE, (event: any, data: any) => {
         console.log(result);
       });
     }
+  });
+
+});
+
+ipcMain.on(GET_TAGS_FOR_NOTE, (event: any, data: any) => {
+  console.log('GET TAGS FOR NOTE: ' + data.note);
+
+  dbMessager.getNoteContent(data.notebook, data.note)
+  .then((result: any) => {
+    console.log(result);
   });
 
 });
