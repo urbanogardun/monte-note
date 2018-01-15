@@ -88,6 +88,8 @@ export class Sidebar extends React.Component<Props, State> {
         }
     }
 
+    // Switches to selected note and loads its content. Saves content of
+    // the note we are switching from as well (if needed).
     updateLastOpenedNote(name: string) {
         let editor = document.querySelector('.ql-editor') as Element;
         let noteContentToUpdate = editor.innerHTML;
@@ -111,57 +113,6 @@ export class Sidebar extends React.Component<Props, State> {
 
         // Switch to another note and get that note's content
         ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, noteToSwitchTo);
-    }
-
-    componentWillReceiveProps(nextProps: Props) {
-        // // This will save content of note that just got added to
-        // // notebook when user navigates to another note.
-        // if (this.state.notes.indexOf(this.props.lastOpenedNote) === -1) {
-        //     this.setState(
-        //         {
-        //             notes: this.props.notes
-        //         }
-        //     );
-
-        //     let editor = document.querySelector('.ql-editor') as Element;
-        //     let noteData = editor.innerHTML;
-
-        //     let data = {
-        //         noteName: this.state.lastOpenedNote,
-        //         notebookName: this.props.notebookName,
-        //         noteData: noteData,
-        //         noteDataTextOnly: striptags(noteData)
-        //     };
-        //     ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
-        // } else {
-
-        //     // Saves current note data when we navigate to another note
-        //     if ( (nextProps.noteContent !== '') && (this.state.lastOpenedNote) ) {
-        //         if ( (this.props.lastOpenedNote) !== (nextProps.lastOpenedNote) ) {
-        //             let data = {
-        //                 noteName: this.state.lastOpenedNote,
-        //                 notebookName: this.props.notebookName,
-        //                 noteData: this.state.noteContent,
-        //                 noteDataTextOnly: striptags(this.state.noteContent)
-        //             };
-        //             ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
-        //         }
-        //     }
-
-        // }
-
-    }
-
-    componentWillUnmount() {
-        // Saves current note data when we leave the notebook
-        // let editor = document.querySelector('.ql-editor') as Element;
-        // let noteData = editor.innerHTML;
-        // let data = {
-        //     noteName: this.props.lastOpenedNote,
-        //     notebookName: this.props.notebookName,
-        //     noteData: noteData
-        // };
-        // ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
     }
 
     render() {
@@ -229,10 +180,3 @@ export class Sidebar extends React.Component<Props, State> {
 }
 
 export default Sidebar;
-
-// // Helpers
-// function removeNote(notesList: string[], noteName: string): string[] {
-//     return notesList.filter((note: string) => { return note !== noteName ? true : false; } );
-// }
-
-// Refactor saving of note content on different user actions
