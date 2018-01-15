@@ -51,10 +51,31 @@ class DbMessager {
                         notebookName: notebookName,
                         noteName: noteName,
                         documentFor: 'NOTE_DATA',
-                        noteContent: noteContent
+                        noteContent: noteContent,
+                        tags: []
                     }, () => {
                         resolve(true);
                     });
+                }
+            });
+        });
+    }
+    addTagToNote(data) {
+        return new Promise((resolve) => {
+            let notebook = data.notebook;
+            let note = data.note;
+            let tag = data.tag;
+            this.db.findOne({ notebookName: notebook,
+                noteName: note,
+                documentFor: 'NOTE_DATA'
+            }, (err, doc) => {
+                if (doc) {
+                    this.db.update(doc, { $push: { tags: tag } }, {}, () => {
+                        resolve(true);
+                    });
+                }
+                else {
+                    resolve(false);
                 }
             });
         });
@@ -64,11 +85,6 @@ class DbMessager {
             this.db.findOne({ notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA' }, (err, doc) => {
                 resolve(doc);
             });
-        });
-    }
-    addNoteContentToNote(notebook, note, noteContent) {
-        return new Promise((resolve) => {
-            // this.db.update({ notebook: notebook }, { $set: { "notes." } })
         });
     }
     getNotebook(notebook) {

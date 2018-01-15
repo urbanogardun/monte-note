@@ -360,12 +360,26 @@ ipcMain.on(RESTORE_NOTE_FROM_TRASH, (event: any, data: any) => {
 
 ipcMain.on(ADD_TAG_TO_NOTE, (event: any, data: any) => {
   console.log('Add tag to note');
+
   let notebook = data.notebook;
   let note = data.note;
-  dbMessager.getNoteContent(notebook, note)
-  .then((result: any) => {
-    console.log(result);
+  let tag = data.tag;
+  let noteObj = {
+    notebook: notebook,
+    note: note,
+    tag: tag
+  };
+
+  dbMessager.addTagToNote(noteObj)
+  .then((response: boolean) => {
+    if (response) {
+      dbMessager.getNoteContent(notebook, note)
+      .then((result: any) => {
+        console.log(result);
+      });
+    }
   });
+
 });
 
 // In this file you can include the rest of your app's specific main process

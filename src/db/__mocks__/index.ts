@@ -38,6 +38,8 @@ export class Db {
                 callback(null, {notebooks: ['book-1', 'book-2', 'book-3']});
             } else if ('notebook' in query) {
                 callback(null, {lastOpenedNote: 'test-note-23'});
+            } else if (query.documentFor === 'NOTE_DATA') {
+                callback(null, {noteName: 'test-note'});
             } else {
                 callback();
             }

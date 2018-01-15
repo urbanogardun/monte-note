@@ -59,7 +59,8 @@ export class DbMessager {
                         notebookName: notebookName, 
                         noteName: noteName, 
                         documentFor: 'NOTE_DATA', 
-                        noteContent: noteContent 
+                        noteContent: noteContent,
+                        tags: [] 
                     }, 
                     () => {
                         resolve(true);
@@ -67,6 +68,33 @@ export class DbMessager {
                 }
 
             });
+        });
+    }
+
+    addTagToNote(data: any) {
+        return new Promise((resolve) => {
+
+            let notebook = data.notebook;
+            let note = data.note;
+            let tag = data.tag;
+
+            this.db.findOne
+            (
+                {notebookName: notebook, 
+                noteName: note, 
+                documentFor: 'NOTE_DATA'
+            },  (err: Error, doc: any) => {
+
+                if (doc) {
+                    this.db.update(doc, { $push: {tags: tag} }, {}, () => {
+                        resolve(true);
+                    });
+                } else {
+                    resolve(false);
+                }
+
+            });
+
         });
     }
 

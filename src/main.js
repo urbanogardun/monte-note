@@ -288,9 +288,20 @@ electron_1.ipcMain.on(index_1.ADD_TAG_TO_NOTE, (event, data) => {
     console.log('Add tag to note');
     let notebook = data.notebook;
     let note = data.note;
-    dbMessager.getNoteContent(notebook, note)
-        .then((result) => {
-        console.log(result);
+    let tag = data.tag;
+    let noteObj = {
+        notebook: notebook,
+        note: note,
+        tag: tag
+    };
+    dbMessager.addTagToNote(noteObj)
+        .then((response) => {
+        if (response) {
+            dbMessager.getNoteContent(notebook, note)
+                .then((result) => {
+                console.log(result);
+            });
+        }
     });
 });
 // In this file you can include the rest of your app's specific main process
