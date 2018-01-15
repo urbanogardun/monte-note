@@ -316,11 +316,16 @@ electron_1.ipcMain.on(index_1.ADD_TAG_TO_NOTE, (event, data) => {
 });
 electron_1.ipcMain.on(index_1.GET_TAGS_FOR_NOTE, (event, data) => {
     // console.log('GET TAGS FOR NOTE: ' + data.note);
-    // dbMessager.getNoteTags(data.notebook, data.note)
-    // .then((tags: string[]) => {
-    //   // console.log(tags);
-    //   event.sender.send(GET_TAGS_FOR_NOTE, tags);
-    // });
+    dbMessager.getNoteTags(data.notebook, data.note)
+        .then((tags) => {
+        // console.log(tags);
+        event.sender.send(index_1.GET_TAGS_FOR_NOTE, tags);
+    });
+});
+electron_1.ipcMain.on(index_1.REMOVE_NOTE_FROM_DRIVE, (event, data) => {
+    let notebook = data.notebook;
+    let note = data.note;
+    console.log('Remove note from drive');
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

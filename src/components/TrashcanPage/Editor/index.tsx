@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Quill from 'quill';
 import electronMessager from '../../../utils/electron-messaging/electronMessager';
-import { RESTORE_NOTE_FROM_TRASH } from '../../../constants/index';
+import { RESTORE_NOTE_FROM_TRASH, REMOVE_NOTE_FROM_DRIVE } from '../../../constants/index';
 
 export interface Props {
     noteContent?: string;
@@ -102,6 +102,11 @@ export class TrashcanEditor extends React.Component<Props, State> {
         // TODO
         // Delete note document from the drive
         // if successful, delete note document from DB
+        let data = {
+            notebook: this.props.notebook,
+            note: this.props.note
+        };
+        electronMessager.sendMessageWithIpcRenderer(REMOVE_NOTE_FROM_DRIVE, data);
     }
 
     componentWillUpdate(nextProps: Props) {

@@ -18,7 +18,8 @@ import {
   RESTORE_NOTE_FROM_TRASH,
   EXIT_APP_SAVE_CONTENT,
   ADD_TAG_TO_NOTE,
-  GET_TAGS_FOR_NOTE
+  GET_TAGS_FOR_NOTE,
+  REMOVE_NOTE_FROM_DRIVE
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -387,7 +388,7 @@ ipcMain.on(ADD_TAG_TO_NOTE, (event: any, data: any) => {
     if (response) {
       dbMessager.getNoteContent(notebook, note)
       .then((result: any) => {
-        console.log(result);
+        // console.log(result);
       });
     }
   });
@@ -397,12 +398,19 @@ ipcMain.on(ADD_TAG_TO_NOTE, (event: any, data: any) => {
 ipcMain.on(GET_TAGS_FOR_NOTE, (event: any, data: any) => {
   // console.log('GET TAGS FOR NOTE: ' + data.note);
 
-  // dbMessager.getNoteTags(data.notebook, data.note)
-  // .then((tags: string[]) => {
-  //   // console.log(tags);
-  //   event.sender.send(GET_TAGS_FOR_NOTE, tags);
-  // });
+  dbMessager.getNoteTags(data.notebook, data.note)
+  .then((tags: string[]) => {
+    // console.log(tags);
+    event.sender.send(GET_TAGS_FOR_NOTE, tags);
+  });
 
+});
+
+ipcMain.on(REMOVE_NOTE_FROM_DRIVE, (event: any, data: any) => {
+  let notebook = data.notebook;
+  let note = data.note;
+
+  console.log('Remove note from drive');
 });
 
 // In this file you can include the rest of your app's specific main process
