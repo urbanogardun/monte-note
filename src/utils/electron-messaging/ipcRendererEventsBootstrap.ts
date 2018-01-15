@@ -134,7 +134,6 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on(GET_TAGS_FOR_NOTE, (event: Event, tags: string[]): void => {
 
-            console.log('tags for this note: ' + tags);
             reduxStore.dispatch(actions.loadTagsForNote(tags));
 
         });

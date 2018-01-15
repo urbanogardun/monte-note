@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TagAdder from '../TagAdder/index';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { UPDATE_NOTE, GET_NAME_OF_LAST_OPENED_NOTE, GET_NOTE_CONTENT, DELETE_NOTE } from '../../../constants/index';
+import { UPDATE_NOTE, GET_NAME_OF_LAST_OPENED_NOTE, GET_NOTE_CONTENT } from '../../../constants/index';
 import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
 
@@ -127,12 +127,15 @@ export class Editor extends React.Component<Props, State> {
             noteDataTextOnly: striptags(noteData),
             updateNoteData: true
         };
+        console.log(data);
 
         // // Removes note from app state & sets last opened note to be the last
         // // note from the notes array
-        let newNotes = removeNote(this.props.notes as string[], name);
+        let newNotes = removeNote(this.props.notes as string[], data.noteName);
         let updateNotes = this.props.updateNotes as Function;
         updateNotes(newNotes);
+
+        console.log(newNotes);
 
         let updateLastOpenedNote = this.props.updateLastOpenedNote as Function;
         updateLastOpenedNote(newNotes.pop());
@@ -140,7 +143,12 @@ export class Editor extends React.Component<Props, State> {
         let updateNoteContent = this.props.updateNoteContent as Function;
         updateNoteContent(this.props.noteContent);
 
-        ElectronMessager.sendMessageWithIpcRenderer(DELETE_NOTE, data);
+        if (newNotes.length === 0) {
+            this.quill.disable();
+            this.quill.deleteText(0, this.quill.getLength());
+        }
+
+        // ElectronMessager.sendMessageWithIpcRenderer(DELETE_NOTE, data);
 
     }
 

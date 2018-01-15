@@ -20,6 +20,7 @@ export interface State {
     inputValue: string;
     lastOpenedNote: string;
     noteContent: string;
+    notes: string[];
 }
 
 export class Sidebar extends React.Component<Props, State> {
@@ -29,7 +30,8 @@ export class Sidebar extends React.Component<Props, State> {
             showInput: 'hidden',
             inputValue: '',
             lastOpenedNote: '',
-            noteContent: ''
+            noteContent: '',
+            notes: []
         };
         ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES, this.props.notebookName);
     }
@@ -74,6 +76,11 @@ export class Sidebar extends React.Component<Props, State> {
 
     addNote(name: string) {
         if (name) {
+            this.setState(
+                {lastOpenedNote: name,
+                noteContent: '',
+                notes: this.props.notes}
+            );
             let data = {notebookName: this.props.notebookName, noteName: name};
             ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTE, data);
             ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
@@ -125,18 +132,43 @@ export class Sidebar extends React.Component<Props, State> {
     }
 
     componentWillReceiveProps(nextProps: Props) {
-        // Saves current note data when we navigate to another note
-        if ( (nextProps.noteContent !== '') && (this.state.lastOpenedNote) ) {
-            if ( (this.props.lastOpenedNote) !== (nextProps.lastOpenedNote) ) {
-                let data = {
-                    noteName: this.state.lastOpenedNote,
-                    notebookName: this.props.notebookName,
-                    noteData: this.state.noteContent,
-                    noteDataTextOnly: striptags(this.state.noteContent)
-                };
-                ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
+
+        // This will save content of note that just got added to
+        // notebook when user navigates to another note.
+        if (this.state.notes.indexOf(this.props.lastOpenedNote) === -1) {
+            this.setState(
+                {
+                    notes: this.props.notes
+                }
+            );
+
+            let editor = document.querySelector('.ql-editor') as Element;
+            let noteData = editor.innerHTML;
+
+            let data = {
+                noteName: this.state.lastOpenedNote,
+                notebookName: this.props.notebookName,
+                noteData: noteData,
+                noteDataTextOnly: striptags(noteData)
+            };
+            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
+        } else {
+
+            // Saves current note data when we navigate to another note
+            if ( (nextProps.noteContent !== '') && (this.state.lastOpenedNote) ) {
+                if ( (this.props.lastOpenedNote) !== (nextProps.lastOpenedNote) ) {
+                    let data = {
+                        noteName: this.state.lastOpenedNote,
+                        notebookName: this.props.notebookName,
+                        noteData: this.state.noteContent,
+                        noteDataTextOnly: striptags(this.state.noteContent)
+                    };
+                    ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
+                }
             }
+
         }
+
     }
 
     componentWillUnmount() {
