@@ -1,4 +1,5 @@
 import * as React from 'react';
+import TagList from '../TagList/index';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
 import { ADD_TAG_TO_NOTE } from '../../../constants/index';
 
@@ -58,56 +59,7 @@ export class TagAdder extends React.Component<Props, State> {
                         onKeyPress={(e) => this.handleKeyPress(e)}
                     />
                 </div>
-                <div className="tags">
-                    <span 
-                        className="badge badge-primary tag-name"
-                    >Tag 1 <span className="oi oi-x remove-tag"/>
-                    </span>
-                    <span 
-                        className="badge badge-primary tag-name"
-                    >Tag 2 <span className="oi oi-x remove-tag"/>
-                    </span>
-                    <span 
-                        className="badge badge-primary tag-name"
-                    >Tag 3 <span className="oi oi-x remove-tag"/>
-                    </span>
-                    <span 
-                        className="badge badge-primary tag-name"
-                    >Tag 4 <span className="oi oi-x remove-tag"/>
-                    </span>
-                    <span 
-                        className="badge badge-primary tag-name"
-                    >Tag 5 <span className="oi oi-x remove-tag"/>
-                    </span>
-                    <span 
-                        className="badge badge-primary tag-name"
-                    >Tag 6 <span className="oi oi-x remove-tag"/>
-                    </span>
-                    <span 
-                        className="badge badge-primary tag-name"
-                    >Tag 7 <span className="oi oi-x remove-tag"/>
-                    </span>
-                    <span 
-                        className="badge badge-primary tag-name"
-                    >Tag 8 <span className="oi oi-x remove-tag"/>
-                    </span>
-                    <span 
-                        className="badge badge-primary tag-name"
-                    >Tag 9 <span className="oi oi-x remove-tag"/>
-                    </span>
-                    <span 
-                        className="badge badge-primary tag-name"
-                    >Tag 10 <span className="oi oi-x remove-tag"/>
-                    </span>
-                    <span 
-                        className="badge badge-primary tag-name"
-                    >Tag 11 <span className="oi oi-x remove-tag"/>
-                    </span>
-                    <span 
-                        className="badge badge-primary tag-name"
-                    >Tag 12 <span className="oi oi-x remove-tag"/>
-                    </span>
-                </div>
+                <TagList tags={['tag-1', 'tag-2']} />
             </div>
         );
     }
