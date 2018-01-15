@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE, DELETE_NOTE } from '../../../constants/index';
+// import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE, DELETE_NOTE } from '../../../constants/index';
+import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE } from '../../../constants/index';
 import { Link } from 'react-router-dom';
 var striptags = require('striptags');
 
@@ -88,99 +89,79 @@ export class Sidebar extends React.Component<Props, State> {
     }
 
     updateLastOpenedNote(name: string) {
-        if (this.props.lastOpenedNote !== name) {
-            let editor = document.querySelector('.ql-editor') as Element;
-            let noteData = editor.innerHTML;
-            this.setState(
-                {lastOpenedNote: this.props.lastOpenedNote as string,
-                noteContent: noteData}
-            );
-            let data = {notebookName: this.props.notebookName, noteName: name};
-            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
-        }
-    }
+        let editor = document.querySelector('.ql-editor') as Element;
+        let noteContentToUpdate = editor.innerHTML;
 
-    deleteNote(name: string) {
-        let data = {
-            noteName: name,
+        let noteDataToSave = {
+            noteName: this.props.lastOpenedNote,
             notebookName: this.props.notebookName,
-            noteData: '',
-            updateNoteData: false
+            noteData: noteContentToUpdate,
+            noteDataTextOnly: striptags(noteContentToUpdate)
         };
 
-        // Removes note from app state & sets last opened note to be the last
-        // note from the notes array
-        let newNotes = removeNote(this.props.notes as string[], name);
-        let updateNotes = this.props.updateNotes as Function;
-        updateNotes(newNotes);
+        let noteToSwitchTo = {
+            notebookName: this.props.notebookName, 
+            noteName: name
+        };
 
-        // When deleting a currently opened note, get current note data from
-        // editor
-        if (this.props.lastOpenedNote === name) {
-            let editor = document.querySelector('.ql-editor') as Element;
-            let noteData = editor.innerHTML;
-            data.noteData = noteData;
-            data.updateNoteData = true;
-            let updateLastOpenedNote = this.props.updateLastOpenedNote as Function;
-            updateLastOpenedNote(newNotes.pop());
+        // Updates note data only if the data got changed
+        if (noteDataToSave.noteData !== this.props.noteContent) {
+            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
         }
-        
-        let updateNoteContent = this.props.updateNoteContent as Function;
-        updateNoteContent(this.props.noteContent);
 
-        ElectronMessager.sendMessageWithIpcRenderer(DELETE_NOTE, data);
+        // Switch to another note and get that note's content
+        ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, noteToSwitchTo);
     }
 
     componentWillReceiveProps(nextProps: Props) {
+        // // This will save content of note that just got added to
+        // // notebook when user navigates to another note.
+        // if (this.state.notes.indexOf(this.props.lastOpenedNote) === -1) {
+        //     this.setState(
+        //         {
+        //             notes: this.props.notes
+        //         }
+        //     );
 
-        // This will save content of note that just got added to
-        // notebook when user navigates to another note.
-        if (this.state.notes.indexOf(this.props.lastOpenedNote) === -1) {
-            this.setState(
-                {
-                    notes: this.props.notes
-                }
-            );
+        //     let editor = document.querySelector('.ql-editor') as Element;
+        //     let noteData = editor.innerHTML;
 
-            let editor = document.querySelector('.ql-editor') as Element;
-            let noteData = editor.innerHTML;
+        //     let data = {
+        //         noteName: this.state.lastOpenedNote,
+        //         notebookName: this.props.notebookName,
+        //         noteData: noteData,
+        //         noteDataTextOnly: striptags(noteData)
+        //     };
+        //     ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
+        // } else {
 
-            let data = {
-                noteName: this.state.lastOpenedNote,
-                notebookName: this.props.notebookName,
-                noteData: noteData,
-                noteDataTextOnly: striptags(noteData)
-            };
-            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
-        } else {
+        //     // Saves current note data when we navigate to another note
+        //     if ( (nextProps.noteContent !== '') && (this.state.lastOpenedNote) ) {
+        //         if ( (this.props.lastOpenedNote) !== (nextProps.lastOpenedNote) ) {
+        //             let data = {
+        //                 noteName: this.state.lastOpenedNote,
+        //                 notebookName: this.props.notebookName,
+        //                 noteData: this.state.noteContent,
+        //                 noteDataTextOnly: striptags(this.state.noteContent)
+        //             };
+        //             ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
+        //         }
+        //     }
 
-            // Saves current note data when we navigate to another note
-            if ( (nextProps.noteContent !== '') && (this.state.lastOpenedNote) ) {
-                if ( (this.props.lastOpenedNote) !== (nextProps.lastOpenedNote) ) {
-                    let data = {
-                        noteName: this.state.lastOpenedNote,
-                        notebookName: this.props.notebookName,
-                        noteData: this.state.noteContent,
-                        noteDataTextOnly: striptags(this.state.noteContent)
-                    };
-                    ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
-                }
-            }
-
-        }
+        // }
 
     }
 
     componentWillUnmount() {
         // Saves current note data when we leave the notebook
-        let editor = document.querySelector('.ql-editor') as Element;
-        let noteData = editor.innerHTML;
-        let data = {
-            noteName: this.props.lastOpenedNote,
-            notebookName: this.props.notebookName,
-            noteData: noteData
-        };
-        ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
+        // let editor = document.querySelector('.ql-editor') as Element;
+        // let noteData = editor.innerHTML;
+        // let data = {
+        //     noteName: this.props.lastOpenedNote,
+        //     notebookName: this.props.notebookName,
+        //     noteData: noteData
+        // };
+        // ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
     }
 
     render() {
@@ -249,7 +230,9 @@ export class Sidebar extends React.Component<Props, State> {
 
 export default Sidebar;
 
-// Helpers
-function removeNote(notesList: string[], noteName: string): string[] {
-    return notesList.filter((note: string) => { return note !== noteName ? true : false; } );
-}
+// // Helpers
+// function removeNote(notesList: string[], noteName: string): string[] {
+//     return notesList.filter((note: string) => { return note !== noteName ? true : false; } );
+// }
+
+// Refactor saving of note content on different user actions
