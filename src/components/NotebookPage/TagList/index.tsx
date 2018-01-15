@@ -3,7 +3,7 @@ import ElectronMessager from '../../../utils/electron-messaging/electronMessager
 import { GET_TAGS_FOR_NOTE } from '../../../constants/index';
 
 export interface Props {
-    tags: string[];
+    currentNoteTags: string[];
     notebookName: string;
     noteName: string;
 }
@@ -34,7 +34,7 @@ export class TagList extends React.Component<Props, State> {
     render() {
         return (
             <div className="tags">
-                {(this.props.tags as string[]).map((name: string, index: number) => {
+                {(this.props.currentNoteTags as string[]).map((name: string, index: number) => {
                     return (
                         <span 
                             key={name}

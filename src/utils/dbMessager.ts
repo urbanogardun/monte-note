@@ -123,7 +123,11 @@ export class DbMessager {
             this.db.findOne(docToGet, (err: Error, doc: any) => {
 
                 if (doc) {
-                    resolve(doc.tags);
+                    if (doc.tags) {
+                        resolve(doc.tags);
+                    } else {
+                        resolve([]);
+                    }
                 } else {
                     resolve([]);
                 }

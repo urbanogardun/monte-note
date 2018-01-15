@@ -78,3 +78,6 @@ export type ADD_TAG_TO_NOTE = typeof ADD_TAG_TO_NOTE;
 
 export const GET_TAGS_FOR_NOTE = 'GET_TAGS_FOR_NOTE';
 export type GET_TAGS_FOR_NOTE = typeof GET_TAGS_FOR_NOTE;
+
+export const LOAD_TAGS_FOR_NOTE = 'LOAD_TAGS_FOR_NOTE';
+export type LOAD_TAGS_FOR_NOTE = typeof LOAD_TAGS_FOR_NOTE;

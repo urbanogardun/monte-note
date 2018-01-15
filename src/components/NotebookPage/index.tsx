@@ -14,6 +14,7 @@ export interface Props {
     updateLastOpenedNote: Function;
     updateNoteContent: Function;
     addTagToNote: Function;
+    currentNoteTags: string[];
 }
 
 export interface State {
@@ -47,6 +48,7 @@ export class Notebook extends React.Component<Props, State> {
                         lastOpenedNote={this.props.lastOpenedNote}
                         noteContent={this.props.noteContent}
                         addTagToNote={this.props.addTagToNote}
+                        currentNoteTags={this.props.currentNoteTags}
                     />
                 </div>
             </div>

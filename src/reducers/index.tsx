@@ -4,7 +4,8 @@ import { EnthusiasmAction,
   NoteAction, 
   LastOpenedNoteAction, 
   LoadContentIntoNote, 
-  TrashAction } from '../actions';
+  TrashAction, 
+  LoadTagsForNote} from '../actions';
 import { StoreState } from '../types/index';
 import { 
   INCREMENT_ENTHUSIASM, 
@@ -18,7 +19,8 @@ import {
   LOAD_CONTENT_INTO_NOTE,
   LOAD_TRASH,
   LOAD_LAST_OPENED_TRASH_NOTE,
-  LOAD_LAST_OPENED_TRASH_NOTEBOOK } from '../constants/index';
+  LOAD_LAST_OPENED_TRASH_NOTEBOOK,
+  LOAD_TAGS_FOR_NOTE } from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -116,6 +118,15 @@ export function lastOpenedTrashNotebook(state: StoreState, action: TrashAction):
   }
 }
 
+export function currentNoteTags(state: StoreState, action: LoadTagsForNote): StoreState {
+  switch (action.type) {
+    case LOAD_TAGS_FOR_NOTE:
+      return action.tags as StoreState;
+    default:
+      return state || [] as StoreState;
+  }
+}
+
 const rootReducers: Reducer<StoreState> = combineReducers(
   { 
     enthusiasmLevel, 
@@ -126,7 +137,8 @@ const rootReducers: Reducer<StoreState> = combineReducers(
     noteContent, 
     trash, 
     lastOpenedTrashNote, 
-    lastOpenedTrashNotebook 
+    lastOpenedTrashNotebook,
+    currentNoteTags 
   }
 );
 

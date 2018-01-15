@@ -10,6 +10,7 @@ export interface Props {
     lastOpenedNote: string;
     noteContent: string;
     addTagToNote: Function;
+    currentNoteTags: string[];
 }
 
 export interface State {
@@ -122,6 +123,7 @@ export class Editor extends React.Component<Props, State> {
                     notebookName={this.state.notebookName}
                     lastOpenedNote={this.props.lastOpenedNote}
                     addTagToNote={this.props.addTagToNote}
+                    currentNoteTags={this.props.currentNoteTags}
                 />
                 <div id="quill-container" />
             </div>

@@ -7,6 +7,7 @@ export interface Props {
     notebookName: string;
     lastOpenedNote: string;
     addTagToNote: Function;
+    currentNoteTags: string[];
 }
 
 export interface State {
@@ -60,9 +61,9 @@ export class TagAdder extends React.Component<Props, State> {
                     />
                 </div>
                 <TagList 
-                    tags={['tag-1', 'tag-2']} 
                     notebookName={this.props.notebookName}
                     noteName={this.props.lastOpenedNote}
+                    currentNoteTags={this.props.currentNoteTags}
                 />
             </div>
         );

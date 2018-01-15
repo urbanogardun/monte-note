@@ -102,7 +102,12 @@ class DbMessager {
             let docToGet = { notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA' };
             this.db.findOne(docToGet, (err, doc) => {
                 if (doc) {
-                    resolve(doc.tags);
+                    if (doc.tags) {
+                        resolve(doc.tags);
+                    }
+                    else {
+                        resolve([]);
+                    }
                 }
                 else {
                     resolve([]);

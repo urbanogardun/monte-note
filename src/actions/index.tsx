@@ -58,6 +58,11 @@ export interface LoadLastOpenedTrashNotebook {
     notebook: string;
 }
 
+export interface LoadTagsForNote {
+    type: constants.LOAD_TAGS_FOR_NOTE;
+    tags: string[];
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -147,5 +152,12 @@ export function loadLastOpenedTrashNotebook(notebook: string): LoadLastOpenedTra
     return {
         type: constants.LOAD_LAST_OPENED_TRASH_NOTEBOOK,
         notebook
+    };
+}
+
+export function loadTagsForNote(tags: string[]): LoadTagsForNote {
+    return {
+        type: constants.LOAD_TAGS_FOR_NOTE,
+        tags
     };
 }
