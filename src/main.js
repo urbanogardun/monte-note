@@ -309,7 +309,7 @@ electron_1.ipcMain.on(index_1.ADD_TAG_TO_NOTE, (event, data) => {
         if (response) {
             dbMessager.getNoteContent(notebook, note)
                 .then((result) => {
-                console.log(result);
+                // console.log(result);
             });
         }
     });
@@ -325,7 +325,17 @@ electron_1.ipcMain.on(index_1.GET_TAGS_FOR_NOTE, (event, data) => {
 electron_1.ipcMain.on(index_1.REMOVE_NOTE_FROM_DRIVE, (event, data) => {
     let notebook = data.notebook;
     let note = data.note;
-    console.log('Remove note from drive');
+    // Removes note from drive and if that is successful, it removes note document
+    // from the db
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        notebookManager_1.default.destroyNote(location, notebook, note + '.html')
+            .then((response) => {
+            if (response) {
+                dbMessager.removeNote(notebook, note);
+            }
+        });
+    });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

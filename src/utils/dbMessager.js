@@ -43,6 +43,21 @@ class DbMessager {
             });
         });
     }
+    removeNote(notebook, note) {
+        return new Promise((resolve) => {
+            let docToRemove = {
+                notebookName: notebook,
+                noteName: note,
+                documentFor: 'NOTE_DATA'
+            };
+            this.db.remove(docToRemove, {}, (err) => {
+                if (err) {
+                    resolve(false);
+                }
+                resolve(true);
+            });
+        });
+    }
     /**
      * Saves/updates note content that is stripped from HTML tags
      * @param  {any} data

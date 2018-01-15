@@ -410,13 +410,14 @@ ipcMain.on(REMOVE_NOTE_FROM_DRIVE, (event: any, data: any) => {
   let notebook = data.notebook;
   let note = data.note;
 
-  // console.log('Remove note from drive');
+  // Removes note from drive and if that is successful, it removes note document
+  // from the db
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
     NotebookManager.destroyNote(location, notebook, note + '.html')
     .then((response: boolean) => {
       if (response) {
-        // Delete note document from db
+        dbMessager.removeNote(notebook, note);
       }
     });
   });
