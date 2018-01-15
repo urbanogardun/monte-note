@@ -153,14 +153,14 @@ export class Editor extends React.Component<Props, State> {
     }
 
     componentWillReceiveProps(nextProps: Props) {
-        if (nextProps.lastOpenedNote === 'NO_LAST_OPENED_NOTE') {
-            this.quill.disable();
-        } else {
+        if (nextProps.lastOpenedNote.length) {
             this.quill.enable();
             this.quill.focus();
+        } else {
+            this.quill.disable();
         }
 
-        if ((this.state.lastOpenedNote === null) || (this.state.lastOpenedNote !== nextProps.lastOpenedNote)) {
+        if ( (this.state.lastOpenedNote === null) || (this.state.lastOpenedNote !== nextProps.lastOpenedNote) ) {
             this.setState({lastOpenedNote: nextProps.lastOpenedNote as string});
 
             let data = {
@@ -169,6 +169,7 @@ export class Editor extends React.Component<Props, State> {
             };
             ElectronMessager.sendMessageWithIpcRenderer(GET_NOTE_CONTENT, data);
         }
+
     }
 
     componentWillUpdate(nextProps: Props) {
