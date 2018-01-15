@@ -105,7 +105,7 @@ export class DbMessager {
             },  (err: Error, doc: any) => {
 
                 if (doc) {
-                    this.db.update(doc, { $push: {tags: tag} }, {}, () => {
+                    this.db.update(doc, { $addToSet: {tags: tag} }, {}, () => {
                         resolve(true);
                     });
                 } else {
