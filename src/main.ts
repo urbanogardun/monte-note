@@ -239,27 +239,29 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
   let noteData = data.noteData;
   let noteDataTextOnly = data.noteDataTextOnly;
 
-  dbMessager.getFromSettings('notebooksLocation')
-  .then((location: string) => {
-    if (location) {
-
-      let absolutePathToNote = path.join(location, notebookName, noteName + '.html');
-
-      NotebookManager.updateNoteData(absolutePathToNote, noteData)
-      .then((result: boolean) => {
-        if (result) {
-          console.log('Note content updated successfully');
-          let noteDataToSave = {
-            note: noteName,
-            notebook: notebookName,
-            data: noteDataTextOnly
-          };
-          dbMessager.saveNoteContent(noteDataToSave);
-        }
-      });
-    
-    }
-  });
+  if (noteName && notebookName) {
+    dbMessager.getFromSettings('notebooksLocation')
+    .then((location: string) => {
+      if (location) {
+  
+        let absolutePathToNote = path.join(location, notebookName, noteName + '.html');
+  
+        NotebookManager.updateNoteData(absolutePathToNote, noteData)
+        .then((result: boolean) => {
+          if (result) {
+            console.log('Note content updated successfully');
+            let noteDataToSave = {
+              note: noteName,
+              notebook: notebookName,
+              data: noteDataTextOnly
+            };
+            dbMessager.saveNoteContent(noteDataToSave);
+          }
+        });
+      
+      }
+    });
+  }
 
 });
 
@@ -393,13 +395,13 @@ ipcMain.on(ADD_TAG_TO_NOTE, (event: any, data: any) => {
 });
 
 ipcMain.on(GET_TAGS_FOR_NOTE, (event: any, data: any) => {
-  console.log('GET TAGS FOR NOTE: ' + data.note);
+  // console.log('GET TAGS FOR NOTE: ' + data.note);
 
-  dbMessager.getNoteTags(data.notebook, data.note)
-  .then((tags: string[]) => {
-    // console.log(tags);
-    event.sender.send(GET_TAGS_FOR_NOTE, tags);
-  });
+  // dbMessager.getNoteTags(data.notebook, data.note)
+  // .then((tags: string[]) => {
+  //   // console.log(tags);
+  //   event.sender.send(GET_TAGS_FOR_NOTE, tags);
+  // });
 
 });
 

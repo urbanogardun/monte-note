@@ -181,24 +181,26 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
     let notebookName = data.notebookName;
     let noteData = data.noteData;
     let noteDataTextOnly = data.noteDataTextOnly;
-    dbMessager.getFromSettings('notebooksLocation')
-        .then((location) => {
-        if (location) {
-            let absolutePathToNote = path.join(location, notebookName, noteName + '.html');
-            notebookManager_1.default.updateNoteData(absolutePathToNote, noteData)
-                .then((result) => {
-                if (result) {
-                    console.log('Note content updated successfully');
-                    let noteDataToSave = {
-                        note: noteName,
-                        notebook: notebookName,
-                        data: noteDataTextOnly
-                    };
-                    dbMessager.saveNoteContent(noteDataToSave);
-                }
-            });
-        }
-    });
+    if (noteName && notebookName) {
+        dbMessager.getFromSettings('notebooksLocation')
+            .then((location) => {
+            if (location) {
+                let absolutePathToNote = path.join(location, notebookName, noteName + '.html');
+                notebookManager_1.default.updateNoteData(absolutePathToNote, noteData)
+                    .then((result) => {
+                    if (result) {
+                        console.log('Note content updated successfully');
+                        let noteDataToSave = {
+                            note: noteName,
+                            notebook: notebookName,
+                            data: noteDataTextOnly
+                        };
+                        dbMessager.saveNoteContent(noteDataToSave);
+                    }
+                });
+            }
+        });
+    }
 });
 electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
     let note = data.noteName;
@@ -313,12 +315,12 @@ electron_1.ipcMain.on(index_1.ADD_TAG_TO_NOTE, (event, data) => {
     });
 });
 electron_1.ipcMain.on(index_1.GET_TAGS_FOR_NOTE, (event, data) => {
-    console.log('GET TAGS FOR NOTE: ' + data.note);
-    dbMessager.getNoteTags(data.notebook, data.note)
-        .then((tags) => {
-        // console.log(tags);
-        event.sender.send(index_1.GET_TAGS_FOR_NOTE, tags);
-    });
+    // console.log('GET TAGS FOR NOTE: ' + data.note);
+    // dbMessager.getNoteTags(data.notebook, data.note)
+    // .then((tags: string[]) => {
+    //   // console.log(tags);
+    //   event.sender.send(GET_TAGS_FOR_NOTE, tags);
+    // });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 
