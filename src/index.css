@@ -4,6 +4,7 @@ html, body, div#root, div#app, div.trashcan, div.row, div.trashcan-container, di
 
 .quill-custom-button {
   vertical-align: top;
+  color: #444444;
 }
 
 section.notebooks, section.notes {

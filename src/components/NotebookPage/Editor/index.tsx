@@ -51,12 +51,21 @@ export class Editor extends React.Component<Props, State> {
             modules: {
                 toolbar: [
                 ['bold', 'italic', 'underline'],
-                ['image', 'code-block']
+                ['image', 'code-block'],
+                ['omega'],
                 ]
             },
             placeholder: 'Take notes...',
             theme: 'snow'  // or 'bubble'
         });
+
+        let toolbar = this.quill.getModule('toolbar');
+        toolbar.addHandler('omega');
+
+        // Adds text on hover & custom icon to button
+        let customButton = document.querySelector('.ql-omega') as Element;
+        customButton.setAttribute('title', 'Restore note');
+        customButton.innerHTML = '<span class="oi oi-trash quill-custom-button"></span>';
 
         this.quill.on('text-change', (delta: DeltaStatic, oldContents: DeltaStatic, source: any) => {
             
