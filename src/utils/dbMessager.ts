@@ -79,14 +79,6 @@ export class DbMessager {
         });
     }
 
-    addNoteContentToNote(notebook: string, note: string, noteContent: string): any {
-        return new Promise((resolve) => {
-
-            // this.db.update({ notebook: notebook }, { $set: { "notes." } })
-
-        });
-    }
-
     getNotebook(notebook: string): any {
         return new Promise((resolve) => {
             this.db.findOne({ notebook: notebook }, (err: any, doc: any): any => {
