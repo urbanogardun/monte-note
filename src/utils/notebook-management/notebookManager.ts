@@ -186,6 +186,19 @@ export class NotebookManager {
         });
     }
 
+    static destroyNote(notebooksLocation: string, notebookName: string, noteName: string) {
+        let notePath = path.join(notebooksLocation, '.trashcan', notebookName, noteName);
+        return new Promise(resolve => {
+            fs.remove(notePath)
+            .then(() => {
+                resolve(true);
+            })
+            .catch((err: Error) => {
+                resolve(false);
+            });
+        });
+    }
+
     /**
      * Gets trashed notes mapped to their corresponding notebooks
      * @param  {string} notebooksLocation - location where notebooks get saved

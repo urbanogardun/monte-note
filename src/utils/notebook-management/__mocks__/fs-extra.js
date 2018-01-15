@@ -61,6 +61,12 @@ function move(oldPath, newPath) {
     });
 }
 
+function remove(path) {
+    return new Promise(resolve => {
+        resolve(true);
+    });
+}
+
 fs.mkdir = mkdir;
 fs.existsSync = existsSync;
 fs.mkdirSync = mkdirSync;
@@ -73,5 +79,6 @@ fs.stat = stat;
 fs.readFile = readFile;
 fs.__setNotebookList = __setNotebookList;
 fs.move = move;
+fs.remove = remove;
 
 module.exports = fs;

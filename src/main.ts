@@ -410,7 +410,17 @@ ipcMain.on(REMOVE_NOTE_FROM_DRIVE, (event: any, data: any) => {
   let notebook = data.notebook;
   let note = data.note;
 
-  console.log('Remove note from drive');
+  // console.log('Remove note from drive');
+  dbMessager.getFromSettings('notebooksLocation')
+  .then((location: string) => {
+    NotebookManager.destroyNote(location, notebook, note + '.html')
+    .then((response: boolean) => {
+      if (response) {
+        // Delete note document from db
+      }
+    });
+  });
+
 });
 
 // In this file you can include the rest of your app's specific main process
