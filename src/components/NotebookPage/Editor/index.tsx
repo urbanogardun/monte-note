@@ -1,7 +1,7 @@
 import * as React from 'react';
 import TagAdder from '../TagAdder/index';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { UPDATE_NOTE, GET_NAME_OF_LAST_OPENED_NOTE, GET_NOTE_CONTENT } from '../../../constants/index';
+import { UPDATE_NOTE, GET_NAME_OF_LAST_OPENED_NOTE, GET_NOTE_CONTENT, DELETE_NOTE } from '../../../constants/index';
 import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
 
@@ -99,24 +99,6 @@ export class Editor extends React.Component<Props, State> {
     }
 
     deleteNote() {
-        // TODO:
-        // Pass to this component notebook name & note names
-        // Ping ipcMain with notebook name & note name
-        // Restore the note based on that data
-        // Update app state (remove note that got restored from trashcan items)
-        // let data = {
-        //     note: this.props.lastOpenedNote,
-        //     notebook: this.props.notebookName
-        // };
-        console.log('Move note to trash');
-        console.log(this.props);
-
-        // TODO:
-        // Get note content from edit
-        // Save to note that content
-        // Strip note content & save it to DB
-        // Move note to trash
-
         let editor = document.querySelector('.ql-editor') as Element;
         let noteData = editor.innerHTML;
 
@@ -127,33 +109,33 @@ export class Editor extends React.Component<Props, State> {
             noteDataTextOnly: striptags(noteData),
             updateNoteData: true
         };
-        console.log(data);
 
-        // // Removes note from app state & sets last opened note to be the last
-        // // note from the notes array
+        // Removes note from app state & sets last opened note to be the last
+        // note from the notes array
         let newNotes = removeNote(this.props.notes as string[], data.noteName);
         let updateNotes = this.props.updateNotes as Function;
         updateNotes(newNotes);
 
-        console.log(newNotes);
-
+        // Updates app state with lastOpenedNote value - it picks last item
+        // from an array, which is the newest created note.
         let updateLastOpenedNote = this.props.updateLastOpenedNote as Function;
         updateLastOpenedNote(newNotes.pop());
 
+        // Updates note content in app state
         let updateNoteContent = this.props.updateNoteContent as Function;
         updateNoteContent(this.props.noteContent);
 
+        // If there are no notes in notebook, clears editor from previous
+        // note content
         if (newNotes.length === 0) {
-            this.quill.disable();
             this.quill.deleteText(0, this.quill.getLength());
         }
 
-        // ElectronMessager.sendMessageWithIpcRenderer(DELETE_NOTE, data);
-
+        ElectronMessager.sendMessageWithIpcRenderer(DELETE_NOTE, data);
     }
 
     componentWillReceiveProps(nextProps: Props) {
-        if (nextProps.lastOpenedNote.length) {
+        if (nextProps.notes.length) {
             this.quill.enable();
             this.quill.focus();
         } else {
@@ -190,9 +172,6 @@ export class Editor extends React.Component<Props, State> {
     render() {
         return (
             <div className="col-sm trashcan main-content">
-                {/*
-                <h4>Notebook: {this.state.notebookName}</h4>
-                <h4>Editing Note: {this.props.lastOpenedNote}</h4> */}
                 <TagAdder
                     notebookName={this.state.notebookName}
                     lastOpenedNote={this.props.lastOpenedNote}
