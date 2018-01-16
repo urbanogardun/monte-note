@@ -1,5 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
+import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
+import { GET_NOTEBOOKS } from '../../../constants/index';
 // import NewNotebookButton from './NewNotebookButton';
 
 export interface Props {
@@ -7,6 +9,11 @@ export interface Props {
 }
 
 export class Sidebar extends React.Component<Props, {}> {
+
+    componentWillMount() {
+        ElectronMessager.sendMessageWithIpcRenderer(GET_NOTEBOOKS);
+    }
+
     render() {
         return (
             // <div className="col-sm-2">
