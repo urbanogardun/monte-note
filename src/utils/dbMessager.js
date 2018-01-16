@@ -14,6 +14,17 @@ class DbMessager {
             });
         });
     }
+    searchNotesWithinNotebook(notebook, query) {
+        return new Promise((resolve) => {
+            let regex = new RegExp(query, 'i');
+            this.db.find({
+                notebookName: notebook,
+                noteContent: regex
+            }).sort({ updatedAt: -1 }).exec((err, docs) => {
+                resolve(docs);
+            });
+        });
+    }
     getNotebooks() {
         return new Promise((resolve) => {
             this.db.findOne({ name: 'notebooks' }, (err, doc) => {

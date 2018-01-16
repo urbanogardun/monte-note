@@ -445,6 +445,13 @@ ipcMain.on(GLOBAL_SEARCH, (event: any, searchQuery: string) => {
 
 ipcMain.on(SEARCH_WITHIN_NOTEBOOK, (event: any, searchData: any) => {
   console.log(`Search notes within: ${searchData.notebook} for term ${searchData.searchQuery}`);
+  let notebook = searchData.notebook;
+  let searchQuery = searchData.searchQuery;
+  
+  dbMessager.searchNotesWithinNotebook(notebook, searchQuery)
+  .then((docs: any) => {
+    event.sender.send(SEARCH_RESULTS, docs);
+  });
 });
 
 // In this file you can include the rest of your app's specific main process

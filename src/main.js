@@ -352,6 +352,12 @@ electron_1.ipcMain.on(index_1.GLOBAL_SEARCH, (event, searchQuery) => {
 });
 electron_1.ipcMain.on(index_1.SEARCH_WITHIN_NOTEBOOK, (event, searchData) => {
     console.log(`Search notes within: ${searchData.notebook} for term ${searchData.searchQuery}`);
+    let notebook = searchData.notebook;
+    let searchQuery = searchData.searchQuery;
+    dbMessager.searchNotesWithinNotebook(notebook, searchQuery)
+        .then((docs) => {
+        event.sender.send(index_1.SEARCH_RESULTS, docs);
+    });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 
