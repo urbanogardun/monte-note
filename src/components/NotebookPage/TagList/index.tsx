@@ -6,6 +6,7 @@ export interface Props {
     currentNoteTags: string[];
     notebookName: string;
     noteName: string;
+    updateTags: Function;
 }
 
 export interface State {
@@ -38,6 +39,10 @@ export class TagList extends React.Component<Props, State> {
             tag: name
         };
         ElectronMessager.sendMessageWithIpcRenderer(REMOVE_TAG_FROM_NOTE, data);
+        
+        // Remove tag from the app state
+        let newTags = this.props.currentNoteTags.filter((tag: string) => { return tag !== name; });
+        this.props.updateTags(newTags);
     }
 
     render() {

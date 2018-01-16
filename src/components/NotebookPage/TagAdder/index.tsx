@@ -66,6 +66,7 @@ export class TagAdder extends React.Component<Props, State> {
                     notebookName={this.props.notebookName}
                     noteName={this.props.lastOpenedNote}
                     currentNoteTags={this.props.currentNoteTags}
+                    updateTags={this.props.addTagToNote}
                 />
             </div>
         );
