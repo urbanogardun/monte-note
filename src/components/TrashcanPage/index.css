@@ -15,11 +15,6 @@ a.home-sidebar {
     min-width: 200px;
 }
 
-.trashcan.main-content {
-    display:block;
-    overflow:auto;
-}
-
 .sidebar, ul.notes, li.sidebar-note {
     background-color: #282E3F;
     color: #9EA6C2;

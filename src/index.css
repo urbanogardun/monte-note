@@ -11,6 +11,11 @@ section.notebooks, section.notes {
   margin-top: 20px;
 }
 
+.trashcan.main-content, .preview-note-content {
+  display:block;
+  overflow:auto;
+}
+
 /* Notebook page */
 
 .home-icon {

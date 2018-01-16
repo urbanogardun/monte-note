@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Sidebar from './Sidebar/index';
 import MainSection from './MainSection/index';
+import PreviewNote from './PreviewNote/index';
 import ElectronMessager from '../../utils/electron-messaging/electronMessager';
 import { GLOBAL_SEARCH } from '../../constants/index';
 
@@ -36,9 +37,7 @@ export class HomePage extends React.Component<Props, State> {
             <div className="row">
                 <Sidebar notebooks={this.props.notebooks} />
                 <MainSection />
-                <div className="col-sm">
-                    <h1>Preview Note Content</h1>
-                </div>
+                <PreviewNote />
             </div>
         );
     }
