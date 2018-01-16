@@ -15,12 +15,30 @@ export class SearchBar extends React.Component<Props, State> {
         this.state = {
             searchQuery: ''
         };
+        // Debounce calls to ElectronMessager for a number of msecs
+        // this.debounce keeps a reference to the same debounceEvent function
+        // so we don't create multiple same functions.
+        this.debounce = debounceEvent(this.sendSearchQuery.bind(this), 250);
+    }
+
+    debounce() {
+        // Stores reference to instantiated debounceEvent function
+        // Since debounce function is stateful and React components are
+        // as well, we need a way to instantiate only one debounce function
+        // and keep a reference to it.
+    }
+
+    sendSearchQuery() {
+        let searchQuery = this.state.searchQuery;
+        ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchQuery);
     }
 
     // Adds tag on Enter key press
     handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
-        let searchQuery = this.state.searchQuery;
-        ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchQuery);
+        // Calls this.debounce which stores reference to debounceEvent function
+        // that calls itself with callback of sendSearchQuery which ultimately
+        // sends the search query
+        this.debounce();
     }
 
     updateInputValue(e: React.ChangeEvent<HTMLInputElement>) {
@@ -61,7 +79,7 @@ export class SearchBar extends React.Component<Props, State> {
                                 <a className="dropdown-item" href="#">Introduction to Advertising</a>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </li>
@@ -70,3 +88,16 @@ export class SearchBar extends React.Component<Props, State> {
 }
 
 export default SearchBar;
+
+// Helpers
+
+function debounceEvent(callback: any, time: Number) {
+    let interval: number | null;
+    return (...args: any[]) => {
+      clearTimeout(interval as number);
+      interval = setTimeout(() => {
+        interval = null;
+        callback(...args);
+      },                    time);
+    };
+  }
