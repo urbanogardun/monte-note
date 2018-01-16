@@ -74,10 +74,14 @@ export class Sidebar extends React.Component<Props, {}> {
 
                 <section className="trashcan">
                     <ul className="list-group notes">
-                        <li 
-                            className="list-group-item sidebar-note sidebar-link"
-                        >Trash <span className="oi oi-trash trashcan" />
-                        </li>
+                        <Link 
+                            to={'/trashcan'} 
+                        >
+                            <li 
+                                className="list-group-item sidebar-note sidebar-link"
+                            >Trash <span className="oi oi-trash trashcan" />
+                            </li>
+                        </Link>
                     </ul>
                 </section>
 
