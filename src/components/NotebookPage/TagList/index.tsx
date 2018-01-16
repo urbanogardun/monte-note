@@ -53,7 +53,7 @@ export class TagList extends React.Component<Props, State> {
                         <span 
                             key={name}
                             className="badge badge-primary tag-name"
-                        >{name} <span className="oi oi-x remove-tag" onClick={() => { this.removeTag(name); }}/>
+                        >{name} <span className="oi oi-delete remove-tag" onClick={() => { this.removeTag(name); }}/>
                         </span>
                     );
                 })}

@@ -48,13 +48,22 @@ section.notebooks, section.notes {
   margin-right: 5px;
 }
 
+
 span.remove-tag {
   padding-left: 10px;
 }
 
-span.tag-name:hover {
-  color: #fff;
-  background-color: #868e96;
+span.badge.badge-primary.tag-name {
+  color: #444444;
+}
+
+span.oi.oi-delete.remove-tag:hover {
+  color: #dc3545;
+}
+
+.tags > span.badge:hover {
+  color: #007bff;
+  background-color: #fff;
 }
 
 /* Home page */
@@ -96,15 +105,6 @@ div.preview-note-content {
 div.card:hover {
   color: #007bff;
   cursor: pointer;
-}
-
-.tags > span.badge {
-  color: inherit;
-}
-
-.tags > span.badge:hover {
-  color: #007bff;
-  background-color: #fff;
 }
 
 .notebook-name-sidebar {

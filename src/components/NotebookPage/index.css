@@ -26,13 +26,6 @@
     margin-right: 5px;
 }
 
-span.remove-tag {
-    padding-left: 8px;
-    font-size: 0.8em;
-    position: initial;
-    top: 0px;
-}
-
 span.tag-name:hover {
     color: #fff;
     background-color: #868e96;
