@@ -155,7 +155,7 @@ export class Sidebar extends React.Component<Props, State> {
                 <section className="links">
                     <ul className="list-group notes">
                         <li 
-                            className="list-group-item sidebar-note add-note"
+                            className="list-group-item sidebar-note add-note add-note-sidebar"
                             onClick={() => this.showInput()}
                         >
                             Add Note 
