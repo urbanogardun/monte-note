@@ -140,7 +140,6 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(SEARCH_RESULTS, (event: Event, data: any): void => {
-            console.log(data);
             reduxStore.dispatch(actions.loadSearchResults(data));
         });
 
