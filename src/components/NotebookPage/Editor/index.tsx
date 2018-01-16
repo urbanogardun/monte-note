@@ -170,7 +170,6 @@ export class Editor extends React.Component<Props, State> {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div className="col-sm trashcan main-content">
                 <TagAdder
