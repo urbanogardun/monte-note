@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { ElectronMessager } from '../../../../utils/electron-messaging/electronMessager';
 import { GLOBAL_SEARCH } from '../../../../constants/index';
+const $ = require('jquery');
 
 export interface Props {
     notebooks: string[];
@@ -48,10 +49,14 @@ export class SearchBar extends React.Component<Props, State> {
     }
 
     updateSearchValue(e: React.MouseEvent<HTMLAnchorElement>) {
-        let clickedElement = e.target as Element;
-        let notebookName = clickedElement.innerHTML;
-        clickedElement.innerHTML = `<span class="oi oi-check"></span> ${notebookName}`;
-        console.log(notebookName);
+        // let clickedElement = e.target as Element;
+        // let notebookName = clickedElement.innerHTML;
+        // clickedElement.innerHTML = `<span class="oi oi-check"></span> ${notebookName}`;
+        // console.log(notebookName);
+        console.log($(e.target).text().trim());
+
+        let notebookName = $(e.target).text().trim();
+        $(e.target).html(`<span class="oi oi-check"></span> ${notebookName}`);
         // let originalElement = document.querySelector('#Chemistry-101') as Element;
         // originalElement.innerHTML = `<span class="oi oi-check"></span> ${notebookName}`;
         // console.log(originalElement);
@@ -95,7 +100,7 @@ export class SearchBar extends React.Component<Props, State> {
                                             <a
                                                 className="dropdown-item"
                                                 onClick={(e) => this.updateSearchValue(e)}
-                                                href=""
+                                                href="#"
                                                 key={name}
                                             >
                                                 {name}
