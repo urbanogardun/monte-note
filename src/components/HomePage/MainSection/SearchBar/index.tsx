@@ -88,15 +88,23 @@ export class SearchBar extends React.Component<Props, State> {
                             <div className="dropdown-menu">
                                 <a className="dropdown-item" href="#"><span className="oi oi-check" /> All Notebooks</a>
                                 <div role="separator" className="dropdown-divider" />
-                                <a 
-                                    className="dropdown-item" 
-                                    onClick={(e) => this.updateSearchValue(e)} 
-                                    href="#"
-                                >
-                                    Chemistry 101
-                                </a>
-                                <a className="dropdown-item" href="#">Biology</a>
-                                <a className="dropdown-item" href="#">Introduction to Advertising</a>
+
+                                {(this.props.notebooks as string[]).map((name: string) => {
+                                    if (name !== '.trashcan') {
+                                        return (
+                                            <a
+                                                className="dropdown-item"
+                                                onClick={(e) => this.updateSearchValue(e)}
+                                                href=""
+                                                key={name}
+                                            >
+                                                {name}
+                                            </a>
+                                        );
+                                    } else {
+                                        return;
+                                    }
+                                })}
                             </div>
                         </div>
 
