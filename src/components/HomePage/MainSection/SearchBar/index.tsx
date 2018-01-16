@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ElectronMessager } from '../../../../utils/electron-messaging/electronMessager';
-import { GLOBAL_SEARCH } from '../../../../constants/index';
+import { GLOBAL_SEARCH, SEARCH_WITHIN_NOTEBOOK } from '../../../../constants/index';
 import * as $ from 'jquery';
 
 export interface Props {
@@ -9,6 +9,8 @@ export interface Props {
 
 export interface State {
     searchQuery: string;
+    searchOption: string;
+    notebookToSearch: string;
 }
 
 export class SearchBar extends React.Component<Props, State> {
@@ -16,7 +18,9 @@ export class SearchBar extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            searchQuery: ''
+            searchQuery: '',
+            searchOption: GLOBAL_SEARCH,
+            notebookToSearch: ''
         };
         // Debounce calls to ElectronMessager for a number of msecs
         // this.debounce keeps a reference to the same debounceEvent function
@@ -33,7 +37,15 @@ export class SearchBar extends React.Component<Props, State> {
 
     sendSearchQuery() {
         let searchQuery = this.state.searchQuery;
-        ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchQuery);
+        if (this.state.searchOption === GLOBAL_SEARCH) {
+            ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchQuery);
+        } else {
+            let searchData = {
+                notebook: this.state.notebookToSearch,
+                searchQuery: searchQuery
+            };
+            ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchData);
+        }
     }
 
     runSearch() {
@@ -56,9 +68,12 @@ export class SearchBar extends React.Component<Props, State> {
         $(e.target).html(`<span class="oi oi-check notebook-check"></span> ${notebookName}`);
 
         if (notebookName === 'All Notebooks') {
-            // Electron msger GLOBAL_SEARCH
+            this.setState({searchOption: GLOBAL_SEARCH});
         } else {
-            // Electron msger SEARCH WITHIN SPECIFIED NOTEBOOK
+            this.setState({
+                searchOption: SEARCH_WITHIN_NOTEBOOK,
+                notebookToSearch: notebookName
+            });
         }
     }
 
