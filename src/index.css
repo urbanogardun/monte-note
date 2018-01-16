@@ -97,3 +97,7 @@ div.card:hover {
   color: #007bff;
   background-color: #fff;
 }
+
+.notebook-name-sidebar {
+  background-color: #282E3F;
+}

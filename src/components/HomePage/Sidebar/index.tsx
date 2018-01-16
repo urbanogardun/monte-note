@@ -26,13 +26,13 @@ export class Sidebar extends React.Component<Props, {}> {
                         className="notebook-name-sidebar" 
                         data-toggle="collapse" 
                         data-target="#collapseExample" 
-                        aria-expanded="true"
+                        aria-expanded="false"
                     >
                         Notebooks
                         <span className="oi oi-chevron-bottom expand-notebook" />
                         <span className="oi oi-chevron-left expand-notebook" />
                     </div>
-                    <div className="collapse show notes-sidebar" id="collapseExample">
+                    <div className="collapse notes-sidebar" id="collapseExample">
                         <ul className="list-group notes">
                             {(this.props.notebooks as string[]).map((name: string) => {
                                 if (name !== '.trashcan') {
