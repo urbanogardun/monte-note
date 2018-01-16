@@ -20,7 +20,8 @@ import {
   ADD_TAG_TO_NOTE,
   GET_TAGS_FOR_NOTE,
   REMOVE_NOTE_FROM_DRIVE,
-  REMOVE_TAG_FROM_NOTE
+  REMOVE_TAG_FROM_NOTE,
+  GLOBAL_SEARCH
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -430,6 +431,14 @@ ipcMain.on(REMOVE_NOTE_FROM_DRIVE, (event: any, data: any) => {
     });
   });
 
+});
+
+ipcMain.on(GLOBAL_SEARCH, (event: any, searchQuery: string) => {
+  console.log('Search notes globally for: ' + searchQuery);
+  // dbMessager.searchNotesGlobally(searchQuery)
+  // .then((docs: any) => {
+  //   console.log(docs);
+  // });
 });
 
 // In this file you can include the rest of your app's specific main process

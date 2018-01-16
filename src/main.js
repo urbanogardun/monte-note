@@ -343,5 +343,12 @@ electron_1.ipcMain.on(index_1.REMOVE_NOTE_FROM_DRIVE, (event, data) => {
         });
     });
 });
+electron_1.ipcMain.on(index_1.GLOBAL_SEARCH, (event, searchQuery) => {
+    console.log('Search notes globally for: ' + searchQuery);
+    // dbMessager.searchNotesGlobally(searchQuery)
+    // .then((docs: any) => {
+    //   console.log(docs);
+    // });
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 
