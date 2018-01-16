@@ -22,7 +22,8 @@ import {
   REMOVE_NOTE_FROM_DRIVE,
   REMOVE_TAG_FROM_NOTE,
   GLOBAL_SEARCH,
-  SEARCH_RESULTS
+  SEARCH_RESULTS,
+  SEARCH_WITHIN_NOTEBOOK
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -440,6 +441,10 @@ ipcMain.on(GLOBAL_SEARCH, (event: any, searchQuery: string) => {
   .then((docs: any) => {
     event.sender.send(SEARCH_RESULTS, docs);
   });
+});
+
+ipcMain.on(SEARCH_WITHIN_NOTEBOOK, (event: any, searchData: any) => {
+  console.log(`Search notes within: ${searchData.notebook} for term ${searchData.searchQuery}`);
 });
 
 // In this file you can include the rest of your app's specific main process

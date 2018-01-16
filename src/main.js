@@ -350,5 +350,8 @@ electron_1.ipcMain.on(index_1.GLOBAL_SEARCH, (event, searchQuery) => {
         event.sender.send(index_1.SEARCH_RESULTS, docs);
     });
 });
+electron_1.ipcMain.on(index_1.SEARCH_WITHIN_NOTEBOOK, (event, searchData) => {
+    console.log(`Search notes within: ${searchData.notebook} for term ${searchData.searchQuery}`);
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

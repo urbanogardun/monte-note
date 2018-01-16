@@ -44,7 +44,7 @@ export class SearchBar extends React.Component<Props, State> {
                 notebook: this.state.notebookToSearch,
                 searchQuery: searchQuery
             };
-            ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchData);
+            ElectronMessager.sendMessageWithIpcRenderer(SEARCH_WITHIN_NOTEBOOK, searchData);
         }
     }
 
@@ -67,6 +67,7 @@ export class SearchBar extends React.Component<Props, State> {
         $('span.notebook-check').hide();
         $(e.target).html(`<span class="oi oi-check notebook-check"></span> ${notebookName}`);
 
+        // Set search option depending on what got selected
         if (notebookName === 'All Notebooks') {
             this.setState({searchOption: GLOBAL_SEARCH});
         } else {
