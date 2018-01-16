@@ -42,24 +42,26 @@ export class SearchBar extends React.Component<Props, State> {
                             aria-describedby="inputGroup-sizing-sm"
                             onKeyPress={(e) => this.handleKeyPress(e)}
                         />
-                    </div>
-                    <div className="input-group-append">
-                        <button
-                            className="btn btn-outline-secondary dropdown-toggle home-search"
-                            type="button"
-                            data-toggle="dropdown"
-                            aria-haspopup="true"
-                            aria-expanded="false"
-                        >
-                            <span className="oi oi-chevron-bottom search-dropdown" />
-                        </button>
-                        <div className="dropdown-menu">
-                            <a className="dropdown-item" href="#"><span className="oi oi-check" /> All Notebooks</a>
-                            <div role="separator" className="dropdown-divider" />
-                            <a className="dropdown-item" href="#">Chemistry 101</a>
-                            <a className="dropdown-item" href="#">Biology</a>
-                            <a className="dropdown-item" href="#">Introduction to Advertising</a>
+
+                        <div className="input-group-append">
+                            <button
+                                className="btn btn-outline-secondary dropdown-toggle home-search"
+                                type="button"
+                                data-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                            >
+                                <span className="oi oi-chevron-bottom search-dropdown" />
+                            </button>
+                            <div className="dropdown-menu">
+                                <a className="dropdown-item" href="#"><span className="oi oi-check" /> All Notebooks</a>
+                                <div role="separator" className="dropdown-divider" />
+                                <a className="dropdown-item" href="#">Chemistry 101</a>
+                                <a className="dropdown-item" href="#">Biology</a>
+                                <a className="dropdown-item" href="#">Introduction to Advertising</a>
+                            </div>
                         </div>
+                        
                     </div>
                 </div>
             </li>
