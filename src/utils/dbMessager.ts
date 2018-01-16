@@ -9,6 +9,17 @@ export class DbMessager {
         this.db = setup.getDb();
     }
 
+    searchNotesGlobally(query: string) {
+        return new Promise((resolve) => {
+            
+            let regex = new RegExp(query, 'i');
+
+            this.db.find({ noteContent: regex }, {}, (err: Error, docs: any) => {
+                resolve(docs);
+            });
+        });
+    }
+
     getNotebooks(): any {
         return new Promise((resolve) => {
             this.db.findOne({ name: 'notebooks' }, (err: any, doc: any): any => {

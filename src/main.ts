@@ -435,10 +435,10 @@ ipcMain.on(REMOVE_NOTE_FROM_DRIVE, (event: any, data: any) => {
 
 ipcMain.on(GLOBAL_SEARCH, (event: any, searchQuery: string) => {
   console.log('Search notes globally for: ' + searchQuery);
-  // dbMessager.searchNotesGlobally(searchQuery)
-  // .then((docs: any) => {
-  //   console.log(docs);
-  // });
+  dbMessager.searchNotesGlobally(searchQuery)
+  .then((docs: any) => {
+    console.log(docs);
+  });
 });
 
 // In this file you can include the rest of your app's specific main process

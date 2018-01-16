@@ -6,6 +6,14 @@ class DbMessager {
         let setup = new index_1.default();
         this.db = setup.getDb();
     }
+    searchNotesGlobally(query) {
+        return new Promise((resolve) => {
+            let regex = new RegExp(query, 'i');
+            this.db.find({ noteContent: regex }, {}, (err, docs) => {
+                resolve(docs);
+            });
+        });
+    }
     getNotebooks() {
         return new Promise((resolve) => {
             this.db.findOne({ name: 'notebooks' }, (err, doc) => {
