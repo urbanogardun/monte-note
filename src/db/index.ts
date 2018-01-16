@@ -23,7 +23,13 @@ export class Db {
     constructor() {
         let userDataPath = (electron.app || electron.remote.app).getPath('userData');
         let dbName = 'app-data';
-        this.db = new Datastore({ filename: path.join(userDataPath, dbName + '.json'), autoload: true });
+        this.db = new Datastore(
+            { 
+                filename: path.join(userDataPath, dbName + '.json'), 
+                autoload: true,
+                timestampData: true
+            }
+        );
     }
 
     getDb(): Nedb {

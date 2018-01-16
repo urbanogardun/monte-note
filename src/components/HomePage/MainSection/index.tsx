@@ -14,6 +14,7 @@ export class MainSection extends React.Component<Props, {}> {
                     <SearchBar />
 
                     {(this.props.searchResults as object[]).map((result: any) => {
+                        console.log(result);
                         return (
                             <li key={result._id} className="list-group-item note-item">
                                 <div className="card">
