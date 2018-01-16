@@ -50,8 +50,16 @@ export class SearchBar extends React.Component<Props, State> {
 
     updateSearchValue(e: React.MouseEvent<HTMLAnchorElement>) {
         let notebookName = $(e.target).text().trim();
-        console.log('nbook name is: ' + notebookName);
-        $(e.target).html(`<span class="oi oi-check"></span> ${notebookName}`);
+        
+        // Set check icon to currently selected search option
+        $('span.notebook-check').hide();
+        $(e.target).html(`<span class="oi oi-check notebook-check"></span> ${notebookName}`);
+
+        if (notebookName === 'All Notebooks') {
+            // Electron msger GLOBAL_SEARCH
+        } else {
+            // Electron msger SEARCH WITHIN SPECIFIED NOTEBOOK
+        }
     }
 
     render() {
@@ -83,7 +91,9 @@ export class SearchBar extends React.Component<Props, State> {
                                 <span className="oi oi-chevron-bottom search-dropdown" />
                             </button>
                             <div className="dropdown-menu">
-                                <a className="dropdown-item" href="#"><span className="oi oi-check" /> All Notebooks</a>
+                                <a className="dropdown-item" href="#" onClick={(e) => this.updateSearchValue(e)}>
+                                    <span className="oi oi-check notebook-check" /> All Notebooks
+                                </a>
                                 <div role="separator" className="dropdown-divider" />
 
                                 {(this.props.notebooks as string[]).map((name: string) => {
