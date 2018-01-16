@@ -33,8 +33,7 @@ export class SearchBar extends React.Component<Props, State> {
         ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchQuery);
     }
 
-    // Adds tag on Enter key press
-    handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
+    runSearch() {
         // Calls this.debounce which stores reference to debounceEvent function
         // that calls itself with callback of sendSearchQuery which ultimately
         // sends the search query
@@ -42,6 +41,7 @@ export class SearchBar extends React.Component<Props, State> {
     }
 
     updateInputValue(e: React.ChangeEvent<HTMLInputElement>) {
+        // Save input value
         this.setState({searchQuery: e.target.value});
     }
 
@@ -52,13 +52,15 @@ export class SearchBar extends React.Component<Props, State> {
                     <div className="input-group input-group-sm mb-3 add-tags">
                         <input
                             value={this.state.searchQuery}
-                            onChange={e => this.updateInputValue(e)}
+                            onChange={e => { 
+                                this.updateInputValue(e);
+                                this.runSearch();
+                            }}
                             type="text"
                             className="form-control"
                             aria-label="Small"
                             placeholder="Search"
                             aria-describedby="inputGroup-sizing-sm"
-                            onKeyPress={(e) => this.handleKeyPress(e)}
                         />
 
                         <div className="input-group-append">
