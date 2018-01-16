@@ -37,3 +37,7 @@ span.tag-name:hover {
     color: #fff;
     background-color: #868e96;
 }
+
+.input-group.input-group-sm.hidden {
+    display: none;
+}

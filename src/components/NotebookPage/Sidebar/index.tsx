@@ -170,8 +170,8 @@ export class Sidebar extends React.Component<Props, State> {
                         ref={input => input && input.focus()}
                         onKeyPress={(e) => this.handleKeyPress(e)}
                         onBlur={() => this.handleFocusOut()}
-                        type="text" 
-                        className="form-control" 
+                        type="text"
+                        className="form-control add-note" 
                         placeholder="Note" 
                         aria-label="Note" 
                         aria-describedby="sizing-addon2"
