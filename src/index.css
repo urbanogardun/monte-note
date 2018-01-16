@@ -112,5 +112,9 @@ div.card:hover {
 }
 
 div.ql-container.preview-note-container {
-  height: 85vh;
+  height: 90vh;
+}
+
+.input-group.input-group-sm.mb-3.add-tags {
+  margin-top: 0px;
 }

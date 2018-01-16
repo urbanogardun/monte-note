@@ -16,8 +16,7 @@ export class PreviewViewer extends React.Component<Props, State> {
     componentDidMount() {
         this.quill = new Quill('#quill-container', {
             modules: {
-                toolbar: [
-                ]
+                toolbar: false
             },
             theme: 'snow'  // or 'bubble',
         });
