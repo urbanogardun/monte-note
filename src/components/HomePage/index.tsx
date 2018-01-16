@@ -37,7 +37,10 @@ export class HomePage extends React.Component<Props, State> {
         return (
             <div className="row">
                 <Sidebar notebooks={this.props.notebooks} />
-                <MainSection searchResults={this.props.searchResults} />
+                <MainSection 
+                    searchResults={this.props.searchResults} 
+                    notebooks={this.props.notebooks}
+                />
                 <PreviewNote />
             </div>
         );

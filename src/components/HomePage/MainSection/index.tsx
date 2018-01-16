@@ -3,6 +3,7 @@ import SearchBar from './SearchBar/index';
 
 export interface Props {
     searchResults: object[];
+    notebooks: string[];
 }
 
 export class MainSection extends React.Component<Props, {}> {
@@ -11,7 +12,7 @@ export class MainSection extends React.Component<Props, {}> {
         return (
             <div className="col notes-index">
                 <ul className="list-group">
-                    <SearchBar />
+                    <SearchBar notebooks={this.props.notebooks} />
 
                     {(this.props.searchResults as object[]).map((result: any) => {
                         return (

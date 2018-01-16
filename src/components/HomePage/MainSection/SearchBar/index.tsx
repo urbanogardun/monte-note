@@ -2,7 +2,9 @@ import * as React from 'react';
 import { ElectronMessager } from '../../../../utils/electron-messaging/electronMessager';
 import { GLOBAL_SEARCH } from '../../../../constants/index';
 
-export interface Props {}
+export interface Props {
+    notebooks: string[];
+}
 
 export interface State {
     searchQuery: string;
@@ -45,6 +47,16 @@ export class SearchBar extends React.Component<Props, State> {
         this.setState({searchQuery: e.target.value});
     }
 
+    updateSearchValue(e: React.MouseEvent<HTMLAnchorElement>) {
+        let clickedElement = e.target as Element;
+        let notebookName = clickedElement.innerHTML;
+        clickedElement.innerHTML = `<span class="oi oi-check"></span> ${notebookName}`;
+        console.log(notebookName);
+        // let originalElement = document.querySelector('#Chemistry-101') as Element;
+        // originalElement.innerHTML = `<span class="oi oi-check"></span> ${notebookName}`;
+        // console.log(originalElement);
+    }
+
     render() {
         return (
             <li className="list-group-item note-item search-home">
@@ -76,7 +88,13 @@ export class SearchBar extends React.Component<Props, State> {
                             <div className="dropdown-menu">
                                 <a className="dropdown-item" href="#"><span className="oi oi-check" /> All Notebooks</a>
                                 <div role="separator" className="dropdown-divider" />
-                                <a className="dropdown-item" href="#">Chemistry 101</a>
+                                <a 
+                                    className="dropdown-item" 
+                                    onClick={(e) => this.updateSearchValue(e)} 
+                                    href="#"
+                                >
+                                    Chemistry 101
+                                </a>
                                 <a className="dropdown-item" href="#">Biology</a>
                                 <a className="dropdown-item" href="#">Introduction to Advertising</a>
                             </div>
