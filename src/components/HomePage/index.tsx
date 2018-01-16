@@ -32,7 +32,6 @@ export class HomePage extends React.Component<Props, State> {
     }
 
     render() {
-        console.log(this.props);
         return (
             <div>
                 <div className="row">
@@ -50,7 +49,7 @@ export class HomePage extends React.Component<Props, State> {
                     </div>
                 </div>
                 <div className="row">
-                    <Sidebar notebooks={['about', 'note-2', 'note-3']} />
+                    <Sidebar notebooks={this.props.notebooks} />
                     <MainSection />
                     <div className="col-sm">
                         <h1>Preview Note Content</h1>
