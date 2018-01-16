@@ -1,4 +1,4 @@
-import HomePage from '../../components/HomePg/index';
+import HomePage from '../../components/HomePage/index';
 import * as actions from '../../actions/';
 import { StoreState } from '../../types/index';
 import { connect, Dispatch } from 'react-redux';
