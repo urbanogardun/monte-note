@@ -1,4 +1,5 @@
 import * as React from 'react';
+import SearchBar from './SearchBar/index';
 
 export class MainSection extends React.Component {
 
@@ -6,7 +7,8 @@ export class MainSection extends React.Component {
         return (
             <div className="col notes-index">
                 <ul className="list-group">
-                    <li className="list-group-item note-item search-home">
+                    <SearchBar />
+                    {/* <li className="list-group-item note-item search-home">
                         <div className="input-group input-group-sm mb-3">
                             <input 
                                 type="text" 
@@ -34,7 +36,7 @@ export class MainSection extends React.Component {
                             </div>
                             </div>
                         </div>
-                    </li>
+                    </li> */}
                     <li className="list-group-item note-item">
                         <div className="card">
                             <div className="card-body">
