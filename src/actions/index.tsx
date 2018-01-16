@@ -63,6 +63,11 @@ export interface LoadTagsForNote {
     tags: string[];
 }
 
+export interface LoadSearchResults {
+    type: constants.LOAD_SEARCH_RESULTS;
+    results: object[];
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -159,5 +164,12 @@ export function loadTagsForNote(tags: string[]): LoadTagsForNote {
     return {
         type: constants.LOAD_TAGS_FOR_NOTE,
         tags
+    };
+}
+
+export function loadSearchResults(results: object[]): LoadSearchResults {
+    return {
+        type: constants.LOAD_SEARCH_RESULTS,
+        results
     };
 }

@@ -21,7 +21,7 @@ it('renders without crashing', () => {
   const div = document.createElement('div');
   ReactDOM.render(
   <Provider store={store}>
-    <App notebooks={['note-1', 'note-2', 'note-3']} />
+    <App notebooks={['note-1', 'note-2', 'note-3']} searchResults={[{}, {}]} />
   </Provider>,
   div);
 });

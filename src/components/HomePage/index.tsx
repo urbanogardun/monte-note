@@ -7,6 +7,7 @@ import { GLOBAL_SEARCH } from '../../constants/index';
 
 export interface Props {
     notebooks: string[];
+    searchResults: object[];
 }
 export interface State {
     searchQuery: string;
@@ -36,7 +37,7 @@ export class HomePage extends React.Component<Props, State> {
         return (
             <div className="row">
                 <Sidebar notebooks={this.props.notebooks} />
-                <MainSection />
+                <MainSection searchResults={this.props.searchResults} />
                 <PreviewNote />
             </div>
         );

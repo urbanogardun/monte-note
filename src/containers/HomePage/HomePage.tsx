@@ -11,7 +11,7 @@ export function mapStateToProps({ enthusiasmLevel, notebooksLocation, notebooks 
     return {
         enthusiasmLevel,
         notebooksLocation,
-        notebooks
+        notebooks,
     };
 }
 

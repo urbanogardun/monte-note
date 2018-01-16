@@ -9,6 +9,7 @@ interface Props {
   enthusiasmLevel?: number;
   notebooksLocation?: string;
   notebooks: string[];
+  searchResults: object[];
 }
 
 class App extends React.Component<Props, object> {
@@ -25,7 +26,7 @@ class App extends React.Component<Props, object> {
 
     let componentToRender = <Welcome name={'John'} notebooksLocation={''} />;
     if (enthusiasmLevel) {
-      componentToRender = <HomePage notebooks={this.props.notebooks} />;
+      componentToRender = <HomePage notebooks={this.props.notebooks} searchResults={this.props.searchResults} />;
     }
 
     return (

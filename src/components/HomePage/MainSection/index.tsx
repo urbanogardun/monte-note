@@ -1,9 +1,14 @@
 import * as React from 'react';
 import SearchBar from './SearchBar/index';
 
-export class MainSection extends React.Component {
+export interface Props {
+    searchResults: object[];
+}
+
+export class MainSection extends React.Component<Props, {}> {
 
     render() {
+        console.log(this.props);
         return (
             <div className="col notes-index">
                 <ul className="list-group">
