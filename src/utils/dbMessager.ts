@@ -14,7 +14,7 @@ export class DbMessager {
             
             let regex = new RegExp(query, 'i');
 
-            this.db.find({ noteContent: regex }, {}, (err: Error, docs: any) => {
+            this.db.find({ noteContent: regex }).sort({updatedAt: -1}).exec((err: Error, docs: any) => {
                 resolve(docs);
             });
         });

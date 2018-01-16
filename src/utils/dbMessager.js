@@ -9,7 +9,7 @@ class DbMessager {
     searchNotesGlobally(query) {
         return new Promise((resolve) => {
             let regex = new RegExp(query, 'i');
-            this.db.find({ noteContent: regex }, {}, (err, docs) => {
+            this.db.find({ noteContent: regex }).sort({ updatedAt: -1 }).exec((err, docs) => {
                 resolve(docs);
             });
         });
