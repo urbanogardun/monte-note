@@ -19,7 +19,8 @@ import {
   EXIT_APP_SAVE_CONTENT,
   ADD_TAG_TO_NOTE,
   GET_TAGS_FOR_NOTE,
-  REMOVE_NOTE_FROM_DRIVE
+  REMOVE_NOTE_FROM_DRIVE,
+  REMOVE_TAG_FROM_NOTE
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -393,6 +394,10 @@ ipcMain.on(ADD_TAG_TO_NOTE, (event: any, data: any) => {
     }
   });
 
+});
+
+ipcMain.on(REMOVE_TAG_FROM_NOTE, (event: any, data: any) => {
+  console.log('Remove tag from notebook' + data.notebook + ' note: ' + data.note + ' tag: ' + data.tag);
 });
 
 ipcMain.on(GET_TAGS_FOR_NOTE, (event: any, data: any) => {

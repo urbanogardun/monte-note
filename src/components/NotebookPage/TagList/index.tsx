@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { GET_TAGS_FOR_NOTE } from '../../../constants/index';
+import { GET_TAGS_FOR_NOTE, REMOVE_TAG_FROM_NOTE } from '../../../constants/index';
 
 export interface Props {
     currentNoteTags: string[];
@@ -31,6 +31,15 @@ export class TagList extends React.Component<Props, State> {
         }
     }
 
+    removeTag(name: string) {
+        let data = {
+            notebook: this.props.notebookName,
+            note: this.props.noteName,
+            tag: name
+        };
+        ElectronMessager.sendMessageWithIpcRenderer(REMOVE_TAG_FROM_NOTE, data);
+    }
+
     render() {
         return (
             <div className="tags">
@@ -39,7 +48,7 @@ export class TagList extends React.Component<Props, State> {
                         <span 
                             key={name}
                             className="badge badge-primary tag-name"
-                        >{name} <span className="oi oi-x remove-tag"/>
+                        >{name} <span className="oi oi-x remove-tag" onClick={() => { this.removeTag(name); }}/>
                         </span>
                     );
                 })}

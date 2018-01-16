@@ -76,6 +76,9 @@ export type EXIT_APP_SAVE_CONTENT = typeof EXIT_APP_SAVE_CONTENT;
 export const ADD_TAG_TO_NOTE = 'ADD_TAG_TO_NOTE';
 export type ADD_TAG_TO_NOTE = typeof ADD_TAG_TO_NOTE;
 
+export const REMOVE_TAG_FROM_NOTE = 'REMOVE_TAG_FROM_NOTE';
+export type REMOVE_TAG_FROM_NOTE = typeof REMOVE_TAG_FROM_NOTE;
+
 export const GET_TAGS_FOR_NOTE = 'GET_TAGS_FOR_NOTE';
 export type GET_TAGS_FOR_NOTE = typeof GET_TAGS_FOR_NOTE;
 
