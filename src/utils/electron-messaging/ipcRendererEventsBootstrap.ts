@@ -16,7 +16,8 @@ import {
     RESTORE_NOTE_FROM_TRASH,
     UPDATE_NOTE,
     EXIT_APP_SAVE_CONTENT,
-    GET_TAGS_FOR_NOTE
+    GET_TAGS_FOR_NOTE,
+    SEARCH_RESULTS
 } from '../../constants/index';
 import ElectronMessager from '../electron-messaging/electronMessager';
     
@@ -136,6 +137,10 @@ export function ipcRendererEventsBootstrap() {
 
             reduxStore.dispatch(actions.loadTagsForNote(tags));
 
+        });
+
+        ipcRenderer.on(SEARCH_RESULTS, (event: Event, data: any): void => {
+            console.log(data);
         });
 
     } catch (error) {

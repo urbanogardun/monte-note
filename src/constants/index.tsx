@@ -90,3 +90,6 @@ export type REMOVE_NOTE_FROM_DRIVE = typeof REMOVE_NOTE_FROM_DRIVE;
 
 export const GLOBAL_SEARCH = 'GLOBAL_SEARCH';
 export type GLOBAL_SEARCH = typeof GLOBAL_SEARCH;
+
+export const SEARCH_RESULTS = 'SEARCH_RESULTS';
+export type SEARCH_RESULTS = typeof SEARCH_RESULTS;

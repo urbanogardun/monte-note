@@ -21,7 +21,8 @@ import {
   GET_TAGS_FOR_NOTE,
   REMOVE_NOTE_FROM_DRIVE,
   REMOVE_TAG_FROM_NOTE,
-  GLOBAL_SEARCH
+  GLOBAL_SEARCH,
+  SEARCH_RESULTS
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -437,7 +438,7 @@ ipcMain.on(GLOBAL_SEARCH, (event: any, searchQuery: string) => {
   console.log('Search notes globally for: ' + searchQuery);
   dbMessager.searchNotesGlobally(searchQuery)
   .then((docs: any) => {
-    console.log(docs);
+    event.sender.send(SEARCH_RESULTS, docs);
   });
 });
 

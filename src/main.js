@@ -347,7 +347,7 @@ electron_1.ipcMain.on(index_1.GLOBAL_SEARCH, (event, searchQuery) => {
     console.log('Search notes globally for: ' + searchQuery);
     dbMessager.searchNotesGlobally(searchQuery)
         .then((docs) => {
-        console.log(docs);
+        event.sender.send(index_1.SEARCH_RESULTS, docs);
     });
 });
 // In this file you can include the rest of your app's specific main process

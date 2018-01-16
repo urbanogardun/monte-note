@@ -20,11 +20,9 @@ export class HomePage extends React.Component<Props, State> {
 
     // Adds tag on Enter key press
     handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
-        if (e.key === 'Enter') {
-            let searchQuery = this.state.searchQuery;
-            console.log('search for: ' + searchQuery);
-            ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchQuery);
-        }
+        let searchQuery = this.state.searchQuery;
+        console.log('search for: ' + searchQuery);
+        ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchQuery);
     }
 
     updateInputValue(e: React.ChangeEvent<HTMLInputElement>) {
