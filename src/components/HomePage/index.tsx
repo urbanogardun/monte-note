@@ -33,27 +33,11 @@ export class HomePage extends React.Component<Props, State> {
 
     render() {
         return (
-            <div>
-                <div className="row">
-                    <div className="input-group input-group-sm mb-3 add-tags">
-                        <input 
-                            value={this.state.searchQuery}
-                            onChange={e => this.updateInputValue(e)}
-                            type="text"
-                            className="form-control" 
-                            aria-label="Small" 
-                            placeholder="Search content" 
-                            aria-describedby="inputGroup-sizing-sm"
-                            onKeyPress={(e) => this.handleKeyPress(e)}
-                        />
-                    </div>
-                </div>
-                <div className="row">
-                    <Sidebar notebooks={this.props.notebooks} />
-                    <MainSection />
-                    <div className="col-sm">
-                        <h1>Preview Note Content</h1>
-                    </div>
+            <div className="row">
+                <Sidebar notebooks={this.props.notebooks} />
+                <MainSection />
+                <div className="col-sm">
+                    <h1>Preview Note Content</h1>
                 </div>
             </div>
         );

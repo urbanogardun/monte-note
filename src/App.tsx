@@ -29,7 +29,7 @@ class App extends React.Component<Props, object> {
     }
 
     return (
-      <div className="App container-fluid">
+      <div className="container-fluid notebook-container">
         
         {componentToRender}
 
