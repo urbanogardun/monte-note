@@ -1,12 +1,67 @@
 import * as React from 'react';
-import NewNotebookButton from './NewNotebookButton';
+// import NewNotebookButton from './NewNotebookButton';
 
 export class Sidebar extends React.Component {
     render() {
         return (
-            <div className="col-sm-2">
-                <NewNotebookButton />
-            </div> 
+            // <div className="col-sm-2">
+            //     <NewNotebookButton />
+            // </div> 
+            <div className="col-2 trashcan sidebar">
+                <section className="notebooks">
+                    {/* <NewNotebookButton /> */}
+                    <div 
+                        className="notebook-name-sidebar" 
+                        data-toggle="collapse" 
+                        data-target="#collapseExample" 
+                        aria-expanded="true"
+                    >
+                        Notebooks
+                        <span className="oi oi-chevron-bottom expand-notebook" />
+                        <span className="oi oi-chevron-left expand-notebook" />
+                    </div>
+                    <div className="collapse show notes-sidebar" id="collapseExample">
+                        <ul className="list-group notes">
+                            <li className="list-group-item sidebar-note">Cras justo odio</li>
+                            <li className="list-group-item sidebar-note">Dapibus ac facilisis in</li>
+                            <li className="list-group-item sidebar-note">Morbi leo risus</li>
+                            <li className="list-group-item sidebar-note">Porta ac consectetur ac</li>
+                            <li className="list-group-item sidebar-note">Vestibulum at eros</li>
+                        </ul>
+                    </div>
+                    <div 
+                        className="notebook-name-sidebar" 
+                        data-toggle="collapse" 
+                        data-target="#collapseExample2" 
+                        aria-expanded="false" 
+                        title="Tags"
+                    >
+                        Tags
+                        <span className="oi oi-chevron-bottom expand-notebook" />
+                        <span className="oi oi-chevron-left expand-notebook" />
+                    </div>
+                    <div className="collapse notes-sidebar" id="collapseExample2">
+                        <ul className="list-group notes">
+                            <li className="list-group-item sidebar-note">Cras justo odio</li>
+                            <li className="list-group-item sidebar-note">Dapibus ac facilisis in</li>
+                            <li className="list-group-item sidebar-note">Morbi leo risus</li>
+                            <li className="list-group-item sidebar-note">Porta ac consectetur ac</li>
+                            <li className="list-group-item sidebar-note">Vestibulum at eros</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section className="trashcan">
+                    <ul className="list-group notes">
+                        <li 
+                            className="list-group-item sidebar-note sidebar-link"
+                        >Trash <span className="oi oi-trash trashcan" />
+                        </li>
+                    </ul>
+                </section>
+
+            </div>
+
         );
     }
 }

@@ -10,3 +10,90 @@ html, body, div#root, div#app, div.trashcan, div.row, div.trashcan-container, di
 section.notebooks, section.notes {
   margin-top: 20px;
 }
+
+/* Notebook page */
+
+.home-icon {
+  float: right;
+}
+
+.add-tags {
+  margin-top: 16px;
+  margin-bottom: 0px !important;
+}
+
+.tags {
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.tags > span.badge {
+  padding: 8px;
+  margin-top: 10px;
+  border: 1px solid #ced4da;
+  background-color: #fff;
+  /* color: #868e96; */
+  cursor: pointer;
+  /* color: #9EA6C2; */
+  /* background-color: #282E3F; */
+  margin-right: 5px;
+}
+
+span.remove-tag {
+  padding-left: 10px;
+}
+
+span.tag-name:hover {
+  color: #fff;
+  background-color: #868e96;
+}
+
+/* Home page */
+
+span.trashcan {
+  float: right;
+}
+
+li.sidebar-link {
+  padding-left: 10px; 
+  text-align: left;
+}
+
+.sidebar-note {
+  text-align: left;
+}
+
+li.note-item:hover {
+  color: inherit;
+  background-color: inherit;
+}
+
+div.notes-index {
+  padding-top: 10px;
+}
+
+div.preview-note-content {
+  padding-top: 22px;
+}
+
+.home-search.dropdown-toggle::after {
+  border: none;
+}
+
+.search-dropdown {
+  left: 3px;
+}
+
+div.card:hover {
+  color: #007bff;
+  cursor: pointer;
+}
+
+.tags > span.badge {
+  color: inherit;
+}
+
+.tags > span.badge:hover {
+  color: #007bff;
+  background-color: #fff;
+}
