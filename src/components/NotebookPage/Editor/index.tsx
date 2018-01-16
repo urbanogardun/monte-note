@@ -170,6 +170,7 @@ export class Editor extends React.Component<Props, State> {
     }
 
     render() {
+        console.log(this.props);
         return (
             <div className="col-sm trashcan main-content">
                 <TagAdder
@@ -177,6 +178,7 @@ export class Editor extends React.Component<Props, State> {
                     lastOpenedNote={this.props.lastOpenedNote}
                     addTagToNote={this.props.addTagToNote}
                     currentNoteTags={this.props.currentNoteTags}
+                    updateNoteContent={this.props.updateNoteContent}
                 />
                 <div id="quill-container" />
             </div>
