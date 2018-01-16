@@ -165,3 +165,15 @@ test('removes note document from db', done => {
         expect(result).toEqual(true);
     });
 });
+
+test('removes tag value from note document', done => {
+    let notebookName = 'testNotebook';
+    let noteName = 'test-note';
+    let tagToRemove = 'tag-1';
+
+    dbMessager.removeTagFromNote(notebookName, noteName, tagToRemove)
+    .then((result: boolean) => {
+        done();
+        expect(result).toEqual(true);
+    });
+});

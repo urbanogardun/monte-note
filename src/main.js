@@ -315,7 +315,10 @@ electron_1.ipcMain.on(index_1.ADD_TAG_TO_NOTE, (event, data) => {
     });
 });
 electron_1.ipcMain.on(index_1.REMOVE_TAG_FROM_NOTE, (event, data) => {
-    console.log('Remove tag from notebook' + data.notebook + ' note: ' + data.note + ' tag: ' + data.tag);
+    let notebook = data.notebook;
+    let note = data.note;
+    let tag = data.tag;
+    dbMessager.removeTagFromNote(notebook, note, tag);
 });
 electron_1.ipcMain.on(index_1.GET_TAGS_FOR_NOTE, (event, data) => {
     // console.log('GET TAGS FOR NOTE: ' + data.note);

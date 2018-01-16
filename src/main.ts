@@ -397,7 +397,10 @@ ipcMain.on(ADD_TAG_TO_NOTE, (event: any, data: any) => {
 });
 
 ipcMain.on(REMOVE_TAG_FROM_NOTE, (event: any, data: any) => {
-  console.log('Remove tag from notebook' + data.notebook + ' note: ' + data.note + ' tag: ' + data.tag);
+  let notebook = data.notebook;
+  let note = data.note;
+  let tag = data.tag;
+  dbMessager.removeTagFromNote(notebook, note, tag);
 });
 
 ipcMain.on(GET_TAGS_FOR_NOTE, (event: any, data: any) => {

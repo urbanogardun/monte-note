@@ -134,6 +134,22 @@ export class DbMessager {
         });
     }
 
+    removeTagFromNote(notebook: string, note: string, tag: string) {
+        return new Promise((resolve) => {
+
+            let docToUpdate = {
+                notebookName: notebook,
+                noteName: note,
+                documentFor: 'NOTE_DATA'
+            };
+
+            this.db.update(docToUpdate, { $pull: { tags: tag } }, {}, function () {
+                resolve(true);
+            });
+
+        });
+    }
+
     getNoteTags(notebook: string, note: string) {
         return new Promise((resolve) => {
             let docToGet = {notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA'};
