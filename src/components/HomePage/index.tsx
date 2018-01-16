@@ -4,7 +4,9 @@ import MainSection from './MainSection/index';
 import ElectronMessager from '../../utils/electron-messaging/electronMessager';
 import { GLOBAL_SEARCH } from '../../constants/index';
 
-export interface Props {}
+export interface Props {
+    notebooks: string[];
+}
 export interface State {
     searchQuery: string;
 }
@@ -30,6 +32,7 @@ export class HomePage extends React.Component<Props, State> {
     }
 
     render() {
+        console.log(this.props);
         return (
             <div>
                 <div className="row">
@@ -47,7 +50,7 @@ export class HomePage extends React.Component<Props, State> {
                     </div>
                 </div>
                 <div className="row">
-                    <Sidebar />
+                    <Sidebar notebooks={['about', 'note-2', 'note-3']} />
                     <MainSection />
                     <div className="col-sm">
                         <h1>Preview Note Content</h1>

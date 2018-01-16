@@ -1,7 +1,12 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 // import NewNotebookButton from './NewNotebookButton';
 
-export class Sidebar extends React.Component {
+export interface Props {
+    notebooks: string[];
+}
+
+export class Sidebar extends React.Component<Props, {}> {
     render() {
         return (
             // <div className="col-sm-2">
@@ -22,11 +27,20 @@ export class Sidebar extends React.Component {
                     </div>
                     <div className="collapse show notes-sidebar" id="collapseExample">
                         <ul className="list-group notes">
-                            <li className="list-group-item sidebar-note">Cras justo odio</li>
-                            <li className="list-group-item sidebar-note">Dapibus ac facilisis in</li>
-                            <li className="list-group-item sidebar-note">Morbi leo risus</li>
-                            <li className="list-group-item sidebar-note">Porta ac consectetur ac</li>
-                            <li className="list-group-item sidebar-note">Vestibulum at eros</li>
+                            {(this.props.notebooks as string[]).map((name: string) => {
+                                if (name !== '.trashcan') {
+                                    return (
+                                    <Link 
+                                        to={`/notebooks/${name}`} 
+                                        key={name}
+                                    >
+                                        <li className="list-group-item sidebar-note">{name}</li>
+                                    </Link>
+                                    );
+                                } else {
+                                    return;
+                                }
+                            })}
                         </ul>
                     </div>
                     <div 

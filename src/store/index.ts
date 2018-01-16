@@ -12,7 +12,7 @@ try {
 }
 
 let notebooks: string[];
-notebooks = ['la', 'bla1'];
+notebooks = [];
 
 const reduxStore = createStore<StoreState>(reducer, {
   enthusiasmLevel: 1,

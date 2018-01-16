@@ -8,7 +8,7 @@ import { LOAD_SETTINGS } from './constants/index';
 interface Props {
   enthusiasmLevel?: number;
   notebooksLocation?: string;
-  notebooks?: string[];
+  notebooks: string[];
 }
 
 class App extends React.Component<Props, object> {
@@ -25,7 +25,7 @@ class App extends React.Component<Props, object> {
 
     let componentToRender = <Welcome name={'John'} notebooksLocation={''} />;
     if (enthusiasmLevel) {
-      componentToRender = <HomePage />;
+      componentToRender = <HomePage notebooks={this.props.notebooks} />;
     }
 
     return (
