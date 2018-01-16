@@ -35,7 +35,7 @@ export class PreviewViewer extends React.Component<Props, State> {
 
     render() {
         return (
-            <div id="quill-container" />
+            <div id="quill-container" className="preview-note-container" />
         );
     }
 }

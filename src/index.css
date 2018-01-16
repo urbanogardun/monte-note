@@ -16,6 +16,10 @@ section.notebooks, section.notes {
   overflow:auto;
 }
 
+.preview-note-content {
+  max-height: 100vh;
+}
+
 /* Notebook page */
 
 .home-icon {
@@ -105,4 +109,8 @@ div.card:hover {
 
 .notebook-name-sidebar {
   background-color: #282E3F;
+}
+
+div.ql-container.preview-note-container {
+  height: 85vh;
 }
