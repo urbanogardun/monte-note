@@ -1,6 +1,7 @@
 import * as React from 'react';
 import PreviewViewer from './PreviewViewer/index';
 import TagAdder from './TagAdder/index';
+import GoToNote from './GoToNote/index';
 import TagList from './TagList/index';
 
 export interface Props {
@@ -29,6 +30,10 @@ export class PreviewNote extends React.Component<Props, State> {
                     notebookName={this.props.previewContent.notebook}
                     noteName={this.props.previewContent.note}
                     updateTags={this.props.updateTags} 
+                />
+                <GoToNote
+                    notebookName={this.props.previewContent.notebook}
+                    noteName={this.props.previewContent.note}
                 />
                 <TagList 
                     tags={this.props.previewContent.tags}
