@@ -27,6 +27,7 @@ import {
   PREVIEW_NOTE,
   GET_NOTEBOOKS_LOCATION,
   LOAD_NOTEBOOKS_LOCATION,
+  RELOAD_SEARCH_RESULTS
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -167,7 +168,7 @@ ipcMain.on(GET_NOTEBOOKS, (event: any, args: any) => {
       // component.
       dbMessager.searchNotesGlobally('')
       .then((docs: any) => {
-        event.sender.send(SEARCH_RESULTS, docs);
+        event.sender.send(RELOAD_SEARCH_RESULTS, docs);
       });
 
     });
@@ -494,7 +495,7 @@ ipcMain.on(GLOBAL_SEARCH, (event: any, searchData: any) => {
   let searchPageNumber = searchData.searchPage;
   let searchResultsPerPage = searchData.searchResultsPerPage;
   let returnSearchResultsFrom = (searchPageNumber - 1) * searchResultsPerPage;
-  
+
   console.log('Search notes globally for: ' + searchQuery);
   dbMessager.searchNotesGlobally(searchQuery, searchResultsPerPage, returnSearchResultsFrom)
   .then((docs: any) => {

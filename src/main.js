@@ -120,7 +120,7 @@ electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
             // component.
             dbMessager.searchNotesGlobally('')
                 .then((docs) => {
-                event.sender.send(index_1.SEARCH_RESULTS, docs);
+                event.sender.send(index_1.RELOAD_SEARCH_RESULTS, docs);
             });
         });
     });
