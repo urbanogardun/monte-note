@@ -45,6 +45,10 @@ input.sidebar-app-form:focus {
   float: right;
 }
 
+span.add-notebook {
+  top: 4px;
+}
+
 .add-tags {
   margin-top: 16px;
   margin-bottom: 0px !important;

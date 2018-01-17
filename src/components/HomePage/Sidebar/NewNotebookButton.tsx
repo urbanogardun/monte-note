@@ -77,7 +77,7 @@ export class NewNotebookButton extends React.Component<Props, Props> {
                     className="open-input list-group-item sidebar-note sidebar-link" 
                     onClick={() => this.showInput()}
                 >
-                    Add Notebook
+                    New Notebook <span className="oi oi-book home-icon add-notebook"/>
                 </li>
 
                 <div className={`sidebar-app-form input-group input-group-sm ${this.state.showInput}`}>
