@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
 import { GET_NOTEBOOKS } from '../../../constants/index';
-// import NewNotebookButton from './NewNotebookButton';
+import NewNotebookButton from './NewNotebookButton';
 
 export interface Props {
     notebooks: string[];
@@ -21,7 +21,12 @@ export class Sidebar extends React.Component<Props, {}> {
             // </div> 
             <div className="col-2 trashcan sidebar">
                 <section className="notebooks">
-                    {/* <NewNotebookButton /> */}
+                    <section className="trashcan">
+                        <ul className="list-group notes">
+                            <NewNotebookButton />
+                        </ul>
+                    </section>
+
                     <div 
                         className="notebook-name-sidebar" 
                         data-toggle="collapse" 

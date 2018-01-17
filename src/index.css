@@ -68,6 +68,20 @@ span.oi.oi-delete.remove-tag:hover {
 
 /* Home page */
 
+/* button.add-notebook {
+  color: inherit;
+  background-color: transparent;
+  border: none;
+  font-size: inherit;
+  padding-left: 0px;
+  width: 100%;
+}
+
+button.add-notebook:hover {
+  color: #fff;
+  background-color: #1E2230;
+} */
+
 span.trashcan {
   float: right;
 }

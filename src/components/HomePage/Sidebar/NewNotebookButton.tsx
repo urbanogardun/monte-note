@@ -68,13 +68,9 @@ export class NewNotebookButton extends React.Component<Props, Props> {
     render() {
         return (
             <div>
-                <button 
-                    onClick={() => this.showInput()}
-                    type="button"
-                    className="btn btn-secondary btn-sm add-notebook"
-                >
+                <li className="list-group-item sidebar-note sidebar-link" onClick={() => this.showInput()}>
                     Add Notebook
-                </button>
+                </li>
 
                 <div className={`input-group input-group-sm ${this.state.showInput}`}>
                     <input 
