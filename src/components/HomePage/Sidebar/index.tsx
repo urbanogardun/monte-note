@@ -16,9 +16,6 @@ export class Sidebar extends React.Component<Props, {}> {
 
     render() {
         return (
-            // <div className="col-sm-2">
-            //     <NewNotebookButton />
-            // </div> 
             <div className="col-2 trashcan sidebar">
                 <section className="notebooks">
                     <section className="trashcan">

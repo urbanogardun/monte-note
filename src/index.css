@@ -20,6 +20,25 @@ section.notebooks, section.notes {
   max-height: 100vh;
 }
 
+input.sidebar-app-form {
+  background-color: inherit;
+  border: none;
+}
+
+div.sidebar-app-form {
+  width: 90%;
+  margin: auto;
+  padding-top: 9px;
+  padding-bottom: 9px;
+}
+
+input.sidebar-app-form:focus {
+  border-color: #282E3F !important;
+  box-shadow: 0 0 5px rgba(40, 46, 63, 1) !important;
+  background-color: #1E2230;
+  color: #fff;
+}
+
 /* Notebook page */
 
 .home-icon {
@@ -67,20 +86,6 @@ span.oi.oi-delete.remove-tag:hover {
 }
 
 /* Home page */
-
-/* button.add-notebook {
-  color: inherit;
-  background-color: transparent;
-  border: none;
-  font-size: inherit;
-  padding-left: 0px;
-  width: 100%;
-}
-
-button.add-notebook:hover {
-  color: #fff;
-  background-color: #1E2230;
-} */
 
 span.trashcan {
   float: right;
