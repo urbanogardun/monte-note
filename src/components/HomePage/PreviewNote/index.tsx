@@ -1,8 +1,9 @@
 import * as React from 'react';
 import PreviewViewer from './PreviewViewer/index';
+import TagList from './TagList/index';
 
 export interface Props {
-    previewContent: object;
+    previewContent: any;
 }
 
 export interface State {}
@@ -21,6 +22,12 @@ export class PreviewNote extends React.Component<Props, State> {
                         placeholder="Add a tag..."
                     />
                 </div>
+                <TagList 
+                    tags={this.props.previewContent.tags}
+                    notebookName={this.props.previewContent.notebook}
+                    noteName={this.props.previewContent.note}
+                    updateTags={() => {return; }} 
+                />
                 <PreviewViewer previewContent={this.props.previewContent} />
             </div>
         );

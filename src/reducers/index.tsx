@@ -150,7 +150,12 @@ export function previewContent(state: StoreState, action: LoadPreviewContent): S
         tags: action.tags
       } as StoreState;
     default:
-      return state || {} as StoreState;
+      return state || {
+        notebook: '',
+        note: '',
+        noteContent: '',
+        tags: []
+      } as StoreState;
   }
 }
 
