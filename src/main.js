@@ -115,6 +115,13 @@ electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
         dbMessager.addExistingNotebooks(notebooks)
             .then(() => {
             event.sender.send(index_1.GET_NOTEBOOKS, notebooks);
+            // ipcMain catches this event as soon as the HomePage component gets 
+            // loaded - here we get all notes for our main section on the HomePage
+            // component.
+            dbMessager.searchNotesGlobally('')
+                .then((docs) => {
+                event.sender.send(index_1.SEARCH_RESULTS, docs);
+            });
         });
     });
 });

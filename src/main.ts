@@ -161,6 +161,15 @@ ipcMain.on(GET_NOTEBOOKS, (event: any, args: any) => {
     dbMessager.addExistingNotebooks(notebooks)
     .then(() => {
       event.sender.send(GET_NOTEBOOKS, notebooks);
+
+      // ipcMain catches this event as soon as the HomePage component gets 
+      // loaded - here we get all notes for our main section on the HomePage
+      // component.
+      dbMessager.searchNotesGlobally('')
+      .then((docs: any) => {
+        event.sender.send(SEARCH_RESULTS, docs);
+      });
+
     });
 
   });
