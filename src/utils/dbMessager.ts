@@ -9,14 +9,26 @@ export class DbMessager {
         this.db = setup.getDb();
     }
 
-    searchNotesGlobally(query: string) {
+    /**
+     * Searches notes and returns paginated results
+     * @param  {string} query - Search term
+     * @param  {number} resultsLimit - Returns specified number of results
+     * @param  {number} resultsToSkip - Skip first n of results before returning
+     * the results that we want
+     */
+    searchNotesGlobally(query: string, resultsLimit: number = 10, resultsToSkip: number = 0) {
         return new Promise((resolve) => {
             
             let regex = new RegExp(query, 'i');
 
-            this.db.find({ noteContent: regex }).sort({noteLastupdatedAt: -1}).exec((err: Error, docs: any) => {
-                resolve(docs);
-            });
+            this.db.find(
+                { noteContent: regex })
+                .skip(resultsToSkip)
+                .limit(resultsLimit)
+                .sort({noteLastupdatedAt: -1})
+                .exec((err: Error, docs: any) => {
+                    resolve(docs);
+                });
         });
     }
 
