@@ -404,15 +404,16 @@ ipcMain.on(ADD_TAG_TO_NOTE, (event: any, data: any) => {
     tag: tag
   };
 
-  dbMessager.addTagToNote(noteObj)
-  .then((response: boolean) => {
-    if (response) {
-      dbMessager.getNoteContent(notebook, note)
-      .then((result: any) => {
-        // console.log(result);
-      });
-    }
-  });
+  dbMessager.addTagToNote(noteObj);
+  // .then((response: boolean) => {
+  //   if (response) {
+  //     console.log(response);
+  //     // dbMessager.getNoteContent(notebook, note)
+  //     // .then((result: any) => {
+  //     //   // console.log(result);
+  //     // });
+  //   }
+  // });
 
 });
 

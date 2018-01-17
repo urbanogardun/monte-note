@@ -121,7 +121,7 @@ class DbMessager {
                 documentFor: 'NOTE_DATA'
             }, (err, doc) => {
                 if (doc) {
-                    this.db.update(doc, { $addToSet: { tags: tag } }, {}, () => {
+                    this.db.update(doc, { $addToSet: { tags: tag } }, {}, (error) => {
                         resolve(true);
                     });
                 }

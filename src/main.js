@@ -318,15 +318,16 @@ electron_1.ipcMain.on(index_1.ADD_TAG_TO_NOTE, (event, data) => {
         note: note,
         tag: tag
     };
-    dbMessager.addTagToNote(noteObj)
-        .then((response) => {
-        if (response) {
-            dbMessager.getNoteContent(notebook, note)
-                .then((result) => {
-                // console.log(result);
-            });
-        }
-    });
+    dbMessager.addTagToNote(noteObj);
+    // .then((response: boolean) => {
+    //   if (response) {
+    //     console.log(response);
+    //     // dbMessager.getNoteContent(notebook, note)
+    //     // .then((result: any) => {
+    //     //   // console.log(result);
+    //     // });
+    //   }
+    // });
 });
 electron_1.ipcMain.on(index_1.REMOVE_TAG_FROM_NOTE, (event, data) => {
     let notebook = data.notebook;
