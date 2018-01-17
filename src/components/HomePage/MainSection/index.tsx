@@ -20,7 +20,7 @@ export class MainSection extends React.Component<Props, {}> {
                             <li 
                                 key={result._id} 
                                 className="list-group-item note-item" 
-                                onClick={(e) => this.props.previewNote()}
+                                onClick={(e) => this.props.previewNote(result.notebookName, result.noteName)}
                             >
                                 <div className="card">
                                     <div className="card-body">
