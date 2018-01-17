@@ -10,6 +10,7 @@ export interface Props {
     addTagToNote: Function;
     currentNoteTags: string[];
     updateNoteContent: Function;
+    noteContent: string;
 }
 
 export interface State {
@@ -43,8 +44,13 @@ export class TagAdder extends React.Component<Props, State> {
             // Save current note content that is inside an editor
             let editor = document.querySelector('.ql-editor') as Element;
             let noteContentToUpdate = editor.innerHTML;
-            let noteDataToSave = prepareNoteData(this.props, noteContentToUpdate);
-            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
+
+            // Only update note data in DB if it got changed
+            if (this.props.noteContent !== noteContentToUpdate) {
+                let noteDataToSave = prepareNoteData(this.props, noteContentToUpdate);
+                ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
+            }
+
             // Update app state with current note content that's inside editor
             this.props.updateNoteContent(noteContentToUpdate);
         }

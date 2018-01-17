@@ -178,6 +178,7 @@ export class Editor extends React.Component<Props, State> {
                     addTagToNote={this.props.addTagToNote}
                     currentNoteTags={this.props.currentNoteTags}
                     updateNoteContent={this.props.updateNoteContent}
+                    noteContent={this.props.noteContent}
                 />
                 <div id="quill-container" />
             </div>

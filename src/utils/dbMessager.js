@@ -10,7 +10,6 @@ class DbMessager {
         return new Promise((resolve) => {
             let regex = new RegExp(query, 'i');
             this.db.find({ noteContent: regex }).sort({ noteLastupdatedAt: -1 }).exec((err, docs) => {
-                console.log(docs);
                 resolve(docs);
             });
         });
