@@ -22,6 +22,7 @@ it('renders without crashing', () => {
   ReactDOM.render(
   <Provider store={store}>
     <App 
+      notebooksLocation={''}
       notebooks={['note-1', 'note-2', 'note-3']} 
       searchResults={[{}, {}]}
       previewContent={{notebook: 'test', note: 'test', noteContent: 'test'}}

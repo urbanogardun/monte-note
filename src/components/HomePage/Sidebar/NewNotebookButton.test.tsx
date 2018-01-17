@@ -7,7 +7,7 @@ const instance = wrapper.instance() as NewNotebookButton; // explicitly declare 
 
 it('renders the button', () => {
   const button = enzyme.shallow(<NewNotebookButton />);
-  expect(button.find('.add-notebook').text()).toEqual('Add Notebook');
+  expect(button.find('li.sidebar-link').text().trim()).toEqual('New Notebook');
 });
 
 it('renders the input on button click', () => {
