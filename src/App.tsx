@@ -10,7 +10,6 @@ interface Props {
   notebooksLocation?: string;
   notebooks: string[];
   searchResults: object[];
-  previewNote: Function;
 }
 
 class App extends React.Component<Props, object> {
@@ -30,7 +29,6 @@ class App extends React.Component<Props, object> {
     <HomePage 
       notebooks={this.props.notebooks} 
       searchResults={this.props.searchResults} 
-      previewNote={this.props.previewNote}
     />);
     }
 

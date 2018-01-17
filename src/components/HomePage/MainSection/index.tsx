@@ -4,10 +4,13 @@ import SearchBar from './SearchBar/index';
 export interface Props {
     searchResults: object[];
     notebooks: string[];
-    previewNote: Function;
 }
 
 export class MainSection extends React.Component<Props, {}> {
+
+    previewNote(notebook: string, note: string) {
+        console.log(`Get note content for note: ${note} from notebook: ${notebook}`);
+    }
 
     render() {
         return (
@@ -20,7 +23,7 @@ export class MainSection extends React.Component<Props, {}> {
                             <li 
                                 key={result._id} 
                                 className="list-group-item note-item" 
-                                onClick={(e) => this.props.previewNote(result.notebookName, result.noteName)}
+                                onClick={(e) => this.previewNote(result.notebookName, result.noteName)}
                             >
                                 <div className="card">
                                     <div className="card-body">
