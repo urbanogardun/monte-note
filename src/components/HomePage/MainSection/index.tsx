@@ -1,5 +1,6 @@
 import * as React from 'react';
 import SearchBar from './SearchBar/index';
+import LoadMoreButton from './LoadMoreButton/index';
 import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
 import { GET_NOTE_CONTENT } from '../../../constants/index';
 
@@ -24,17 +25,7 @@ export class MainSection extends React.Component<Props, {}> {
 
         let loadMoreButton = ( <div /> );
         if (this.props.searchResults.length > 10) {
-            loadMoreButton = (
-            <div className="load-more">
-                <button 
-                    type="button" 
-                    className="btn btn-primary"
-                >
-                    Primary
-                </button>
-            </div>
-                
-            );
+            loadMoreButton = <LoadMoreButton />;
         }
 
         return (
