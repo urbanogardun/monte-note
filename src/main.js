@@ -78,12 +78,15 @@ electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
         console.log('Created settings for app: ' + success);
         if (success) {
             let location = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
-            dbMessager.updateSettings('notebooksLocation', location)
-                .then((result) => {
-                if (result) {
-                    console.log(result);
-                    event.sender.send('location-for-notebooks', location);
-                }
+            notebookManager_1.default.createTrashcan(location)
+                .then(() => {
+                dbMessager.updateSettings('notebooksLocation', location)
+                    .then((result) => {
+                    if (result) {
+                        console.log(result);
+                        event.sender.send('location-for-notebooks', location);
+                    }
+                });
             });
         }
     });

@@ -151,6 +151,22 @@ export class NotebookManager {
             });
         });
     }
+
+    // Creates .trashcan dir if it does not exist already
+    static createTrashcan(notebooksLocation: string) {
+        return new Promise(resolve => {
+            let dir = path.join(notebooksLocation, '.trashcan');
+
+            fs.ensureDir(dir)
+            .then(() => {
+                resolve(true);
+            })
+            .catch((err: Error) => {
+                resolve(false);
+            });
+        });
+
+    }
     
     /**
      * Moves note to trashcan directory
