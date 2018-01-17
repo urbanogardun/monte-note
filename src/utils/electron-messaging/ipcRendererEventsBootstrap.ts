@@ -87,7 +87,7 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(PREVIEW_NOTE, (event: Event, data: any): void => {
-            console.log('DATA FOR PREVIEW:');
+            reduxStore.dispatch(actions.loadPreviewContent(data));
         });
 
         ipcRenderer.on(GET_NAME_OF_LAST_OPENED_NOTE, (event: Event, note: string): void => {

@@ -10,4 +10,5 @@ export interface StoreState {
     lastOpenedTrashNotebook?: string;
     currentNoteTags?: string[];
     searchResults?: object[];
+    previewContent?: object;
 }

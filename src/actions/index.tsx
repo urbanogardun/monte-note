@@ -68,6 +68,13 @@ export interface LoadSearchResults {
     results: object[];
 }
 
+export interface LoadPreviewContent {
+    type: constants.LOAD_PREVIEW_CONTENT;
+    notebook: string;
+    note: string;
+    noteContent: string;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -171,5 +178,14 @@ export function loadSearchResults(results: object[]): LoadSearchResults {
     return {
         type: constants.LOAD_SEARCH_RESULTS,
         results
+    };
+}
+
+export function loadPreviewContent(data: any): LoadPreviewContent {
+    return {
+        type: constants.LOAD_PREVIEW_CONTENT,
+        notebook: data.notebook,
+        note: data.note,
+        noteContent: data.noteContent
     };
 }
