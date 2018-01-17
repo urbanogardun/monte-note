@@ -147,7 +147,14 @@ export class DbMessager {
             },  (err: Error, doc: any) => {
 
                 if (doc) {
-                    this.db.update(doc, { $addToSet: { tags: tag } }, {}, (error: Error) => {
+                    // Grab old updatedAt value. We don't want to modify
+                    // that value on tag add.
+                    let updatedAt = doc.updatedAt;
+
+                    this.db.update(
+                        doc, 
+                        { $set: {updatedAt: updatedAt}, $addToSet: { tags: tag } }, 
+                        {}, (error: Error) => {
                         resolve(true);
                     });
                 } else {
