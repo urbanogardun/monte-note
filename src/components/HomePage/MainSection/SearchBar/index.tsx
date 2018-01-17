@@ -107,7 +107,14 @@ export class SearchBar extends React.Component<Props, State> {
                                 <span className="oi oi-chevron-bottom search-dropdown" />
                             </button>
                             <div className="dropdown-menu">
-                                <a className="dropdown-item" href="#" onClick={(e) => this.updateSearchValue(e)}>
+                                <a 
+                                    className="dropdown-item" 
+                                    href="#" 
+                                    onClick={(e) => {
+                                        this.updateSearchValue(e);
+                                        this.runSearch();
+                                    }}
+                                >
                                     <span className="oi oi-check notebook-check" /> All Notebooks
                                 </a>
                                 <div role="separator" className="dropdown-divider" />
@@ -117,7 +124,10 @@ export class SearchBar extends React.Component<Props, State> {
                                         return (
                                             <a
                                                 className="dropdown-item"
-                                                onClick={(e) => this.updateSearchValue(e)}
+                                                onClick={(e) => {
+                                                    this.updateSearchValue(e);
+                                                    this.runSearch();
+                                                }}
                                                 href="#"
                                                 key={name}
                                             >
