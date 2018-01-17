@@ -24,7 +24,7 @@ export class MainSection extends React.Component<Props, {}> {
     render() {
 
         let loadMoreButton = ( <div /> );
-        if (this.props.searchResults.length > 10) {
+        if (this.props.searchResults.length > 9) {
             loadMoreButton = <LoadMoreButton />;
         }
 
