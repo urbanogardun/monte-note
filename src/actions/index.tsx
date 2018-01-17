@@ -76,6 +76,11 @@ export interface LoadPreviewContent {
     tags: string[];
 }
 
+export interface UpdatePreviewContentTags {
+    type: constants.UPDATE_PREVIEW_CONTENT_TAGS;
+    tags: string[];
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -85,6 +90,8 @@ export type NoteAction = AddNote | LoadNotes;
 export type LastOpenedNoteAction = LastOpenedNote;
 
 export type TrashAction = LoadTrash | LoadLastOpenedTrashNote | LoadLastOpenedTrashNotebook;
+
+export type PreviewAction = LoadPreviewContent | UpdatePreviewContentTags;
 
 export function incrementEnthusiasm(): IncrementEnthusiasm {
     return {
@@ -182,12 +189,19 @@ export function loadSearchResults(results: object[]): LoadSearchResults {
     };
 }
 
-export function loadPreviewContent(data: any): LoadPreviewContent {
+export function loadPreviewContent(data: any): PreviewAction {
     return {
         type: constants.LOAD_PREVIEW_CONTENT,
         notebook: data.notebook,
         note: data.note,
         noteContent: data.noteContent,
         tags: data.tags
+    };
+}
+
+export function updatePreviewContentTags(tags: string[]): PreviewAction {
+    return {
+        type: constants.UPDATE_PREVIEW_CONTENT_TAGS,
+        tags
     };
 }

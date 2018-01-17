@@ -1,6 +1,6 @@
 import * as React from 'react';
-// import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
-// import { GET_TAGS_FOR_NOTE, REMOVE_TAG_FROM_NOTE } from '../../../../constants/index';
+import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
+import { REMOVE_TAG_FROM_NOTE } from '../../../../constants/index';
 
 export interface Props {
     tags: string[];
@@ -21,20 +21,17 @@ export class TagList extends React.Component<Props, State> {
         super(props);
     }
 
-    // removeTag(name: string) {
-    //     let data = {
-    //         notebook: this.props.notebookName,
-    //         note: this.props.noteName,
-    //         tag: name
-    //     };
-    //     ElectronMessager.sendMessageWithIpcRenderer(REMOVE_TAG_FROM_NOTE, data);
-        
-    //     // Remove tag from the app state
-    //     let newTags = this.props.currentNoteTags.filter((tag: string) => { return tag !== name; });
-    //     this.props.updateTags(newTags);
-    // }
     removeTag(name: string) {
-        console.log('Remove tag: ' + name);
+        let data = {
+            notebook: this.props.notebookName,
+            note: this.props.noteName,
+            tag: name
+        };
+        ElectronMessager.sendMessageWithIpcRenderer(REMOVE_TAG_FROM_NOTE, data);
+        
+        // Remove tag from the app state
+        let newTags = this.props.tags.filter((tag: string) => { return tag !== name; });
+        this.props.updateTags(newTags);
     }
 
     render() {

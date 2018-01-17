@@ -25,6 +25,7 @@ it('renders without crashing', () => {
       notebooks={['note-1', 'note-2', 'note-3']} 
       searchResults={[{}, {}]}
       previewContent={{notebook: 'test', note: 'test', noteContent: 'test'}}
+      updateTags={() => { return; }}
     />
   </Provider>,
   div);

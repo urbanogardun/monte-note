@@ -11,6 +11,7 @@ interface Props {
   notebooks: string[];
   searchResults: object[];
   previewContent: object;
+  updateTags: Function;
 }
 
 class App extends React.Component<Props, object> {
@@ -31,6 +32,7 @@ class App extends React.Component<Props, object> {
       notebooks={this.props.notebooks} 
       searchResults={this.props.searchResults}
       previewContent={this.props.previewContent} 
+      updateTags={this.props.updateTags}
     />);
     }
 

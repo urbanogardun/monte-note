@@ -20,6 +20,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>)
     return {
         onIncrement: () => dispatch(actions.decrementEnthusiasm()),
         onDecrement: () => dispatch(actions.decrementEnthusiasm()),
+        updateTags: (tags: string[]) => dispatch(actions.updatePreviewContentTags(tags))
     };
 }
 

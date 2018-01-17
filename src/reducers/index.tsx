@@ -7,7 +7,7 @@ import { EnthusiasmAction,
   TrashAction, 
   LoadTagsForNote,
   LoadSearchResults,
-  LoadPreviewContent } from '../actions';
+  PreviewAction } from '../actions';
 import { StoreState } from '../types/index';
 import { 
   INCREMENT_ENTHUSIASM, 
@@ -24,7 +24,8 @@ import {
   LOAD_LAST_OPENED_TRASH_NOTEBOOK,
   LOAD_TAGS_FOR_NOTE,
   LOAD_SEARCH_RESULTS,
-  LOAD_PREVIEW_CONTENT } from '../constants/index';
+  LOAD_PREVIEW_CONTENT,
+  UPDATE_PREVIEW_CONTENT_TAGS } from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -140,7 +141,7 @@ export function searchResults(state: StoreState, action: LoadSearchResults): Sto
   }
 }
 
-export function previewContent(state: StoreState, action: LoadPreviewContent): StoreState {
+export function previewContent(state: StoreState, action: PreviewAction): StoreState {
   switch (action.type) {
     case LOAD_PREVIEW_CONTENT:
       return {
@@ -149,6 +150,8 @@ export function previewContent(state: StoreState, action: LoadPreviewContent): S
         noteContent: action.noteContent,
         tags: action.tags
       } as StoreState;
+    case UPDATE_PREVIEW_CONTENT_TAGS:
+      return {...state, tags: action.tags} as StoreState;
     default:
       return state || {
         notebook: '',
