@@ -18,7 +18,8 @@ import {
     EXIT_APP_SAVE_CONTENT,
     GET_TAGS_FOR_NOTE,
     SEARCH_RESULTS,
-    PREVIEW_NOTE
+    PREVIEW_NOTE,
+    LOAD_NOTEBOOKS_LOCATION
 } from '../../constants/index';
 import ElectronMessager from '../electron-messaging/electronMessager';
     
@@ -67,6 +68,13 @@ export function ipcRendererEventsBootstrap() {
             // Parse the received settings file and dispatch parts of it
             // using appropriate actions
             // console.log('SETTINGS ARE: ' + JSON.stringify(arg));
+            // if (arg) {
+            // }
+        });
+
+        ipcRenderer.on(LOAD_NOTEBOOKS_LOCATION, (event: Event, location: string): void => {
+            console.log('SET LOCATION!');
+            reduxStore.dispatch(actions.setNotebooksLocation(location));
         });
 
         ipcRenderer.on(ADD_NOTE, (event: Event, arg: any): void => {

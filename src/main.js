@@ -54,6 +54,18 @@ electron_1.app.on('activate', () => {
         createWindow();
     }
 });
+electron_1.ipcMain.on(index_1.GET_NOTEBOOKS_LOCATION, (event, args) => {
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        console.log(`location: ${location}`);
+        if (location) {
+            event.sender.send(index_1.LOAD_NOTEBOOKS_LOCATION, location);
+        }
+        else {
+            event.sender.send(index_1.LOAD_NOTEBOOKS_LOCATION, 'NOTEBOOKS_LOCATION_NOT_SET');
+        }
+    });
+});
 electron_1.ipcMain.on('get-global-packages', () => {
     console.log('create nbook!');
 });
@@ -61,11 +73,18 @@ electron_1.ipcMain.on('is-location-for-notebooks-set', (event, args) => {
     event.sender.send('start-it!', notebookManager_1.default.getNotebookLocation());
 });
 electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
-    let location = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
-    dbMessager.updateSettings('notebooksLocation', location)
-        .then((result) => {
-        if (result) {
-            event.sender.send('location-for-notebooks', location);
+    dbMessager.createSettings()
+        .then((success) => {
+        console.log('Created settings for app: ' + success);
+        if (success) {
+            let location = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
+            dbMessager.updateSettings('notebooksLocation', location)
+                .then((result) => {
+                if (result) {
+                    console.log(result);
+                    event.sender.send('location-for-notebooks', location);
+                }
+            });
         }
     });
 });
@@ -87,6 +106,7 @@ electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
     // Bootstrap db with notebooks entry
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
+        console.log('GET NOTEBOOKS LOCATION: ' + location);
         let notebooks = notebookManager_1.default.getNotebooks(location);
         // dbMessager.updateSettings('notebooks', notebooks)
         dbMessager.addExistingNotebooks(notebooks)

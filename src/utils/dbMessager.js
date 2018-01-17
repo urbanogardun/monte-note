@@ -266,12 +266,32 @@ class DbMessager {
         let newValue = {};
         newValue[key] = value;
         return new Promise(resolve => {
-            this.db.update({ name: 'applicationSettings' }, { $set: newValue }, {}, (error) => {
-                if (error) {
-                    resolve(false);
+            this.db.findOne({ name: 'applicationSettings' }, (error, document) => {
+                if (document) {
+                    this.db.update({ name: 'applicationSettings' }, { $set: newValue }, {}, (err) => {
+                        if (error) {
+                            resolve(false);
+                        }
+                        else {
+                            resolve(true);
+                        }
+                    });
                 }
-                else {
-                    resolve(true);
+            });
+        });
+    }
+    createSettings() {
+        return new Promise(resolve => {
+            this.db.findOne({ name: 'applicationSettings' }, (error, document) => {
+                if (!document) {
+                    this.db.insert({ name: 'applicationSettings' }, (err) => {
+                        if (err) {
+                            resolve(false);
+                        }
+                        else {
+                            resolve(true);
+                        }
+                    });
                 }
             });
         });

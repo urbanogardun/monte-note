@@ -25,6 +25,8 @@ import {
   SEARCH_RESULTS,
   SEARCH_WITHIN_NOTEBOOK,
   PREVIEW_NOTE,
+  GET_NOTEBOOKS_LOCATION,
+  LOAD_NOTEBOOKS_LOCATION,
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -90,6 +92,18 @@ app.on('activate', () => {
 
 });
 
+ipcMain.on(GET_NOTEBOOKS_LOCATION, (event: any, args: any) => {
+  dbMessager.getFromSettings('notebooksLocation')
+  .then((location: any) => {
+    console.log(`location: ${location}`);
+    if (location) {
+      event.sender.send(LOAD_NOTEBOOKS_LOCATION, location);
+    } else {
+      event.sender.send(LOAD_NOTEBOOKS_LOCATION, 'NOTEBOOKS_LOCATION_NOT_SET');
+    }
+  });
+});
+
 ipcMain.on('get-global-packages', () => {
     console.log('create nbook!');
 });
@@ -99,15 +113,21 @@ ipcMain.on('is-location-for-notebooks-set', (event: any, args: any) => {
 });
 
 ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
-  let location = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
-
-  dbMessager.updateSettings('notebooksLocation', location as string)
-  .then((result: boolean) => {
-    if (result) {
-      event.sender.send('location-for-notebooks', location);
+  dbMessager.createSettings()
+  .then((success: boolean) => {
+    console.log('Created settings for app: ' + success);
+    if (success) {
+      let location = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
+    
+      dbMessager.updateSettings('notebooksLocation', location as string)
+      .then((result: boolean) => {
+        if (result) {
+          console.log(result);
+          event.sender.send('location-for-notebooks', location);
+        }
+      });
     }
   });
-
 });
 
 ipcMain.on(ADD_NOTEBOOK, (event: any, notebookName: any) => {
@@ -130,12 +150,14 @@ ipcMain.on(GET_NOTEBOOKS, (event: any, args: any) => {
   // Bootstrap db with notebooks entry
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
+    console.log('GET NOTEBOOKS LOCATION: ' + location);
     let notebooks = NotebookManager.getNotebooks(location);
     // dbMessager.updateSettings('notebooks', notebooks)
     dbMessager.addExistingNotebooks(notebooks)
     .then(() => {
       event.sender.send(GET_NOTEBOOKS, notebooks);
     });
+
   });
 });
 

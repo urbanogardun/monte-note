@@ -3,7 +3,7 @@ import './App.css';
 import HomePage from './containers/HomePage/HomePage';
 import Welcome from './containers/WelcomePage/Welcome';
 import ElectronMessager from './utils/electron-messaging/electronMessager';
-import { LOAD_SETTINGS } from './constants/index';
+import { GET_NOTEBOOKS_LOCATION } from './constants/index';
 
 interface Props {
   enthusiasmLevel?: number;
@@ -19,23 +19,26 @@ class App extends React.Component<Props, object> {
   isNotebooksLocationSet: boolean;
 
   componentWillMount() {
-    ElectronMessager.sendMessageWithIpcRenderer(LOAD_SETTINGS);
+    ElectronMessager.sendMessageWithIpcRenderer(GET_NOTEBOOKS_LOCATION);
   }
 
   render() {
-    let enthusiasmLevel = this.props.notebooksLocation as string;
+    let notebooksLocation = this.props.notebooksLocation as string;
 
     let componentToRender = <Welcome name={'John'} notebooksLocation={''} />;
-    if (enthusiasmLevel) {
-    componentToRender = (
-    <HomePage 
-      notebooks={this.props.notebooks} 
-      searchResults={this.props.searchResults}
-      previewContent={this.props.previewContent} 
-      updateTags={this.props.updateTags}
-    />);
+    // Render HomePage component only when notebookslocation prop value gets received and
+    // if it got set by user
+    if ( (notebooksLocation !== 'NOTEBOOKS_LOCATION_NOT_SET') && (notebooksLocation.length) ) {
+      componentToRender = (
+      <HomePage 
+        notebooks={this.props.notebooks} 
+        searchResults={this.props.searchResults}
+        previewContent={this.props.previewContent} 
+        updateTags={this.props.updateTags}
+      />);
     }
 
+    console.log(this.props);
     return (
       <div className="container-fluid notebook-container">
         

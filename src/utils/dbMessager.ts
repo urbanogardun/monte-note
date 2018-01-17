@@ -306,14 +306,39 @@ export class DbMessager {
     updateSettings(key: string, value: any) {
         let newValue = {};
         newValue[key] = value;
+
         return new Promise(resolve => {
-            this.db.update({ name: 'applicationSettings'}, { $set: newValue }, {}, (error: Error) => {
-                if (error) {
-                    resolve(false);
-                } else {
-                    resolve(true);
+            this.db.findOne({ name: 'applicationSettings'}, (error: Error, document: any) => {
+
+                if (document) {
+                    this.db.update({ name: 'applicationSettings'}, { $set: newValue }, {}, (err: Error) => {
+                        if (error) {
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
                 }
             });
+        });
+    }
+
+    createSettings() {
+        return new Promise(resolve => {
+
+            this.db.findOne({ name: 'applicationSettings'}, (error: Error, document: any) => {
+
+                if (!document) {
+                    this.db.insert({ name: 'applicationSettings' }, (err: Error) => {
+                        if (err) {
+                            resolve(false);
+                        } else {
+                            resolve(true);
+                        }
+                    });
+                }
+            });
+
         });
     }
     
