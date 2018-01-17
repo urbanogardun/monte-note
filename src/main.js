@@ -390,8 +390,11 @@ electron_1.ipcMain.on(index_1.REMOVE_NOTE_FROM_DRIVE, (event, data) => {
 });
 electron_1.ipcMain.on(index_1.GLOBAL_SEARCH, (event, searchData) => {
     let searchQuery = searchData.searchQuery;
+    let searchPageNumber = searchData.searchPage;
+    let searchResultsPerPage = searchData.searchResultsPerPage;
+    let returnSearchResultsFrom = (searchPageNumber - 1) * searchResultsPerPage;
     console.log('Search notes globally for: ' + searchQuery);
-    dbMessager.searchNotesGlobally(searchQuery)
+    dbMessager.searchNotesGlobally(searchQuery, searchResultsPerPage, returnSearchResultsFrom)
         .then((docs) => {
         event.sender.send(index_1.SEARCH_RESULTS, docs);
     });
