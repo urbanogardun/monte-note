@@ -9,7 +9,8 @@ class DbMessager {
     searchNotesGlobally(query) {
         return new Promise((resolve) => {
             let regex = new RegExp(query, 'i');
-            this.db.find({ noteContent: regex }).sort({ updatedAt: -1 }).exec((err, docs) => {
+            this.db.find({ noteContent: regex }).sort({ noteLastupdatedAt: -1 }).exec((err, docs) => {
+                console.log(docs);
                 resolve(docs);
             });
         });
@@ -20,7 +21,7 @@ class DbMessager {
             this.db.find({
                 notebookName: notebook,
                 noteContent: regex
-            }).sort({ updatedAt: -1 }).exec((err, docs) => {
+            }).sort({ noteLastupdatedAt: -1 }).exec((err, docs) => {
                 resolve(docs);
             });
         });
@@ -91,9 +92,10 @@ class DbMessager {
                 noteName: noteName,
                 documentFor: 'NOTE_DATA'
             };
+            console.log('SAVE THIS CONTENT');
             this.db.findOne(docToSave, (err, doc) => {
                 if (doc) {
-                    this.db.update(docToSave, { $set: { noteContent: noteContent } }, {}, () => {
+                    this.db.update(docToSave, { $set: { noteContent: noteContent, noteLastupdatedAt: Date.now() } }, {}, () => {
                         resolve(true);
                     });
                 }
@@ -103,7 +105,8 @@ class DbMessager {
                         noteName: noteName,
                         documentFor: 'NOTE_DATA',
                         noteContent: noteContent,
-                        tags: []
+                        tags: [],
+                        noteLastupdatedAt: Date.now()
                     }, () => {
                         resolve(true);
                     });
@@ -121,11 +124,7 @@ class DbMessager {
                 documentFor: 'NOTE_DATA'
             }, (err, doc) => {
                 if (doc) {
-                    // Grab old updatedAt value. We don't want to modify
-                    // that value on tag add.
-                    let updatedAt = doc.updatedAt;
-                    console.log(updatedAt);
-                    this.db.update(doc, { $set: { updatedAt: updatedAt }, $addToSet: { tags: tag } }, {}, (error) => {
+                    this.db.update(doc, { $addToSet: { tags: tag } }, {}, (error) => {
                         resolve(true);
                     });
                 }

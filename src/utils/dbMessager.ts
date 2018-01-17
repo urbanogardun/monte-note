@@ -14,7 +14,7 @@ export class DbMessager {
             
             let regex = new RegExp(query, 'i');
 
-            this.db.find({ noteContent: regex }).sort({updatedAt: -1}).exec((err: Error, docs: any) => {
+            this.db.find({ noteContent: regex }).sort({noteLastupdatedAt: -1}).exec((err: Error, docs: any) => {
                 resolve(docs);
             });
         });
@@ -28,7 +28,7 @@ export class DbMessager {
             this.db.find({ 
                 notebookName: notebook, 
                 noteContent: regex 
-            }).sort({updatedAt: -1}).exec((err: Error, docs: any) => {
+            }).sort({noteLastupdatedAt: -1}).exec((err: Error, docs: any) => {
                 resolve(docs);
             });
         });
@@ -108,10 +108,10 @@ export class DbMessager {
                 noteName: noteName,
                 documentFor: 'NOTE_DATA'
             };
-
+            console.log('SAVE THIS CONTENT');
             this.db.findOne(docToSave, (err: Error, doc: any) => {
                 if (doc) {
-                    this.db.update(docToSave, { $set: {noteContent: noteContent, updatedAt: Date.now() } }, {}, () => {
+                    this.db.update(docToSave, { $set: {noteContent: noteContent, noteLastupdatedAt: Date.now() } }, {}, () => {
                         resolve(true);
                     });
                 } else {
@@ -122,7 +122,7 @@ export class DbMessager {
                         documentFor: 'NOTE_DATA', 
                         noteContent: noteContent,
                         tags: [],
-                        updatedAt: Date.now()
+                        noteLastupdatedAt: Date.now()
                     }, 
                     () => {
                         resolve(true);
