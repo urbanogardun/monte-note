@@ -388,7 +388,8 @@ electron_1.ipcMain.on(index_1.REMOVE_NOTE_FROM_DRIVE, (event, data) => {
         });
     });
 });
-electron_1.ipcMain.on(index_1.GLOBAL_SEARCH, (event, searchQuery) => {
+electron_1.ipcMain.on(index_1.GLOBAL_SEARCH, (event, searchData) => {
+    let searchQuery = searchData.searchQuery;
     console.log('Search notes globally for: ' + searchQuery);
     dbMessager.searchNotesGlobally(searchQuery)
         .then((docs) => {

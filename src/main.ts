@@ -489,7 +489,8 @@ ipcMain.on(REMOVE_NOTE_FROM_DRIVE, (event: any, data: any) => {
 
 });
 
-ipcMain.on(GLOBAL_SEARCH, (event: any, searchQuery: string) => {
+ipcMain.on(GLOBAL_SEARCH, (event: any, searchData: any) => {
+  let searchQuery = searchData.searchQuery;
   console.log('Search notes globally for: ' + searchQuery);
   dbMessager.searchNotesGlobally(searchQuery)
   .then((docs: any) => {

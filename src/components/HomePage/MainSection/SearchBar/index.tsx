@@ -38,7 +38,10 @@ export class SearchBar extends React.Component<Props, State> {
     sendSearchQuery() {
         let searchQuery = this.state.searchQuery;
         if (this.state.searchOption === GLOBAL_SEARCH) {
-            ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchQuery);
+            let searchData = {
+                searchQuery: searchQuery
+            };
+            ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchData);
         } else {
             let searchData = {
                 notebook: this.state.notebookToSearch,

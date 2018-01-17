@@ -28,7 +28,10 @@ export class HomePage extends React.Component<Props, State> {
     handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
         let searchQuery = this.state.searchQuery;
         console.log('search for: ' + searchQuery);
-        ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchQuery);
+        let data = {
+            searchQuery: searchQuery
+        };
+        ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, data);
     }
 
     updateInputValue(e: React.ChangeEvent<HTMLInputElement>) {
