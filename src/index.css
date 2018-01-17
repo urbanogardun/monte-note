@@ -14,7 +14,14 @@
 
 ::-webkit-scrollbar-thumb
 {
-	background-color: #d3d3d3;
+  background-color: transparent;
+}
+
+/* Show scrollbar only when element is hovered over  */
+div.notes-index:hover::-webkit-scrollbar-thumb,
+div.preview-note-content:hover::-webkit-scrollbar-thumb,
+div.main-content:hover::-webkit-scrollbar-thumb {
+  background-color: #d3d3d3;
 }
 
 /* General */
