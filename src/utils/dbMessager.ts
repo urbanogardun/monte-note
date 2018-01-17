@@ -111,7 +111,7 @@ export class DbMessager {
 
             this.db.findOne(docToSave, (err: Error, doc: any) => {
                 if (doc) {
-                    this.db.update(docToSave, { $set: {noteContent: noteContent} }, {}, () => {
+                    this.db.update(docToSave, { $set: {noteContent: noteContent, updatedAt: Date.now() } }, {}, () => {
                         resolve(true);
                     });
                 } else {
@@ -121,7 +121,8 @@ export class DbMessager {
                         noteName: noteName, 
                         documentFor: 'NOTE_DATA', 
                         noteContent: noteContent,
-                        tags: [] 
+                        tags: [],
+                        updatedAt: Date.now()
                     }, 
                     () => {
                         resolve(true);
@@ -147,13 +148,9 @@ export class DbMessager {
             },  (err: Error, doc: any) => {
 
                 if (doc) {
-                    // Grab old updatedAt value. We don't want to modify
-                    // that value on tag add.
-                    let updatedAt = doc.updatedAt;
-
                     this.db.update(
                         doc, 
-                        { $set: {updatedAt: updatedAt}, $addToSet: { tags: tag } }, 
+                        { $addToSet: { tags: tag } }, 
                         {}, (error: Error) => {
                         resolve(true);
                     });
