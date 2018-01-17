@@ -157,12 +157,16 @@ electron_1.ipcMain.on(index_1.GET_NOTE_CONTENT, (event, data) => {
         notebookManager_1.default.getNoteData(absolutePathToNote)
             .then((noteData) => {
             if ('getContentForPreview' in data) {
-                let dataToSend = {
-                    notebook: notebook,
-                    note: note,
-                    noteContent: noteData
-                };
-                event.sender.send(index_1.PREVIEW_NOTE, dataToSend);
+                dbMessager.getNoteTags(data.notebook, data.note)
+                    .then((tags) => {
+                    let dataToSend = {
+                        notebook: notebook,
+                        note: note,
+                        noteContent: noteData,
+                        tags: tags
+                    };
+                    event.sender.send(index_1.PREVIEW_NOTE, dataToSend);
+                });
             }
             else {
                 event.sender.send(index_1.LOAD_CONTENT_INTO_NOTE, noteData);

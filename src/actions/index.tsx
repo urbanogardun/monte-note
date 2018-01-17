@@ -73,6 +73,7 @@ export interface LoadPreviewContent {
     notebook: string;
     note: string;
     noteContent: string;
+    tags: string[];
 }
 
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
@@ -186,6 +187,7 @@ export function loadPreviewContent(data: any): LoadPreviewContent {
         type: constants.LOAD_PREVIEW_CONTENT,
         notebook: data.notebook,
         note: data.note,
-        noteContent: data.noteContent
+        noteContent: data.noteContent,
+        tags: data.tags
     };
 }

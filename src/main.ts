@@ -215,12 +215,19 @@ ipcMain.on(GET_NOTE_CONTENT, (event: any, data: any) => {
     NotebookManager.getNoteData(absolutePathToNote)
     .then((noteData: string) => {
       if ('getContentForPreview' in data) {
-        let dataToSend = {
-          notebook: notebook,
-          note: note,
-          noteContent: noteData
-        };
-        event.sender.send(PREVIEW_NOTE, dataToSend);
+
+        dbMessager.getNoteTags(data.notebook, data.note)
+        .then((tags: string[]) => {
+          let dataToSend = {
+            notebook: notebook,
+            note: note,
+            noteContent: noteData,
+            tags: tags
+          };
+
+          event.sender.send(PREVIEW_NOTE, dataToSend);
+        });
+
       } else {
         event.sender.send(LOAD_CONTENT_INTO_NOTE, noteData);
       }

@@ -146,7 +146,8 @@ export function previewContent(state: StoreState, action: LoadPreviewContent): S
       return {
         notebook: action.notebook,
         note: action.note,
-        noteContent: action.noteContent
+        noteContent: action.noteContent,
+        tags: action.tags
       } as StoreState;
     default:
       return state || {} as StoreState;
