@@ -2,7 +2,7 @@ import * as React from 'react';
 import SearchBar from './SearchBar/index';
 import LoadMoreButton from './LoadMoreButton/index';
 import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
-import { GET_NOTE_CONTENT } from '../../../constants/index';
+import { GET_NOTE_CONTENT, GLOBAL_SEARCH } from '../../../constants/index';
 
 export interface Props {
     searchResults: object[];
@@ -19,6 +19,35 @@ export class MainSection extends React.Component<Props, {}> {
             getContentForPreview: true
         };
         ElectronMessager.sendMessageWithIpcRenderer(GET_NOTE_CONTENT, data);
+        this.handleScroll = this.handleScroll.bind(this);
+    }
+
+    handleScroll() {
+        // We get 3rd page on start because on app initialization we get the
+        // 1st page of results automatically, then on clicking the Load More 
+        // button we get the 2nd page, and after that it's this function's turn.
+        let searchPageToGet = 3;
+        $('div.notes-index').on('scroll', function(this: any) {
+            let scrollTop = $(this).scrollTop() as any;
+            let innerHeight = $(this).innerHeight() as any;
+
+            // Calculate to see if we have reached the bottom of the page & that button to load more
+            // content is not there
+            if ( (scrollTop + innerHeight >= $(this)[0].scrollHeight) && (!$('div.load-more').length) ) {
+                let data = {
+                    searchQuery: '',
+                    searchPage: searchPageToGet,
+                    searchResultsPerPage: 10
+                };
+
+                searchPageToGet = searchPageToGet + 1;
+                ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, data);
+            }
+        });
+    }
+
+    componentDidMount() {
+        this.handleScroll();
     }
 
     render() {
