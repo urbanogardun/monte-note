@@ -11,7 +11,7 @@ export interface Props {
 export class MainSection extends React.Component<Props, {}> {
 
     previewNote(notebook: string, note: string) {
-        console.log(`Get note content for note: ${note} from notebook: ${notebook}`);
+        // console.log(`Get note content for note: ${note} from notebook: ${notebook}`);
         let data = {
             notebook: notebook,
             note: note,

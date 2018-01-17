@@ -1,7 +1,9 @@
 import * as React from 'react';
 import PreviewViewer from './PreviewViewer/index';
 
-export interface Props {}
+export interface Props {
+    previewContent: object;
+}
 
 export interface State {}
 
@@ -19,7 +21,7 @@ export class PreviewNote extends React.Component<Props, State> {
                         placeholder="Add a tag..."
                     />
                 </div>
-                <PreviewViewer />
+                <PreviewViewer previewContent={this.props.previewContent} />
             </div>
         );
     }

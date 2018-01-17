@@ -24,6 +24,7 @@ it('renders without crashing', () => {
     <App 
       notebooks={['note-1', 'note-2', 'note-3']} 
       searchResults={[{}, {}]}
+      previewContent={{notebook: 'test', note: 'test', noteContent: 'test'}}
     />
   </Provider>,
   div);

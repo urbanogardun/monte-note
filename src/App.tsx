@@ -10,6 +10,7 @@ interface Props {
   notebooksLocation?: string;
   notebooks: string[];
   searchResults: object[];
+  previewContent: object;
 }
 
 class App extends React.Component<Props, object> {
@@ -28,7 +29,8 @@ class App extends React.Component<Props, object> {
     componentToRender = (
     <HomePage 
       notebooks={this.props.notebooks} 
-      searchResults={this.props.searchResults} 
+      searchResults={this.props.searchResults}
+      previewContent={this.props.previewContent} 
     />);
     }
 
