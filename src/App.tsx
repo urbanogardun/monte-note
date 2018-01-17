@@ -3,7 +3,7 @@ import './App.css';
 import HomePage from './containers/HomePage/HomePage';
 import Welcome from './containers/WelcomePage/Welcome';
 import ElectronMessager from './utils/electron-messaging/electronMessager';
-import { GET_NOTEBOOKS_LOCATION } from './constants/index';
+import { GET_NOTEBOOKS_LOCATION, NOTEBOOKS_LOCATION_NOT_SET } from './constants/index';
 
 interface Props {
   enthusiasmLevel?: number;
@@ -25,10 +25,10 @@ class App extends React.Component<Props, object> {
   render() {
     let notebooksLocation = this.props.notebooksLocation as string;
 
-    let componentToRender = <Welcome name={'John'} notebooksLocation={''} />;
+    let componentToRender = ( <div /> );
     // Render HomePage component only when notebookslocation prop value gets received and
     // if it got set by user
-    if ( (notebooksLocation !== 'NOTEBOOKS_LOCATION_NOT_SET') && (notebooksLocation.length) ) {
+    if ( (notebooksLocation !== NOTEBOOKS_LOCATION_NOT_SET) && (notebooksLocation.length) ) {
       componentToRender = (
       <HomePage 
         notebooks={this.props.notebooks} 
@@ -36,9 +36,10 @@ class App extends React.Component<Props, object> {
         previewContent={this.props.previewContent} 
         updateTags={this.props.updateTags}
       />);
+    } else if (notebooksLocation === NOTEBOOKS_LOCATION_NOT_SET) {
+      componentToRender = <Welcome name={'John'} notebooksLocation={''} />;
     }
 
-    console.log(this.props);
     return (
       <div className="container-fluid notebook-container">
         
