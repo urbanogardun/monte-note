@@ -1,3 +1,24 @@
+/* Scrollbar */
+
+::-webkit-scrollbar-track
+{
+  border: none;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar
+{
+	width: 10px;
+	background-color: #F5F5F5;
+}
+
+::-webkit-scrollbar-thumb
+{
+	background-color: #d3d3d3;
+}
+
+/* General */
+
 html, body, div#root, div#app, div.trashcan, div.row, div.trashcan-container, div.notebook-container {
   height: 100%;
 }
@@ -11,7 +32,7 @@ section.notebooks, section.notes {
   margin-top: 20px;
 }
 
-.trashcan.main-content, .preview-note-content {
+.trashcan.main-content, .preview-note-content, .notes-index {
   display:block;
   overflow:auto;
 }
@@ -140,4 +161,8 @@ div.ql-container.preview-note-container {
 
 .input-group.input-group-sm.mb-3.add-tags {
   margin-top: 0px;
+}
+
+div.load-more {
+  text-align: center;
 }

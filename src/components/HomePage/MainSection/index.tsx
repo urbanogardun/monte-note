@@ -21,6 +21,22 @@ export class MainSection extends React.Component<Props, {}> {
     }
 
     render() {
+
+        let loadMoreButton = ( <div /> );
+        if (this.props.searchResults.length > 10) {
+            loadMoreButton = (
+            <div className="load-more">
+                <button 
+                    type="button" 
+                    className="btn btn-primary"
+                >
+                    Primary
+                </button>
+            </div>
+                
+            );
+        }
+
         return (
             <div className="col notes-index">
                 <ul className="list-group">
@@ -45,6 +61,8 @@ export class MainSection extends React.Component<Props, {}> {
                         );
                     })}
                 </ul>
+
+                {loadMoreButton}
             </div>
         );
     }
