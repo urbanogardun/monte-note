@@ -1,5 +1,7 @@
 import * as React from 'react';
 import SearchBar from './SearchBar/index';
+import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
+import { GET_NOTE_CONTENT } from '../../../constants/index';
 
 export interface Props {
     searchResults: object[];
@@ -10,6 +12,12 @@ export class MainSection extends React.Component<Props, {}> {
 
     previewNote(notebook: string, note: string) {
         console.log(`Get note content for note: ${note} from notebook: ${notebook}`);
+        let data = {
+            notebook: notebook,
+            note: note,
+            getContentForPreview: true
+        };
+        ElectronMessager.sendMessageWithIpcRenderer(GET_NOTE_CONTENT, data);
     }
 
     render() {

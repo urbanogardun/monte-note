@@ -17,7 +17,8 @@ import {
     UPDATE_NOTE,
     EXIT_APP_SAVE_CONTENT,
     GET_TAGS_FOR_NOTE,
-    SEARCH_RESULTS
+    SEARCH_RESULTS,
+    PREVIEW_NOTE
 } from '../../constants/index';
 import ElectronMessager from '../electron-messaging/electronMessager';
     
@@ -83,6 +84,10 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on(LOAD_CONTENT_INTO_NOTE, (event: Event, data: string): void => {
             reduxStore.dispatch(actions.loadContentIntoNote(data));
+        });
+
+        ipcRenderer.on(PREVIEW_NOTE, (event: Event, data: any): void => {
+            console.log('DATA FOR PREVIEW:');
         });
 
         ipcRenderer.on(GET_NAME_OF_LAST_OPENED_NOTE, (event: Event, note: string): void => {

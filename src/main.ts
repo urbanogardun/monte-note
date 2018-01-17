@@ -23,7 +23,8 @@ import {
   REMOVE_TAG_FROM_NOTE,
   GLOBAL_SEARCH,
   SEARCH_RESULTS,
-  SEARCH_WITHIN_NOTEBOOK
+  SEARCH_WITHIN_NOTEBOOK,
+  PREVIEW_NOTE,
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -213,7 +214,16 @@ ipcMain.on(GET_NOTE_CONTENT, (event: any, data: any) => {
     let absolutePathToNote = path.join(location, notebook, note + '.html');
     NotebookManager.getNoteData(absolutePathToNote)
     .then((noteData: string) => {
-      event.sender.send(LOAD_CONTENT_INTO_NOTE, noteData);
+      if ('getContentForPreview' in data) {
+        let dataToSend = {
+          notebook: notebook,
+          note: note,
+          noteContent: noteData
+        };
+        event.sender.send(PREVIEW_NOTE, dataToSend);
+      } else {
+        event.sender.send(LOAD_CONTENT_INTO_NOTE, noteData);
+      }
     });
   });
 
