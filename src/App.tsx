@@ -10,6 +10,7 @@ interface Props {
   notebooksLocation?: string;
   notebooks: string[];
   searchResults: object[];
+  previewNote: Function;
 }
 
 class App extends React.Component<Props, object> {
@@ -21,12 +22,16 @@ class App extends React.Component<Props, object> {
   }
 
   render() {
-    // console.log(this.props);
     let enthusiasmLevel = this.props.notebooksLocation as string;
 
     let componentToRender = <Welcome name={'John'} notebooksLocation={''} />;
     if (enthusiasmLevel) {
-      componentToRender = <HomePage notebooks={this.props.notebooks} searchResults={this.props.searchResults} />;
+    componentToRender = (
+    <HomePage 
+      notebooks={this.props.notebooks} 
+      searchResults={this.props.searchResults} 
+      previewNote={this.props.previewNote}
+    />);
     }
 
     return (

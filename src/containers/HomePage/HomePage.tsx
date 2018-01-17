@@ -19,6 +19,9 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>)
     return {
         onIncrement: () => dispatch(actions.decrementEnthusiasm()),
         onDecrement: () => dispatch(actions.decrementEnthusiasm()),
+        previewNote: () => {
+            console.log('Preview Note!');
+        }
     };
 }
 

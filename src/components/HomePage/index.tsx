@@ -8,6 +8,7 @@ import { GLOBAL_SEARCH } from '../../constants/index';
 export interface Props {
     notebooks: string[];
     searchResults: object[];
+    previewNote: Function;
 }
 export interface State {
     searchQuery: string;
@@ -40,6 +41,7 @@ export class HomePage extends React.Component<Props, State> {
                 <MainSection 
                     searchResults={this.props.searchResults} 
                     notebooks={this.props.notebooks}
+                    previewNote={this.props.previewNote}
                 />
                 <PreviewNote />
             </div>

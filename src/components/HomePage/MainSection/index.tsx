@@ -4,6 +4,7 @@ import SearchBar from './SearchBar/index';
 export interface Props {
     searchResults: object[];
     notebooks: string[];
+    previewNote: Function;
 }
 
 export class MainSection extends React.Component<Props, {}> {
@@ -16,7 +17,11 @@ export class MainSection extends React.Component<Props, {}> {
 
                     {(this.props.searchResults as object[]).map((result: any) => {
                         return (
-                            <li key={result._id} className="list-group-item note-item">
+                            <li 
+                                key={result._id} 
+                                className="list-group-item note-item" 
+                                onClick={(e) => this.props.previewNote()}
+                            >
                                 <div className="card">
                                     <div className="card-body">
                                         <h5 className="card-title">{result.noteName}</h5>
