@@ -6,6 +6,8 @@ export class LoadMoreButton extends React.Component<{}, {}> {
 
     loadMoreResults(pageNumber: number, resultsPerPage: number) {
         console.log('Load 10 more results');
+        // TODO:
+        // Pass searchQuery to this component
         let data = {
             searchQuery: '',
             searchPage: 2,
