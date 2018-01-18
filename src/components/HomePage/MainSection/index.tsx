@@ -3,6 +3,7 @@ import SearchBar from './SearchBar/index';
 import LoadMoreButton from './LoadMoreButton/index';
 import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
 import { GET_NOTE_CONTENT, GLOBAL_SEARCH, SEARCH_WITHIN_NOTEBOOK } from '../../../constants/index';
+import * as $ from 'jquery';
 
 export interface Props {
     searchResults: any;
@@ -11,7 +12,7 @@ export interface Props {
 
 export class MainSection extends React.Component<Props, {}> {
 
-    previewNote(notebook: string, note: string) {
+    previewNote(elementId: string, notebook: string, note: string) {
         // console.log(`Get note content for note: ${note} from notebook: ${notebook}`);
         let data = {
             notebook: notebook,
@@ -20,6 +21,10 @@ export class MainSection extends React.Component<Props, {}> {
         };
         ElectronMessager.sendMessageWithIpcRenderer(GET_NOTE_CONTENT, data);
         this.handleScroll = this.handleScroll.bind(this);
+
+        $('div.card').removeClass('note-selected');
+        // Highlight selected note
+        $(`#${elementId}`).children().first().addClass('note-selected');
     }
 
     handleScroll() {
@@ -82,8 +87,9 @@ export class MainSection extends React.Component<Props, {}> {
                         return (
                             <li 
                                 key={result._id} 
+                                id={result._id}
                                 className="list-group-item note-item" 
-                                onClick={(e) => this.previewNote(result.notebookName, result.noteName)}
+                                onClick={(e) => this.previewNote(result._id, result.notebookName, result.noteName)}
                             >
                                 <div className="card">
                                     <div className="card-body">

@@ -157,7 +157,7 @@ div.preview-note-content {
   left: 3px;
 }
 
-div.card:hover {
+div.card:hover, .note-selected {
   color: #007bff;
   cursor: pointer;
 }
