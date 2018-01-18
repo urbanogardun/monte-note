@@ -171,7 +171,7 @@ export class Editor extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="col-sm trashcan main-content">
+            <div className="col-sm trashcan main-content notebook-note-editor">
                 <TagAdder
                     notebookName={this.state.notebookName}
                     lastOpenedNote={this.props.lastOpenedNote}

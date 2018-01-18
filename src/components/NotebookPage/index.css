@@ -34,3 +34,7 @@ span.tag-name:hover {
 .input-group.input-group-sm.hidden {
     display: none;
 }
+
+.notebook-note-editor {
+    padding-top: 22px;
+}

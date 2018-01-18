@@ -64,9 +64,6 @@ export class TagAdder extends React.Component<Props, State> {
         return (
             <div className="tag-manager">
                 <div className="input-group input-group-sm mb-3 add-tags">
-                    <div className="input-group-prepend">
-                        <button className="btn btn-outline-secondary" type="button">Add</button>
-                    </div>
                     <input 
                         value={this.state.tag}
                         onChange={e => this.updateInputValue(e)}
