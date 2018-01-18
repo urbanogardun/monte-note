@@ -67,6 +67,10 @@ input.sidebar-app-form:focus {
   color: #fff;
 }
 
+ul.list-group.notes > a:hover {
+  text-decoration: none;
+}
+
 /* Notebook page */
 
 .home-icon {
