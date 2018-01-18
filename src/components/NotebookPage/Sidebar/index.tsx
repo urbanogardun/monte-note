@@ -3,6 +3,7 @@ import ElectronMessager from '../../../utils/electron-messaging/electronMessager
 // import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE, DELETE_NOTE } from '../../../constants/index';
 import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE } from '../../../constants/index';
 import { Link } from 'react-router-dom';
+import * as $ from 'jquery';
 var striptags = require('striptags');
 
 export interface Props {
@@ -56,6 +57,7 @@ export class Sidebar extends React.Component<Props, State> {
 
         }
 
+        $('li.open-input').hide();
     }
 
     // Creates notebook on Enter key press
@@ -72,6 +74,8 @@ export class Sidebar extends React.Component<Props, State> {
         let note = this.prepareNote(this.state.inputValue as string);
         this.addNote(note);
         this.resetComponentState();
+
+        $('li.open-input').show();
     }
 
     // After notebook name gets submitted through the input field, resets the
@@ -155,14 +159,14 @@ export class Sidebar extends React.Component<Props, State> {
                 <section className="links">
                     <ul className="list-group notes">
                         <li 
-                            className="list-group-item sidebar-note add-note add-note-sidebar"
+                            className="open-input list-group-item sidebar-note add-note add-note-sidebar"
                             onClick={() => this.showInput()}
                         >
                             Add Note 
                             <span className="oi oi-home home-icon"/>
                         </li>
                     </ul>
-                    <div className={`input-group input-group-sm ${this.state.showInput}`}>
+                    <div className={`sidebar-app-form input-group input-group-sm ${this.state.showInput}`}>
                     <input 
                         value={this.state.inputValue}
                         onChange={e => this.updateInputValue(e)}
@@ -171,8 +175,7 @@ export class Sidebar extends React.Component<Props, State> {
                         onKeyPress={(e) => this.handleKeyPress(e)}
                         onBlur={() => this.handleFocusOut()}
                         type="text"
-                        className="form-control add-note" 
-                        placeholder="Note" 
+                        className="form-control add-note sidebar-app-form" 
                         aria-label="Note" 
                         aria-describedby="sizing-addon2"
                     />
