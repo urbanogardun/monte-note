@@ -10,6 +10,7 @@ export interface Props {
     searchResults: object[];
     previewContent: object;
     updateTags: Function;
+    goToRoute: Function;
 }
 export interface State {
     searchQuery: string;
@@ -41,7 +42,10 @@ export class HomePage extends React.Component<Props, State> {
     render() {
         return (
             <div className="row">
-                <Sidebar notebooks={this.props.notebooks} />
+                <Sidebar 
+                    notebooks={this.props.notebooks} 
+                    goToRoute={this.props.goToRoute}
+                />
                 <MainSection 
                     searchResults={this.props.searchResults} 
                     notebooks={this.props.notebooks}

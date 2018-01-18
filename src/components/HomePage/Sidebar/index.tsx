@@ -6,6 +6,7 @@ import NewNotebookButton from './NewNotebookButton';
 
 export interface Props {
     notebooks: string[];
+    goToRoute: Function;
 }
 
 export class Sidebar extends React.Component<Props, {}> {
@@ -20,7 +21,10 @@ export class Sidebar extends React.Component<Props, {}> {
                 <section className="notebooks">
                     <section className="trashcan">
                         <ul className="list-group notes">
-                            <NewNotebookButton />
+                            <NewNotebookButton 
+                                goToRoute={this.props.goToRoute} 
+                                notebooks={this.props.notebooks} 
+                            />
                         </ul>
                     </section>
 

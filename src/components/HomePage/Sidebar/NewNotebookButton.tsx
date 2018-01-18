@@ -10,9 +10,18 @@ export interface Props {
     showInput?: string;
     inputValue?: string;
     handleFocusOut?: void;
+    goToRoute: Function;
+    notebooks: string[];
 }
 
-export class NewNotebookButton extends React.Component<Props, Props> {
+export interface State {
+    showInput: string;
+    inputValue: string;
+}
+
+export class NewNotebookButton extends React.Component<Props, State> {
+
+    addedNotebook: string = '';
 
     constructor(props: Props) {
         super(props);
@@ -20,6 +29,7 @@ export class NewNotebookButton extends React.Component<Props, Props> {
             showInput: 'hidden',
             inputValue: '',
         };
+        this.addNotebook = this.addNotebook.bind(this);
     }
 
     showInput() {
@@ -67,6 +77,14 @@ export class NewNotebookButton extends React.Component<Props, Props> {
     addNotebook(name: string) {
         if (name) {
             ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTEBOOK, name);
+            this.addedNotebook = name as string;
+        }
+    }
+
+    componentWillReceiveProps(nextProps: Props) {
+        // Go to notebook page of a notebook we just created
+        if (nextProps.notebooks.indexOf(this.addedNotebook) > -1) {
+            this.props.goToRoute(`/notebooks/${this.addedNotebook}`);
         }
     }
 
