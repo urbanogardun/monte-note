@@ -1,6 +1,7 @@
 export interface SearchData {
     query: string;
     results: object[];
+    notebook: string;
 }
 
 export interface StoreState {

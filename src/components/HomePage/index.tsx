@@ -10,7 +10,6 @@ export interface Props {
     searchResults: object[];
     previewContent: object;
     updateTags: Function;
-    updateSearchQuery: Function;
 }
 export interface State {
     searchQuery: string;
@@ -46,7 +45,6 @@ export class HomePage extends React.Component<Props, State> {
                 <MainSection 
                     searchResults={this.props.searchResults} 
                     notebooks={this.props.notebooks}
-                    updateSearchQuery={this.props.updateSearchQuery}
                 />
                 <PreviewNote 
                     previewContent={this.props.previewContent} 

@@ -2,12 +2,11 @@ import * as React from 'react';
 import SearchBar from './SearchBar/index';
 import LoadMoreButton from './LoadMoreButton/index';
 import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
-import { GET_NOTE_CONTENT, GLOBAL_SEARCH } from '../../../constants/index';
+import { GET_NOTE_CONTENT, GLOBAL_SEARCH, SEARCH_WITHIN_NOTEBOOK } from '../../../constants/index';
 
 export interface Props {
     searchResults: any;
     notebooks: string[];
-    updateSearchQuery: Function;
 }
 
 export class MainSection extends React.Component<Props, {}> {
@@ -36,15 +35,21 @@ export class MainSection extends React.Component<Props, {}> {
             // Calculate to see if we have reached the bottom of the page & that button to load more
             // content is not there
             let searchQuery = self.props.searchResults.query;
+            let notebook = self.props.searchResults.notebook;
             if ( (scrollTop + innerHeight >= $(this)[0].scrollHeight) && (!$('div.load-more').length) ) {
                 let data = {
                     searchQuery: searchQuery,
                     searchPage: searchPageToGet,
-                    searchResultsPerPage: 10
+                    searchResultsPerPage: 10,
+                    notebook: notebook
                 };
 
                 searchPageToGet = searchPageToGet + 1;
-                ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, data);
+                if (notebook) {
+                    ElectronMessager.sendMessageWithIpcRenderer(SEARCH_WITHIN_NOTEBOOK, data);
+                } else {
+                    ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, data);
+                }
             }
         });
     }
@@ -57,7 +62,13 @@ export class MainSection extends React.Component<Props, {}> {
 
         let loadMoreButton = ( <div /> );
         if ( (this.props.searchResults.results.length > 9) && (this.props.searchResults.results.length < 11) ) {
-            loadMoreButton = <LoadMoreButton searchQuery={this.props.searchResults.query} />;
+            loadMoreButton = 
+            ( 
+                <LoadMoreButton 
+                    searchQuery={this.props.searchResults.query} 
+                    notebook={this.props.searchResults.notebook}
+                />
+            );
         }
 
         return (
@@ -65,7 +76,6 @@ export class MainSection extends React.Component<Props, {}> {
                 <ul className="list-group">
                     <SearchBar 
                         notebooks={this.props.notebooks} 
-                        updateSearchQuery={this.props.updateSearchQuery}
                     />
 
                     {(this.props.searchResults.results as object[]).map((result: any) => {

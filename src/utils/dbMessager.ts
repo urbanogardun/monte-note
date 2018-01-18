@@ -32,7 +32,7 @@ export class DbMessager {
         });
     }
 
-    searchNotesWithinNotebook(notebook: string, query: string) {
+    searchNotesWithinNotebook(notebook: string, query: string, resultsLimit: number = 10, resultsToSkip: number = 0) {
         return new Promise((resolve) => {
             
             let regex = new RegExp(query, 'i');
@@ -40,7 +40,10 @@ export class DbMessager {
             this.db.find({ 
                 notebookName: notebook, 
                 noteContent: regex 
-            }).sort({noteLastupdatedAt: -1}).exec((err: Error, docs: any) => {
+            })
+            .skip(resultsToSkip)
+            .limit(resultsLimit)
+            .sort({noteLastupdatedAt: -1}).exec((err: Error, docs: any) => {
                 resolve(docs);
             });
         });

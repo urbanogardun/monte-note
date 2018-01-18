@@ -5,7 +5,6 @@ import * as $ from 'jquery';
 
 export interface Props {
     notebooks: string[];
-    updateSearchQuery: Function;
 }
 
 export interface State {
@@ -38,7 +37,7 @@ export class SearchBar extends React.Component<Props, State> {
 
     sendSearchQuery() {
         let searchQuery = this.state.searchQuery;
-        this.props.updateSearchQuery(searchQuery);
+
         if (this.state.searchOption === GLOBAL_SEARCH) {
             let searchData = {
                 searchQuery: searchQuery

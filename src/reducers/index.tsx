@@ -137,15 +137,15 @@ export function searchResults(state: StoreState, action: SearchResultsAction): S
   switch (action.type) {
     case LOAD_SEARCH_RESULTS:
       let searchState = state as SearchData;
-      console.log(searchState.results.length);
-      if (searchState.query !== action.query) {
+      // If search query or name of the notebook has changed from previous state, reset the
+      // state with values that we receive
+      if ( (searchState.query !== action.query) || (searchState.notebook !== action.notebook) ) {
         return action as StoreState;
       } else {
         let results = [...searchState.results, ...action.results];
         action.results = results;
         return action as StoreState;
       }
-      // return [...state as StoreState[], ...action.results] as StoreState;
     case RELOAD_SEARCH_RESULTS:
       return {results: action.results, query: ''} as StoreState;
     default:

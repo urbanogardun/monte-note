@@ -511,12 +511,16 @@ ipcMain.on(SEARCH_WITHIN_NOTEBOOK, (event: any, searchData: any) => {
   console.log(`Search notes within: ${searchData.notebook} for term ${searchData.searchQuery}`);
   let notebook = searchData.notebook;
   let searchQuery = searchData.searchQuery;
+  let searchPageNumber = searchData.searchPage;
+  let searchResultsPerPage = searchData.searchResultsPerPage;
+  let returnSearchResultsFrom = (searchPageNumber - 1) * searchResultsPerPage;
   
-  dbMessager.searchNotesWithinNotebook(notebook, searchQuery)
+  dbMessager.searchNotesWithinNotebook(notebook, searchQuery, searchResultsPerPage, returnSearchResultsFrom)
   .then((docs: any) => {
     let data = {
       results: docs,
-      query: searchQuery
+      query: searchQuery,
+      notebook: notebook
     };
     event.sender.send(SEARCH_RESULTS, data);
   });

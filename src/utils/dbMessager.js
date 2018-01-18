@@ -25,13 +25,16 @@ class DbMessager {
             });
         });
     }
-    searchNotesWithinNotebook(notebook, query) {
+    searchNotesWithinNotebook(notebook, query, resultsLimit = 10, resultsToSkip = 0) {
         return new Promise((resolve) => {
             let regex = new RegExp(query, 'i');
             this.db.find({
                 notebookName: notebook,
                 noteContent: regex
-            }).sort({ noteLastupdatedAt: -1 }).exec((err, docs) => {
+            })
+                .skip(resultsToSkip)
+                .limit(resultsLimit)
+                .sort({ noteLastupdatedAt: -1 }).exec((err, docs) => {
                 resolve(docs);
             });
         });

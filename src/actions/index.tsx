@@ -67,6 +67,7 @@ export interface LoadSearchResults {
     type: constants.LOAD_SEARCH_RESULTS;
     results: object[];
     query: string;
+    notebook: string;
 }
 
 export interface ReloadSearchResults {
@@ -194,7 +195,8 @@ export function loadSearchResults(data: any): SearchResultsAction {
     return {
         type: constants.LOAD_SEARCH_RESULTS,
         results: data.results,
-        query: data.query
+        query: data.query,
+        notebook: data.notebook
     };
 }
 
