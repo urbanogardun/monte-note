@@ -99,7 +99,7 @@ function prepareNoteData(props: Props, noteData: string) {
         noteName: props.lastOpenedNote,
         notebookName: props.notebookName,
         noteData: noteData,
-        noteDataTextOnly: striptags(noteData)
+        noteDataTextOnly: striptags(noteData, [], '\n')
     };
     return noteDataToSave;
 }

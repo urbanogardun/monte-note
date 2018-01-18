@@ -106,7 +106,7 @@ export class Editor extends React.Component<Props, State> {
             noteName: this.props.lastOpenedNote,
             notebookName: this.props.notebookName,
             noteData: noteData,
-            noteDataTextOnly: striptags(noteData),
+            noteDataTextOnly: striptags(noteData, [], '\n'),
             updateNoteData: true
         };
 
