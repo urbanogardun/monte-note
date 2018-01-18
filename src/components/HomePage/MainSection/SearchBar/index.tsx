@@ -67,9 +67,50 @@ export class SearchBar extends React.Component<Props, State> {
     updateSearchValue(e: React.MouseEvent<HTMLAnchorElement>) {
         let notebookName = $(e.target).text().trim();
         
+        let isnotebookAlreadySelected = $(e.target).children().hasClass('notebook-check');
+
+        if (!isnotebookAlreadySelected) {
+            // Set check icon to currently selected search option
+            $('span.notebook-check').remove();
+            $(e.target).html(`<span class="oi oi-check notebook-check"></span> ${notebookName}`);
+    
+            // Set search option depending on what got selected
+            if (notebookName === 'All Notebooks') {
+                this.setState({searchOption: GLOBAL_SEARCH});
+            } else {
+                this.setState({
+                    searchOption: SEARCH_WITHIN_NOTEBOOK,
+                    notebookToSearch: notebookName
+                });
+            }
+
+            this.runSearch();
+        }
+    }
+
+    searchContent(e: React.MouseEvent<HTMLAnchorElement>) {
+        this.selectNotebook(e.target);
+        if (!this.isNotebookAlreadySelected(e.target)) {
+            this.runSearch();
+        }
+    }
+
+    isNotebookAlreadySelected(element: EventTarget) {
+        if ($(element).children().hasClass('notebook-check')) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    selectNotebook(element: EventTarget) {
+        let notebookName = $(element).text().trim();
+        
+        // Uncheck previously checked option
+        $('span.notebook-check').remove();
+
         // Set check icon to currently selected search option
-        $('span.notebook-check').hide();
-        $(e.target).html(`<span class="oi oi-check notebook-check"></span> ${notebookName}`);
+        $(element).html(`<span class="oi oi-check notebook-check"></span> ${notebookName}`);
 
         // Set search option depending on what got selected
         if (notebookName === 'All Notebooks') {
@@ -91,7 +132,6 @@ export class SearchBar extends React.Component<Props, State> {
                             value={this.state.searchQuery}
                             onChange={e => { 
                                 this.updateInputValue(e);
-                                this.runSearch();
                             }}
                             type="text"
                             className="form-control"
@@ -116,7 +156,6 @@ export class SearchBar extends React.Component<Props, State> {
                                     href="#" 
                                     onClick={(e) => {
                                         this.updateSearchValue(e);
-                                        this.runSearch();
                                     }}
                                 >
                                     <span className="oi oi-check notebook-check" /> All Notebooks
@@ -130,7 +169,6 @@ export class SearchBar extends React.Component<Props, State> {
                                                 className="dropdown-item"
                                                 onClick={(e) => {
                                                     this.updateSearchValue(e);
-                                                    this.runSearch();
                                                 }}
                                                 href="#"
                                                 key={name}
