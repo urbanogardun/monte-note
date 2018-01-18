@@ -7,6 +7,7 @@ import { GET_NOTE_CONTENT, GLOBAL_SEARCH } from '../../../constants/index';
 export interface Props {
     searchResults: object[];
     notebooks: string[];
+    updateSearchQuery: Function;
 }
 
 export class MainSection extends React.Component<Props, {}> {
@@ -60,7 +61,10 @@ export class MainSection extends React.Component<Props, {}> {
         return (
             <div className="col notes-index">
                 <ul className="list-group">
-                    <SearchBar notebooks={this.props.notebooks} />
+                    <SearchBar 
+                        notebooks={this.props.notebooks} 
+                        updateSearchQuery={this.props.updateSearchQuery}
+                    />
 
                     {(this.props.searchResults as object[]).map((result: any) => {
                         return (

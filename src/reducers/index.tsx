@@ -136,10 +136,8 @@ export function currentNoteTags(state: StoreState, action: LoadTagsForNote): Sto
 export function searchResults(state: StoreState, action: SearchResultsAction): StoreState {
   switch (action.type) {
     case LOAD_SEARCH_RESULTS:
-      console.log(action);
       return [...state as StoreState[], ...action.results] as StoreState;
     case RELOAD_SEARCH_RESULTS:
-      console.log(action);
       return action.results as StoreState;
     default:
       return state || [] as StoreState;

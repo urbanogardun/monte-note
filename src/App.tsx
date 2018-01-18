@@ -12,6 +12,7 @@ interface Props {
   searchResults: object[];
   previewContent: object;
   updateTags: Function;
+  updateSearchQuery: Function;
 }
 
 class App extends React.Component<Props, object> {
@@ -35,6 +36,7 @@ class App extends React.Component<Props, object> {
         searchResults={this.props.searchResults}
         previewContent={this.props.previewContent} 
         updateTags={this.props.updateTags}
+        updateSearchQuery={this.props.updateSearchQuery}
       />);
     } else if (notebooksLocation === NOTEBOOKS_LOCATION_NOT_SET) {
       componentToRender = <Welcome name={'John'} notebooksLocation={''} />;
