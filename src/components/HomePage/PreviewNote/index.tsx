@@ -7,6 +7,7 @@ import TagList from './TagList/index';
 export interface Props {
     previewContent: any;
     updateTags: Function;
+    goToRoute: Function;
 }
 
 export interface State {}
@@ -34,6 +35,7 @@ export class PreviewNote extends React.Component<Props, State> {
                 <GoToNote
                     notebookName={this.props.previewContent.notebook}
                     noteName={this.props.previewContent.note}
+                    goToRoute={this.props.goToRoute}
                 />
                 <TagList 
                     tags={this.props.previewContent.tags}

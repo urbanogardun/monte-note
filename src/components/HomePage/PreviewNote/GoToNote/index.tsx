@@ -5,6 +5,7 @@ import { UPDATE_NOTE_STATE } from '../../../../constants/index';
 export interface Props {
     notebookName: string;
     noteName: string;
+    goToRoute: Function;
 }
 
 export interface State {}
@@ -23,7 +24,8 @@ export class GoToNote extends React.Component<Props, State> {
         // Set note we are about to open to be the last opened one in that
         // notebook
         ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
-        window.location.href = `/notebooks/${notebook}`;
+        // window.location.href = `/notebooks/${notebook}`;
+        this.props.goToRoute(`/notebooks/${notebook}`);
     }
 
     render() {

@@ -53,6 +53,7 @@ export class HomePage extends React.Component<Props, State> {
                 <PreviewNote 
                     previewContent={this.props.previewContent} 
                     updateTags={this.props.updateTags}
+                    goToRoute={this.props.goToRoute}
                 />
             </div>
         );
