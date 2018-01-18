@@ -1,3 +1,8 @@
+export interface SearchData {
+    query: string;
+    results: object[];
+}
+
 export interface StoreState {
     enthusiasmLevel?: number;
     notebooksLocation?: string;
@@ -11,4 +16,5 @@ export interface StoreState {
     currentNoteTags?: string[];
     searchResults?: object[];
     previewContent?: object;
+    searchData?: SearchData;
 }

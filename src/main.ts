@@ -499,7 +499,11 @@ ipcMain.on(GLOBAL_SEARCH, (event: any, searchData: any) => {
   console.log('Search notes globally for: ' + searchQuery);
   dbMessager.searchNotesGlobally(searchQuery, searchResultsPerPage, returnSearchResultsFrom)
   .then((docs: any) => {
-    event.sender.send(SEARCH_RESULTS, docs);
+    let data = {
+      results: docs,
+      query: searchQuery
+    };
+    event.sender.send(SEARCH_RESULTS, data);
   });
 });
 
@@ -510,7 +514,11 @@ ipcMain.on(SEARCH_WITHIN_NOTEBOOK, (event: any, searchData: any) => {
   
   dbMessager.searchNotesWithinNotebook(notebook, searchQuery)
   .then((docs: any) => {
-    event.sender.send(SEARCH_RESULTS, docs);
+    let data = {
+      results: docs,
+      query: searchQuery
+    };
+    event.sender.send(SEARCH_RESULTS, data);
   });
 });
 

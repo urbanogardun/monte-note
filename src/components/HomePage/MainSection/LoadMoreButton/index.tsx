@@ -2,14 +2,18 @@ import * as React from 'react';
 import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
 import { GLOBAL_SEARCH } from '../../../../constants/index';
 
-export class LoadMoreButton extends React.Component<{}, {}> {
+export interface Props {
+    searchQuery: string;
+}
+
+export class LoadMoreButton extends React.Component<Props, {}> {
 
     loadMoreResults(pageNumber: number, resultsPerPage: number) {
-        console.log('Load 10 more results');
+        console.log('Load 10 more results for query: ' + this.props.searchQuery);
         // TODO:
         // Pass searchQuery to this component
         let data = {
-            searchQuery: '',
+            searchQuery: this.props.searchQuery,
             searchPage: 2,
             searchResultsPerPage: 10 
         };

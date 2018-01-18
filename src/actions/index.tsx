@@ -66,6 +66,7 @@ export interface LoadTagsForNote {
 export interface LoadSearchResults {
     type: constants.LOAD_SEARCH_RESULTS;
     results: object[];
+    query: string;
 }
 
 export interface ReloadSearchResults {
@@ -189,10 +190,11 @@ export function loadTagsForNote(tags: string[]): LoadTagsForNote {
     };
 }
 
-export function loadSearchResults(results: object[]): SearchResultsAction {
+export function loadSearchResults(data: any): SearchResultsAction {
     return {
         type: constants.LOAD_SEARCH_RESULTS,
-        results
+        results: data.results,
+        query: data.query
     };
 }
 

@@ -5,7 +5,7 @@ import { ElectronMessager } from '../../../utils/electron-messaging/electronMess
 import { GET_NOTE_CONTENT, GLOBAL_SEARCH } from '../../../constants/index';
 
 export interface Props {
-    searchResults: object[];
+    searchResults: any;
     notebooks: string[];
     updateSearchQuery: Function;
 }
@@ -28,15 +28,17 @@ export class MainSection extends React.Component<Props, {}> {
         // 1st page of results automatically, then on clicking the Load More 
         // button we get the 2nd page, and after that it's this function's turn.
         let searchPageToGet = 3;
+        let self = this;
         $('div.notes-index').on('scroll', function(this: any) {
             let scrollTop = $(this).scrollTop() as any;
             let innerHeight = $(this).innerHeight() as any;
 
             // Calculate to see if we have reached the bottom of the page & that button to load more
             // content is not there
+            let searchQuery = self.props.searchResults.query;
             if ( (scrollTop + innerHeight >= $(this)[0].scrollHeight) && (!$('div.load-more').length) ) {
                 let data = {
-                    searchQuery: '',
+                    searchQuery: searchQuery,
                     searchPage: searchPageToGet,
                     searchResultsPerPage: 10
                 };
@@ -54,8 +56,8 @@ export class MainSection extends React.Component<Props, {}> {
     render() {
 
         let loadMoreButton = ( <div /> );
-        if ( (this.props.searchResults.length > 9) && (this.props.searchResults.length < 11) ) {
-            loadMoreButton = <LoadMoreButton />;
+        if ( (this.props.searchResults.results.length > 9) && (this.props.searchResults.results.length < 11) ) {
+            loadMoreButton = <LoadMoreButton searchQuery={this.props.searchResults.query} />;
         }
 
         return (
@@ -66,7 +68,7 @@ export class MainSection extends React.Component<Props, {}> {
                         updateSearchQuery={this.props.updateSearchQuery}
                     />
 
-                    {(this.props.searchResults as object[]).map((result: any) => {
+                    {(this.props.searchResults.results as object[]).map((result: any) => {
                         return (
                             <li 
                                 key={result._id} 

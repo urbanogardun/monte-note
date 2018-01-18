@@ -396,7 +396,11 @@ electron_1.ipcMain.on(index_1.GLOBAL_SEARCH, (event, searchData) => {
     console.log('Search notes globally for: ' + searchQuery);
     dbMessager.searchNotesGlobally(searchQuery, searchResultsPerPage, returnSearchResultsFrom)
         .then((docs) => {
-        event.sender.send(index_1.SEARCH_RESULTS, docs);
+        let data = {
+            results: docs,
+            query: searchQuery
+        };
+        event.sender.send(index_1.SEARCH_RESULTS, data);
     });
 });
 electron_1.ipcMain.on(index_1.SEARCH_WITHIN_NOTEBOOK, (event, searchData) => {
@@ -405,7 +409,11 @@ electron_1.ipcMain.on(index_1.SEARCH_WITHIN_NOTEBOOK, (event, searchData) => {
     let searchQuery = searchData.searchQuery;
     dbMessager.searchNotesWithinNotebook(notebook, searchQuery)
         .then((docs) => {
-        event.sender.send(index_1.SEARCH_RESULTS, docs);
+        let data = {
+            results: docs,
+            query: searchQuery
+        };
+        event.sender.send(index_1.SEARCH_RESULTS, data);
     });
 });
 // In this file you can include the rest of your app's specific main process

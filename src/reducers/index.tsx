@@ -8,7 +8,7 @@ import { EnthusiasmAction,
   LoadTagsForNote,
   SearchResultsAction,
   PreviewAction } from '../actions';
-import { StoreState } from '../types/index';
+import { StoreState, SearchData } from '../types/index';
 import { 
   INCREMENT_ENTHUSIASM, 
   DECREMENT_ENTHUSIASM, 
@@ -136,11 +136,20 @@ export function currentNoteTags(state: StoreState, action: LoadTagsForNote): Sto
 export function searchResults(state: StoreState, action: SearchResultsAction): StoreState {
   switch (action.type) {
     case LOAD_SEARCH_RESULTS:
-      return [...state as StoreState[], ...action.results] as StoreState;
+      let searchState = state as SearchData;
+      console.log(searchState.results.length);
+      if (searchState.query !== action.query) {
+        return action as StoreState;
+      } else {
+        let results = [...searchState.results, ...action.results];
+        action.results = results;
+        return action as StoreState;
+      }
+      // return [...state as StoreState[], ...action.results] as StoreState;
     case RELOAD_SEARCH_RESULTS:
-      return action.results as StoreState;
+      return {results: action.results, query: ''} as StoreState;
     default:
-      return state || [] as StoreState;
+      return state || {results: [], query: ''} as StoreState;
   }
 }
 
