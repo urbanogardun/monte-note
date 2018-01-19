@@ -132,6 +132,7 @@ export class SearchBar extends React.Component<Props, State> {
                             value={this.state.searchQuery}
                             onChange={e => { 
                                 this.updateInputValue(e);
+                                this.runSearch();
                             }}
                             type="text"
                             className="form-control"
