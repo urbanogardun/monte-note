@@ -15,35 +15,42 @@ export interface State {}
 export class PreviewNote extends React.Component<Props, State> {
 
     render() {
+
+        let componentsToRender = (
+            <div className="col preview-note-content" />
+        );
+
+        // Display components only if a note has been selected for a preview
+        if (this.props.previewContent.note) {
+
+            componentsToRender = (
+                <div className="col preview-note-content">
+                    <TagAdder 
+                        tags={this.props.previewContent.tags}
+                        notebookName={this.props.previewContent.notebook}
+                        noteName={this.props.previewContent.note}
+                        updateTags={this.props.updateTags} 
+                    />
+                    <GoToNote
+                        notebookName={this.props.previewContent.notebook}
+                        noteName={this.props.previewContent.note}
+                        goToRoute={this.props.goToRoute}
+                    />
+                    <TagList 
+                        tags={this.props.previewContent.tags}
+                        notebookName={this.props.previewContent.notebook}
+                        noteName={this.props.previewContent.note}
+                        updateTags={this.props.updateTags} 
+                    />
+                    <PreviewViewer previewContent={this.props.previewContent} />
+                </div>
+            );
+
+        }
+
         return (
             <div className="col preview-note-content">
-                {/* <div className="input-group input-group-sm mb-3">
-                    <input 
-                        type="text" 
-                        className="form-control" 
-                        aria-label="Small" 
-                        aria-describedby="inputGroup-sizing-sm" 
-                        placeholder="Add a tag..."
-                    />
-                </div> */}
-                <TagAdder 
-                    tags={this.props.previewContent.tags}
-                    notebookName={this.props.previewContent.notebook}
-                    noteName={this.props.previewContent.note}
-                    updateTags={this.props.updateTags} 
-                />
-                <GoToNote
-                    notebookName={this.props.previewContent.notebook}
-                    noteName={this.props.previewContent.note}
-                    goToRoute={this.props.goToRoute}
-                />
-                <TagList 
-                    tags={this.props.previewContent.tags}
-                    notebookName={this.props.previewContent.notebook}
-                    noteName={this.props.previewContent.note}
-                    updateTags={this.props.updateTags} 
-                />
-                <PreviewViewer previewContent={this.props.previewContent} />
+                {componentsToRender}
             </div>
         );
     }
