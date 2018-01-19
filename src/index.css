@@ -158,7 +158,7 @@ div.preview-note-content {
 }
 
 div.card:hover, .note-selected {
-  color: #007bff;
+  color:#6574a0;
   cursor: pointer;
 }
 
@@ -176,4 +176,16 @@ div.ql-container.preview-note-container {
 
 div.load-more {
   text-align: center;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+div.load-more > button {
+  background-color: #282E3F;
+  border-color: #282E3F;
+}
+
+div.load-more > button:hover {
+  background-color: #1E2230;
+  border-color: #1E2230;
 }

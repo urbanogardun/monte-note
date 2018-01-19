@@ -241,6 +241,8 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
                         };
                         dbMessager.saveNoteContent(noteDataToSave)
                             .then(() => {
+                            // After note content successfully saves, fetch all notes for
+                            // main section again so the list is current.
                             dbMessager.searchNotesGlobally('')
                                 .then((docs) => {
                                 event.sender.send(index_1.RELOAD_SEARCH_RESULTS, docs);
@@ -256,7 +258,6 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
     let note = data.noteName;
     let notebook = data.notebookName;
     let noteDataTextOnly = data.noteDataTextOnly;
-    console.log('DELETE NOTE');
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
         let noteLocation = path.join(location, notebook, note + '.html');

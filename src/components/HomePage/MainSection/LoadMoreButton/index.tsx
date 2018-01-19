@@ -33,7 +33,7 @@ export class LoadMoreButton extends React.Component<Props, {}> {
                     type="button" 
                     className="btn btn-primary"
                 >
-                    Primary
+                    Load More
                 </button>
             </div>
         );
