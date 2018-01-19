@@ -3,7 +3,7 @@ import './App.css';
 import HomePage from './containers/HomePage/HomePage';
 import Welcome from './containers/WelcomePage/Welcome';
 import ElectronMessager from './utils/electron-messaging/electronMessager';
-import { GET_NOTEBOOKS_LOCATION, NOTEBOOKS_LOCATION_NOT_SET } from './constants/index';
+import { GET_NOTEBOOKS_LOCATION, NOTEBOOKS_LOCATION_NOT_SET, RELOAD_SEARCH_RESULTS } from './constants/index';
 
 interface Props {
   enthusiasmLevel?: number;
@@ -21,6 +21,7 @@ class App extends React.Component<Props, object> {
 
   componentWillMount() {
     ElectronMessager.sendMessageWithIpcRenderer(GET_NOTEBOOKS_LOCATION);
+    ElectronMessager.sendMessageWithIpcRenderer(RELOAD_SEARCH_RESULTS);
   }
 
   render() {

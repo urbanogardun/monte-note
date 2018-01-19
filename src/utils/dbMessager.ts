@@ -126,7 +126,8 @@ export class DbMessager {
             console.log('SAVE THIS CONTENT');
             this.db.findOne(docToSave, (err: Error, doc: any) => {
                 if (doc) {
-                    this.db.update(docToSave, { $set: {noteContent: noteContent, noteLastupdatedAt: Date.now() } }, {}, () => {
+                    this.db.update
+                    (docToSave, { $set: {noteContent: noteContent, noteLastupdatedAt: Date.now() } }, {}, () => {
                         resolve(true);
                     });
                 } else {

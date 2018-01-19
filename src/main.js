@@ -118,10 +118,10 @@ electron_1.ipcMain.on(index_1.GET_NOTEBOOKS, (event, args) => {
             // ipcMain catches this event as soon as the HomePage component gets 
             // loaded - here we get all notes for our main section on the HomePage
             // component.
-            dbMessager.searchNotesGlobally('')
-                .then((docs) => {
-                event.sender.send(index_1.RELOAD_SEARCH_RESULTS, docs);
-            });
+            // dbMessager.searchNotesGlobally('')
+            // .then((docs: any) => {
+            //   event.sender.send(RELOAD_SEARCH_RESULTS, docs);
+            // });
         });
     });
 });
@@ -239,7 +239,13 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
                             notebook: notebookName,
                             data: noteDataTextOnly
                         };
-                        dbMessager.saveNoteContent(noteDataToSave);
+                        dbMessager.saveNoteContent(noteDataToSave)
+                            .then(() => {
+                            dbMessager.searchNotesGlobally('')
+                                .then((docs) => {
+                                event.sender.send(index_1.RELOAD_SEARCH_RESULTS, docs);
+                            });
+                        });
                     }
                 });
             }
@@ -401,6 +407,12 @@ electron_1.ipcMain.on(index_1.GLOBAL_SEARCH, (event, searchData) => {
             query: searchQuery
         };
         event.sender.send(index_1.SEARCH_RESULTS, data);
+    });
+});
+electron_1.ipcMain.on(index_1.RELOAD_SEARCH_RESULTS, (event, searchData) => {
+    dbMessager.searchNotesGlobally('')
+        .then((docs) => {
+        event.sender.send(index_1.RELOAD_SEARCH_RESULTS, docs);
     });
 });
 electron_1.ipcMain.on(index_1.SEARCH_WITHIN_NOTEBOOK, (event, searchData) => {

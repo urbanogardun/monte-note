@@ -166,10 +166,11 @@ ipcMain.on(GET_NOTEBOOKS, (event: any, args: any) => {
       // ipcMain catches this event as soon as the HomePage component gets 
       // loaded - here we get all notes for our main section on the HomePage
       // component.
-      dbMessager.searchNotesGlobally('')
-      .then((docs: any) => {
-        event.sender.send(RELOAD_SEARCH_RESULTS, docs);
-      });
+
+      // dbMessager.searchNotesGlobally('')
+      // .then((docs: any) => {
+      //   event.sender.send(RELOAD_SEARCH_RESULTS, docs);
+      // });
 
     });
 
@@ -314,7 +315,17 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
               notebook: notebookName,
               data: noteDataTextOnly
             };
-            dbMessager.saveNoteContent(noteDataToSave);
+            dbMessager.saveNoteContent(noteDataToSave)
+            .then(() => {
+
+              // After note content successfully saves, fetch all notes for
+              // main section again so the list is current.
+              dbMessager.searchNotesGlobally('')
+              .then((docs: any) => {
+                event.sender.send(RELOAD_SEARCH_RESULTS, docs);
+              });
+
+            });
           }
         });
       
@@ -329,7 +340,6 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
   let notebook = data.notebookName;
   let noteDataTextOnly =  data.noteDataTextOnly;
 
-  console.log('DELETE NOTE');
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
 
@@ -504,6 +514,13 @@ ipcMain.on(GLOBAL_SEARCH, (event: any, searchData: any) => {
       query: searchQuery
     };
     event.sender.send(SEARCH_RESULTS, data);
+  });
+});
+
+ipcMain.on(RELOAD_SEARCH_RESULTS, (event: any, searchData: any) => {
+  dbMessager.searchNotesGlobally('')
+  .then((docs: any) => {
+    event.sender.send(RELOAD_SEARCH_RESULTS, docs);
   });
 });
 

@@ -2,7 +2,10 @@ import * as React from 'react';
 import SearchBar from './SearchBar/index';
 import LoadMoreButton from './LoadMoreButton/index';
 import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
-import { GET_NOTE_CONTENT, GLOBAL_SEARCH, SEARCH_WITHIN_NOTEBOOK } from '../../../constants/index';
+import { 
+    GET_NOTE_CONTENT, 
+    GLOBAL_SEARCH, 
+    SEARCH_WITHIN_NOTEBOOK } from '../../../constants/index';
 import * as $ from 'jquery';
 
 export interface Props {
@@ -61,6 +64,14 @@ export class MainSection extends React.Component<Props, {}> {
 
     componentDidMount() {
         this.handleScroll();
+    }
+
+    componentWillMount() {
+        // ElectronMessager.sendMessageWithIpcRenderer(RELOAD_SEARCH_RESULTS);
+    }
+
+    componentWillReceiveProps(nextProps: Props) {
+        // console.log(this.props);
     }
 
     render() {
