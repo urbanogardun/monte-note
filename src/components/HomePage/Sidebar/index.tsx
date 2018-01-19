@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
 import { GET_NOTEBOOKS } from '../../../constants/index';
 import NewNotebookButton from './NewNotebookButton';
+import TagList from './TagList/index';
 
 export interface Props {
     notebooks: string[];
@@ -56,26 +57,7 @@ export class Sidebar extends React.Component<Props, {}> {
                             })}
                         </ul>
                     </div>
-                    <div 
-                        className="notebook-name-sidebar" 
-                        data-toggle="collapse" 
-                        data-target="#collapseExample2" 
-                        aria-expanded="false" 
-                        title="Tags"
-                    >
-                        Tags
-                        <span className="oi oi-chevron-bottom expand-notebook" />
-                        <span className="oi oi-chevron-left expand-notebook" />
-                    </div>
-                    <div className="collapse notes-sidebar" id="collapseExample2">
-                        <ul className="list-group notes">
-                            <li className="list-group-item sidebar-note">Cras justo odio</li>
-                            <li className="list-group-item sidebar-note">Dapibus ac facilisis in</li>
-                            <li className="list-group-item sidebar-note">Morbi leo risus</li>
-                            <li className="list-group-item sidebar-note">Porta ac consectetur ac</li>
-                            <li className="list-group-item sidebar-note">Vestibulum at eros</li>
-                        </ul>
-                    </div>
+                    <TagList />
                 </section>
 
                 <section className="trashcan">
