@@ -156,6 +156,7 @@ export class DbMessager {
 
                 let allTags = docs.map((doc: any) => { return doc.tags; });
                 var uniqueTags = [].concat.apply([], allTags);
+                uniqueTags = uniqueTags.filter((tag: string, i: number) => { return uniqueTags.indexOf(tag) === i; });
                 resolve(uniqueTags);
 
             });

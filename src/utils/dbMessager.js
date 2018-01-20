@@ -132,6 +132,7 @@ class DbMessager {
             this.db.find({ documentFor: 'NOTE_DATA' }, { tags: 1 }, (err, docs) => {
                 let allTags = docs.map((doc) => { return doc.tags; });
                 var uniqueTags = [].concat.apply([], allTags);
+                uniqueTags = uniqueTags.filter((tag, i) => { return uniqueTags.indexOf(tag) === i; });
                 resolve(uniqueTags);
             });
         });

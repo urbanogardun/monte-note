@@ -43,16 +43,17 @@ export class TagList extends React.Component<Props, State> {
                 </div>
                 <div className="collapse notes-sidebar" id="collapseExample2">
                     <ul className="list-group notes">
-                        <li 
-                            onClick={(e) => { this.selectTag('apples'); }} 
-                            className="list-group-item sidebar-note"
-                        >
-                            Cras justo odio
-                        </li>
-                        <li className="list-group-item sidebar-note">Dapibus ac facilisis in</li>
-                        <li className="list-group-item sidebar-note">Morbi leo risus</li>
-                        <li className="list-group-item sidebar-note">Porta ac consectetur ac</li>
-                        <li className="list-group-item sidebar-note">Vestibulum at eros</li>
+                        {(this.props.allTags as string[]).map((name: string, index: number) => {
+                            return (
+                                <li 
+                                    key={name}
+                                    onClick={(e) => { this.selectTag(name); }} 
+                                    className="list-group-item sidebar-note"
+                                >
+                                    {name}
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
             </div>
