@@ -266,6 +266,10 @@ electron_1.ipcMain.on(index_1.GET_ALL_TAGS, (event, args) => {
 });
 electron_1.ipcMain.on(index_1.GET_NOTES_WITH_TAGS, (event, tags) => {
     console.log('tags to get: ' + tags);
+    dbMessager.searchNotesGlobally('', 10, 0, tags)
+        .then((docs) => {
+        event.sender.send(index_1.RELOAD_SEARCH_RESULTS, docs);
+    });
 });
 electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
     let note = data.noteName;

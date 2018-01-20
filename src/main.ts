@@ -351,6 +351,10 @@ ipcMain.on(GET_ALL_TAGS, (event: any, args: any) => {
 
 ipcMain.on(GET_NOTES_WITH_TAGS, (event: any, tags: string[]) => {
   console.log('tags to get: ' + tags);
+  dbMessager.searchNotesGlobally('', 10, 0, tags)
+  .then((docs: any) => {
+    event.sender.send(RELOAD_SEARCH_RESULTS, docs);
+  });
 });
 
 ipcMain.on(DELETE_NOTE, (event: any, data: any) => {

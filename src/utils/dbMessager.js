@@ -13,17 +13,37 @@ class DbMessager {
      * @param  {number} resultsToSkip - Skip first n of results before returning
      * the results that we want
      */
-    searchNotesGlobally(query, resultsLimit = 10, resultsToSkip = 0) {
+    searchNotesGlobally(query, resultsLimit = 10, resultsToSkip = 0, tags = []) {
         return new Promise((resolve) => {
             let regex = new RegExp(query, 'i');
-            this.db.find({ noteContent: regex })
+            // let searchFilter = {
+            //     noteContent: regex,
+            //     tags: { $in: tags }
+            // };
+            let searchQuery = this.formatSearchQuery(regex, tags);
+            this.db
+                .find(searchQuery)
                 .skip(resultsToSkip)
                 .limit(resultsLimit)
                 .sort({ noteLastupdatedAt: -1 })
                 .exec((err, docs) => {
+                console.log(docs);
                 resolve(docs);
             });
         });
+    }
+    formatSearchQuery(query, tags) {
+        if (tags.length) {
+            return {
+                noteContent: query,
+                tags: { $in: tags }
+            };
+        }
+        else {
+            return {
+                noteContent: query,
+            };
+        }
     }
     searchNotesWithinNotebook(notebook, query, resultsLimit = 10, resultsToSkip = 0) {
         return new Promise((resolve) => {

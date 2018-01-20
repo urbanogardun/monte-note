@@ -186,3 +186,7 @@ test('gets tags from all note documents', done => {
         expect(tags).toHaveLength(3);
     });
 });
+
+// test('gets notes that contain all tags in a given array', done => {
+
+// });
