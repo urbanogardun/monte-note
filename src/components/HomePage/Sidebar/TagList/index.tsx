@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as $ from 'jquery';
 
 export interface Props {
     allTags: string[];
@@ -17,17 +18,30 @@ export class TagList extends React.Component<Props, State> {
         };
     }
 
-    selectTag(name: string) {
-        let tags = this.state.selectedTags;
-        tags.push(name);
+    selectTag(event: React.MouseEvent<HTMLLIElement>, name: string) {
+        
+        let tags: string[] = [];
+        
+        if ( this.isTagSelected(event.target) ) {
+            let tagToRemove = $(event.target).text();
+            tags = this.state.selectedTags.filter((tag: string) => { return tag !== tagToRemove; });
+            $(event.target).removeClass('tag-selected');
+        } else {
+            tags = this.state.selectedTags;
+            tags.push(name);
+            $(event.target).addClass('tag-selected');
+        }
+
         this.setState({
             selectedTags: tags
         });
-        console.log('Selected tags: ' + this.state.selectedTags);
+    }
+
+    isTagSelected(element: any) {
+        return $(element).hasClass('tag-selected');
     }
 
     render() {
-        console.log(this.props.allTags);
         return (
             <div>
                 <div 
@@ -47,8 +61,8 @@ export class TagList extends React.Component<Props, State> {
                             return (
                                 <li 
                                     key={name}
-                                    onClick={(e) => { this.selectTag(name); }} 
-                                    className="list-group-item sidebar-note"
+                                    onClick={(e) => { this.selectTag(e, name); }} 
+                                    className={`list-group-item sidebar-note`}
                                 >
                                     {name}
                                 </li>
