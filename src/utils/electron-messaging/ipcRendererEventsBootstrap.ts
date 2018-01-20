@@ -20,7 +20,8 @@ import {
     SEARCH_RESULTS,
     PREVIEW_NOTE,
     LOAD_NOTEBOOKS_LOCATION,
-    RELOAD_SEARCH_RESULTS
+    RELOAD_SEARCH_RESULTS,
+    GET_ALL_TAGS
 } from '../../constants/index';
 import ElectronMessager from '../electron-messaging/electronMessager';
     
@@ -159,6 +160,10 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on(RELOAD_SEARCH_RESULTS, (event: Event, data: any): void => {
             reduxStore.dispatch(actions.reloadSearchResults(data));
+        });
+
+        ipcRenderer.on(GET_ALL_TAGS, (event: Event, tags: string[]): void => {
+            reduxStore.dispatch(actions.loadAllTags(tags));
         });
 
     } catch (error) {

@@ -3,7 +3,8 @@ import './App.css';
 import HomePage from './containers/HomePage/HomePage';
 import Welcome from './containers/WelcomePage/Welcome';
 import ElectronMessager from './utils/electron-messaging/electronMessager';
-import { GET_NOTEBOOKS_LOCATION, NOTEBOOKS_LOCATION_NOT_SET, RELOAD_SEARCH_RESULTS } from './constants/index';
+import { 
+  GET_NOTEBOOKS_LOCATION, NOTEBOOKS_LOCATION_NOT_SET, RELOAD_SEARCH_RESULTS, GET_ALL_TAGS } from './constants/index';
 
 interface Props {
   enthusiasmLevel?: number;
@@ -13,6 +14,7 @@ interface Props {
   previewContent: object;
   updateTags: Function;
   history: any;
+  allTags: string[];
 }
 
 class App extends React.Component<Props, object> {
@@ -22,6 +24,7 @@ class App extends React.Component<Props, object> {
   componentWillMount() {
     ElectronMessager.sendMessageWithIpcRenderer(GET_NOTEBOOKS_LOCATION);
     ElectronMessager.sendMessageWithIpcRenderer(RELOAD_SEARCH_RESULTS);
+    ElectronMessager.sendMessageWithIpcRenderer(GET_ALL_TAGS);
   }
 
   render() {
@@ -38,6 +41,7 @@ class App extends React.Component<Props, object> {
         previewContent={this.props.previewContent} 
         updateTags={this.props.updateTags}
         goToRoute={this.props.history.push}
+        allTags={this.props.allTags}
       />);
     } else if (notebooksLocation === NOTEBOOKS_LOCATION_NOT_SET) {
       componentToRender = <Welcome name={'John'} notebooksLocation={''} />;

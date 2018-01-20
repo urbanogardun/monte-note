@@ -247,12 +247,22 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
                                 .then((docs) => {
                                 event.sender.send(index_1.RELOAD_SEARCH_RESULTS, docs);
                             });
+                            dbMessager.getAllTags()
+                                .then((tags) => {
+                                console.log(tags);
+                            });
                         });
                     }
                 });
             }
         });
     }
+});
+electron_1.ipcMain.on(index_1.GET_ALL_TAGS, (event, args) => {
+    dbMessager.getAllTags()
+        .then((tags) => {
+        event.sender.send(index_1.GET_ALL_TAGS, tags);
+    });
 });
 electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
     let note = data.noteName;

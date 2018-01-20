@@ -127,6 +127,15 @@ class DbMessager {
             });
         });
     }
+    getAllTags() {
+        return new Promise((resolve) => {
+            this.db.find({ documentFor: 'NOTE_DATA' }, { tags: 1 }, (err, docs) => {
+                let allTags = docs.map((doc) => { return doc.tags; });
+                var uniqueTags = [].concat.apply([], allTags);
+                resolve(uniqueTags);
+            });
+        });
+    }
     addTagToNote(data) {
         return new Promise((resolve) => {
             let notebook = data.notebook;

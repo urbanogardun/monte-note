@@ -27,7 +27,8 @@ import {
   PREVIEW_NOTE,
   GET_NOTEBOOKS_LOCATION,
   LOAD_NOTEBOOKS_LOCATION,
-  RELOAD_SEARCH_RESULTS
+  RELOAD_SEARCH_RESULTS,
+  GET_ALL_TAGS
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -325,6 +326,11 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
                 event.sender.send(RELOAD_SEARCH_RESULTS, docs);
               });
 
+              dbMessager.getAllTags()
+              .then((tags: any) => {
+                console.log(tags);
+              });
+
             });
           }
         });
@@ -333,6 +339,13 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
     });
   }
 
+});
+
+ipcMain.on(GET_ALL_TAGS, (event: any, args: any) => {
+  dbMessager.getAllTags()
+  .then((tags: any) => {
+    event.sender.send(GET_ALL_TAGS, tags);
+  });
 });
 
 ipcMain.on(DELETE_NOTE, (event: any, data: any) => {

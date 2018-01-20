@@ -1,12 +1,16 @@
 import * as React from 'react';
 
+export interface Props {
+    allTags: string[];
+}
+
 export interface State {
     selectedTags: string[];
 }
 
-export class TagList extends React.Component<{}, State> {
+export class TagList extends React.Component<Props, State> {
 
-    constructor(props: object) {
+    constructor(props: Props) {
         super(props);
         this.state = {
             selectedTags: []
@@ -23,6 +27,7 @@ export class TagList extends React.Component<{}, State> {
     }
 
     render() {
+        console.log(this.props.allTags);
         return (
             <div>
                 <div 

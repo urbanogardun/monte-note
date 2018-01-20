@@ -88,6 +88,11 @@ export interface UpdatePreviewContentTags {
     tags: string[];
 }
 
+export interface TagsAction {
+    type: constants.LOAD_ALL_TAGS;
+    tags: string[];
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -220,6 +225,13 @@ export function loadPreviewContent(data: any): PreviewAction {
 export function updatePreviewContentTags(tags: string[]): PreviewAction {
     return {
         type: constants.UPDATE_PREVIEW_CONTENT_TAGS,
+        tags
+    };
+}
+
+export function loadAllTags(tags: string[]): TagsAction {
+    return {
+        type: constants.LOAD_ALL_TAGS,
         tags
     };
 }

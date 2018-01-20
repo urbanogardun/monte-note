@@ -7,12 +7,14 @@ export function mergeProps(stateProps: Object, dispatchProps: Object, ownProps: 
     return Object.assign({}, ownProps, stateProps, dispatchProps);
 }
 
-export function mapStateToProps({ enthusiasmLevel, notebooksLocation, notebooks, previewContent }: StoreState) {
+export function mapStateToProps(
+    { enthusiasmLevel, notebooksLocation, notebooks, previewContent, allTags }: StoreState) {
     return {
         enthusiasmLevel,
         notebooksLocation,
         notebooks,
-        previewContent
+        previewContent,
+        allTags
     };
 }
 

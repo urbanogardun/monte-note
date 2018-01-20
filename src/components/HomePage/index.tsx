@@ -11,6 +11,7 @@ export interface Props {
     previewContent: object;
     updateTags: Function;
     goToRoute: Function;
+    allTags: string[];
 }
 export interface State {
     searchQuery: string;
@@ -45,6 +46,7 @@ export class HomePage extends React.Component<Props, State> {
                 <Sidebar 
                     notebooks={this.props.notebooks} 
                     goToRoute={this.props.goToRoute}
+                    allTags={this.props.allTags}
                 />
                 <MainSection 
                     searchResults={this.props.searchResults} 

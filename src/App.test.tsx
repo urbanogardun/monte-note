@@ -28,6 +28,7 @@ it('renders without crashing', () => {
       previewContent={{notebook: 'test', note: 'test', noteContent: 'test'}}
       updateTags={() => { return; }}
       history={() => { return; }}
+      allTags={[]}
     />
   </Provider>,
   div);

@@ -177,3 +177,12 @@ test('removes tag value from note document', done => {
         expect(result).toEqual(true);
     });
 });
+
+test('gets tags from all note documents', done => {
+    
+    dbMessager.getAllTags()
+    .then((tags: string[]) => {
+        done();
+        expect(tags).toHaveLength(5);
+    });
+});

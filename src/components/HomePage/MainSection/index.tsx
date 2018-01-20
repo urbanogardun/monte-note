@@ -22,6 +22,7 @@ export class MainSection extends React.Component<Props, {}> {
             note: note,
             getContentForPreview: true
         };
+        
         ElectronMessager.sendMessageWithIpcRenderer(GET_NOTE_CONTENT, data);
         this.handleScroll = this.handleScroll.bind(this);
 

@@ -8,6 +8,7 @@ import TagList from './TagList/index';
 export interface Props {
     notebooks: string[];
     goToRoute: Function;
+    allTags: string[];
 }
 
 export class Sidebar extends React.Component<Props, {}> {
@@ -57,7 +58,7 @@ export class Sidebar extends React.Component<Props, {}> {
                             })}
                         </ul>
                     </div>
-                    <TagList />
+                    <TagList allTags={this.props.allTags} />
                 </section>
 
                 <section className="trashcan">
