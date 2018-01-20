@@ -28,7 +28,8 @@ import {
   GET_NOTEBOOKS_LOCATION,
   LOAD_NOTEBOOKS_LOCATION,
   RELOAD_SEARCH_RESULTS,
-  GET_ALL_TAGS
+  GET_ALL_TAGS,
+  GET_NOTES_WITH_TAGS
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -346,6 +347,10 @@ ipcMain.on(GET_ALL_TAGS, (event: any, args: any) => {
   .then((tags: any) => {
     event.sender.send(GET_ALL_TAGS, tags);
   });
+});
+
+ipcMain.on(GET_NOTES_WITH_TAGS, (event: any, tags: string[]) => {
+  console.log('tags to get: ' + tags);
 });
 
 ipcMain.on(DELETE_NOTE, (event: any, data: any) => {

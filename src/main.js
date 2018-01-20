@@ -264,6 +264,9 @@ electron_1.ipcMain.on(index_1.GET_ALL_TAGS, (event, args) => {
         event.sender.send(index_1.GET_ALL_TAGS, tags);
     });
 });
+electron_1.ipcMain.on(index_1.GET_NOTES_WITH_TAGS, (event, tags) => {
+    console.log('tags to get: ' + tags);
+});
 electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
     let note = data.noteName;
     let notebook = data.notebookName;

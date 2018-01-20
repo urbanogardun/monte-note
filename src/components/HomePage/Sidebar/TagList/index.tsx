@@ -1,5 +1,7 @@
 import * as React from 'react';
 import * as $ from 'jquery';
+import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
+import { GET_NOTES_WITH_TAGS } from '../../../../constants/index';
 
 export interface Props {
     allTags: string[];
@@ -35,6 +37,8 @@ export class TagList extends React.Component<Props, State> {
         this.setState({
             selectedTags: tags
         });
+
+        ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES_WITH_TAGS, tags);
     }
 
     isTagSelected(element: any) {
