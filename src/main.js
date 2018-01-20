@@ -417,8 +417,9 @@ electron_1.ipcMain.on(index_1.GLOBAL_SEARCH, (event, searchData) => {
     let searchPageNumber = searchData.searchPage;
     let searchResultsPerPage = searchData.searchResultsPerPage;
     let returnSearchResultsFrom = (searchPageNumber - 1) * searchResultsPerPage;
+    let selectedTags = searchData.selectedTags;
     console.log('Search notes globally for: ' + searchQuery);
-    dbMessager.searchNotesGlobally(searchQuery, searchResultsPerPage, returnSearchResultsFrom)
+    dbMessager.searchNotesGlobally(searchQuery, searchResultsPerPage, returnSearchResultsFrom, selectedTags)
         .then((docs) => {
         let data = {
             results: docs,
@@ -440,7 +441,10 @@ electron_1.ipcMain.on(index_1.SEARCH_WITHIN_NOTEBOOK, (event, searchData) => {
     let searchPageNumber = searchData.searchPage;
     let searchResultsPerPage = searchData.searchResultsPerPage;
     let returnSearchResultsFrom = (searchPageNumber - 1) * searchResultsPerPage;
-    dbMessager.searchNotesWithinNotebook(notebook, searchQuery, searchResultsPerPage, returnSearchResultsFrom)
+    let selectedTags = searchData.selectedTags;
+    console.log('selectedTags: ' + selectedTags);
+    dbMessager
+        .searchNotesWithinNotebook(notebook, searchQuery, searchResultsPerPage, returnSearchResultsFrom, selectedTags)
         .then((docs) => {
         let data = {
             results: docs,

@@ -30,6 +30,7 @@ it('renders without crashing', () => {
       history={() => { return; }}
       allTags={[]}
       updateSelectedTags={() => { return; }}
+      selectedTags={[]}
     />
   </Provider>,
   div);

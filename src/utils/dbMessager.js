@@ -32,26 +32,24 @@ class DbMessager {
      * @param  {string[]} tags
      * @returns {object} search query
      */
-    formatSearchQuery(query, tags) {
+    formatSearchQuery(query, tags, searchWithinNotebook = '') {
+        let searchQuery = {};
+        searchQuery.noteContent = query;
         if (tags.length) {
-            return {
-                noteContent: query,
-                tags: { $in: tags }
-            };
+            searchQuery.noteContent = query;
+            searchQuery.tags = { $in: tags };
         }
-        else {
-            return {
-                noteContent: query,
-            };
+        if (searchWithinNotebook) {
+            searchQuery.notebookName = searchWithinNotebook;
         }
+        return searchQuery;
     }
-    searchNotesWithinNotebook(notebook, query, resultsLimit = 10, resultsToSkip = 0) {
+    searchNotesWithinNotebook(notebook, query, resultsLimit = 10, resultsToSkip = 0, tags = []) {
         return new Promise((resolve) => {
             let regex = new RegExp(query, 'i');
-            this.db.find({
-                notebookName: notebook,
-                noteContent: regex
-            })
+            let searchQuery = this.formatSearchQuery(regex, tags, notebook);
+            this.db
+                .find(searchQuery)
                 .skip(resultsToSkip)
                 .limit(resultsLimit)
                 .sort({ noteLastupdatedAt: -1 }).exec((err, docs) => {

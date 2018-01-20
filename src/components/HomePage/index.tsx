@@ -13,6 +13,7 @@ export interface Props {
     goToRoute: Function;
     allTags: string[];
     updateSelectedTags: Function;
+    selectedTags: string[];
 }
 export interface State {
     searchQuery: string;
@@ -53,6 +54,7 @@ export class HomePage extends React.Component<Props, State> {
                 <MainSection 
                     searchResults={this.props.searchResults} 
                     notebooks={this.props.notebooks}
+                    selectedTags={this.props.selectedTags}
                 />
                 <PreviewNote 
                     previewContent={this.props.previewContent} 

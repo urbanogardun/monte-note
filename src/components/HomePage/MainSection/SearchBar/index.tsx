@@ -5,6 +5,7 @@ import * as $ from 'jquery';
 
 export interface Props {
     notebooks: string[];
+    selectedTags: string[];
 }
 
 export interface State {
@@ -40,13 +41,15 @@ export class SearchBar extends React.Component<Props, State> {
 
         if (this.state.searchOption === GLOBAL_SEARCH) {
             let searchData = {
-                searchQuery: searchQuery
+                searchQuery: searchQuery,
+                selectedTags: this.props.selectedTags
             };
             ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchData);
         } else {
             let searchData = {
                 notebook: this.state.notebookToSearch,
-                searchQuery: searchQuery
+                searchQuery: searchQuery,
+                selectedTags: this.props.selectedTags
             };
             ElectronMessager.sendMessageWithIpcRenderer(SEARCH_WITHIN_NOTEBOOK, searchData);
         }

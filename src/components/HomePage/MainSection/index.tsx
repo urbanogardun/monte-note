@@ -11,6 +11,7 @@ import * as $ from 'jquery';
 export interface Props {
     searchResults: any;
     notebooks: string[];
+    selectedTags: string[];
 }
 
 export class MainSection extends React.Component<Props, {}> {
@@ -93,6 +94,7 @@ export class MainSection extends React.Component<Props, {}> {
                 <ul className="list-group">
                     <SearchBar 
                         notebooks={this.props.notebooks} 
+                        selectedTags={this.props.selectedTags}
                     />
 
                     {(this.props.searchResults.results as object[]).map((result: any) => {

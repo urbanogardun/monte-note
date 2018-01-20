@@ -527,9 +527,10 @@ ipcMain.on(GLOBAL_SEARCH, (event: any, searchData: any) => {
   let searchPageNumber = searchData.searchPage;
   let searchResultsPerPage = searchData.searchResultsPerPage;
   let returnSearchResultsFrom = (searchPageNumber - 1) * searchResultsPerPage;
+  let selectedTags = searchData.selectedTags;
 
   console.log('Search notes globally for: ' + searchQuery);
-  dbMessager.searchNotesGlobally(searchQuery, searchResultsPerPage, returnSearchResultsFrom)
+  dbMessager.searchNotesGlobally(searchQuery, searchResultsPerPage, returnSearchResultsFrom, selectedTags)
   .then((docs: any) => {
     let data = {
       results: docs,
@@ -553,8 +554,11 @@ ipcMain.on(SEARCH_WITHIN_NOTEBOOK, (event: any, searchData: any) => {
   let searchPageNumber = searchData.searchPage;
   let searchResultsPerPage = searchData.searchResultsPerPage;
   let returnSearchResultsFrom = (searchPageNumber - 1) * searchResultsPerPage;
+  let selectedTags = searchData.selectedTags;
   
-  dbMessager.searchNotesWithinNotebook(notebook, searchQuery, searchResultsPerPage, returnSearchResultsFrom)
+  console.log('selectedTags: ' + selectedTags);
+  dbMessager
+  .searchNotesWithinNotebook(notebook, searchQuery, searchResultsPerPage, returnSearchResultsFrom, selectedTags)
   .then((docs: any) => {
     let data = {
       results: docs,
