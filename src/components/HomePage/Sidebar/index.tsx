@@ -9,6 +9,7 @@ export interface Props {
     notebooks: string[];
     goToRoute: Function;
     allTags: string[];
+    updateSelectedTags: Function;
 }
 
 export class Sidebar extends React.Component<Props, {}> {
@@ -58,7 +59,10 @@ export class Sidebar extends React.Component<Props, {}> {
                             })}
                         </ul>
                     </div>
-                    <TagList allTags={this.props.allTags} />
+                    <TagList 
+                        allTags={this.props.allTags} 
+                        updateSelectedTags={this.props.updateSelectedTags}
+                    />
                 </section>
 
                 <section className="trashcan">

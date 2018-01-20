@@ -5,6 +5,7 @@ import { GET_NOTES_WITH_TAGS } from '../../../../constants/index';
 
 export interface Props {
     allTags: string[];
+    updateSelectedTags: Function;
 }
 
 export interface State {
@@ -39,6 +40,7 @@ export class TagList extends React.Component<Props, State> {
         });
 
         ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES_WITH_TAGS, tags);
+        this.props.updateSelectedTags(tags);
     }
 
     isTagSelected(element: any) {

@@ -19,4 +19,5 @@ export interface StoreState {
     previewContent?: object;
     searchData?: SearchData;
     allTags?: string[];
+    selectedTags?: string[];
 }

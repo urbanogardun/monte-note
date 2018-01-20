@@ -8,13 +8,15 @@ export function mergeProps(stateProps: Object, dispatchProps: Object, ownProps: 
 }
 
 export function mapStateToProps(
-    { enthusiasmLevel, notebooksLocation, notebooks, previewContent, allTags }: StoreState) {
+    { enthusiasmLevel, notebooksLocation, notebooks, previewContent, allTags, selectedTags }: StoreState) {
+    console.log(selectedTags);
     return {
         enthusiasmLevel,
         notebooksLocation,
         notebooks,
         previewContent,
-        allTags
+        allTags,
+        selectedTags
     };
 }
 
@@ -23,6 +25,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>)
         onIncrement: () => dispatch(actions.decrementEnthusiasm()),
         onDecrement: () => dispatch(actions.decrementEnthusiasm()),
         updateTags: (tags: string[]) => dispatch(actions.updatePreviewContentTags(tags)),
+        updateSelectedTags: (tags: string[]) => dispatch(actions.updateSelectedTags(tags)),
     };
 }
 

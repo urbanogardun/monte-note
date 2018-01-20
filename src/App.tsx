@@ -15,6 +15,7 @@ interface Props {
   updateTags: Function;
   history: any;
   allTags: string[];
+  updateSelectedTags: Function;
 }
 
 class App extends React.Component<Props, object> {
@@ -42,6 +43,7 @@ class App extends React.Component<Props, object> {
         updateTags={this.props.updateTags}
         goToRoute={this.props.history.push}
         allTags={this.props.allTags}
+        updateSelectedTags={this.props.updateSelectedTags}
       />);
     } else if (notebooksLocation === NOTEBOOKS_LOCATION_NOT_SET) {
       componentToRender = <Welcome name={'John'} notebooksLocation={''} />;

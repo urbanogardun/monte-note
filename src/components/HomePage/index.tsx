@@ -12,6 +12,7 @@ export interface Props {
     updateTags: Function;
     goToRoute: Function;
     allTags: string[];
+    updateSelectedTags: Function;
 }
 export interface State {
     searchQuery: string;
@@ -47,6 +48,7 @@ export class HomePage extends React.Component<Props, State> {
                     notebooks={this.props.notebooks} 
                     goToRoute={this.props.goToRoute}
                     allTags={this.props.allTags}
+                    updateSelectedTags={this.props.updateSelectedTags}
                 />
                 <MainSection 
                     searchResults={this.props.searchResults} 

@@ -16,10 +16,6 @@ class DbMessager {
     searchNotesGlobally(query, resultsLimit = 10, resultsToSkip = 0, tags = []) {
         return new Promise((resolve) => {
             let regex = new RegExp(query, 'i');
-            // let searchFilter = {
-            //     noteContent: regex,
-            //     tags: { $in: tags }
-            // };
             let searchQuery = this.formatSearchQuery(regex, tags);
             this.db
                 .find(searchQuery)
@@ -27,11 +23,15 @@ class DbMessager {
                 .limit(resultsLimit)
                 .sort({ noteLastupdatedAt: -1 })
                 .exec((err, docs) => {
-                console.log(docs);
                 resolve(docs);
             });
         });
     }
+    /** Formats a search query for fetching notes
+     * @param  {RegExp} query
+     * @param  {string[]} tags
+     * @returns {object} search query
+     */
     formatSearchQuery(query, tags) {
         if (tags.length) {
             return {

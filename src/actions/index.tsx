@@ -93,6 +93,11 @@ export interface TagsAction {
     tags: string[];
 }
 
+export interface UpdateSelectedTags {
+    type: constants.UPDATE_SELECTED_TAGS;
+    tags: string[];
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -232,6 +237,13 @@ export function updatePreviewContentTags(tags: string[]): PreviewAction {
 export function loadAllTags(tags: string[]): TagsAction {
     return {
         type: constants.LOAD_ALL_TAGS,
+        tags
+    };
+}
+
+export function updateSelectedTags(tags: string[]): UpdateSelectedTags {
+    return {
+        type: constants.UPDATE_SELECTED_TAGS,
         tags
     };
 }
