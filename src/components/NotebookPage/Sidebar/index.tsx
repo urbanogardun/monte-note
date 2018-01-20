@@ -143,62 +143,80 @@ export class Sidebar extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="col-sm-2 trashcan sidebar">
-                <section className="links">
+            <div className="col-2 trashcan sidebar">
+                <section className="notebooks">
                     <ul className="list-group notes">
-                        <Link className="home-sidebar" to="/">
+                        <Link 
+                            to={'/'} 
+                        >
                             <li 
-                                className="notebook-name-sidebar list-group-item sidebar-note"
-                            >
-                                Home
-                                <span className="oi oi-home home-icon"/>
+                                className="list-group-item sidebar-note sidebar-link"
+                            >Home <span className="oi oi-home trashcan" />
                             </li>
                         </Link>
                     </ul>
                 </section>
-                <section className="links">
+
+                <section className="trashcan">
                     <ul className="list-group notes">
-                        <li 
-                            className="open-input list-group-item sidebar-note add-note add-note-sidebar"
+                        <li
+                            className="list-group-item open-input sidebar-note sidebar-link"
                             onClick={() => this.showInput()}
                         >
-                            Add Note 
-                            <span className="oi oi-home home-icon"/>
+                            New Note
+                            <span className="oi oi-document document-icon home-icon" />
                         </li>
                     </ul>
+
                     <div className={`sidebar-app-form input-group input-group-sm ${this.state.showInput}`}>
-                    <input 
-                        value={this.state.inputValue}
-                        onChange={e => this.updateInputValue(e)}
-                        pattern="^[a-zA-Z0-9]+$"
-                        ref={input => input && input.focus()}
-                        onKeyPress={(e) => this.handleKeyPress(e)}
-                        onBlur={() => this.handleFocusOut()}
-                        type="text"
-                        className="form-control add-note sidebar-app-form" 
-                        aria-label="Note" 
-                        aria-describedby="sizing-addon2"
-                    />
+                        <input
+                            value={this.state.inputValue}
+                            onChange={e => this.updateInputValue(e)}
+                            pattern="^[a-zA-Z0-9]+$"
+                            ref={input => input && input.focus()}
+                            onKeyPress={(e) => this.handleKeyPress(e)}
+                            onBlur={() => this.handleFocusOut()}
+                            type="text"
+                            className="form-control add-note sidebar-app-form"
+                            aria-label="Note"
+                            aria-describedby="sizing-addon2"
+                        />
                     </div>
                 </section>
-                <section className="notebooks">
-                    <ul className="list-group notes">
-                        {(this.props.notes as string[]).map((name: string, index: number) => {
-                            let activeNote = name === this.props.lastOpenedNote ? 'notebook-name-sidebar-active' : '';
-                            return (
-                            <li 
-                                key={name} 
-                                {...(name === this.props.lastOpenedNote ? '' : '')}
-                                className={`list-group-item sidebar-note ${activeNote}`}
-                                onClick={() => this.updateLastOpenedNote(name)}
-                            >
-                            {name}
-                            </li>
-                            );
-                        })}
-                    </ul>
+
+                <section className="trashcan">
+                    <div 
+                        className="notebook-name-sidebar" 
+                        data-toggle="collapse" 
+                        data-target="#collapseExample" 
+                        aria-expanded="false"
+                    >
+                        Notebooks
+                        <span className="oi oi-chevron-bottom expand-notebook" />
+                        <span className="oi oi-chevron-left expand-notebook" />
+                    </div>
+                    <div className="collapse notes-sidebar" id="collapseExample">
+                        <ul className="list-group notes">
+                            {(this.props.notes as string[]).map((name: string, index: number) => {
+                                let activeNote = 
+                                name === this.props.lastOpenedNote ? 'notebook-name-sidebar-active' : '';
+                                return (
+                                    <li
+                                        key={name}
+                                        {...(name === this.props.lastOpenedNote ? '' : '') }
+                                        className={`list-group-item sidebar-note ${activeNote}`}
+                                        onClick={() => this.updateLastOpenedNote(name)}
+                                    >
+                                        {name}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+
+                    </div>
                 </section>
-            </div> 
+
+            </div>
         );
     }
 }

@@ -75,7 +75,6 @@ export class Sidebar extends React.Component<Props, {}> {
                 </section>
 
             </div>
-
         );
     }
 }

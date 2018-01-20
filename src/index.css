@@ -73,8 +73,6 @@ ul.list-group.notes > a:hover {
 
 /* Sidebar */
 
-/* Trashcan sidebar */
-
 a.home-sidebar {
   text-decoration: none;
   color: inherit;
@@ -84,10 +82,13 @@ a.home-sidebar {
   min-width: 800px;
 }
 
-.sidebar {
+div.sidebar {
   padding: 0px;
   padding-top: 50px;
   min-width: 200px;
+
+  padding-right: 0px;
+  padding-left: 0px;
 }
 
 .sidebar, ul.notes, li.sidebar-note {
@@ -161,7 +162,7 @@ div[aria-expanded=false] .oi-chevron-bottom {
   float: right;
 }
 
-span.add-notebook {
+span.add-notebook, span.document-icon {
   top: 4px;
 }
 
