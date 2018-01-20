@@ -17,12 +17,19 @@ export class Db {
     }
 
     getDb() {
-        return {find: (searchQuery: any, callback: any) => {
+        return {find: (searchQuery: any, projection: object = {}, callback: any) => {
             let notebookList = Db.notebookList;
             let err = 'str';
             if (searchQuery.name === 'notebooksLocation') {
                 return true;
+            } else if (searchQuery.documentFor === 'NOTE_DATA') {
+                callback('', [
+                    {tags: ['test-tag-1', 'test-tag-2']},
+                    {tags: ['test-tag-3', 'test-tag-1']}
+                ]);
+                return;
             } else {
+                console.log(searchQuery);
                 callback(err, [{notebooks: notebookList}]);
                 return;
             }

@@ -151,7 +151,7 @@ export class DbMessager {
 
     getAllTags() {
         return new Promise((resolve) => {
-
+            
             this.db.find({documentFor: 'NOTE_DATA'}, { tags: 1 }, (err: Error, docs: any) => {
 
                 let allTags = docs.map((doc: any) => { return doc.tags; });
