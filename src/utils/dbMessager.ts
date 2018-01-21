@@ -97,6 +97,15 @@ export class DbMessager {
             .skip(resultsToSkip)
             .limit(resultsLimit)
             .sort({noteLastupdatedAt: -1}).exec((err: Error, docs: any) => {
+                
+                // If multiple tags are selected, get only docs that have all selected tags
+                if (tags.length > 1) {
+                    docs = docs.filter((doc: any) => {
+                        if (this.allTagsInNote(tags, doc.tags)) {
+                            return doc;
+                        }
+                    });
+                }
                 resolve(docs);
             });
         });

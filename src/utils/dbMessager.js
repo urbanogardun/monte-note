@@ -78,6 +78,14 @@ class DbMessager {
                 .skip(resultsToSkip)
                 .limit(resultsLimit)
                 .sort({ noteLastupdatedAt: -1 }).exec((err, docs) => {
+                // If multiple tags are selected, get only docs that have all selected tags
+                if (tags.length > 1) {
+                    docs = docs.filter((doc) => {
+                        if (this.allTagsInNote(tags, doc.tags)) {
+                            return doc;
+                        }
+                    });
+                }
                 resolve(docs);
             });
         });
