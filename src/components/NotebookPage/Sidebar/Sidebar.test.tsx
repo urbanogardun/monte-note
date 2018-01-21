@@ -20,7 +20,7 @@ it('renders the sidebar', () => {
 });
 
 it('renders the input on button click', () => {
-    sidebar.find('.add-note-sidebar').first().simulate('submit');
+    sidebar.find('input.sidebar-app-form').first().simulate('submit');
     expect(sidebar.find('.hidden').exists()).toEqual(true);
 });
 
