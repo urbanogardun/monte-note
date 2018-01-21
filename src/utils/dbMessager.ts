@@ -204,9 +204,14 @@ export class DbMessager {
             },  (err: Error, doc: any) => {
 
                 if (doc) {
+                    let newTags = doc.tags.push(tag);
+                    newTags = newTags.sort((a: string, b: string) => {
+                        return a.toLowerCase().localeCompare(b.toLowerCase());
+                    });
+
                     this.db.update(
                         doc, 
-                        { $addToSet: { tags: tag } }, 
+                        { $set: { tags: newTags } }, 
                         {}, (error: Error) => {
                         resolve(true);
                     });
