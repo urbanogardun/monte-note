@@ -5,6 +5,7 @@ import { GLOBAL_SEARCH, SEARCH_WITHIN_NOTEBOOK } from '../../../../constants/ind
 export interface Props {
     searchQuery: string;
     notebook: string;
+    selectedTags: string[];
 }
 
 export class LoadMoreButton extends React.Component<Props, {}> {
@@ -15,7 +16,8 @@ export class LoadMoreButton extends React.Component<Props, {}> {
             searchPage: 2,
             searchResultsPerPage: 10,
             notebook: this.props.notebook,
-            appendSearchResults: true
+            appendSearchResults: true,
+            selectedTags: this.props.selectedTags
         };
 
         if (data.notebook) {

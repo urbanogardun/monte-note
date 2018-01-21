@@ -46,13 +46,15 @@ export class MainSection extends React.Component<Props, {}> {
             // content is not there
             let searchQuery = self.props.searchResults.query;
             let notebook = self.props.searchResults.notebook;
+            let selectedTags = self.props.selectedTags;
             if ( (scrollTop + innerHeight >= $(this)[0].scrollHeight) && (!$('div.load-more').length) ) {
                 let data = {
                     searchQuery: searchQuery,
                     searchPage: searchPageToGet,
                     searchResultsPerPage: 10,
                     notebook: notebook,
-                    appendSearchResults: true
+                    appendSearchResults: true,
+                    selectedTags: selectedTags
                 };
 
                 searchPageToGet = searchPageToGet + 1;
@@ -86,6 +88,7 @@ export class MainSection extends React.Component<Props, {}> {
                 <LoadMoreButton 
                     searchQuery={this.props.searchResults.query} 
                     notebook={this.props.searchResults.notebook}
+                    selectedTags={this.props.selectedTags}
                 />
             );
         }
