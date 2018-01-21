@@ -17,6 +17,7 @@ interface Props {
   allTags: string[];
   updateSelectedTags: Function;
   selectedTags: string[];
+  updateSearchQuery: Function;
 }
 
 class App extends React.Component<Props, object> {
@@ -46,6 +47,7 @@ class App extends React.Component<Props, object> {
         allTags={this.props.allTags}
         updateSelectedTags={this.props.updateSelectedTags}
         selectedTags={this.props.selectedTags}
+        updateSearchQuery={this.props.updateSearchQuery}
       />);
     } else if (notebooksLocation === NOTEBOOKS_LOCATION_NOT_SET) {
       componentToRender = <Welcome name={'John'} notebooksLocation={''} />;

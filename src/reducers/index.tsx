@@ -9,7 +9,8 @@ import { EnthusiasmAction,
   SearchResultsAction,
   PreviewAction, 
   TagsAction,
-  UpdateSelectedTags} from '../actions';
+  UpdateSelectedTags,
+  UpdateSearchQuery} from '../actions';
 import { StoreState, SearchData } from '../types/index';
 import { 
   INCREMENT_ENTHUSIASM, 
@@ -31,7 +32,8 @@ import {
   RELOAD_SEARCH_RESULTS,
   LOAD_ALL_TAGS,
   UPDATE_SELECTED_TAGS,
-  APPEND_SEARCH_RESULTS } from '../constants/index';
+  APPEND_SEARCH_RESULTS,
+  UPDATE_SEARCH_QUERY } from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -193,6 +195,15 @@ export function selectedTags(state: StoreState, action: UpdateSelectedTags): Sto
   }
 }
 
+export function searchQuery(state: StoreState, action: UpdateSearchQuery): StoreState {
+  switch (action.type) {
+    case UPDATE_SEARCH_QUERY:
+      return action.query as StoreState;
+    default:
+      return state || '' as StoreState;
+  }
+}
+
 const rootReducers: Reducer<StoreState> = combineReducers(
   { 
     enthusiasmLevel, 
@@ -208,7 +219,8 @@ const rootReducers: Reducer<StoreState> = combineReducers(
     searchResults,
     previewContent,
     allTags,
-    selectedTags
+    selectedTags,
+    searchQuery
   }
 );
 

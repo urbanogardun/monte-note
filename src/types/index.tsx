@@ -20,4 +20,5 @@ export interface StoreState {
     searchData?: SearchData;
     allTags?: string[];
     selectedTags?: string[];
+    searchQuery?: string;
 }

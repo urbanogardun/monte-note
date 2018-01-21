@@ -12,6 +12,7 @@ export interface Props {
     searchResults: any;
     notebooks: string[];
     selectedTags: string[];
+    updateSearchQuery: Function;
 }
 
 export class MainSection extends React.Component<Props, {}> {
@@ -99,6 +100,7 @@ export class MainSection extends React.Component<Props, {}> {
                     <SearchBar 
                         notebooks={this.props.notebooks} 
                         selectedTags={this.props.selectedTags}
+                        updateSearchQuery={this.props.updateSearchQuery}
                     />
 
                     {(this.props.searchResults.results as object[]).map((result: any) => {

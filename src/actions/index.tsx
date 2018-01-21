@@ -105,6 +105,11 @@ export interface UpdateSelectedTags {
     tags: string[];
 }
 
+export interface UpdateSearchQuery {
+    type: constants.UPDATE_SEARCH_QUERY;
+    query: string;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -261,5 +266,12 @@ export function updateSelectedTags(tags: string[]): UpdateSelectedTags {
     return {
         type: constants.UPDATE_SELECTED_TAGS,
         tags
+    };
+}
+
+export function updateSearchQuery(query: string): UpdateSearchQuery {
+    return {
+        type: constants.UPDATE_SEARCH_QUERY,
+        query
     };
 }

@@ -31,6 +31,7 @@ it('renders without crashing', () => {
       allTags={[]}
       updateSelectedTags={() => { return; }}
       selectedTags={[]}
+      updateSearchQuery={() => { return; }}
     />
   </Provider>,
   div);

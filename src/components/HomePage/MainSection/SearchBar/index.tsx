@@ -6,6 +6,7 @@ import * as $ from 'jquery';
 export interface Props {
     notebooks: string[];
     selectedTags: string[];
+    updateSearchQuery: Function;
 }
 
 export interface State {
@@ -65,6 +66,7 @@ export class SearchBar extends React.Component<Props, State> {
     updateInputValue(e: React.ChangeEvent<HTMLInputElement>) {
         // Save input value
         this.setState({searchQuery: e.target.value});
+        this.props.updateSearchQuery(e.target.value);
     }
 
     updateSearchValue(e: React.MouseEvent<HTMLAnchorElement>) {
