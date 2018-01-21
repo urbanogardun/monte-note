@@ -1,11 +1,12 @@
 import * as React from 'react';
 import * as $ from 'jquery';
 import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
-import { GET_NOTES_WITH_TAGS } from '../../../../constants/index';
+import { GLOBAL_SEARCH } from '../../../../constants/index';
 
 export interface Props {
     allTags: string[];
     updateSelectedTags: Function;
+    searchQuery: string;
 }
 
 export interface State {
@@ -39,7 +40,14 @@ export class TagList extends React.Component<Props, State> {
             selectedTags: tags
         });
 
-        ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES_WITH_TAGS, tags);
+        console.log(this.props.searchQuery);
+
+        let searchData = {
+            searchQuery: this.props.searchQuery,
+            selectedTags: tags
+        };
+
+        ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchData);
         this.props.updateSelectedTags(tags);
     }
 

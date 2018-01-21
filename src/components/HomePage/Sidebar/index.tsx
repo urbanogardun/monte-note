@@ -10,6 +10,7 @@ export interface Props {
     goToRoute: Function;
     allTags: string[];
     updateSelectedTags: Function;
+    searchQuery: string;
 }
 
 export class Sidebar extends React.Component<Props, {}> {
@@ -62,6 +63,7 @@ export class Sidebar extends React.Component<Props, {}> {
                     <TagList 
                         allTags={this.props.allTags} 
                         updateSelectedTags={this.props.updateSelectedTags}
+                        searchQuery={this.props.searchQuery}
                     />
                 </section>
 
