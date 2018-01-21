@@ -16,6 +16,7 @@ export interface Props {
     selectedTags: string[];
     updateSearchQuery: Function;
     searchQuery: string;
+    updateSelectedNotebook: Function;
 }
 export interface State {
     searchQuery: string;
@@ -59,6 +60,7 @@ export class HomePage extends React.Component<Props, State> {
                     notebooks={this.props.notebooks}
                     selectedTags={this.props.selectedTags}
                     updateSearchQuery={this.props.updateSearchQuery}
+                    updateSelectedNotebook={this.props.updateSelectedNotebook}
                 />
                 <PreviewNote 
                     previewContent={this.props.previewContent} 

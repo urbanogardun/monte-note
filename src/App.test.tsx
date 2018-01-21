@@ -33,6 +33,7 @@ it('renders without crashing', () => {
       selectedTags={[]}
       updateSearchQuery={() => { return; }}
       searchQuery={'test'}
+      updateSelectedNotebook={() => { return; }}
     />
   </Provider>,
   div);

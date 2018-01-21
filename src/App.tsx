@@ -19,6 +19,7 @@ interface Props {
   selectedTags: string[];
   updateSearchQuery: Function;
   searchQuery: string;
+  updateSelectedNotebook: Function;
 }
 
 class App extends React.Component<Props, object> {
@@ -50,6 +51,7 @@ class App extends React.Component<Props, object> {
         selectedTags={this.props.selectedTags}
         updateSearchQuery={this.props.updateSearchQuery}
         searchQuery={this.props.searchQuery}
+        updateSelectedNotebook={this.props.updateSelectedNotebook}
       />);
     } else if (notebooksLocation === NOTEBOOKS_LOCATION_NOT_SET) {
       componentToRender = <Welcome name={'John'} notebooksLocation={''} />;

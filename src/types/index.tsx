@@ -21,4 +21,5 @@ export interface StoreState {
     allTags?: string[];
     selectedTags?: string[];
     searchQuery?: string;
+    selectedNotebook?: string;
 }

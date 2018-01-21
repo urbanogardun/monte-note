@@ -110,6 +110,11 @@ export interface UpdateSearchQuery {
     query: string;
 }
 
+export interface UpdateSelectedNotebook {
+    type: constants.UPDATE_SELECTED_NOTEBOOK;
+    notebook: string;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -273,5 +278,12 @@ export function updateSearchQuery(query: string): UpdateSearchQuery {
     return {
         type: constants.UPDATE_SEARCH_QUERY,
         query
+    };
+}
+
+export function updateSelectedNotebook(notebook: string): UpdateSelectedNotebook {
+    return {
+        type: constants.UPDATE_SELECTED_NOTEBOOK,
+        notebook
     };
 }

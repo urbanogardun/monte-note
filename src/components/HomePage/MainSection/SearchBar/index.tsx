@@ -7,6 +7,7 @@ export interface Props {
     notebooks: string[];
     selectedTags: string[];
     updateSearchQuery: Function;
+    updateSelectedNotebook: Function;
 }
 
 export interface State {
@@ -82,11 +83,15 @@ export class SearchBar extends React.Component<Props, State> {
             // Set search option depending on what got selected
             if (notebookName === 'All Notebooks') {
                 this.setState({searchOption: GLOBAL_SEARCH});
+
+                this.props.updateSelectedNotebook('');
             } else {
                 this.setState({
                     searchOption: SEARCH_WITHIN_NOTEBOOK,
                     notebookToSearch: notebookName
                 });
+
+                this.props.updateSelectedNotebook(notebookName);
             }
 
             this.runSearch();

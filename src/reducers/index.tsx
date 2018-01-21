@@ -10,7 +10,8 @@ import { EnthusiasmAction,
   PreviewAction, 
   TagsAction,
   UpdateSelectedTags,
-  UpdateSearchQuery} from '../actions';
+  UpdateSearchQuery,
+  UpdateSelectedNotebook} from '../actions';
 import { StoreState, SearchData } from '../types/index';
 import { 
   INCREMENT_ENTHUSIASM, 
@@ -33,7 +34,8 @@ import {
   LOAD_ALL_TAGS,
   UPDATE_SELECTED_TAGS,
   APPEND_SEARCH_RESULTS,
-  UPDATE_SEARCH_QUERY } from '../constants/index';
+  UPDATE_SEARCH_QUERY,
+  UPDATE_SELECTED_NOTEBOOK } from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -204,6 +206,15 @@ export function searchQuery(state: StoreState, action: UpdateSearchQuery): Store
   }
 }
 
+export function selectedNotebook(state: StoreState, action: UpdateSelectedNotebook): StoreState {
+  switch (action.type) {
+    case UPDATE_SELECTED_NOTEBOOK:
+      return action.notebook as StoreState;
+    default:
+      return state || '' as StoreState;
+  }
+}
+
 const rootReducers: Reducer<StoreState> = combineReducers(
   { 
     enthusiasmLevel, 
@@ -220,7 +231,8 @@ const rootReducers: Reducer<StoreState> = combineReducers(
     previewContent,
     allTags,
     selectedTags,
-    searchQuery
+    searchQuery,
+    selectedNotebook
   }
 );
 
