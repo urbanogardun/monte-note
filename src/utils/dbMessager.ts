@@ -29,9 +29,37 @@ export class DbMessager {
                 .limit(resultsLimit)
                 .sort({noteLastupdatedAt: -1})
                 .exec((err: Error, docs: any) => {
+
+                    // If multiple tags are selected, get only docs that have all selected tags
+                    if (tags.length > 1) {
+                        docs = docs.filter((doc: any) => {
+                            if (this.allTagsInNote(tags, doc.tags)) {
+                                return doc;
+                            }
+                        });
+                    }
                     resolve(docs);
                 });
         });
+    }
+
+    allTagsInNote(sourceTags: string[], noteTags: string[]) {
+        let result = true;
+        for (let i = 0; i < sourceTags.length; i++) {
+            const tag = sourceTags[i];
+            if (!this.isTagInNote(tag, noteTags)) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+
+    isTagInNote(tag: string, noteTags: string[]) {
+        if (noteTags.indexOf(tag) === -1 ) {
+            return false;
+        }
+        return true;
     }
 
     /** Formats a search query for fetching notes
@@ -204,14 +232,9 @@ export class DbMessager {
             },  (err: Error, doc: any) => {
 
                 if (doc) {
-                    let newTags = doc.tags.push(tag);
-                    newTags = newTags.sort((a: string, b: string) => {
-                        return a.toLowerCase().localeCompare(b.toLowerCase());
-                    });
-
                     this.db.update(
-                        doc, 
-                        { $set: { tags: newTags } }, 
+                        {notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA'}, 
+                        { $addToSet: { tags: tag } }, 
                         {}, (error: Error) => {
                         resolve(true);
                     });

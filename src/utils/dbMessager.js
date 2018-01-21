@@ -23,9 +23,34 @@ class DbMessager {
                 .limit(resultsLimit)
                 .sort({ noteLastupdatedAt: -1 })
                 .exec((err, docs) => {
+                // If multiple tags are selected, get only docs that have all selected tags
+                if (tags.length > 1) {
+                    docs = docs.filter((doc) => {
+                        if (this.allTagsInNote(tags, doc.tags)) {
+                            return doc;
+                        }
+                    });
+                }
                 resolve(docs);
             });
         });
+    }
+    allTagsInNote(sourceTags, noteTags) {
+        let result = true;
+        for (let i = 0; i < sourceTags.length; i++) {
+            const tag = sourceTags[i];
+            if (!this.isTagInNote(tag, noteTags)) {
+                result = false;
+                break;
+            }
+        }
+        return result;
+    }
+    isTagInNote(tag, noteTags) {
+        if (noteTags.indexOf(tag) === -1) {
+            return false;
+        }
+        return true;
     }
     /** Formats a search query for fetching notes
      * @param  {RegExp} query
@@ -165,7 +190,7 @@ class DbMessager {
                 documentFor: 'NOTE_DATA'
             }, (err, doc) => {
                 if (doc) {
-                    this.db.update(doc, { $addToSet: { tags: tag } }, {}, (error) => {
+                    this.db.update({ notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA' }, { $addToSet: { tags: tag } }, {}, (error) => {
                         resolve(true);
                     });
                 }
