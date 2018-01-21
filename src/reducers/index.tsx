@@ -30,7 +30,8 @@ import {
   UPDATE_PREVIEW_CONTENT_TAGS,
   RELOAD_SEARCH_RESULTS,
   LOAD_ALL_TAGS,
-  UPDATE_SELECTED_TAGS } from '../constants/index';
+  UPDATE_SELECTED_TAGS,
+  APPEND_SEARCH_RESULTS } from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -140,16 +141,12 @@ export function currentNoteTags(state: StoreState, action: LoadTagsForNote): Sto
 export function searchResults(state: StoreState, action: SearchResultsAction): StoreState {
   switch (action.type) {
     case LOAD_SEARCH_RESULTS:
-      let searchState = state as SearchData;
-      // If search query or name of the notebook has changed from previous state, reset the
-      // state with values that we receive
-      if ( (searchState.query !== action.query) || (searchState.notebook !== action.notebook) ) {
-        return action as StoreState;
-      } else {
-        let results = [...searchState.results, ...action.results];
-        action.results = results;
-        return action as StoreState;
-      }
+      return action as StoreState;
+    case APPEND_SEARCH_RESULTS:
+      let oldState = state as SearchData;
+      let allResults = [...oldState.results, ...action.results];
+      action.results = allResults;
+      return action as StoreState;
     case RELOAD_SEARCH_RESULTS:
       return {results: action.results, query: ''} as StoreState;
     default:

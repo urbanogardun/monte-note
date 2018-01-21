@@ -51,7 +51,8 @@ export class MainSection extends React.Component<Props, {}> {
                     searchQuery: searchQuery,
                     searchPage: searchPageToGet,
                     searchResultsPerPage: 10,
-                    notebook: notebook
+                    notebook: notebook,
+                    appendSearchResults: true
                 };
 
                 searchPageToGet = searchPageToGet + 1;

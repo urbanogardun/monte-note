@@ -70,6 +70,13 @@ export interface LoadSearchResults {
     notebook: string;
 }
 
+export interface AppendSearchResults {
+    type: constants.APPEND_SEARCH_RESULTS;
+    results: object[];
+    query: string;
+    notebook: string;
+}
+
 export interface ReloadSearchResults {
     type: constants.RELOAD_SEARCH_RESULTS;
     results: object[];
@@ -110,7 +117,7 @@ export type TrashAction = LoadTrash | LoadLastOpenedTrashNote | LoadLastOpenedTr
 
 export type PreviewAction = LoadPreviewContent | UpdatePreviewContentTags;
 
-export type SearchResultsAction = LoadSearchResults | ReloadSearchResults;
+export type SearchResultsAction = LoadSearchResults | ReloadSearchResults | AppendSearchResults;
 
 export function incrementEnthusiasm(): IncrementEnthusiasm {
     return {
@@ -204,6 +211,15 @@ export function loadTagsForNote(tags: string[]): LoadTagsForNote {
 export function loadSearchResults(data: any): SearchResultsAction {
     return {
         type: constants.LOAD_SEARCH_RESULTS,
+        results: data.results,
+        query: data.query,
+        notebook: data.notebook
+    };
+}
+
+export function appendSearchResults(data: any): SearchResultsAction {
+    return {
+        type: constants.APPEND_SEARCH_RESULTS,
         results: data.results,
         query: data.query,
         notebook: data.notebook

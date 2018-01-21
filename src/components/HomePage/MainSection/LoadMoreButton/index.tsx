@@ -14,7 +14,8 @@ export class LoadMoreButton extends React.Component<Props, {}> {
             searchQuery: this.props.searchQuery,
             searchPage: 2,
             searchResultsPerPage: 10,
-            notebook: this.props.notebook
+            notebook: this.props.notebook,
+            appendSearchResults: true
         };
 
         if (data.notebook) {

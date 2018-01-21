@@ -29,7 +29,8 @@ import {
   LOAD_NOTEBOOKS_LOCATION,
   RELOAD_SEARCH_RESULTS,
   GET_ALL_TAGS,
-  GET_NOTES_WITH_TAGS
+  GET_NOTES_WITH_TAGS,
+  APPEND_SEARCH_RESULTS
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -528,6 +529,7 @@ ipcMain.on(GLOBAL_SEARCH, (event: any, searchData: any) => {
   let searchResultsPerPage = searchData.searchResultsPerPage;
   let returnSearchResultsFrom = (searchPageNumber - 1) * searchResultsPerPage;
   let selectedTags = searchData.selectedTags;
+  let appendSearchResults = searchData.appendSearchResults;
 
   console.log('Search notes globally for: ' + searchQuery);
   dbMessager.searchNotesGlobally(searchQuery, searchResultsPerPage, returnSearchResultsFrom, selectedTags)
@@ -536,7 +538,13 @@ ipcMain.on(GLOBAL_SEARCH, (event: any, searchData: any) => {
       results: docs,
       query: searchQuery
     };
-    event.sender.send(SEARCH_RESULTS, data);
+
+    if (appendSearchResults) {
+      event.sender.send(APPEND_SEARCH_RESULTS, data);
+    } else {
+      event.sender.send(SEARCH_RESULTS, data);
+    }
+    
   });
 });
 

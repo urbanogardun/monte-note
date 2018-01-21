@@ -418,6 +418,7 @@ electron_1.ipcMain.on(index_1.GLOBAL_SEARCH, (event, searchData) => {
     let searchResultsPerPage = searchData.searchResultsPerPage;
     let returnSearchResultsFrom = (searchPageNumber - 1) * searchResultsPerPage;
     let selectedTags = searchData.selectedTags;
+    let appendSearchResults = searchData.appendSearchResults;
     console.log('Search notes globally for: ' + searchQuery);
     dbMessager.searchNotesGlobally(searchQuery, searchResultsPerPage, returnSearchResultsFrom, selectedTags)
         .then((docs) => {
@@ -425,7 +426,12 @@ electron_1.ipcMain.on(index_1.GLOBAL_SEARCH, (event, searchData) => {
             results: docs,
             query: searchQuery
         };
-        event.sender.send(index_1.SEARCH_RESULTS, data);
+        if (appendSearchResults) {
+            event.sender.send(index_1.APPEND_SEARCH_RESULTS, data);
+        }
+        else {
+            event.sender.send(index_1.SEARCH_RESULTS, data);
+        }
     });
 });
 electron_1.ipcMain.on(index_1.RELOAD_SEARCH_RESULTS, (event, searchData) => {

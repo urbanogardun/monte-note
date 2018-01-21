@@ -21,7 +21,8 @@ import {
     PREVIEW_NOTE,
     LOAD_NOTEBOOKS_LOCATION,
     RELOAD_SEARCH_RESULTS,
-    GET_ALL_TAGS
+    GET_ALL_TAGS,
+    APPEND_SEARCH_RESULTS
 } from '../../constants/index';
 import ElectronMessager from '../electron-messaging/electronMessager';
     
@@ -156,6 +157,11 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on(SEARCH_RESULTS, (event: Event, data: any): void => {
             reduxStore.dispatch(actions.loadSearchResults(data));
+        });
+
+        ipcRenderer.on(APPEND_SEARCH_RESULTS, (event: Event, data: any): void => {
+            console.log('append search results');
+            reduxStore.dispatch(actions.appendSearchResults(data));
         });
 
         ipcRenderer.on(RELOAD_SEARCH_RESULTS, (event: Event, data: any): void => {
