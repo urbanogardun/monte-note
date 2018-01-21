@@ -1,12 +1,13 @@
 import * as React from 'react';
 import * as $ from 'jquery';
 import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
-import { GLOBAL_SEARCH } from '../../../../constants/index';
+import { GLOBAL_SEARCH, SEARCH_WITHIN_NOTEBOOK } from '../../../../constants/index';
 
 export interface Props {
     allTags: string[];
     updateSelectedTags: Function;
     searchQuery: string;
+    selectedNotebook: string;
 }
 
 export interface State {
@@ -40,14 +41,21 @@ export class TagList extends React.Component<Props, State> {
             selectedTags: tags
         });
 
-        console.log(this.props.searchQuery);
+        if (this.props.selectedNotebook) {
+            let searchData = {
+                notebook: this.props.selectedNotebook,
+                searchQuery: this.props.searchQuery,
+                selectedTags: tags
+            };
+            ElectronMessager.sendMessageWithIpcRenderer(SEARCH_WITHIN_NOTEBOOK, searchData);
+        } else {
+            let searchData = {
+                searchQuery: this.props.searchQuery,
+                selectedTags: tags
+            };
+            ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchData);
+        }
 
-        let searchData = {
-            searchQuery: this.props.searchQuery,
-            selectedTags: tags
-        };
-
-        ElectronMessager.sendMessageWithIpcRenderer(GLOBAL_SEARCH, searchData);
         this.props.updateSelectedTags(tags);
     }
 

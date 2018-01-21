@@ -11,6 +11,7 @@ export interface Props {
     allTags: string[];
     updateSelectedTags: Function;
     searchQuery: string;
+    selectedNotebook: string;
 }
 
 export class Sidebar extends React.Component<Props, {}> {
@@ -64,6 +65,7 @@ export class Sidebar extends React.Component<Props, {}> {
                         allTags={this.props.allTags} 
                         updateSelectedTags={this.props.updateSelectedTags}
                         searchQuery={this.props.searchQuery}
+                        selectedNotebook={this.props.selectedNotebook}
                     />
                 </section>
 

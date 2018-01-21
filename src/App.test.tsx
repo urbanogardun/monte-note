@@ -34,6 +34,7 @@ it('renders without crashing', () => {
       updateSearchQuery={() => { return; }}
       searchQuery={'test'}
       updateSelectedNotebook={() => { return; }}
+      selectedNotebook={'test'}
     />
   </Provider>,
   div);
