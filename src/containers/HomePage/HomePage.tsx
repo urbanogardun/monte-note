@@ -16,7 +16,8 @@ export function mapStateToProps(
         allTags, 
         selectedTags, 
         searchQuery, 
-        selectedNotebook }: StoreState) {
+        selectedNotebook,
+        lastOpenedNote }: StoreState) {
     return {
         enthusiasmLevel,
         notebooksLocation,
@@ -25,7 +26,8 @@ export function mapStateToProps(
         allTags,
         selectedTags, 
         searchQuery,
-        selectedNotebook
+        selectedNotebook,
+        lastOpenedNote
     };
 }
 

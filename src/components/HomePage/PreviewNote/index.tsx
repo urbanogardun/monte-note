@@ -9,6 +9,7 @@ export interface Props {
     previewContent: any;
     updateTags: Function;
     goToRoute: Function;
+    lastOpenedNote: string;
 }
 
 export interface State {}
@@ -36,6 +37,7 @@ export class PreviewNote extends React.Component<Props, State> {
                     notebookName={this.props.previewContent.notebook}
                     noteName={this.props.previewContent.note}
                     goToRoute={this.props.goToRoute}
+                    lastOpenedNote={this.props.lastOpenedNote}
                 />
                 <TagList
                     tags={this.props.previewContent.tags}

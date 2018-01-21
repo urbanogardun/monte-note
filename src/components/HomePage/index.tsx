@@ -18,6 +18,7 @@ export interface Props {
     searchQuery: string;
     updateSelectedNotebook: Function;
     selectedNotebook: string;
+    lastOpenedNote: string;
 }
 export interface State {
     searchQuery: string;
@@ -68,6 +69,7 @@ export class HomePage extends React.Component<Props, State> {
                     previewContent={this.props.previewContent} 
                     updateTags={this.props.updateTags}
                     goToRoute={this.props.goToRoute}
+                    lastOpenedNote={this.props.lastOpenedNote}
                 />
             </div>
         );
