@@ -191,7 +191,7 @@ export class Sidebar extends React.Component<Props, State> {
                         data-target="#collapseExample" 
                         aria-expanded="false"
                     >
-                        Notebooks
+                        Notes
                         <span className="oi oi-chevron-bottom expand-notebook" />
                         <span className="oi oi-chevron-left expand-notebook" />
                     </div>
