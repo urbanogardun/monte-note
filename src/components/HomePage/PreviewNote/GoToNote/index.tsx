@@ -30,9 +30,14 @@ export class GoToNote extends React.Component<Props, State> {
             noteName: note
         };
 
+        // After state gets set, call componentWillUpdate with current props
+        // which are actually new props we've received while waiting for state
+        // to get updated.
         this.setState({
             notebookToOpen: notebook,
             noteToOpen: note
+        },            () => {
+            this.componentWillUpdate(this.props);
         });
 
         // Set note we are about to open to be the last opened one in that
