@@ -4,6 +4,11 @@ import ElectronMessager from '../../../utils/electron-messaging/electronMessager
 import { UPDATE_NOTE, GET_NAME_OF_LAST_OPENED_NOTE, GET_NOTE_CONTENT, DELETE_NOTE } from '../../../constants/index';
 import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
+import initializeResponsiveImages from '../../../utils/quill-modules/resizable-images/resizable-images-quill';
+
+Quill.register('modules/resizableImages', (quill: Quill) => {
+    initializeResponsiveImages(quill);
+});
 
 const striptags = require('striptags');
 
@@ -59,10 +64,12 @@ export class Editor extends React.Component<Props, State> {
                 ['bold', 'italic', 'underline'],
                 ['image', 'code-block'],
                 ['trash'],
-                ]
+                ],
+                resizableImages: {}
             },
             placeholder: 'Take notes...',
-            theme: 'snow'  // or 'bubble'
+            theme: 'snow',  // or 'bubble'
+            scrollingContainer: 'body'
         });
 
         let toolbar = this.quill.getModule('toolbar');
