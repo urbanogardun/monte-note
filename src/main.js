@@ -225,6 +225,7 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
     let notebookName = data.notebookName;
     let noteData = data.noteData;
     let noteDataTextOnly = data.noteDataTextOnly;
+    let updatePreviewContent = data.updatePreviewContent;
     if (noteName && notebookName) {
         dbMessager.getFromSettings('notebooksLocation')
             .then((location) => {
@@ -241,6 +242,21 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
                         };
                         dbMessager.saveNoteContent(noteDataToSave)
                             .then(() => {
+                            // For cases when user edits note content and immediately goes back
+                            // to home page. Update content that just got saved inside the
+                            // preview window of home page.
+                            if (updatePreviewContent) {
+                                dbMessager.getNoteTags(data.notebook, data.note)
+                                    .then((tags) => {
+                                    let dataToSend = {
+                                        notebook: notebookName,
+                                        note: noteName,
+                                        noteContent: noteData,
+                                        tags: tags
+                                    };
+                                    event.sender.send(index_1.PREVIEW_NOTE, dataToSend);
+                                });
+                            }
                             // After note content successfully saves, fetch all notes for
                             // main section again so the list is current.
                             dbMessager.searchNotesGlobally('')

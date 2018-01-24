@@ -133,7 +133,9 @@ export class Sidebar extends React.Component<Props, State> {
     componentWillUnmount() {
         let editor = document.querySelector('.ql-editor') as Element;
         let noteContentToUpdate = editor.innerHTML;
-        let noteDataToSave = prepareNoteData(this.props, noteContentToUpdate);
+        let noteData = prepareNoteData(this.props, noteContentToUpdate);
+        // noteDataToSave = {...noteDataToSave}
+        let noteDataToSave = {...noteData, updatePreviewContent: true};
 
         // Updates note data only if the data got changed
         if (noteDataToSave.noteData !== this.props.noteContent) {
