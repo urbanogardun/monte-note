@@ -3,6 +3,7 @@ import Quill from 'quill';
 
 export interface Props {
     previewContent: any;
+
 }
 
 export interface State {}
@@ -27,8 +28,12 @@ export class PreviewViewer extends React.Component<Props, State> {
 
     componentWillUpdate(nextProps: Props) {
         // Anytime we switch between notes, load note content inside editor
-        this.quill.deleteText(0, this.quill.getLength());
-        this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.previewContent.noteContent as string, 'api');
+        // console.log(nextProps);
+        if ( (this.props.previewContent.note !== nextProps.previewContent.note)
+         || (this.props.previewContent.notebook !== nextProps.previewContent.notebook) ) {
+            this.quill.deleteText(0, this.quill.getLength());
+            this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.previewContent.noteContent as string, 'api');
+        }
     }
 
     render() {
