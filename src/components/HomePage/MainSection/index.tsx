@@ -14,6 +14,8 @@ export interface Props {
     selectedTags: string[];
     updateSearchQuery: Function;
     updateSelectedNotebook: Function;
+    updatePreview: Function;
+    previewData: any;
 }
 
 export class MainSection extends React.Component<Props, {}> {
@@ -106,12 +108,25 @@ export class MainSection extends React.Component<Props, {}> {
                     />
 
                     {(this.props.searchResults.results as object[]).map((result: any) => {
+
+                        let highlightElement = '';
+                        if ( (this.props.previewData.note === result.noteName) 
+                        && (this.props.previewData.notebook === result.notebookName) ) {
+                            highlightElement = 'highlight-note-card';
+                        }
+
                         return (
                             <li 
                                 key={result._id} 
                                 id={`${result.notebookName}-${result.noteName}`}
-                                className="list-group-item note-item" 
-                                onClick={(e) => this.previewNote(result.notebookName, result.noteName)}
+                                className={`list-group-item note-item ${highlightElement}`} 
+                                onClick={
+
+                                    (e) => { 
+                                        this.props.updatePreview(result.notebookName, result.noteName);
+                                        this.previewNote(result.notebookName, result.noteName); 
+                                    }
+                                }
                             >
                                 <div className="card">
                                     <div className="card-body">

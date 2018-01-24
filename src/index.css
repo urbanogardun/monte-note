@@ -242,7 +242,7 @@ div.preview-note-content {
   left: 3px;
 }
 
-div.card:hover, .note-selected {
+div.card:hover, .note-selected, .highlight-note-card {
   color:#6574a0;
   cursor: pointer;
 }

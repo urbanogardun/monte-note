@@ -115,6 +115,12 @@ export interface UpdateSelectedNotebook {
     notebook: string;
 }
 
+export interface UpdatePreview {
+    type: constants.UPDATE_PREVIEW;
+    notebook: string;
+    note: string;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -285,5 +291,13 @@ export function updateSelectedNotebook(notebook: string): UpdateSelectedNotebook
     return {
         type: constants.UPDATE_SELECTED_NOTEBOOK,
         notebook
+    };
+}
+
+export function updatePreview(notebook: string, note: string): UpdatePreview {
+    return {
+        type: constants.UPDATE_PREVIEW,
+        notebook: notebook,
+        note: note
     };
 }

@@ -17,7 +17,8 @@ export function mapStateToProps(
         selectedTags, 
         searchQuery, 
         selectedNotebook,
-        lastOpenedNote }: StoreState) {
+        lastOpenedNote,
+        previewData }: StoreState) {
     return {
         enthusiasmLevel,
         notebooksLocation,
@@ -27,7 +28,8 @@ export function mapStateToProps(
         selectedTags, 
         searchQuery,
         selectedNotebook,
-        lastOpenedNote
+        lastOpenedNote,
+        previewData
     };
 }
 
@@ -39,6 +41,10 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>)
         updateSelectedTags: (tags: string[]) => dispatch(actions.updateSelectedTags(tags)),
         updateSearchQuery: (query: string) => dispatch(actions.updateSearchQuery(query)),
         updateSelectedNotebook: (notebook: string) => dispatch(actions.updateSelectedNotebook(notebook)),
+        updatePreview: (notebook: string, note: string) => {
+            console.log(`${notebook} + ${note} - UPDATE FOR PREVIEW`);
+            dispatch(actions.updatePreview(notebook, note));
+        }
     };
 }
 

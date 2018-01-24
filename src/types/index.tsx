@@ -4,6 +4,11 @@ export interface SearchData {
     notebook: string;
 }
 
+export interface PreviewData {
+    notebook: string;
+    note: string;
+}
+
 export interface StoreState {
     enthusiasmLevel?: number;
     notebooksLocation?: string;
@@ -22,4 +27,5 @@ export interface StoreState {
     selectedTags?: string[];
     searchQuery?: string;
     selectedNotebook?: string;
+    previewData?: PreviewData;
 }

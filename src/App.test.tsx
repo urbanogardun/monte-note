@@ -36,6 +36,8 @@ it('renders without crashing', () => {
       updateSelectedNotebook={() => { return; }}
       selectedNotebook={'test'}
       lastOpenedNote={'test'}
+      updatePreview={() => { return; }}
+      previewData={{}}
     />
   </Provider>,
   div);
