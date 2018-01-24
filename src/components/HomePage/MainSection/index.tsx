@@ -18,7 +18,7 @@ export interface Props {
 
 export class MainSection extends React.Component<Props, {}> {
 
-    previewNote(elementId: string, notebook: string, note: string) {
+    previewNote(notebook: string, note: string) {
         // console.log(`Get note content for note: ${note} from notebook: ${notebook}`);
         let data = {
             notebook: notebook,
@@ -31,7 +31,7 @@ export class MainSection extends React.Component<Props, {}> {
 
         $('div.card').removeClass('note-selected');
         // Highlight selected note
-        $(`#${elementId}`).children().first().addClass('note-selected');
+        $(`#${notebook}-${note}`).children().first().addClass('note-selected');
     }
 
     handleScroll() {
@@ -109,9 +109,9 @@ export class MainSection extends React.Component<Props, {}> {
                         return (
                             <li 
                                 key={result._id} 
-                                id={result._id}
+                                id={`${result.notebookName}-${result.noteName}`}
                                 className="list-group-item note-item" 
-                                onClick={(e) => this.previewNote(result._id, result.notebookName, result.noteName)}
+                                onClick={(e) => this.previewNote(result.notebookName, result.noteName)}
                             >
                                 <div className="card">
                                     <div className="card-body">
