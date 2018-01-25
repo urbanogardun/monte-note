@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
 import { UPDATE_NOTE_STATE } from '../../../../constants/index';
+import { Route } from 'react-router';
 
 export interface Props {
     notebookName: string;
@@ -20,24 +21,27 @@ export class GoToNote extends React.Component<Props, State> {
         super(props);
         this.state = {
             noteToOpen: '',
-            notebookToOpen: ''
+            notebookToOpen: '',
         };
     }
 
-    openNote(notebook: string, note: string) {
+    // openNote(notebook: string, note: string) {
+    openNote(history: any) {
+        // console.log(`notebook to open: ${notebook} note to open: ${note}`);
         let data = {
-            notebookName: notebook,
-            noteName: note
+            notebookName: this.props.notebookName,
+            noteName: this.props.noteName
         };
 
         // After state gets set, call componentWillUpdate with current props
         // which are actually new props we've received while waiting for state
         // to get updated.
         this.setState({
-            notebookToOpen: notebook,
-            noteToOpen: note
+            notebookToOpen: this.props.notebookName,
+            noteToOpen: this.props.noteName,
         },            () => {
             this.componentWillUpdate(this.props);
+            history.push(`/notebooks/${this.props.notebookName}`);
         });
 
         // Set note we are about to open to be the last opened one in that
@@ -51,21 +55,25 @@ export class GoToNote extends React.Component<Props, State> {
         // of a previous note in that notebook.
         if (this.state.noteToOpen) {
             if (this.state.noteToOpen === nextProps.lastOpenedNote) {
-                this.props.goToRoute(`/notebooks/${this.state.notebookToOpen}`);
+                // this.props.goToRoute(`/notebooks/${this.state.notebookToOpen}`);
+                return true;
             }
         }
+        return false;
     }
 
     render() {
         return (
-            <div>
-                <a 
+            <Route 
+                render={({ history}) => (
+                <a
                     href="#" 
-                    onClick={(e) => this.openNote(this.props.notebookName, this.props.noteName)}
+                    onClick={() => { this.openNote(history); }}
                 >
-                    Open Note
+                  Click Me!
                 </a>
-            </div>
+              )} 
+            />
         );
     }
 }
