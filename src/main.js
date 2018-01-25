@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const electron_1 = require("electron");
+require('dotenv').load();
+var isDev = require('electron-is-dev');
 const notebookManager_1 = require("./utils/notebook-management/notebookManager");
 const index_1 = require("./constants/index");
 const dbMessager_1 = require("./utils/dbMessager");
@@ -21,7 +23,9 @@ function createWindow() {
     //     protocol: 'file:',
     //     slashes: true,
     // }));
-    mainWindow.loadURL('http://localhost:3000');
+    // mainWindow.loadURL('http://localhost:3000');
+    // isDev = true;
+    mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
     mainWindow.on('close', () => {

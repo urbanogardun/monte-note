@@ -1,4 +1,6 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+require('dotenv').load();
+var isDev = require('electron-is-dev');
 import NotebookManager from './utils/notebook-management/notebookManager';
 import {
   CHOOSE_LOCATION_FOR_NOTEBOOKS, 
@@ -53,7 +55,9 @@ function createWindow() {
   //     protocol: 'file:',
   //     slashes: true,
   // }));
-  mainWindow.loadURL('http://localhost:3000');
+  // mainWindow.loadURL('http://localhost:3000');
+  // isDev = true;
+  mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
 
   // Open the DevTools.
   mainWindow.webContents.openDevTools();
