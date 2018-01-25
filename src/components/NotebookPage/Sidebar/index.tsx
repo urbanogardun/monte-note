@@ -4,7 +4,7 @@ import ElectronMessager from '../../../utils/electron-messaging/electronMessager
 import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE } from '../../../constants/index';
 import { Link } from 'react-router-dom';
 import * as $ from 'jquery';
-var striptags = require('striptags');
+var striptags = require('../../../utils/striptags');
 
 export interface Props {
     location?: any;

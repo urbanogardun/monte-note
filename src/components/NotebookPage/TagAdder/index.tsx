@@ -2,7 +2,7 @@ import * as React from 'react';
 import TagList from '../TagList/index';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
 import { ADD_TAG_TO_NOTE, UPDATE_NOTE } from '../../../constants/index';
-const striptags = require('striptags');
+const striptags = require('../../../utils/striptags');
 
 export interface Props {
     notebookName: string;

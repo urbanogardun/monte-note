@@ -10,7 +10,7 @@ Quill.register('modules/resizableImages', (quill: Quill) => {
     initializeResponsiveImages(quill);
 });
 
-const striptags = require('striptags');
+const striptags = require('../../../utils/striptags');
 
 export interface Props {
     notebookName: string;
