@@ -33,7 +33,6 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "source-map-loader": "^0.2.1",
-    "striptags": "^3.1.1",
     "style-loader": "0.18.2",
     "sw-precache-webpack-plugin": "0.11.4",
     "ts-jest": "^22.0.0",
@@ -51,7 +50,19 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js --env=jsdom"
+    "test": "node scripts/test.js --env=jsdom",
+    "electron-pack": "npm run build --em.main=build/main.js",
+    "electron-prod": "node_modules\\.bin\\electron.cmd ."
+  },
+  "build": {
+    "appId": "com.example.electron-cra",
+    "files": [
+      "build/**/*",
+      "node_modules/**/*"
+    ],
+    "directories": {
+      "buildResources": "assets"
+    }
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.6",
@@ -67,6 +78,7 @@
     "@types/react-router-dom": "^4.2.3",
     "@types/sinon": "^4.1.2",
     "electron": "1.7.9",
+    "electron-is-dev": "^0.3.0",
     "electron-rebuild": "^1.6.0",
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.1",
