@@ -16,6 +16,9 @@ function createWindow() {
     mainWindow = new electron_1.BrowserWindow({
         height: 600,
         width: 800,
+        webPreferences: {
+            webSecurity: false
+        }
     });
     // // and load the index.html of the app.
     // mainWindow.loadURL(url.format({
