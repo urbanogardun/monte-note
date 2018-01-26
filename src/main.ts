@@ -33,7 +33,8 @@ import {
   GET_ALL_TAGS,
   GET_NOTES_WITH_TAGS,
   APPEND_SEARCH_RESULTS,
-  UPLOAD_IMAGE
+  UPLOAD_IMAGE,
+  IMAGE_UPLOADED
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -609,8 +610,12 @@ ipcMain.on(UPLOAD_IMAGE, (event: any, data: any) => {
       notebook: data.notebook,
       note: data.note
     };
-    console.log(noteLocation);
-    NotebookManager.saveImage(noteLocation, data.filename, data.data);
+    NotebookManager.saveImage(noteLocation, data.filename, data.data)
+    .then((absolutePathToImage: any) => {
+      if (absolutePathToImage) {
+        event.sender.send(IMAGE_UPLOADED, absolutePathToImage);
+      }
+    });
   });
 
 });

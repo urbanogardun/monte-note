@@ -22,7 +22,8 @@ import {
     LOAD_NOTEBOOKS_LOCATION,
     RELOAD_SEARCH_RESULTS,
     GET_ALL_TAGS,
-    APPEND_SEARCH_RESULTS
+    APPEND_SEARCH_RESULTS,
+    IMAGE_UPLOADED
 } from '../../constants/index';
 import ElectronMessager from '../electron-messaging/electronMessager';
     
@@ -170,6 +171,10 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on(GET_ALL_TAGS, (event: Event, tags: string[]): void => {
             reduxStore.dispatch(actions.loadAllTags(tags));
+        });
+
+        ipcRenderer.on(IMAGE_UPLOADED, (event: Event, imagePath: string[]): void => {
+            console.log('path to image: ' + imagePath);
         });
 
     } catch (error) {

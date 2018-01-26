@@ -294,12 +294,13 @@ export class NotebookManager {
             let note = saveLocation.note;
             let imageName = this.getNewNameForImage(imageFilename);
 
-            fs.writeFile
-            (path.join(notebooksLocation, notebook, note, 'assets', 'images', imageName), imageData, (err: Error) => {
+            let absolutePathToImage = path.join(notebooksLocation, notebook, note, 'assets', 'images', imageName);
+
+            fs.writeFile(absolutePathToImage, imageData, (err: Error) => {
                 if (err) {
                     resolve(false);
                 } else {
-                    resolve(imageName);
+                    resolve(absolutePathToImage);
                 }
             });
         });

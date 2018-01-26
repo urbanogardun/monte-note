@@ -147,3 +147,6 @@ export type UPDATE_PREVIEW = typeof UPDATE_PREVIEW;
 
 export const UPLOAD_IMAGE = 'UPLOAD_IMAGE';
 export type UPLOAD_IMAGE = typeof UPLOAD_IMAGE;
+
+export const IMAGE_UPLOADED = 'IMAGE_UPLOADED';
+export type IMAGE_UPLOADED = typeof IMAGE_UPLOADED;

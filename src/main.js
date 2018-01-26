@@ -489,8 +489,12 @@ electron_1.ipcMain.on(index_1.UPLOAD_IMAGE, (event, data) => {
             notebook: data.notebook,
             note: data.note
         };
-        console.log(noteLocation);
-        notebookManager_1.default.saveImage(noteLocation, data.filename, data.data);
+        notebookManager_1.default.saveImage(noteLocation, data.filename, data.data)
+            .then((absolutePathToImage) => {
+            if (absolutePathToImage) {
+                event.sender.send(index_1.IMAGE_UPLOADED, absolutePathToImage);
+            }
+        });
     });
 });
 // In this file you can include the rest of your app's specific main process
