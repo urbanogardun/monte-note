@@ -39,16 +39,48 @@ class NotebookManager {
     static addNote(location, name) {
         return new Promise(resolve => {
             try {
-                fs.writeFile(`${location}\\${name}.html`, '', (err) => {
-                    if (err) {
-                        resolve(false);
-                    }
+                Promise.all([
+                    this.createNoteFile(location, name),
+                    this.createNoteAssetsDirectory(location, name)
+                ])
+                    .then(() => {
                     resolve(true);
+                })
+                    .catch(() => {
+                    resolve(false);
                 });
             }
             catch (error) {
                 return resolve(false);
             }
+        });
+    }
+    static createNoteFile(location, name) {
+        return new Promise((resolve) => {
+            fs.ensureFile(`${location}/${name}/index.html`)
+                .then(() => {
+                resolve(true);
+            })
+                .catch(() => {
+                resolve(false);
+            });
+        });
+    }
+    static createNoteAssetsDirectory(location, name) {
+        return new Promise((resolve) => {
+            fs.ensureDir(`${location}/${name}/assets/images`)
+                .then(() => {
+                fs.ensureDir(`${location}/${name}/assets/attachments`)
+                    .then(() => {
+                    resolve(true);
+                })
+                    .catch(() => {
+                    resolve(false);
+                });
+            })
+                .catch(() => {
+                resolve(false);
+            });
         });
     }
     static getNotes(location) {

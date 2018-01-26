@@ -47,7 +47,7 @@ function readdir(path, callback) {
 function stat(path, callback) {
     // Use setTimeout to simulate async function
     setTimeout(() => {
-        callback('', {ctime: 1318289051000.1});
+        callback('', {ctime: 1318289051000.1, birthtime: 1318289051000.1});
     }, 100);
 }
 
@@ -67,6 +67,18 @@ function remove(path) {
     });
 }
 
+function ensureFile(path) {
+    return new Promise(resolve => {
+        resolve(true);
+    });
+}
+
+function ensureDir(path) {
+    return new Promise(resolve => {
+        resolve(true);
+    });
+}
+
 fs.mkdir = mkdir;
 fs.existsSync = existsSync;
 fs.mkdirSync = mkdirSync;
@@ -80,5 +92,7 @@ fs.readFile = readFile;
 fs.__setNotebookList = __setNotebookList;
 fs.move = move;
 fs.remove = remove;
+fs.ensureFile = ensureFile;
+fs.ensureDir = ensureDir;
 
 module.exports = fs;

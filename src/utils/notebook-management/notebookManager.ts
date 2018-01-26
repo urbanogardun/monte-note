@@ -39,15 +39,52 @@ export class NotebookManager {
     static addNote(location: string, name: string) {
         return new Promise(resolve => {
             try {
-                fs.writeFile(`${location}\\${name}.html`, '', (err: Error) => {
-                    if (err) {
-                        resolve(false);
-                    }
+                Promise.all([
+                    this.createNoteFile(location, name),
+                    this.createNoteAssetsDirectory(location, name)
+                ])
+                .then(() => {
                     resolve(true);
+                })
+                .catch(() => {
+                    resolve(false);
                 });
             } catch (error) {
                 return resolve(false);
             }
+        });
+    }
+
+    // Creates file inside which note content will get saved
+    static createNoteFile(location: string, name: string) {
+        return new Promise((resolve) => {
+            fs.ensureFile(`${location}/${name}/index.html`)
+            .then(() => {
+                resolve(true);
+            })
+            .catch(() => {
+                resolve(false);
+            });
+        });
+    }
+
+    // Creates an assets directory where all media content is going to get
+    // saved
+    static createNoteAssetsDirectory(location: string, name: string) {
+        return new Promise((resolve) => {
+            fs.ensureDir(`${location}/${name}/assets/images`)
+            .then(() => {
+                fs.ensureDir(`${location}/${name}/assets/attachments`)
+                .then(() => {
+                    resolve(true);
+                })
+                .catch(() => {
+                    resolve(false);
+                });
+            })
+            .catch(() => {
+                resolve(false);
+            });
         });
     }
 
