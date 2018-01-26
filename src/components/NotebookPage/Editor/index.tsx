@@ -1,7 +1,12 @@
 import * as React from 'react';
 import TagAdder from '../TagAdder/index';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { UPDATE_NOTE, GET_NAME_OF_LAST_OPENED_NOTE, GET_NOTE_CONTENT, DELETE_NOTE } from '../../../constants/index';
+import { 
+    UPDATE_NOTE, 
+    GET_NAME_OF_LAST_OPENED_NOTE, 
+    GET_NOTE_CONTENT, 
+    DELETE_NOTE, 
+    UPLOAD_IMAGE } from '../../../constants/index';
 import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
 import initializeResponsiveImages from '../../../utils/quill-modules/resizable-images/resizable-images-quill';
@@ -60,11 +65,19 @@ export class Editor extends React.Component<Props, State> {
 
         this.quill = new Quill('#quill-container', {
             modules: {
-                toolbar: [
-                ['bold', 'italic', 'underline'],
-                ['image', 'code-block'],
-                ['trash'],
-                ],
+                toolbar: {
+                    container: '#toolbar',
+                    handlers: {
+                        'omega': function(value: any) {
+                            console.log(value);
+                        }
+                    }
+                },
+                // toolbar: [
+                // ['bold', 'italic', 'underline'],
+                // ['image', 'code-block'],
+                // ['trash'],
+                // ],
                 resizableImages: {}
             },
             placeholder: 'Take notes...',
@@ -76,10 +89,10 @@ export class Editor extends React.Component<Props, State> {
         toolbar.addHandler('omega');
 
         // Adds text on hover & custom icon to button
-        let customButton = document.querySelector('.ql-trash') as Element;
-        customButton.setAttribute('title', 'Restore note');
-        customButton.innerHTML = '<span class="oi oi-trash quill-custom-button"></span>';
-        customButton.addEventListener('click', this.deleteNote.bind(this));
+        // let customButton = document.querySelector('.ql-trash') as Element;
+        // customButton.setAttribute('title', 'Restore note');
+        // customButton.innerHTML = '<span className="oi oi-trash quill-custom-button"></span>';
+        // customButton.addEventListener('click', this.deleteNote.bind(this));
 
         this.quill.on('text-change', (delta: DeltaStatic, oldContents: DeltaStatic, source: any) => {
             
@@ -172,8 +185,24 @@ export class Editor extends React.Component<Props, State> {
     componentWillUnmount() {
         clearTimeout(this.timeout);
         
-        let customButton = document.querySelector('.ql-trash') as Element;
-        customButton.removeEventListener('click', this.deleteNote);
+        // let customButton = document.querySelector('.ql-trash') as Element;
+        // customButton.removeEventListener('click', this.deleteNote);
+    }
+
+    // Sends image data to ipcMain process
+    handleImageUpload() {
+        let input = document.querySelector('input[type=file]') as any;
+        var file    = input.files[0];
+        var reader  = new FileReader();
+
+        reader.addEventListener('load', function () {
+            ElectronMessager.sendMessageWithIpcRenderer(UPLOAD_IMAGE, reader.result);
+        },                      false);
+
+        if (file) {
+            reader.readAsDataURL(file);
+        }
+
     }
 
     render() {
@@ -187,6 +216,23 @@ export class Editor extends React.Component<Props, State> {
                     updateNoteContent={this.props.updateNoteContent}
                     noteContent={this.props.noteContent}
                 />
+                <div id="toolbar">
+                    <select className="ql-size">
+                        <option value="small"/>
+                        <option value="large"/>
+                        <option value="huge"/>
+                    </select>
+                    <button className="ql-bold"/>
+                    <button className="ql-italic"/>
+                    <button className="ql-underline"/>
+
+                    <input 
+                        className="ql-omega" 
+                        value="" 
+                        type="file" 
+                        onChange={() => this.handleImageUpload()}
+                    />
+                </div>
                 <div id="quill-container" />
             </div>
         );
