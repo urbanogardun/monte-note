@@ -2,7 +2,6 @@ import * as React from 'react';
 import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
 import { UPDATE_NOTE_STATE } from '../../../../constants/index';
 import { Route } from 'react-router';
-import { Link } from 'react-router-dom';
 
 export interface Props {
     notebookName: string;
@@ -41,8 +40,7 @@ export class GoToNote extends React.Component<Props, State> {
             notebookToOpen: this.props.notebookName,
             noteToOpen: this.props.noteName,
         },            () => {
-            // this.componentWillUpdate(this.props);
-            // history.push(`/notebooks/${this.props.notebookName}`);
+            this.componentWillUpdate(this.props);
         });
 
         // Set note we are about to open to be the last opened one in that
@@ -56,25 +54,23 @@ export class GoToNote extends React.Component<Props, State> {
         // of a previous note in that notebook.
         if (this.state.noteToOpen) {
             if (this.state.noteToOpen === nextProps.lastOpenedNote) {
-                // this.props.goToRoute(`/notebooks/${this.state.notebookToOpen}`);
-                return true;
+                this.props.goToRoute(`/notebooks/${this.props.notebookName}`);
             }
         }
-        return false;
     }
 
     render() {
         return (
             <Route 
                 render={({ history}) => (
-                <Link
-                    to={`/notebooks/${this.props.notebookName}`} 
-                    // onClick={() => { 
-                    //     history.push(`/notebooks/autobahn`);
-                    // }}
+                <a
+                    // to={`/notebooks/${this.props.notebookName}`} 
+                    onClick={() => { 
+                        this.openNote();
+                    }}
                 >
-                  Click Me!
-                </Link>
+                  Open Note
+                </a>
               )} 
             />
         );
