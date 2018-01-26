@@ -55,6 +55,7 @@ class NotebookManager {
             }
         });
     }
+    // Creates file inside which note content will get saved
     static createNoteFile(location, name) {
         return new Promise((resolve) => {
             fs.ensureFile(`${location}/${name}/index.html`)
@@ -66,6 +67,8 @@ class NotebookManager {
             });
         });
     }
+    // Creates an assets directory where all media content is going to get
+    // saved
     static createNoteAssetsDirectory(location, name) {
         return new Promise((resolve) => {
             fs.ensureDir(`${location}/${name}/assets/images`)

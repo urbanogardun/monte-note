@@ -187,7 +187,7 @@ electron_1.ipcMain.on(index_1.GET_NOTE_CONTENT, (event, data) => {
     let note = data.note;
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
-        let absolutePathToNote = path.join(location, notebook, note + '.html');
+        let absolutePathToNote = path.join(location, notebook, note, 'index.html');
         notebookManager_1.default.getNoteData(absolutePathToNote)
             .then((noteData) => {
             if ('getContentForPreview' in data) {
@@ -234,7 +234,7 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
         dbMessager.getFromSettings('notebooksLocation')
             .then((location) => {
             if (location) {
-                let absolutePathToNote = path.join(location, notebookName, noteName + '.html');
+                let absolutePathToNote = path.join(location, notebookName, noteName, 'index.html');
                 notebookManager_1.default.updateNoteData(absolutePathToNote, noteData)
                     .then((result) => {
                     if (result) {
@@ -297,7 +297,7 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
     let noteDataTextOnly = data.noteDataTextOnly;
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
-        let noteLocation = path.join(location, notebook, note + '.html');
+        let noteLocation = path.join(location, notebook, note, 'index.html');
         if (data.updateNoteData) {
             notebookManager_1.default.updateNoteData(noteLocation, data.noteData)
                 .then((result) => {
@@ -358,7 +358,7 @@ electron_1.ipcMain.on(index_1.GET_NOTE_FROM_TRASH, (event, data) => {
     let notebook = data.notebook;
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
-        let absolutePathToNote = path.join(location, '.trashcan', notebook, note + '.html');
+        let absolutePathToNote = path.join(location, '.trashcan', notebook, note, 'index.html');
         notebookManager_1.default.getNoteData(absolutePathToNote)
             .then((noteData) => {
             let noteInfo = {

@@ -257,7 +257,7 @@ ipcMain.on(GET_NOTE_CONTENT, (event: any, data: any) => {
 
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
-    let absolutePathToNote = path.join(location, notebook, note + '.html');
+    let absolutePathToNote = path.join(location, notebook, note, 'index.html');
     NotebookManager.getNoteData(absolutePathToNote)
     .then((noteData: string) => {
       if ('getContentForPreview' in data) {
@@ -313,7 +313,7 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
     .then((location: string) => {
       if (location) {
   
-        let absolutePathToNote = path.join(location, notebookName, noteName + '.html');
+        let absolutePathToNote = path.join(location, notebookName, noteName, 'index.html');
   
         NotebookManager.updateNoteData(absolutePathToNote, noteData)
         .then((result: boolean) => {
@@ -388,7 +388,7 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
 
-    let noteLocation = path.join(location, notebook, note + '.html');
+    let noteLocation = path.join(location, notebook, note, 'index.html');
     if (data.updateNoteData) {
       NotebookManager.updateNoteData(noteLocation, data.noteData)
       .then((result: boolean) => {
@@ -457,7 +457,7 @@ ipcMain.on(GET_NOTE_FROM_TRASH, (event: any, data: any) => {
 
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
-    let absolutePathToNote = path.join(location, '.trashcan', notebook, note + '.html');
+    let absolutePathToNote = path.join(location, '.trashcan', notebook, note, 'index.html');
     NotebookManager.getNoteData(absolutePathToNote)
     .then((noteData: string) => {
       let noteInfo = {
