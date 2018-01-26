@@ -27,6 +27,7 @@ export interface Props {
     updateNotes: Function;
     updateLastOpenedNote: Function;
     updateNoteContent: Function;
+    pathToNewestUpload: string;
 }
 
 export interface State {
@@ -34,10 +35,34 @@ export interface State {
     lastOpenedNote: string | null;
 }
 
+// class ResizableImage extends BlockEmbed {
+//     static create(value: any) {
+//       let node = super.create();
+//       node.setAttribute('alt', value.alt);
+//       node.setAttribute('src', value.url);
+//       node.setAttribute('height', `${value.height}`);
+//       return node;
+//     }
+  
+//     static value(node: any) {
+//       return {
+//         alt: node.getAttribute('alt'),
+//         url: node.getAttribute('src'),
+//         height: node.getAttribute('height')
+//       };
+//     }
+// }
+
+// ResizableImage.blotName = 'resizableImage';
+// ResizableImage.tagName = 'img';
+
+// Quill.register(ResizableImage);
+
 export class Editor extends React.Component<Props, State> {
 
     quill: Quill;
     timeout: any;
+    currentCursorPosition: number;
 
     constructor(props: Props) {
         super(props);
@@ -175,20 +200,20 @@ export class Editor extends React.Component<Props, State> {
     }
 
     componentWillUpdate(nextProps: Props) {
-        console.log(nextProps);
-        console.log(this.quill.getSelection());
-        // TODO: Get notebooksLocation, notebook, and note name
-        // When image gets saved on the backend, dispatch newly generated note name to state
-        // Using those 3 values & image name, insert image with absolute path into quill editor
-        // Move this inserting code into component will update
-        // quill.insertEmbed(quill.getSelection().index, 'image', 'https://i.imgur.com/TEQexkz.png', 'user');
 
+        // When an image has uploaded successfully, add it to note
+        if (this.props.pathToNewestUpload !== nextProps.pathToNewestUpload) {
+            this.quill.insertEmbed(
+                this.currentCursorPosition, 
+                'resizableImage', { url: `${nextProps.pathToNewestUpload}` }, 'user');
+        } else {
+            // Load saved content from note file into Quill editor
+            this.quill.deleteText(0, this.quill.getLength());
+            this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.noteContent as string, 'api');
+            // Sets cursor to the end of note content
+            this.quill.setSelection(this.quill.getLength(), this.quill.getLength());
+        }
 
-        // Load saved content from note file into Quill editor
-        this.quill.deleteText(0, this.quill.getLength());
-        this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.noteContent as string, 'api');
-        // Sets cursor to the end of note content
-        this.quill.setSelection(this.quill.getLength(), this.quill.getLength());
     }
 
     componentWillUnmount() {
@@ -250,7 +275,12 @@ export class Editor extends React.Component<Props, State> {
                         className="ql-omega" 
                         value="" 
                         type="file" 
-                        onChange={() => this.handleImageUpload()}
+                        onChange={
+                            () => {
+                                this.currentCursorPosition = this.quill.getSelection().index;
+                                this.handleImageUpload();
+                            }
+                        }
                     />
                 </div>
                 <div id="quill-container" />
