@@ -32,7 +32,8 @@ import {
   RELOAD_SEARCH_RESULTS,
   GET_ALL_TAGS,
   GET_NOTES_WITH_TAGS,
-  APPEND_SEARCH_RESULTS
+  APPEND_SEARCH_RESULTS,
+  UPLOAD_IMAGE
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -596,6 +597,12 @@ ipcMain.on(SEARCH_WITHIN_NOTEBOOK, (event: any, searchData: any) => {
     };
     event.sender.send(SEARCH_RESULTS, data);
   });
+});
+
+ipcMain.on(UPLOAD_IMAGE, (event: any, data: any) => {
+  
+  console.log(data);
+
 });
 
 // In this file you can include the rest of your app's specific main process
