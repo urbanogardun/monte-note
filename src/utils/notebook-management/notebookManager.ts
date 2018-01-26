@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const path = require('path');
+const uuidv1 = require('uuid/v1');
 import DbMessager from '../dbMessager';
 
 export class NotebookManager {
@@ -291,16 +292,24 @@ export class NotebookManager {
             let notebooksLocation = saveLocation.notebooksLocation;
             let notebook = saveLocation.notebook;
             let note = saveLocation.note;
+            let imageName = this.getNewNameForImage(imageFilename);
 
-            // resolve(true);
-            console.log('notebooksLocation: ' + notebooksLocation);
-            console.log('notebook: ' + notebook);
-            console.log('note: ' + note);
             fs.writeFile
-            (path.join(notebooksLocation, notebook, note, 'assets', 'images', imageFilename), imageData, () => {
-                resolve(true);
+            (path.join(notebooksLocation, notebook, note, 'assets', 'images', imageName), imageData, (err: Error) => {
+                if (err) {
+                    resolve(false);
+                } else {
+                    resolve(imageName);
+                }
             });
         });
+    }
+
+    static getNewNameForImage(imageFilename: string) {
+        let extension = path.extname(imageFilename);
+        let newFilename = uuidv1(); // ⇨ 'f64f2940-fae4-11e7-8c5f-ef356f279131'
+        newFilename = newFilename + extension;
+        return newFilename;
     }
 
     constructor() {
