@@ -159,9 +159,9 @@ electron_1.ipcMain.on(index_1.ADD_NOTE, (event, args) => {
 electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
-        notebookManager_1.default.getNotes(`${location}\\${notebook}`)
+        notebookManager_1.default.getNotes(path.join(location, notebook))
             .then((notes) => {
-            notebookManager_1.default.getNotesCreationDate(`${location}\\${notebook}`, notes)
+            notebookManager_1.default.getNotesCreationDate(notes)
                 .then((result) => {
                 notes = notebookManager_1.default.orderNotesBy(result, 'created_at');
                 notes = notebookManager_1.default.formatNotes(notes);
@@ -311,7 +311,7 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
                         let notebookLocation = path.join(location, notebook);
                         notebookManager_1.default.getNotes(notebookLocation)
                             .then((notes) => {
-                            notebookManager_1.default.getNotesCreationDate(notebookLocation, notes)
+                            notebookManager_1.default.getNotesCreationDate(notes)
                                 .then((response) => {
                                 notes = notebookManager_1.default.orderNotesBy(response, 'created_at');
                                 notes = notebookManager_1.default.formatNotes(notes);

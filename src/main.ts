@@ -224,9 +224,9 @@ ipcMain.on(ADD_NOTE, (event: any, args: any) => {
 ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
-    NotebookManager.getNotes(`${location}\\${notebook}`)
+    NotebookManager.getNotes(path.join(location, notebook))
     .then((notes: string[]) => {
-      NotebookManager.getNotesCreationDate(`${location}\\${notebook}`, notes)
+      NotebookManager.getNotesCreationDate(notes)
       .then((result: any) => {
         notes = NotebookManager.orderNotesBy(result, 'created_at');
         notes = NotebookManager.formatNotes(notes);
@@ -404,7 +404,7 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
             let notebookLocation = path.join(location, notebook);
             NotebookManager.getNotes(notebookLocation)
             .then((notes: string[]) => {
-              NotebookManager.getNotesCreationDate(notebookLocation, notes)
+              NotebookManager.getNotesCreationDate(notes)
               .then((response: any) => {
                 notes = NotebookManager.orderNotesBy(response, 'created_at');
                 notes = NotebookManager.formatNotes(notes) as string[];

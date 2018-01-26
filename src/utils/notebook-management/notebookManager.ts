@@ -92,7 +92,7 @@ export class NotebookManager {
     static getNotes(location: string) {
         return new Promise(resolve => {
             fs.readdir(`${location}`, (err: Error, files: string[]) => {
-                files = files.filter((file: string) => { return file.endsWith('.html'); });
+                files = files.map((file: string) => { return path.join(location, file, 'index.html'); });
                 resolve(files);
             });
         });
@@ -104,7 +104,7 @@ export class NotebookManager {
      * @param  {string[]} notes
      * @returns {noteName: {created_at: date}}
      */
-    static getNotesCreationDate(location: string, notes: string[]) {
+    static getNotesCreationDate(notes: string[]) {
         return new Promise(resolve => {
             let data = {};
             let itemsProcessed = 0;
@@ -114,7 +114,7 @@ export class NotebookManager {
             }
 
             // Sets each file to have an absolute path before getting stats
-            notes.map((file: string) => { return path.join(location, file); })
+            notes
             .forEach((note: string, index: number) => {
                 fs.stat(note, (err: Error, stats: any) => {
                     itemsProcessed++;
@@ -157,8 +157,7 @@ export class NotebookManager {
      * @returns {string}
      */
     static formatNoteName(note: string): string {
-        note = note.slice(0, note.length - 5);
-        return note;
+        return path.basename(path.dirname(note));
     }
 
     static formatNotes(notes: string[]): string[] {

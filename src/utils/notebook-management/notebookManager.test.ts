@@ -96,10 +96,13 @@ test('gets all note files in a directory of a notebook', done => {
 });
 
 test('gets created date for files in array', done => {
-  let notebookLocation = 'C:\\notebooks\\test-nbook-1';
-  let notes = ['note-1.html', 'note-2.html', 'note-3.html', 'note-4.html'];
+  let notes = [
+    'C:\\notebooks\\test-nbook-1\\note-1\\index.html', 
+    'C:\\notebooks\\test-nbook-1\\note-2\\index.html', 
+    'C:\\notebooks\\test-nbook-1\\note-3\\index.html', 
+    'C:\\notebooks\\test-nbook-1\\note-4\\index.html'];
 
-  NotebookManager.getNotesCreationDate(notebookLocation, notes)
+  NotebookManager.getNotesCreationDate(notes)
   .then((result: any) => {
     done();
     expect(result[notes[0]]).toHaveProperty('created_at');
