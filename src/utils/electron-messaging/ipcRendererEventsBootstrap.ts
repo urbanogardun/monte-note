@@ -173,8 +173,8 @@ export function ipcRendererEventsBootstrap() {
             reduxStore.dispatch(actions.loadAllTags(tags));
         });
 
-        ipcRenderer.on(IMAGE_UPLOADED, (event: Event, imagePath: string[]): void => {
-            console.log('path to image: ' + imagePath);
+        ipcRenderer.on(IMAGE_UPLOADED, (event: Event, imagePath: string): void => {
+            reduxStore.dispatch(actions.pathToNewlyUploadedMediaAsset(imagePath, 'image'));
         });
 
     } catch (error) {

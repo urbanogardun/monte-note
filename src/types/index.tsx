@@ -28,4 +28,5 @@ export interface StoreState {
     searchQuery?: string;
     selectedNotebook?: string;
     previewData?: PreviewData;
+    pathToNewestUpload?: string;
 }

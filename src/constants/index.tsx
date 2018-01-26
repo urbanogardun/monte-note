@@ -150,3 +150,6 @@ export type UPLOAD_IMAGE = typeof UPLOAD_IMAGE;
 
 export const IMAGE_UPLOADED = 'IMAGE_UPLOADED';
 export type IMAGE_UPLOADED = typeof IMAGE_UPLOADED;
+
+export const PATH_TO_NEW_UPLOAD = 'PATH_TO_NEW_UPLOAD';
+export type PATH_TO_NEW_UPLOAD = typeof PATH_TO_NEW_UPLOAD;

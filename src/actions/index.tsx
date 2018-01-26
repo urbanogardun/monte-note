@@ -121,6 +121,12 @@ export interface UpdatePreview {
     note: string;
 }
 
+export interface UploadedMediaAsset {
+    type: constants.PATH_TO_NEW_UPLOAD;
+    assetType: string;
+    path: string;
+}
+
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
 export type NotebooksAction = GetNotebooks | AddNotebook;
@@ -299,5 +305,13 @@ export function updatePreview(notebook: string, note: string): UpdatePreview {
         type: constants.UPDATE_PREVIEW,
         notebook: notebook,
         note: note
+    };
+}
+
+export function pathToNewlyUploadedMediaAsset(path: string, assetType: string): UploadedMediaAsset {
+    return {
+        type: constants.PATH_TO_NEW_UPLOAD,
+        assetType,
+        path
     };
 }
