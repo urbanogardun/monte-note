@@ -207,6 +207,26 @@ test('deletes note from drive inside the .trashcan directory', done => {
 
 });
 
+test('saves image data to assets/images directory', done => {
+  let noteName = 'testNote.html';
+  let notebookName = 'test-nbook-1';
+  let notebooksLocation = 'C:\\notebooks';
+  let imageFilename = 'photo.jpg';
+  let imageDataBase64 = 'test';
+
+  let noteLocation = {
+    notebooksLocation: notebooksLocation,
+    notebook: notebookName,
+    note: noteName
+  };
+
+  NotebookManager.saveImage(noteLocation, imageFilename, imageDataBase64)
+  .then((result: boolean) => {
+    done();
+    expect(result).toEqual(true);
+  });
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

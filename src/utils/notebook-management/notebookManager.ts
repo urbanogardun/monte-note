@@ -286,6 +286,12 @@ export class NotebookManager {
         });
     }
 
+    static saveImage(saveLocation: any, imageFilename: string, imageData: string) {
+        return new Promise((resolve) => {
+            resolve(true);
+        });
+    }
+
     constructor() {
         // NotebookManager.directoryToSaveNotebooksAt = saveDir;
         // this.createRootDirectory(NotebookManager.directoryToSaveNotebooksAt);

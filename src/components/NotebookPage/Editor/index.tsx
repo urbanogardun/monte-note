@@ -193,10 +193,15 @@ export class Editor extends React.Component<Props, State> {
     handleImageUpload() {
         let input = document.querySelector('input[type=file]') as any;
         var file    = input.files[0];
+        var fileName = file.name;
         var reader  = new FileReader();
 
         reader.addEventListener('load', function () {
-            ElectronMessager.sendMessageWithIpcRenderer(UPLOAD_IMAGE, reader.result);
+            let imageData = {
+                fileName: fileName,
+                data: reader.result
+            };
+            ElectronMessager.sendMessageWithIpcRenderer(UPLOAD_IMAGE, imageData);
         },                      false);
 
         if (file) {

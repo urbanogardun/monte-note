@@ -259,6 +259,11 @@ class NotebookManager {
             });
         });
     }
+    static saveImage(saveLocation, imageFilename, imageData) {
+        return new Promise((resolve) => {
+            resolve(true);
+        });
+    }
     getNotebooksLocation() {
         return new Promise(resolve => {
             this.DbConnection.getNotebooksLocation()
