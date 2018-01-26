@@ -481,7 +481,17 @@ electron_1.ipcMain.on(index_1.SEARCH_WITHIN_NOTEBOOK, (event, searchData) => {
     });
 });
 electron_1.ipcMain.on(index_1.UPLOAD_IMAGE, (event, data) => {
-    console.log(data);
+    // console.log(data);
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        let noteLocation = {
+            notebooksLocation: location,
+            notebook: data.notebook,
+            note: data.note
+        };
+        console.log(noteLocation);
+        notebookManager_1.default.saveImage(noteLocation, data.filename, data.data);
+    });
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

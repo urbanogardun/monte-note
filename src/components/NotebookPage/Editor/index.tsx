@@ -195,11 +195,17 @@ export class Editor extends React.Component<Props, State> {
         var file    = input.files[0];
         var fileName = file.name;
         var reader  = new FileReader();
+        let props = this.props;
 
         reader.addEventListener('load', function () {
             let imageData = {
-                fileName: fileName,
-                data: reader.result
+                filename: fileName,
+                // Strip data type prefix from a string representation of a uploaded image data
+                // and convert it to a Buffer type with base64 encoding. This way a valid image
+                // will get saved to disk.
+                data: new Buffer(reader.result.replace(/^data:image\/\w+;base64,/, ''), 'base64'),
+                note: props.lastOpenedNote,
+                notebook: props.notebookName
             };
             ElectronMessager.sendMessageWithIpcRenderer(UPLOAD_IMAGE, imageData);
         },                      false);

@@ -288,7 +288,18 @@ export class NotebookManager {
 
     static saveImage(saveLocation: any, imageFilename: string, imageData: string) {
         return new Promise((resolve) => {
-            resolve(true);
+            let notebooksLocation = saveLocation.notebooksLocation;
+            let notebook = saveLocation.notebook;
+            let note = saveLocation.note;
+
+            // resolve(true);
+            console.log('notebooksLocation: ' + notebooksLocation);
+            console.log('notebook: ' + notebook);
+            console.log('note: ' + note);
+            fs.writeFile
+            (path.join(notebooksLocation, notebook, note, 'assets', 'images', imageFilename), imageData, () => {
+                resolve(true);
+            });
         });
     }
 

@@ -601,7 +601,17 @@ ipcMain.on(SEARCH_WITHIN_NOTEBOOK, (event: any, searchData: any) => {
 
 ipcMain.on(UPLOAD_IMAGE, (event: any, data: any) => {
   
-  console.log(data);
+  // console.log(data);
+  dbMessager.getFromSettings('notebooksLocation')
+  .then((location: any) => {
+    let noteLocation = {
+      notebooksLocation: location,
+      notebook: data.notebook,
+      note: data.note
+    };
+    console.log(noteLocation);
+    NotebookManager.saveImage(noteLocation, data.filename, data.data);
+  });
 
 });
 
