@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const uuidv1 = require('uuid/v1');
+const striptags = require('../striptags');
 import * as cheerio from 'cheerio';
 import DbMessager from '../dbMessager';
 
@@ -205,6 +206,16 @@ export class NotebookManager {
         return new Promise(resolve => {
             fs.readFile(noteLocation, 'utf8', (err: Error, data: any) => {
                 resolve(data);
+            });
+        });
+    }
+
+    static getOnlyTextFromNote(noteLocation: string) {
+        return new Promise(resolve => {
+            NotebookManager.getNoteData(noteLocation)
+            .then((data: string) => {
+                let textData = striptags(data);
+                resolve(textData);
             });
         });
     }

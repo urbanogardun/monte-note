@@ -141,6 +141,8 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
         NotebookManager.relinkAttachmentContent(notebooksLocation)
         .then(() => {
 
+          // TODO: Add existing notes to DB
+
           NotebookManager.createTrashcan(notebooksLocation as string)
           .then(() => {
     
