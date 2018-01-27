@@ -1,6 +1,7 @@
 const fs = require('fs-extra');
 const path = require('path');
 const uuidv1 = require('uuid/v1');
+import * as cheerio from 'cheerio';
 import DbMessager from '../dbMessager';
 
 export class NotebookManager {
@@ -329,6 +330,62 @@ export class NotebookManager {
         let newFilename = uuidv1(); // ⇨ 'f64f2940-fae4-11e7-8c5f-ef356f279131'
         newFilename = newFilename + extension;
         return newFilename;
+    }
+
+    /**
+     * When existing note content is moved to another directory and that new
+     * directory is set as new notebooks location, note assets such as images
+     * get its absolute path changed.
+     * @param  {string} notebooksLocation
+     */
+    static relinkAttachmentContent(notebooksLocation: string) {
+        return new Promise((resolve) => {
+            let notebooks = NotebookManager.getNotebooks(notebooksLocation);
+    
+            for (let index = 0; index < notebooks.length; index++) {
+                const notebook = notebooks[index];
+                NotebookManager.getNotes(path.join(notebooksLocation, notebook))
+                .then((notes: string[]) => {
+    
+                    // Open each note file and change each image url to the one
+                    // using new notebooks location
+                    for (let i = 0; i < notes.length; i++) {
+                        const note = notes[i];
+
+                        const updatedNoteData = NotebookManager.changeAssetLinks(notebooksLocation, notebook, note);
+
+                        fs.writeFile(note, updatedNoteData, (err: Error) => {
+                            if (err) {
+                                throw `Could not relink image content: ${err}`;
+                            }
+                            return;
+                        });
+
+                    }
+    
+                });
+            }
+            resolve(true);
+        });
+    }
+
+    static changeAssetLinks(notebooksLocation: string, notebook: string, note: string) {
+        const $ = cheerio.load(fs.readFileSync(note));
+        $('.image-upload, .attachment').each((ind: number, element: CheerioElement) => {
+            let oldLink = $(element).attr('src');
+            let filename = path.parse(oldLink).base;
+            let noteName = NotebookManager.formatNoteName(note);
+            if ($(element).hasClass('image-upload')) {
+                let newLink = path.join(
+                    notebooksLocation, notebook, noteName, 'assets', 'images', filename);
+                $(element).attr('src', newLink);
+            } else if ($(element).hasClass('attachment')) {
+                let newLink = path.join(
+                    notebooksLocation, notebook, noteName, 'assets', 'attachments', filename);
+                $(element).attr('src', newLink);
+            }
+        });
+        return $.html();
     }
 
     constructor() {

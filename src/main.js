@@ -87,22 +87,19 @@ electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
             let location = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
             notebookManager_1.default.createNotebooksDirectory(location)
                 .then((notebooksLocation) => {
-                // TODO (Mechanism for reinstantiating notes inside differet notebooks directory)
-                // Get all notebook folders if any exist
-                // For each notebook
-                // Get all notes
-                // For each note
-                //  Open index.html (note content) using cheerio
-                //  Get all images with class of 'image-attachment' (add this class also with quill editor when uploading image on front end)
-                //  Replace each images' path with current absolute path
-                //  Do the same thing for other attachments later, except use 'other-attachment' class for that one
-                notebookManager_1.default.createTrashcan(notebooksLocation)
+                // In case that an absolute path to notebook directory has changed but
+                // there is note content inside notebook directory, this will relink
+                // that content to new directory.
+                notebookManager_1.default.relinkAttachmentContent(notebooksLocation)
                     .then(() => {
-                    dbMessager.updateSettings('notebooksLocation', notebooksLocation)
-                        .then((result) => {
-                        if (result) {
-                            event.sender.send('location-for-notebooks', notebooksLocation);
-                        }
+                    notebookManager_1.default.createTrashcan(notebooksLocation)
+                        .then(() => {
+                        dbMessager.updateSettings('notebooksLocation', notebooksLocation)
+                            .then((result) => {
+                            if (result) {
+                                event.sender.send('location-for-notebooks', notebooksLocation);
+                            }
+                        });
                     });
                 });
             });

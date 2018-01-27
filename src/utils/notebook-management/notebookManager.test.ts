@@ -245,6 +245,17 @@ test('creates directory for notebooks', done => {
 
 });
 
+test('changes absolute path of note attachment images', done => {
+  let newNotebooksLocation = 'C:\\Users\\seneca\\Documents\\my-notebooks';
+
+  NotebookManager.relinkAttachmentContent(newNotebooksLocation)
+  .then((result: boolean) => {
+    done();
+    expect(result).toEqual(true);
+  });
+
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

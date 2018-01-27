@@ -200,12 +200,15 @@ export class Editor extends React.Component<Props, State> {
     }
 
     componentWillUpdate(nextProps: Props) {
+        // TODO: When an attachment has uploaded successfully, add it to note
+        // Also set attachment element class to 'attachment' - this class
+        // will be used for relinking content
 
         // When an image has uploaded successfully, add it to note
         if (this.props.pathToNewestUpload !== nextProps.pathToNewestUpload) {
             this.quill.insertEmbed(
                 this.currentCursorPosition, 
-                'resizableImage', { url: `${nextProps.pathToNewestUpload}`, class: 'image-attachment' }, 'user');
+                'resizableImage', { url: `${nextProps.pathToNewestUpload}`, class: 'image-upload' }, 'user');
         } else {
             // Load saved content from note file into Quill editor
             this.quill.deleteText(0, this.quill.getLength());
