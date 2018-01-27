@@ -40,7 +40,7 @@ function writeFile(file, data, callback) {
 
 function readdir(path, callback) {
     callback('', 
-    ['note-file-1.html', 'note-file-2', 'note-file-3.html', 'note-file-4']
+    ['Chemistry', 'Biology', 'Animals and Food', 'Design']
     );
 }
 
@@ -75,7 +75,11 @@ function ensureFile(path) {
 
 function ensureDir(path) {
     return new Promise(resolve => {
-        resolve(true);
+        if (path.includes('my-notebooks')) {
+            resolve(path);
+        } else {
+            resolve(true);
+        }
     });
 }
 

@@ -91,7 +91,7 @@ test('gets all note files in a directory of a notebook', done => {
   NotebookManager.getNotes(notebookLocation)
   .then((notes: string[]) => {
     done();
-    expect(notes).toHaveLength(2);
+    expect(notes).toHaveLength(4);
   });
 });
 
@@ -123,14 +123,18 @@ test('sorts notebooks object by a property value that we specify', () => {
   expect(result[4]).toEqual('fishie-2.html');
 });
 
-test('removes .html extension from note filename', () => {
-  let result = NotebookManager.formatNoteName('fishie-2.html');
+test('gets name of note from last directory path in a string', () => {
+  let result = NotebookManager
+  .formatNoteName('C:\\Users\\seneca\\Documents\\my-notebooks\\Women\\Favorites\\index.html');
 
-  expect(result).toEqual('fishie-2');
+  expect(result).toEqual('Favorites');
 });
 
 test('pretty formats note list', () => {
-  let notes = ['fishie-2.html', 'coffee.html', 'bikes.html'];
+  let notes = [
+    'C:\\Users\\seneca\\Documents\\my-notebooks\\Women\\fishie-2\\index.html', 
+    'C:\\Users\\seneca\\Documents\\my-notebooks\\Women\\coffee\\index.html', 
+    'C:\\Users\\seneca\\Documents\\my-notebooks\\Women\\bikes\\index.html'];
 
   let result = NotebookManager.formatNotes(notes);
 
@@ -211,7 +215,7 @@ test('deletes note from drive inside the .trashcan directory', done => {
 });
 
 test('saves image data to assets/images directory', done => {
-  let noteName = 'testNote.html';
+  let noteName = 'testNote';
   let notebookName = 'test-nbook-1';
   let notebooksLocation = 'C:\\notebooks';
   let imageFilename = 'photo.jpg';
@@ -226,8 +230,19 @@ test('saves image data to assets/images directory', done => {
   NotebookManager.saveImage(noteLocation, imageFilename, imageDataBase64)
   .then((result: boolean) => {
     done();
-    expect(result).toEqual(true);
+    expect(result).toContain('.jpg');
   });
+});
+
+test('creates directory for notebooks', done => {
+  let notebooksLocation = 'C:\\Users\\seneca\\Documents\\my-notebooks';
+
+  NotebookManager.createNotebooksDirectory(notebooksLocation)
+  .then((result: string) => {
+    done();
+    expect(result).toEqual('C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks');
+  });
+
 });
 
 afterEach(() => {

@@ -37,6 +37,24 @@ class NotebookManager {
             }
         });
     }
+    /**
+     * When user chooses a directory where notebooks will get stored, a subdir
+     * is created inside which all note content will be located.
+     * @param  {string} location
+     * @returns {string}
+     */
+    static createNotebooksDirectory(location) {
+        return new Promise(resolve => {
+            let notebooksDirectory = path.join(location, 'NinjaNote Notebooks');
+            fs.ensureDir(notebooksDirectory)
+                .then(() => {
+                resolve(notebooksDirectory);
+            })
+                .catch((err) => {
+                throw `Directory for notebooks could not be created: ${err}`;
+            });
+        });
+    }
     static addNote(location, name) {
         return new Promise(resolve => {
             try {
@@ -268,7 +286,7 @@ class NotebookManager {
             let absolutePathToImage = path.join(notebooksLocation, notebook, note, 'assets', 'images', imageName);
             fs.writeFile(absolutePathToImage, imageData, (err) => {
                 if (err) {
-                    resolve(false);
+                    throw `Image could not be saved: ${err}`;
                 }
                 else {
                     resolve(absolutePathToImage);

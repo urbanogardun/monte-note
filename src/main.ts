@@ -132,18 +132,23 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
     if (success) {
       let location = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
 
-      NotebookManager.createTrashcan(location as string)
-      .then(() => {
+      NotebookManager.createNotebooksDirectory(location as string)
+      .then((notebooksLocation: string) => {
 
-        dbMessager.updateSettings('notebooksLocation', location as string)
-        .then((result: boolean) => {
-          if (result) {
-            console.log(result);
-            event.sender.send('location-for-notebooks', location);
-          }
+        NotebookManager.createTrashcan(notebooksLocation as string)
+        .then(() => {
+  
+          dbMessager.updateSettings('notebooksLocation', notebooksLocation as string)
+          .then((result: boolean) => {
+            if (result) {
+              event.sender.send('location-for-notebooks', notebooksLocation);
+            }
+          });
+  
         });
-
+      
       });
+
     }
   });
 });
