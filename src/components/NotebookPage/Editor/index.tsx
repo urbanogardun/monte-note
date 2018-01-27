@@ -205,7 +205,7 @@ export class Editor extends React.Component<Props, State> {
         if (this.props.pathToNewestUpload !== nextProps.pathToNewestUpload) {
             this.quill.insertEmbed(
                 this.currentCursorPosition, 
-                'resizableImage', { url: `${nextProps.pathToNewestUpload}` }, 'user');
+                'resizableImage', { url: `${nextProps.pathToNewestUpload}`, class: 'image-attachment' }, 'user');
         } else {
             // Load saved content from note file into Quill editor
             this.quill.deleteText(0, this.quill.getLength());
