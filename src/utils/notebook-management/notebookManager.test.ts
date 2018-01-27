@@ -256,6 +256,17 @@ test('changes absolute path of note attachment images', done => {
 
 });
 
+test('gets only text stripped from HTML tags from a note file', done => {
+  let noteLocation = 'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-1\\index.html';
+
+  NotebookManager.getOnlyTextFromNote(noteLocation)
+  .then((text: string) => {
+    done();
+    expect(text).toEqual('Test paragraph.');
+  });
+
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

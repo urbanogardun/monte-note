@@ -52,7 +52,7 @@ function stat(path, callback) {
 }
 
 function readFile(location, encoding, callback) {
-    callback('', 'test-data');
+    callback('', '<p>Test paragraph.</p>');
 }
 
 function move(oldPath, newPath) {
