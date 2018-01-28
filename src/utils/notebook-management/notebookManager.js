@@ -338,13 +338,13 @@ class NotebookManager {
             let notebook = saveLocation.notebook;
             let note = saveLocation.note;
             let filename = this.getNewNameForUploadedFile(attachmentFilename);
-            let absolutePathToImage = path.join(notebooksLocation, notebook, note, 'assets', 'attachments', filename);
-            fs.writeFile(absolutePathToImage, fileData, (err) => {
+            let absolutePathToAttachment = path.join(notebooksLocation, notebook, note, 'assets', 'attachments', filename);
+            fs.writeFile(absolutePathToAttachment, fileData, (err) => {
                 if (err) {
                     throw `Attachment could not be saved: ${err}`;
                 }
                 else {
-                    resolve(absolutePathToImage);
+                    resolve(absolutePathToAttachment);
                 }
             });
         });

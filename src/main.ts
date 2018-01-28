@@ -667,9 +667,9 @@ ipcMain.on(UPLOAD_ATTACHMENT, (event: any, data: any) => {
       note: data.note
     };
     NotebookManager.saveAttachment(noteLocation, data.filename, data.data)
-    .then((absolutePathToImage: any) => {
-      if (absolutePathToImage) {
-        event.sender.send(IMAGE_UPLOADED, absolutePathToImage);
+    .then((absolutePathToAttachment: any) => {
+      if (absolutePathToAttachment) {
+        console.log('attachment link: ' + absolutePathToAttachment);
       }
     });
   });
