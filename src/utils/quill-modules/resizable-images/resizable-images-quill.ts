@@ -73,7 +73,7 @@ function initializeResponsiveImages(quill: Quill) {
                 isDragging = true;
                 event.preventDefault();
 
-                currentElementHeight = $($img).css('height')
+                currentElementHeight = $($img).css('height');
                 let imageSize = $($img).css('height').split('px')[0] as any;
                 if (event.pageX > imageSize) {
                     subtractFromPageX = event.pageX - imageSize;

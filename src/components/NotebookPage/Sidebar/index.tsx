@@ -131,10 +131,18 @@ export class Sidebar extends React.Component<Props, State> {
     }
 
     componentWillUnmount() {
-        let editor = document.querySelector('.ql-editor') as Element;
+        // When resizing images, on images that have been hovered over, regardless
+        // if they have been resized, a css style class for displaying/hiding 
+        // a resize frame will be added. In cases when nothing inside a note
+        // doesn't change, note will get updated as latest modified inside the
+        // db regardless. This check will remove that resize frame style.
+        if ($('.ql-editor').find('img').attr('style') === 'border: none; cursor: inherit;') {
+            $('.ql-editor').find('img').removeAttr('style');
+        }
+
+        let editor = $('.ql-editor')[0];
         let noteContentToUpdate = editor.innerHTML;
         let noteData = prepareNoteData(this.props, noteContentToUpdate);
-        // noteDataToSave = {...noteDataToSave}
         let noteDataToSave = {...noteData, updatePreviewContent: true};
 
         // Updates note data only if the data got changed

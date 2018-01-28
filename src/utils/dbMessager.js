@@ -128,6 +128,12 @@ class DbMessager {
             });
         });
     }
+    /**
+     * Opens note file and gets its text content (among other things) and formats
+     * it for saving that data to database
+     * @param  {string} notebook
+     * @param  {string} noteLocation
+     */
     prepareNoteForDb(notebook, noteLocation) {
         return new Promise(resolve => {
             let data = {
@@ -144,10 +150,12 @@ class DbMessager {
             });
         });
     }
+    /**
+     * Adds note file that already exists inside notebook directory to the database
+     * @param  {string} notebook
+     * @param  {string} noteLocation
+     */
     addExistingNote(notebook, noteLocation) {
-        // TODO: in notebookmanager - read notefile and get
-        // content of that notefile but use striptags to
-        // get only its text
         return new Promise(resolve => {
             this.prepareNoteForDb(notebook, noteLocation)
                 .then((docToSave) => {
@@ -160,6 +168,11 @@ class DbMessager {
             });
         });
     }
+    /**
+     * Goes over collection of objects with format { notebook: [path-to-note] },
+     * gets data for each note, formats it for the database, and saves it.
+     * @param  {any} noteData
+     */
     addAllExistingNotes(noteData) {
         return new Promise(resolve => {
             let promisesToResolve = [];

@@ -41,10 +41,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>)
         updateSelectedTags: (tags: string[]) => dispatch(actions.updateSelectedTags(tags)),
         updateSearchQuery: (query: string) => dispatch(actions.updateSearchQuery(query)),
         updateSelectedNotebook: (notebook: string) => dispatch(actions.updateSelectedNotebook(notebook)),
-        updatePreview: (notebook: string, note: string) => {
-            console.log(`${notebook} + ${note} - UPDATE FOR PREVIEW`);
-            dispatch(actions.updatePreview(notebook, note));
-        }
+        updatePreview: (notebook: string, note: string) => dispatch(actions.updatePreview(notebook, note)),
     };
 }
 
