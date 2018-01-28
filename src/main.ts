@@ -142,18 +142,27 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
         .then(() => {
 
           // TODO: Add existing notes to DB
+          let notebooks = NotebookManager.getNotebooks(notebooksLocation);
 
-          NotebookManager.createTrashcan(notebooksLocation as string)
-          .then(() => {
-    
-            dbMessager.updateSettings('notebooksLocation', notebooksLocation as string)
-            .then((result: boolean) => {
-              if (result) {
-                event.sender.send('location-for-notebooks', notebooksLocation);
-              }
+          NotebookManager.getAllNotes(notebooksLocation, notebooks)
+          .then((notes: string[][]) => {
+            
+            console.log(notes);
+
+            NotebookManager.createTrashcan(notebooksLocation as string)
+            .then(() => {
+      
+              dbMessager.updateSettings('notebooksLocation', notebooksLocation as string)
+              .then((result: boolean) => {
+                if (result) {
+                  event.sender.send('location-for-notebooks', notebooksLocation);
+                }
+              });
+      
             });
-    
+            
           });
+
           
         });
 

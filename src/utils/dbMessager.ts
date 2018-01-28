@@ -1,4 +1,5 @@
 import Db from '../db/index';
+import { NotebookManager } from './notebook-management/notebookManager';
 
 export class DbMessager {
     
@@ -152,7 +153,25 @@ export class DbMessager {
         });
     }
 
-    addExistingNote(notebook: string, noteData: string): any {
+    prepareNoteForDb(notebook: string, noteLocation: string) {
+        return new Promise(resolve => {
+            let data = {
+                notebookName: notebook,
+                noteName: NotebookManager.formatNoteName(noteLocation),
+                noteContent: '',
+                tags: [],
+                documentFor: 'NOTE_DATA'
+            };
+    
+            NotebookManager.getOnlyTextFromNote(noteLocation)
+            .then((content: string) => {
+                data.noteContent = content;
+                resolve(data);
+            });
+        });
+    }
+
+    addExistingNote(notebook: string, noteData: any): any {
         // TODO: in notebookmanager - read notefile and get
         // content of that notefile but use striptags to
         // get only its text

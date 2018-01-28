@@ -187,6 +187,17 @@ test('gets tags from all note documents', done => {
     });
 });
 
-// test('gets notes that contain all tags in a given array', done => {
+test('formats a note file data for database save', done => {
+  let noteLocation = 'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-1\\index.html';
 
-// });
+  dbMessager.prepareNoteForDb('note-1', noteLocation)
+  .then((doc: any) => {
+    done();
+    expect(doc).toHaveProperty('notebookName');
+    expect(doc).toHaveProperty('noteName');
+    expect(doc).toHaveProperty('noteContent');
+    expect(doc).toHaveProperty('tags');
+    expect(doc).toHaveProperty('documentFor');
+  });
+
+});

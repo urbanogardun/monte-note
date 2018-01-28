@@ -92,13 +92,19 @@ electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
                 // that content to new directory.
                 notebookManager_1.default.relinkAttachmentContent(notebooksLocation)
                     .then(() => {
-                    notebookManager_1.default.createTrashcan(notebooksLocation)
-                        .then(() => {
-                        dbMessager.updateSettings('notebooksLocation', notebooksLocation)
-                            .then((result) => {
-                            if (result) {
-                                event.sender.send('location-for-notebooks', notebooksLocation);
-                            }
+                    // TODO: Add existing notes to DB
+                    let notebooks = notebookManager_1.default.getNotebooks(notebooksLocation);
+                    notebookManager_1.default.getAllNotes(notebooksLocation, notebooks)
+                        .then((notes) => {
+                        console.log(notes);
+                        notebookManager_1.default.createTrashcan(notebooksLocation)
+                            .then(() => {
+                            dbMessager.updateSettings('notebooksLocation', notebooksLocation)
+                                .then((result) => {
+                                if (result) {
+                                    event.sender.send('location-for-notebooks', notebooksLocation);
+                                }
+                            });
                         });
                     });
                 });

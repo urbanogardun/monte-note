@@ -127,6 +127,26 @@ class DbMessager {
             });
         });
     }
+    addExistingNote(notebook, noteData) {
+        // TODO: in notebookmanager - read notefile and get
+        // content of that notefile but use striptags to
+        // get only its text
+        return new Promise((resolve) => {
+            let docToSave = {
+                notebookName: notebook,
+                noteName: noteData.note,
+                noteContent: noteData.content,
+                tags: [],
+                documentFor: 'NOTE_DATA'
+            };
+            this.db.insert(docToSave, (err) => {
+                if (err) {
+                    resolve(false);
+                }
+                resolve(true);
+            });
+        });
+    }
     removeNote(notebook, note) {
         return new Promise((resolve) => {
             let docToRemove = {
