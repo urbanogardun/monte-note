@@ -126,7 +126,6 @@ class NotebookManager {
         return new Promise(resolve => {
             let notes = [];
             // Get list of note files for each notebook
-            console.log(notebooks);
             for (let index = 0; index < notebooks.length; index++) {
                 const notebook = notebooks[index];
                 notes.push(NotebookManager.getNotes(path.join(location, notebook)));

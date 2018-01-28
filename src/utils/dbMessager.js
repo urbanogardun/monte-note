@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("../db/index");
+const notebookManager_1 = require("./notebook-management/notebookManager");
 class DbMessager {
     constructor() {
         let setup = new index_1.default();
@@ -127,22 +128,51 @@ class DbMessager {
             });
         });
     }
-    addExistingNote(notebook, noteData) {
-        // TODO: in notebookmanager - read notefile and get
-        // content of that notefile but use striptags to
-        // get only its text
-        return new Promise((resolve) => {
-            let docToSave = {
+    prepareNoteForDb(notebook, noteLocation) {
+        return new Promise(resolve => {
+            let data = {
                 notebookName: notebook,
-                noteName: noteData.note,
-                noteContent: noteData.content,
+                noteName: notebookManager_1.NotebookManager.formatNoteName(noteLocation),
+                noteContent: '',
                 tags: [],
                 documentFor: 'NOTE_DATA'
             };
-            this.db.insert(docToSave, (err) => {
-                if (err) {
-                    resolve(false);
+            notebookManager_1.NotebookManager.getOnlyTextFromNote(noteLocation)
+                .then((content) => {
+                data.noteContent = content;
+                resolve(data);
+            });
+        });
+    }
+    addExistingNote(notebook, noteLocation) {
+        // TODO: in notebookmanager - read notefile and get
+        // content of that notefile but use striptags to
+        // get only its text
+        return new Promise(resolve => {
+            this.prepareNoteForDb(notebook, noteLocation)
+                .then((docToSave) => {
+                this.db.insert(docToSave, (err) => {
+                    if (err) {
+                        resolve(false);
+                    }
+                    resolve(true);
+                });
+            });
+        });
+    }
+    addAllExistingNotes(noteData) {
+        return new Promise(resolve => {
+            let promisesToResolve = [];
+            for (const notebookName in noteData) {
+                if (noteData.hasOwnProperty(notebookName)) {
+                    const notes = noteData[notebookName];
+                    notes.forEach((note) => {
+                        promisesToResolve.push(this.addExistingNote(notebookName, note));
+                    });
                 }
+            }
+            Promise.all(promisesToResolve)
+                .then(() => {
                 resolve(true);
             });
         });
