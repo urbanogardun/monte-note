@@ -171,24 +171,42 @@ export class DbMessager {
         });
     }
 
-    addExistingNote(notebook: string, noteData: any): any {
+    addExistingNote(notebook: string, noteLocation: string) {
         // TODO: in notebookmanager - read notefile and get
         // content of that notefile but use striptags to
         // get only its text
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
 
-            let docToSave = {
-                notebookName: notebook,
-                noteName: noteData.note,
-                noteContent: noteData.content,
-                tags: [],
-                documentFor: 'NOTE_DATA'
-            };
+            this.prepareNoteForDb(notebook, noteLocation)
+            .then((docToSave: any) => {
+                this.db.insert(docToSave, (err: Error) => {
+                    if (err) {
+                        resolve(false);
+                    }
+                    resolve(true);
+                });
+            });
+        });
+    }
 
-            this.db.insert(docToSave, (err: Error) => {
-                if (err) {
-                    resolve(false);
+    addAllExistingNotes(noteData: any) {
+        return new Promise(resolve => {
+            
+            let promisesToResolve: any = [];
+
+            for (const notebookName in noteData) {
+                if (noteData.hasOwnProperty(notebookName)) {
+                    const notes = noteData[notebookName];
+                    
+                    notes.forEach((note: string) => {
+                        promisesToResolve.push(this.addExistingNote(notebookName, note));
+                    });
+
                 }
+            }
+
+            Promise.all(promisesToResolve)
+            .then(() => {
                 resolve(true);
             });
 

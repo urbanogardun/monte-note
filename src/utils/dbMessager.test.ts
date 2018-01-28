@@ -201,3 +201,25 @@ test('formats a note file data for database save', done => {
   });
 
 });
+
+test('adds all existing notes to database', done => {
+    let testData = {
+            'Chemistry': [
+                'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-1\\index.html',
+                'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-2\\index.html',
+                'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-3\\index.html',
+            ],
+            'Biking': [
+                'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-1\\index.html',
+                'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-1\\index.html',
+                'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-1\\index.html',
+            ]
+        };
+
+    dbMessager.addAllExistingNotes(testData)
+    .then((result: boolean) => {
+        done();
+        expect(result).toEqual(true);
+    });
+
+});
