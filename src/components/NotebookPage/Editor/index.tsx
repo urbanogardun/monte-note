@@ -212,12 +212,9 @@ export class Editor extends React.Component<Props, State> {
                 this.currentCursorPosition, 
                 'resizableImage', { url: `${nextProps.pathToNewestUploadedImage}`, class: 'image-upload' }, 'user');
         } else if (this.props.pathToNewestUploadedAsset !== nextProps.pathToNewestUploadedAsset) {
-            // TODO:
-            // Create attachment Quill blob
-            // It will link to attachment file and have a class which will use css styling so it looks pretty
-            // this.quill.insertEmbed(
-            //     this.currentCursorPosition, 
-            //     'attachment', { url: `${nextProps.pathToNewestUploadedImage}`, class: 'attachment' }, 'user');
+            this.quill.insertEmbed(
+                this.currentCursorPosition, 
+                'attachment', { href: `${nextProps.pathToNewestUploadedAsset}` }, 'user');
         } else {
             // Load saved content from note file into Quill editor
             this.quill.deleteText(0, this.quill.getLength());

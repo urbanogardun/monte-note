@@ -12,6 +12,7 @@ Attachment.blotName = 'attachment';
 Attachment.tagName = 'a';
 
 Quill.register(ResizableImage);
+Quill.register(Attachment);
 
 function initializeResponsiveImages(quill: Quill) {
 
