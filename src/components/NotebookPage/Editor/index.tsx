@@ -260,24 +260,8 @@ export class Editor extends React.Component<Props, State> {
         var filename = file.name;
         var reader  = new FileReader();
         let props = this.props;
-        // reader.addEventListener('onload', function () {
-        //     // let imageData = {
-        //     //     filename: fileName,
-        //     //     // Strip data type prefix from a string representation of a uploaded image data
-        //     //     // and convert it to a Buffer type with base64 encoding. This way a valid image
-        //     //     // will get saved to disk.
-        //         // data: new Buffer(reader.result.replace(/^data:image\/\w+;base64,/, ''), 'base64'),
-        //     //     note: props.lastOpenedNote,
-        //     //     notebook: props.notebookName
-        //     // };
-        //     // console.log(reader.result);
-        //     // ElectronMessager.sendMessageWithIpcRenderer(UPLOAD_IMAGE, imageData);
-        //     console.log(reader.result);
-        // },                      false);
         
         reader.onloadend = function(e: any) {
-            // console.log(e.target.result);
-            // var buffer = new ArrayBuffer(e.target.result.byteLength());
             var attachmentData = {
                 filename: filename,
                 data: new Uint8Array(e.target.result),
@@ -289,7 +273,6 @@ export class Editor extends React.Component<Props, State> {
         };
 
         if (file) {
-            console.log(file);
             reader.readAsArrayBuffer(file);
         }
     }
