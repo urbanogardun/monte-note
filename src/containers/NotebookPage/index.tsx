@@ -8,13 +8,23 @@ export function mergeProps(stateProps: Object, dispatchProps: Object, ownProps: 
 }
 
 export function mapStateToProps(
-    { notes, lastOpenedNote, noteContent, currentNoteTags, pathToNewestUpload }: StoreState) {
+    { 
+        notes, 
+        lastOpenedNote, 
+        noteContent, 
+        currentNoteTags, 
+        pathToNewestUploadedImage, 
+        pathToNewestUploadedAsset }: StoreState) {
+    console.log(`pathToNewestUploadedImage: ${pathToNewestUploadedImage}`);
+    console.log('\n');
+    console.log(`pathToNewestUploadedAsset: ${pathToNewestUploadedAsset}`);
     return {
         notes,
         lastOpenedNote,
         noteContent,
         currentNoteTags,
-        pathToNewestUpload
+        pathToNewestUploadedImage,
+        pathToNewestUploadedAsset
     };
 }
 

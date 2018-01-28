@@ -121,9 +121,13 @@ export interface UpdatePreview {
     note: string;
 }
 
-export interface UploadedMediaAsset {
-    type: constants.PATH_TO_NEW_UPLOAD;
-    assetType: string;
+export interface UploadedMediaImage {
+    type: constants.PATH_TO_NEW_IMAGE;
+    path: string;
+}
+
+export interface UploadedMediaAttachment {
+    type: constants.PATH_TO_NEW_ATTACHMENT;
     path: string;
 }
 
@@ -140,6 +144,8 @@ export type TrashAction = LoadTrash | LoadLastOpenedTrashNote | LoadLastOpenedTr
 export type PreviewAction = LoadPreviewContent | UpdatePreviewContentTags;
 
 export type SearchResultsAction = LoadSearchResults | ReloadSearchResults | AppendSearchResults;
+
+export type UploadedAction = UploadedMediaImage | UploadedMediaAttachment;
 
 export function incrementEnthusiasm(): IncrementEnthusiasm {
     return {
@@ -308,10 +314,16 @@ export function updatePreview(notebook: string, note: string): UpdatePreview {
     };
 }
 
-export function pathToNewlyUploadedMediaAsset(path: string, assetType: string): UploadedMediaAsset {
+export function pathToNewUploadedImage(path: string): UploadedMediaImage {
     return {
-        type: constants.PATH_TO_NEW_UPLOAD,
-        assetType,
+        type: constants.PATH_TO_NEW_IMAGE,
+        path
+    };
+}
+
+export function pathToNewUploadedAttachment(path: string): UploadedMediaAttachment {
+    return {
+        type: constants.PATH_TO_NEW_ATTACHMENT,
         path
     };
 }

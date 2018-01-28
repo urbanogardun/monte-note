@@ -28,7 +28,8 @@ export interface Props {
     updateNotes: Function;
     updateLastOpenedNote: Function;
     updateNoteContent: Function;
-    pathToNewestUpload: string;
+    pathToNewestUploadedImage: string;
+    pathToNewestUploadedAsset: string;
 }
 
 export interface State {
@@ -206,10 +207,10 @@ export class Editor extends React.Component<Props, State> {
         // will be used for relinking content
 
         // When an image has uploaded successfully, add it to note
-        if (this.props.pathToNewestUpload !== nextProps.pathToNewestUpload) {
+        if (this.props.pathToNewestUploadedImage !== nextProps.pathToNewestUploadedImage) {
             this.quill.insertEmbed(
                 this.currentCursorPosition, 
-                'resizableImage', { url: `${nextProps.pathToNewestUpload}`, class: 'image-upload' }, 'user');
+                'resizableImage', { url: `${nextProps.pathToNewestUploadedImage}`, class: 'image-upload' }, 'user');
         } else {
             // Load saved content from note file into Quill editor
             this.quill.deleteText(0, this.quill.getLength());

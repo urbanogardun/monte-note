@@ -23,7 +23,8 @@ import {
     RELOAD_SEARCH_RESULTS,
     GET_ALL_TAGS,
     APPEND_SEARCH_RESULTS,
-    IMAGE_UPLOADED
+    IMAGE_UPLOADED,
+    ATTACHMENT_UPLOADED
 } from '../../constants/index';
 import ElectronMessager from '../electron-messaging/electronMessager';
     
@@ -174,7 +175,11 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(IMAGE_UPLOADED, (event: Event, imagePath: string): void => {
-            reduxStore.dispatch(actions.pathToNewlyUploadedMediaAsset(imagePath, 'image'));
+            reduxStore.dispatch(actions.pathToNewUploadedImage(imagePath));
+        });
+
+        ipcRenderer.on(ATTACHMENT_UPLOADED, (event: Event, attachmentPath: string): void => {
+            reduxStore.dispatch(actions.pathToNewUploadedAttachment(attachmentPath));
         });
 
     } catch (error) {

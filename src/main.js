@@ -531,7 +531,7 @@ electron_1.ipcMain.on(index_1.UPLOAD_ATTACHMENT, (event, data) => {
         notebookManager_1.default.saveAttachment(noteLocation, data.filename, data.data)
             .then((absolutePathToAttachment) => {
             if (absolutePathToAttachment) {
-                console.log('attachment link: ' + absolutePathToAttachment);
+                event.sender.send(index_1.ATTACHMENT_UPLOADED, absolutePathToAttachment);
             }
         });
     });

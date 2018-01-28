@@ -13,7 +13,7 @@ import { EnthusiasmAction,
   UpdateSearchQuery,
   UpdateSelectedNotebook,
   UpdatePreview,
-  UploadedMediaAsset} from '../actions';
+  UploadedAction } from '../actions';
 import { StoreState, SearchData } from '../types/index';
 import { 
   INCREMENT_ENTHUSIASM, 
@@ -39,7 +39,8 @@ import {
   UPDATE_SEARCH_QUERY,
   UPDATE_SELECTED_NOTEBOOK,
   UPDATE_PREVIEW,
-  PATH_TO_NEW_UPLOAD } from '../constants/index';
+  PATH_TO_NEW_IMAGE, 
+  PATH_TO_NEW_ATTACHMENT}  from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -228,9 +229,18 @@ export function previewData(state: StoreState, action: UpdatePreview): StoreStat
   }
 }
 
-export function pathToNewestUpload(state: StoreState, action: UploadedMediaAsset) {
+export function pathToNewestUploadedImage(state: StoreState, action: UploadedAction) {
   switch (action.type) {
-    case PATH_TO_NEW_UPLOAD:
+    case PATH_TO_NEW_IMAGE:
+      return action.path as StoreState;
+    default:
+      return state || '' as StoreState;
+  }
+}
+
+export function pathToNewestUploadedAsset(state: StoreState, action: UploadedAction) {
+  switch (action.type) {
+    case PATH_TO_NEW_ATTACHMENT:
       return action.path as StoreState;
     default:
       return state || '' as StoreState;
@@ -256,7 +266,8 @@ const rootReducers: Reducer<StoreState> = combineReducers(
     searchQuery,
     selectedNotebook,
     previewData,
-    pathToNewestUpload
+    pathToNewestUploadedImage,
+    pathToNewestUploadedAsset
   }
 );
 

@@ -35,7 +35,8 @@ import {
   APPEND_SEARCH_RESULTS,
   UPLOAD_IMAGE,
   IMAGE_UPLOADED,
-  UPLOAD_ATTACHMENT
+  UPLOAD_ATTACHMENT,
+  ATTACHMENT_UPLOADED
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -669,7 +670,7 @@ ipcMain.on(UPLOAD_ATTACHMENT, (event: any, data: any) => {
     NotebookManager.saveAttachment(noteLocation, data.filename, data.data)
     .then((absolutePathToAttachment: any) => {
       if (absolutePathToAttachment) {
-        console.log('attachment link: ' + absolutePathToAttachment);
+        event.sender.send(ATTACHMENT_UPLOADED, absolutePathToAttachment);
       }
     });
   });
