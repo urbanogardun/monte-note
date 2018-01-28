@@ -267,6 +267,18 @@ test('gets only text stripped from HTML tags from a note file', done => {
 
 });
 
+test('gets paths to all note files in all notebooks', done => {
+  let noteLocation = 'C:\\Users\\seneca\\Documents\\my-notebooks';
+  let notebooks = [ '.trashcan', 'Foods' ];
+
+  NotebookManager.getAllNotes(noteLocation, notebooks)
+  .then((result: any) => {
+    done();
+    expect(result.Foods).toBeTruthy();
+  });
+
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

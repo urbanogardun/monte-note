@@ -120,17 +120,20 @@ class NotebookManager {
      * notebook are put into separate arrays, each array signifying a notebook.
      * @param  {string} location
      * @param  {string[]} notebooks
-     * @returns {string[][]} Each inner array is for a specific notebook
+     * @returns {object} Each object's key is notebook name and value list of notes
      */
     static getAllNotes(location, notebooks) {
         return new Promise(resolve => {
             let notes = [];
+            // Get list of note files for each notebook
+            console.log(notebooks);
             for (let index = 0; index < notebooks.length; index++) {
                 const notebook = notebooks[index];
                 notes.push(NotebookManager.getNotes(path.join(location, notebook)));
             }
             Promise.all(notes).then((files) => {
                 let data = {};
+                // Map note files to notebooks they belong to
                 for (let index = 0; index < files.length; index++) {
                     const noteFiles = files[index];
                     const notebook = notebooks[index];
