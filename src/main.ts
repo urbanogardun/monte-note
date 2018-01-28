@@ -150,6 +150,11 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
             dbMessager.addAllExistingNotes(notes)
             .then(() => {
 
+              dbMessager.searchNotesGlobally('')
+              .then((docs: any) => {
+                event.sender.send(RELOAD_SEARCH_RESULTS, docs);
+              });
+
               NotebookManager.createTrashcan(notebooksLocation as string)
               .then(() => {
         

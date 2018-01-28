@@ -96,9 +96,12 @@ electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
                     let notebooks = notebookManager_1.default.getNotebooks(notebooksLocation);
                     notebookManager_1.default.getAllNotes(notebooksLocation, notebooks)
                         .then((notes) => {
-                        console.log(notes);
                         dbMessager.addAllExistingNotes(notes)
                             .then(() => {
+                            dbMessager.searchNotesGlobally('')
+                                .then((docs) => {
+                                event.sender.send(index_1.RELOAD_SEARCH_RESULTS, docs);
+                            });
                             notebookManager_1.default.createTrashcan(notebooksLocation)
                                 .then(() => {
                                 dbMessager.updateSettings('notebooksLocation', notebooksLocation)
