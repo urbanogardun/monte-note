@@ -229,27 +229,25 @@ export class Editor extends React.Component<Props, State> {
 
     // Sends image data to ipcMain process
     handleImageUpload() {
-        let input = document.querySelector('input[type=file]') as any;
+        let input = document.querySelector('#ql-image-attachment') as any;
         var file    = input.files[0];
-        var fileName = file.name;
+        var filename = file.name;
         var reader  = new FileReader();
         let props = this.props;
 
-        reader.addEventListener('load', function () {
+        reader.onloadend = function(e: any) {
             let imageData = {
-                filename: fileName,
-                // Strip data type prefix from a string representation of a uploaded image data
-                // and convert it to a Buffer type with base64 encoding. This way a valid image
-                // will get saved to disk.
-                data: new Buffer(reader.result.replace(/^data:image\/\w+;base64,/, ''), 'base64'),
+                filename: filename,
+                data: new Uint8Array(e.target.result),
                 note: props.lastOpenedNote,
                 notebook: props.notebookName
             };
+
             ElectronMessager.sendMessageWithIpcRenderer(UPLOAD_IMAGE, imageData);
-        },                      false);
+        };
 
         if (file) {
-            reader.readAsDataURL(file);
+            reader.readAsArrayBuffer(file);
         }
 
     }
@@ -301,6 +299,7 @@ export class Editor extends React.Component<Props, State> {
                     <input 
                         className="ql-omega" 
                         value="" 
+                        id="ql-image-attachment"
                         type="file" 
                         onChange={
                             () => {
