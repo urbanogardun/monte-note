@@ -1,26 +1,8 @@
 import * as $ from 'jquery';
 const resizeFrame = require('./resize-frame.png');
+import ResizableImage from '../formats/resizableImage';
 import Quill, { DeltaStatic } from 'quill';
 let Parchment = Quill.import('parchment');
-let BlockEmbed = Quill.import('blots/block/embed');
-
-class ResizableImage extends BlockEmbed {
-    static create(value: any) {
-      let node = super.create();
-      node.setAttribute('src', value.url);
-      node.setAttribute('class', value.class);
-      node.setAttribute('height', `${value.height}`);
-      return node;
-    }
-  
-    static value(node: any) {
-      return {
-        class: node.getAttribute('class'),
-        url: node.getAttribute('src'),
-        height: node.getAttribute('height')
-      };
-    }
-}
 
 ResizableImage.blotName = 'resizableImage';
 ResizableImage.tagName = 'img';
