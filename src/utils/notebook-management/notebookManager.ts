@@ -120,6 +120,38 @@ export class NotebookManager {
     }
 
     /**
+     * Gets absolute path to each note file from every notebook. Notes for each
+     * notebook are put into separate arrays, each array signifying a notebook.
+     * @param  {string} location
+     * @param  {string[]} notebooks
+     * @returns {object} Each object's key is notebook name and value list of notes
+     */
+    static getAllNotes(location: string, notebooks: string[]) {
+        return new Promise(resolve => {
+            let notes = [];
+    
+            // Get list of note files for each notebook
+            for (let index = 0; index < notebooks.length; index++) {
+                const notebook = notebooks[index];
+                notes.push(NotebookManager.getNotes(path.join(location, notebook)));
+            }
+    
+            Promise.all(notes).then((files: string[][]) => {
+                let data = {};
+
+                // Map note files to notebooks they belong to
+                for (let index = 0; index < files.length; index++) {
+                    const noteFiles = files[index];
+                    const notebook = notebooks[index];
+                    data[notebook] = noteFiles;
+                }
+
+                resolve(data);
+            });
+        });
+    }
+
+    /**
      * Gets date when note file got created
      * @param  {string} location
      * @param  {string[]} notes

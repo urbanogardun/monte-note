@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fs = require('fs-extra');
 const path = require('path');
 const uuidv1 = require('uuid/v1');
+const striptags = require('../striptags');
 const cheerio = require("cheerio");
 const dbMessager_1 = require("../dbMessager");
 class NotebookManager {
@@ -115,6 +116,31 @@ class NotebookManager {
         });
     }
     /**
+     * Gets absolute path to each note file from every notebook. Notes for each
+     * notebook are put into separate arrays, each array signifying a notebook.
+     * @param  {string} location
+     * @param  {string[]} notebooks
+     * @returns {string[][]} Each inner array is for a specific notebook
+     */
+    static getAllNotes(location, notebooks) {
+        return new Promise(resolve => {
+            let notes = [];
+            for (let index = 0; index < notebooks.length; index++) {
+                const notebook = notebooks[index];
+                notes.push(NotebookManager.getNotes(path.join(location, notebook)));
+            }
+            Promise.all(notes).then((files) => {
+                let data = {};
+                for (let index = 0; index < files.length; index++) {
+                    const noteFiles = files[index];
+                    const notebook = notebooks[index];
+                    data[notebook] = noteFiles;
+                }
+                resolve(data);
+            });
+        });
+    }
+    /**
      * Gets date when note file got created
      * @param  {string} location
      * @param  {string[]} notes
@@ -191,6 +217,15 @@ class NotebookManager {
         return new Promise(resolve => {
             fs.readFile(noteLocation, 'utf8', (err, data) => {
                 resolve(data);
+            });
+        });
+    }
+    static getOnlyTextFromNote(noteLocation) {
+        return new Promise(resolve => {
+            NotebookManager.getNoteData(noteLocation)
+                .then((data) => {
+                let textData = striptags(data);
+                resolve(textData);
             });
         });
     }
