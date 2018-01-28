@@ -247,6 +247,10 @@ div.card:hover, .note-selected, .highlight-note-card {
   cursor: pointer;
 }
 
+a.attachment:hover {
+  cursor: pointer;
+}
+
 .notebook-name-sidebar {
   background-color: #282E3F;
 }

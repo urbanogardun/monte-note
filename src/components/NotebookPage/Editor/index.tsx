@@ -121,12 +121,14 @@ export class Editor extends React.Component<Props, State> {
         // customButton.innerHTML = '<span className="oi oi-trash quill-custom-button"></span>';
         // customButton.addEventListener('click', this.deleteNote.bind(this));
 
+        let quill = this.quill;
         this.quill.on('text-change', (delta: DeltaStatic, oldContents: DeltaStatic, source: any) => {
             
             let noteName = this.props.lastOpenedNote;
             let notebookName = this.state.notebookName;
             let editor = document.querySelector('.ql-editor') as Element;
             let noteData = editor.innerHTML;
+            
             
             if (source === 'user') {
                 clearTimeout(this.timeout);
@@ -141,6 +143,18 @@ export class Editor extends React.Component<Props, State> {
                 };
                 ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
             }
+
+            // For a popover element to display whenever an attachment link is
+            // clicked and for it to disappear on next click outside of a popover
+            // element, quill editor needs to be temporarily disabled in order
+            // for popover to properly work. Popover settings are configured
+            // in Attachment format file.
+            $('.attachment').hover(function() {
+                quill.disable();
+            },                     function() {
+                quill.enable();
+            });
+
         });
 
     }
@@ -205,7 +219,6 @@ export class Editor extends React.Component<Props, State> {
         // TODO: When an attachment has uploaded successfully, add it to note
         // Also set attachment element class to 'attachment' - this class
         // will be used for relinking content
-
         // When an image has uploaded successfully, add it to note
         if (this.props.pathToNewestUploadedImage !== nextProps.pathToNewestUploadedImage) {
             this.quill.insertEmbed(
