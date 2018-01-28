@@ -17,13 +17,21 @@ class Attachment extends BlockEmbed {
             trigger: 'focus',
             placement: 'bottom',
             title: 'Twitter Bootstrap Popover', 
-            content: `It's so simple to create a tooltop for my website!`,
+            content: `
+                <div>
+                    <p>Open Attachment: <a href="${value.href}" target="_blank">Name of Attachment</a> 
+                    <a href="#" id="edit-attachment">Edit</a> | Delete</p>
+                </div>`,
             html: true
         });
         
         $(node).on('click', (event: JQuery.Event) => {
             // Attachment gets opened otherwise
             event.preventDefault();
+        });
+
+        $('#edit-attachment').on('click', function() {
+            console.log('rename attachment');
         });
 
         return node;
