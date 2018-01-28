@@ -520,5 +520,22 @@ electron_1.ipcMain.on(index_1.UPLOAD_IMAGE, (event, data) => {
         });
     });
 });
+electron_1.ipcMain.on(index_1.UPLOAD_ATTACHMENT, (event, data) => {
+    // console.log(data);
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        let noteLocation = {
+            notebooksLocation: location,
+            notebook: data.notebook,
+            note: data.note
+        };
+        notebookManager_1.default.saveAttachment(noteLocation, data.filename, data.data)
+            .then((absolutePathToImage) => {
+            if (absolutePathToImage) {
+                event.sender.send(index_1.IMAGE_UPLOADED, absolutePathToImage);
+            }
+        });
+    });
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

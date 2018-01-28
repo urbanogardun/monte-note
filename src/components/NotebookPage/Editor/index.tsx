@@ -6,7 +6,8 @@ import {
     GET_NAME_OF_LAST_OPENED_NOTE, 
     GET_NOTE_CONTENT, 
     DELETE_NOTE, 
-    UPLOAD_IMAGE } from '../../../constants/index';
+    UPLOAD_IMAGE,
+    UPLOAD_ATTACHMENT } from '../../../constants/index';
 import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
 import initializeResponsiveImages from '../../../utils/quill-modules/resizable-images/resizable-images-quill';
@@ -253,6 +254,46 @@ export class Editor extends React.Component<Props, State> {
 
     }
 
+    handleAttachmentUpload() {
+        let input = document.querySelector('#ql-attachment') as any;
+        var file    = input.files[0];
+        var filename = file.name;
+        var reader  = new FileReader();
+        let props = this.props;
+        // reader.addEventListener('onload', function () {
+        //     // let imageData = {
+        //     //     filename: fileName,
+        //     //     // Strip data type prefix from a string representation of a uploaded image data
+        //     //     // and convert it to a Buffer type with base64 encoding. This way a valid image
+        //     //     // will get saved to disk.
+        //         // data: new Buffer(reader.result.replace(/^data:image\/\w+;base64,/, ''), 'base64'),
+        //     //     note: props.lastOpenedNote,
+        //     //     notebook: props.notebookName
+        //     // };
+        //     // console.log(reader.result);
+        //     // ElectronMessager.sendMessageWithIpcRenderer(UPLOAD_IMAGE, imageData);
+        //     console.log(reader.result);
+        // },                      false);
+        
+        reader.onloadend = function(e: any) {
+            // console.log(e.target.result);
+            // var buffer = new ArrayBuffer(e.target.result.byteLength());
+            var attachmentData = {
+                filename: filename,
+                data: new Uint8Array(e.target.result),
+                note: props.lastOpenedNote,
+                notebook: props.notebookName
+            };
+
+            ElectronMessager.sendMessageWithIpcRenderer(UPLOAD_ATTACHMENT, attachmentData);
+        };
+
+        if (file) {
+            console.log(file);
+            reader.readAsArrayBuffer(file);
+        }
+    }
+
     render() {
         return (
             <div className="col-sm trashcan main-content notebook-note-editor">
@@ -282,6 +323,19 @@ export class Editor extends React.Component<Props, State> {
                             () => {
                                 this.currentCursorPosition = this.quill.getSelection().index;
                                 this.handleImageUpload();
+                            }
+                        }
+                    />
+
+                    <input
+                        className="ql-attachment"
+                        value=""
+                        id="ql-attachment"
+                        type="file"
+                        onChange={
+                            () => {
+                                this.currentCursorPosition = this.quill.getSelection().index;
+                                this.handleAttachmentUpload();
                             }
                         }
                     />

@@ -320,7 +320,7 @@ class NotebookManager {
             let notebooksLocation = saveLocation.notebooksLocation;
             let notebook = saveLocation.notebook;
             let note = saveLocation.note;
-            let imageName = this.getNewNameForImage(imageFilename);
+            let imageName = this.getNewNameForUploadedFile(imageFilename);
             let absolutePathToImage = path.join(notebooksLocation, notebook, note, 'assets', 'images', imageName);
             fs.writeFile(absolutePathToImage, imageData, (err) => {
                 if (err) {
@@ -332,7 +332,24 @@ class NotebookManager {
             });
         });
     }
-    static getNewNameForImage(imageFilename) {
+    static saveAttachment(saveLocation, attachmentFilename, fileData) {
+        return new Promise((resolve) => {
+            let notebooksLocation = saveLocation.notebooksLocation;
+            let notebook = saveLocation.notebook;
+            let note = saveLocation.note;
+            let filename = this.getNewNameForUploadedFile(attachmentFilename);
+            let absolutePathToImage = path.join(notebooksLocation, notebook, note, 'assets', 'attachments', filename);
+            fs.writeFile(absolutePathToImage, fileData, (err) => {
+                if (err) {
+                    throw `Attachment could not be saved: ${err}`;
+                }
+                else {
+                    resolve(absolutePathToImage);
+                }
+            });
+        });
+    }
+    static getNewNameForUploadedFile(imageFilename) {
         let extension = path.extname(imageFilename);
         let newFilename = uuidv1(); // ⇨ 'f64f2940-fae4-11e7-8c5f-ef356f279131'
         newFilename = newFilename + extension;
