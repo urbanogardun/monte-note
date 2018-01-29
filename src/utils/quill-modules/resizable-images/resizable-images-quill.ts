@@ -1,18 +1,13 @@
 import * as $ from 'jquery';
 const resizeFrame = require('./resize-frame.png');
 import ResizableImage from '../formats/resizableImage';
-import Attachment from '../formats/attachment';
 import Quill, { DeltaStatic } from 'quill';
 let Parchment = Quill.import('parchment');
 
 ResizableImage.blotName = 'resizableImage';
 ResizableImage.tagName = 'img';
 
-Attachment.blotName = 'attachment';
-Attachment.tagName = 'a';
-
 Quill.register(ResizableImage);
-Quill.register(Attachment);
 
 function initializeResponsiveImages(quill: Quill) {
 

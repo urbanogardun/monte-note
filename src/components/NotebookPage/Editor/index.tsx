@@ -11,9 +11,14 @@ import {
 import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
 import initializeResponsiveImages from '../../../utils/quill-modules/resizable-images/resizable-images-quill';
+import renameAttachment from '../../../utils/quill-modules/rename-attachment/renameAttachment';
 
 Quill.register('modules/resizableImages', (quill: Quill) => {
     initializeResponsiveImages(quill);
+});
+
+Quill.register('modules/renameAttachment', (quill: Quill) => {
+    renameAttachment(quill);
 });
 
 const striptags = require('../../../utils/striptags');
@@ -105,7 +110,8 @@ export class Editor extends React.Component<Props, State> {
                 // ['image', 'code-block'],
                 // ['trash'],
                 // ],
-                resizableImages: {}
+                resizableImages: {},
+                renameAttachment: {}
             },
             placeholder: 'Take notes...',
             theme: 'snow',  // or 'bubble'
@@ -321,7 +327,9 @@ export class Editor extends React.Component<Props, State> {
                         type="file" 
                         onChange={
                             () => {
-                                this.currentCursorPosition = this.quill.getSelection().index;
+                                if (this.quill.getSelection()) {
+                                    this.currentCursorPosition = this.quill.getSelection().index;
+                                }
                                 this.handleImageUpload();
                             }
                         }
@@ -334,7 +342,9 @@ export class Editor extends React.Component<Props, State> {
                         type="file"
                         onChange={
                             () => {
-                                this.currentCursorPosition = this.quill.getSelection().index;
+                                if (this.quill.getSelection()) {
+                                    this.currentCursorPosition = this.quill.getSelection().index;
+                                }
                                 this.handleAttachmentUpload();
                             }
                         }
