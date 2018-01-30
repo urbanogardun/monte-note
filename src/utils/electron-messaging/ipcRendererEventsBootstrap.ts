@@ -162,7 +162,6 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(APPEND_SEARCH_RESULTS, (event: Event, data: any): void => {
-            console.log('append search results');
             reduxStore.dispatch(actions.appendSearchResults(data));
         });
 
