@@ -1,9 +1,9 @@
 .popover {
-    max-width: none !important;
+    /* max-width: none !important; */
 }
 
 .popover-body {
-    height: 39.5px;
+    min-height: 39.5px;
 }
 
 .input-group-prepend {

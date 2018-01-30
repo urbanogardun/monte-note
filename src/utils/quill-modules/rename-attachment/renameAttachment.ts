@@ -52,10 +52,12 @@ function renameAttachment(quill: Quill) {
 
             // Attachment gets opened otherwise
             event.preventDefault();
-
-            $('.attachment-input').hide();
             
             var attachment = $(this) as any;
+            $('#attachment-link').text(attachment.text().trim());
+        
+            $('.attachment-input').hide();
+            
             $('#attachment-link').off('click').on('click', function(evt: JQuery.Event) {
                 evt.preventDefault();
                 ElectronMessager.sendMessageWithIpcRenderer(OPEN_ATTACHMENT, attachment.attr('href'));
@@ -67,6 +69,7 @@ function renameAttachment(quill: Quill) {
                 
                 $('.attachment-text').hide();
                 $('.attachment-input').show();
+                $('input.rename-attachment').val(attachment.text());
                 $('input.rename-attachment').select();
                 $('input.rename-attachment').focus();
                 $('.save-attachment-name').on('click', function(e1: JQuery.Event) {
