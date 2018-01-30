@@ -9,14 +9,9 @@ class Attachment extends BlockEmbed {
         node.setAttribute('target', '_blank');
         node.setAttribute('data-toggle', 'popover');
         node.setAttribute('tabindex', '0');
-        if (value.attachmentName) {
-            node.setAttribute('attachment-name', value.attachmentName);
-            node.innerHTML = value.attachmentName;
-        } else {
-            // Gets filename from absolute path
-            node.setAttribute('attachment-name', value.href);
-            node.innerHTML = value.href;
-        }
+        node.setAttribute('attachment-name', value.attachmentName);
+        node.innerHTML = value.attachmentName;
+
         return node;
     }
   
