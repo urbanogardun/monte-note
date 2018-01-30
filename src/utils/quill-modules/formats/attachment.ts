@@ -1,5 +1,4 @@
 import Quill from 'quill';
-// import * as $ from 'jquery';
 let BlockEmbed = Quill.import('blots/block/embed');
 
 class Attachment extends BlockEmbed {
@@ -14,33 +13,10 @@ class Attachment extends BlockEmbed {
             node.setAttribute('attachment-name', value.attachmentName);
             node.innerHTML = value.attachmentName;
         } else {
-            console.log(value);
+            // Gets filename from absolute path
             node.setAttribute('attachment-name', value.href);
             node.innerHTML = value.href;
         }
-        console.log(value);
-        // let popoverEl = $(node) as any;
-        // popoverEl.popover({
-        //     trigger: 'focus',
-        //     placement: 'bottom',
-        //     title: 'Twitter Bootstrap Popover', 
-        //     content: `
-        //         <div>
-        //             <p>Open Attachment: <a href="${value.href}" target="_blank">Name of Attachment</a> 
-        //             <a href="#" id="edit-attachment">Edit</a> | Delete</p>
-        //         </div>`,
-        //     html: true
-        // });
-        
-        // $(node).on('click', (event: JQuery.Event) => {
-        //     // Attachment gets opened otherwise
-        //     event.preventDefault();
-        // });
-
-        // $('#edit-attachment').on('click', function() {
-        //     console.log('rename attachment');
-        // });
-
         return node;
     }
   
