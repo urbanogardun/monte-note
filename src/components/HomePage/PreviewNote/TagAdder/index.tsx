@@ -30,14 +30,15 @@ export class TagAdder extends React.Component<Props, State> {
                 note: this.props.noteName,
                 tag: this.state.tag
             };
-            console.log(data.tag);
             ElectronMessager.sendMessageWithIpcRenderer(ADD_TAG_TO_NOTE, data);
 
             let notes = this.props.tags;
             notes.push(this.state.tag);
+
             // Update list of tags in app state with tag that is about to be added
             this.props.updateTags(notes);
             
+            this.setState({tag: ''});
         }
     }
 

@@ -53,6 +53,8 @@ export class TagAdder extends React.Component<Props, State> {
 
             // Update app state with current note content that's inside editor
             this.props.updateNoteContent(noteContentToUpdate);
+
+            this.setState({tag: ''});
         }
     }
 
