@@ -14,7 +14,7 @@ input.form-control.rename-attachment {
 }
 
 #edit-attachment {
-    margin-left: 15px;
+    margin-left: 10px;
 }
 
 a.save-attachment-name, input.form-control.rename-attachment {
@@ -30,4 +30,12 @@ a#attachment-link:hover,
 a#edit-attachment,
 a#delete-attachment {
     text-decoration: none;
+}
+
+.attachment-open-external {
+    margin-right: 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: #007bff;
+    top: 2.7px;
 }

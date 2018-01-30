@@ -20,26 +20,28 @@ function renameAttachment(quill: Quill) {
         self.popover({
             placement: 'bottom',
             content: `
-                <div id="attachment-popover" class="attachment-popover">
-                    <div class="attachment-text">
-                        Open: 
-                        <a href="" class="attachment-link" target="_blank">Name of Attachment</a> 
-                        <a href="" class="edit-attachment">Edit</a> <span class="separator">|</span> 
-                        <a href="#" class="delete-attachment">Delete</a></p>
+            <div id="attachment-popover" class="attachment-popover">
+                <div class="attachment-text">
+                    Open: <a href="" class="attachment-link" target="_blank">Name of Attachment</a> 
+                    <span class="separator">|</span> 
+                    <span title="Open in Explorer" class="oi oi-external-link attachment-open-external"></span>
+                    <a href="" class="edit-attachment">Edit</a> 
+                    <span class="separator">|</span> 
+                    <a href="#" class="delete-attachment">Delete</a></p>
+                </div>
+                <div class="attachment-input input-group input-group-sm mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text attachment-new-name" id="inputGroup-sizing-sm">Name: </span>
                     </div>
-                    <div class="attachment-input input-group input-group-sm mb-3">
-                        <div class="input-group-prepend">
-                            <span class="attachment-new-name" id="inputGroup-sizing-sm">Name: </span>
-                        </div>
-                        <input 
-                            type="text" 
-                            class="form-control rename-attachment" 
-                            aria-label="Name" 
-                            aria-describedby="inputGroup-sizing-sm"
-                        >
-                        <a href="" class="save-attachment-name">Save</a>
-                    </div>
-                </div>`,
+                    <input 
+                        type="text" 
+                        class="form-control rename-attachment" 
+                        aria-label="Name" 
+                        aria-describedby="inputGroup-sizing-sm"
+                    >
+                    <a href="" class="save-attachment-name">Save</a>
+                </div>
+            </div>`,
             html: true
         });
 
@@ -58,9 +60,22 @@ function renameAttachment(quill: Quill) {
         
             $('.attachment-input').hide();
             
-            $('.attachment-link').off('click').on('click', function(evt: JQuery.Event) {
+            $('.attachment-link, .attachment-open-external').off('click').on('click', function(evt: JQuery.Event) {
                 evt.preventDefault();
-                ElectronMessager.sendMessageWithIpcRenderer(OPEN_ATTACHMENT, attachment.attr('href'));
+                
+                let dataToSend: any;
+                if ($(evt.target).hasClass('attachment-open-external')) {
+                    dataToSend = {
+                        filenamePath: attachment.attr('href'),
+                        openExplorer: true
+                    };
+                } else {
+                    dataToSend = {
+                        filenamePath: attachment.attr('href'),
+                        openExplorer: false
+                    };
+                }
+                ElectronMessager.sendMessageWithIpcRenderer(OPEN_ATTACHMENT, dataToSend);
             });
 
             $('.attachment-popover').find('.edit-attachment').off('click').on('click', function(e: JQuery.Event) {

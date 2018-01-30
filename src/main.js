@@ -544,8 +544,15 @@ electron_1.ipcMain.on(index_1.UPLOAD_ATTACHMENT, (event, data) => {
 electron_1.ipcMain.on(index_1.DELETE_ATTACHMENT, (event, filenamePath) => {
     notebookManager_1.default.deleteAttachment(filenamePath);
 });
-electron_1.ipcMain.on(index_1.OPEN_ATTACHMENT, (event, filenamePath) => {
-    electron_1.shell.openItem(filenamePath);
+electron_1.ipcMain.on(index_1.OPEN_ATTACHMENT, (event, data) => {
+    let filenamePath = data.filenamePath;
+    let openExplorer = data.openExplorer;
+    if (openExplorer) {
+        electron_1.shell.showItemInFolder(filenamePath);
+    }
+    else {
+        electron_1.shell.openItem(filenamePath);
+    }
 });
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

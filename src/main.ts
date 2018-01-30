@@ -688,8 +688,16 @@ ipcMain.on(DELETE_ATTACHMENT, (event: any, filenamePath: string) => {
   NotebookManager.deleteAttachment(filenamePath);
 });
 
-ipcMain.on(OPEN_ATTACHMENT, (event: any, filenamePath: string) => {
-  shell.openItem(filenamePath);
+ipcMain.on(OPEN_ATTACHMENT, (event: any, data: any) => {
+  let filenamePath = data.filenamePath;
+  let openExplorer = data.openExplorer;
+
+  if (openExplorer) {
+    shell.showItemInFolder(filenamePath);
+  } else {
+    shell.openItem(filenamePath);
+  }
+
 });
 
 // In this file you can include the rest of your app's specific main process
