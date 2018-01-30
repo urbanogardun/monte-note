@@ -77,11 +77,9 @@ function renameAttachment(quill: Quill) {
 
             $('#attachment-popover').find('#delete-attachment').off('click').on('click', function() {
 
-                console.log(`Delete attachment: ${attachmentLink}`);
-                    
                 attachment.popover('hide');
-                ElectronMessager.sendMessageWithIpcRenderer(DELETE_ATTACHMENT, attachmentLink);
-                // attachment.remove();
+                ElectronMessager.sendMessageWithIpcRenderer(DELETE_ATTACHMENT, attachment.attr('href'));
+                attachment.remove();
 
             });
 

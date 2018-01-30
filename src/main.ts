@@ -679,7 +679,7 @@ ipcMain.on(UPLOAD_ATTACHMENT, (event: any, data: any) => {
 });
 
 ipcMain.on(DELETE_ATTACHMENT, (event: any, filenamePath: string) => {
-  console.log(`Delete filename: ${filenamePath}`);
+  NotebookManager.deleteAttachment(filenamePath);
 });
 
 // In this file you can include the rest of your app's specific main process
