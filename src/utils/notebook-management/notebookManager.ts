@@ -382,28 +382,47 @@ export class NotebookManager {
             let note = saveLocation.note;
             let absolutePathToAttachment = 
             path.join(notebooksLocation, notebook, note, 'assets', 'attachments', attachmentFilename);
-            let filename = this.getNewNameForAttachment(absolutePathToAttachment);
+            
+            NotebookManager.getNewNameForAttachment(absolutePathToAttachment)
+            .then((pathToAttachment: string) => {
 
-            fs.writeFile(absolutePathToAttachment, fileData, (err: Error) => {
-                if (err) {
-                    throw `Attachment could not be saved: ${err}`;
-                } else {
-                    resolve(absolutePathToAttachment);
-                }
+                fs.writeFile(pathToAttachment, fileData, (err: Error) => {
+                    if (err) {
+                        throw `Attachment could not be saved: ${err}`;
+                    } else {
+                        resolve(pathToAttachment);
+                    }
+                });
+
             });
+
         });
     }
 
+    /**
+     * Checks if same filename already exists in the directory; if it does, it
+     * adds an integer to the end of the filename to make it unique.
+     * @param  {string} attachmentPath
+     * @param  {number=1} filenumber
+     * @returns {string}
+     */
     static getNewNameForAttachment(attachmentPath: string, filenumber: number = 1) {
         return new Promise((resolve) => {
 
             fs.pathExists(attachmentPath)
             .then((exists: any) => {
-                if (!exists) {
+                if (exists) {
                     let newPathToAttachment = path.parse(attachmentPath);
                     let attachmentFilename = newPathToAttachment.base;
                     let extension = path.parse(attachmentFilename).ext;
-                    let newFilename = path.parse(attachmentFilename).name + '_' + filenumber + extension;
+
+                    let newFilename;
+                    if (filenumber > 1) {
+                        newFilename = path.parse(attachmentFilename).name.slice(0, -1) + filenumber + extension;
+                    } else {
+                        newFilename = path.parse(attachmentFilename).name + '_' + filenumber + extension;
+                    }
+
                     newPathToAttachment = path.join(newPathToAttachment.dir, newFilename);
                     resolve(NotebookManager.getNewNameForAttachment(newPathToAttachment, filenumber + 1));
                 } else {

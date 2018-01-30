@@ -320,7 +320,7 @@ class NotebookManager {
             let notebooksLocation = saveLocation.notebooksLocation;
             let notebook = saveLocation.notebook;
             let note = saveLocation.note;
-            let imageName = this.getNewNameForUploadedFile(imageFilename);
+            let imageName = this.getNewNameForUploadedImage(imageFilename);
             let absolutePathToImage = path.join(notebooksLocation, notebook, note, 'assets', 'images', imageName);
             fs.writeFile(absolutePathToImage, imageData, (err) => {
                 if (err) {
@@ -332,28 +332,54 @@ class NotebookManager {
             });
         });
     }
+    static getNewNameForUploadedImage(filename) {
+        let extension = path.extname(filename);
+        let newFilename = uuidv1(); // ⇨ 'f64f2940-fae4-11e7-8c5f-ef356f279131'
+        newFilename = newFilename + extension;
+        return newFilename;
+    }
     static saveAttachment(saveLocation, attachmentFilename, fileData) {
         return new Promise((resolve) => {
             let notebooksLocation = saveLocation.notebooksLocation;
             let notebook = saveLocation.notebook;
             let note = saveLocation.note;
-            let filename = this.getNewNameForUploadedFile(attachmentFilename);
-            let absolutePathToAttachment = path.join(notebooksLocation, notebook, note, 'assets', 'attachments', filename);
-            fs.writeFile(absolutePathToAttachment, fileData, (err) => {
-                if (err) {
-                    throw `Attachment could not be saved: ${err}`;
-                }
-                else {
-                    resolve(absolutePathToAttachment);
-                }
+            let absolutePathToAttachment = path.join(notebooksLocation, notebook, note, 'assets', 'attachments', attachmentFilename);
+            NotebookManager.getNewNameForAttachment(absolutePathToAttachment)
+                .then((pathToAttachment) => {
+                fs.writeFile(pathToAttachment, fileData, (err) => {
+                    if (err) {
+                        throw `Attachment could not be saved: ${err}`;
+                    }
+                    else {
+                        resolve(pathToAttachment);
+                    }
+                });
             });
         });
     }
-    static getNewNameForUploadedFile(imageFilename) {
-        let extension = path.extname(imageFilename);
-        let newFilename = uuidv1(); // ⇨ 'f64f2940-fae4-11e7-8c5f-ef356f279131'
-        newFilename = newFilename + extension;
-        return newFilename;
+    static getNewNameForAttachment(attachmentPath, filenumber = 1) {
+        return new Promise((resolve) => {
+            fs.pathExists(attachmentPath)
+                .then((exists) => {
+                if (exists) {
+                    let newPathToAttachment = path.parse(attachmentPath);
+                    let attachmentFilename = newPathToAttachment.base;
+                    let extension = path.parse(attachmentFilename).ext;
+                    let newFilename;
+                    if (filenumber > 1) {
+                        newFilename = path.parse(attachmentFilename).name.slice(0, -1) + filenumber + extension;
+                    }
+                    else {
+                        newFilename = path.parse(attachmentFilename).name + '_' + filenumber + extension;
+                    }
+                    newPathToAttachment = path.join(newPathToAttachment.dir, newFilename);
+                    resolve(NotebookManager.getNewNameForAttachment(newPathToAttachment, filenumber + 1));
+                }
+                else {
+                    resolve(attachmentPath);
+                }
+            });
+        });
     }
     /**
      * When existing note content is moved to another directory and that new
