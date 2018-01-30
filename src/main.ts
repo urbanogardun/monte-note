@@ -672,7 +672,12 @@ ipcMain.on(UPLOAD_ATTACHMENT, (event: any, data: any) => {
     NotebookManager.saveAttachment(noteLocation, data.filename, data.data)
     .then((absolutePathToAttachment: any) => {
       if (absolutePathToAttachment) {
-        event.sender.send(ATTACHMENT_UPLOADED, absolutePathToAttachment);
+        let filename = path.parse(absolutePathToAttachment).base;
+        let dataToSend = {
+          absolutePathToAttachment: absolutePathToAttachment,
+          filename: filename
+        };
+        event.sender.send(ATTACHMENT_UPLOADED, dataToSend);
       }
     });
   });

@@ -241,9 +241,9 @@ export function pathToNewestUploadedImage(state: StoreState, action: UploadedAct
 export function pathToNewestUploadedAsset(state: StoreState, action: UploadedAction) {
   switch (action.type) {
     case PATH_TO_NEW_ATTACHMENT:
-      return action.path as StoreState;
+      return {path: action.path, filename: action.filename} as StoreState;
     default:
-      return state || '' as StoreState;
+      return state || {path: '', filename: ''} as StoreState;
   }
 }
 

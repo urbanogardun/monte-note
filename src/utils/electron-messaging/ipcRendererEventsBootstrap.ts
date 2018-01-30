@@ -178,8 +178,10 @@ export function ipcRendererEventsBootstrap() {
             reduxStore.dispatch(actions.pathToNewUploadedImage(imagePath));
         });
 
-        ipcRenderer.on(ATTACHMENT_UPLOADED, (event: Event, attachmentPath: string): void => {
-            reduxStore.dispatch(actions.pathToNewUploadedAttachment(attachmentPath));
+        ipcRenderer.on(ATTACHMENT_UPLOADED, (event: Event, data: any): void => {
+            let attachmentPath = data.absolutePathToAttachment;
+            let filename = data.filename;
+            reduxStore.dispatch(actions.pathToNewUploadedAttachment(attachmentPath, filename));
         });
 
     } catch (error) {

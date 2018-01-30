@@ -129,6 +129,7 @@ export interface UploadedMediaImage {
 export interface UploadedMediaAttachment {
     type: constants.PATH_TO_NEW_ATTACHMENT;
     path: string;
+    filename: string;
 }
 
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
@@ -321,9 +322,10 @@ export function pathToNewUploadedImage(path: string): UploadedMediaImage {
     };
 }
 
-export function pathToNewUploadedAttachment(path: string): UploadedMediaAttachment {
+export function pathToNewUploadedAttachment(path: string, filename: string): UploadedMediaAttachment {
     return {
         type: constants.PATH_TO_NEW_ATTACHMENT,
-        path
+        path,
+        filename
     };
 }

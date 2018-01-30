@@ -34,7 +34,7 @@ export interface Props {
     updateLastOpenedNote: Function;
     updateNoteContent: Function;
     pathToNewestUploadedImage: string;
-    pathToNewestUploadedAsset: string;
+    pathToNewestUploadedAsset: any;
 }
 
 export interface State {
@@ -233,7 +233,11 @@ export class Editor extends React.Component<Props, State> {
         } else if (this.props.pathToNewestUploadedAsset !== nextProps.pathToNewestUploadedAsset) {
             this.quill.insertEmbed(
                 this.currentCursorPosition, 
-                'attachment', { href: `${nextProps.pathToNewestUploadedAsset}` }, 'user');
+                'attachment', { 
+                    href: nextProps.pathToNewestUploadedAsset.path,
+                    attachmentName:  nextProps.pathToNewestUploadedAsset.filename
+                }, 
+                'user');
         } else {
             // Load saved content from note file into Quill editor
             this.quill.deleteText(0, this.quill.getLength());

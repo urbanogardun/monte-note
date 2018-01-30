@@ -15,9 +15,7 @@ export function mapStateToProps(
         currentNoteTags, 
         pathToNewestUploadedImage, 
         pathToNewestUploadedAsset }: StoreState) {
-    console.log(`pathToNewestUploadedImage: ${pathToNewestUploadedImage}`);
-    console.log('\n');
-    console.log(`pathToNewestUploadedAsset: ${pathToNewestUploadedAsset}`);
+    console.log(`pathToNewestUploadedAsset: ${JSON.stringify(pathToNewestUploadedAsset)}`);
     return {
         notes,
         lastOpenedNote,

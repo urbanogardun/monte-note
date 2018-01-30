@@ -16,7 +16,7 @@ export interface Props {
     addTagToNote: Function;
     currentNoteTags: string[];
     pathToNewestUploadedImage: string;
-    pathToNewestUploadedAsset: string;
+    pathToNewestUploadedAsset: any;
 }
 
 export interface State {
