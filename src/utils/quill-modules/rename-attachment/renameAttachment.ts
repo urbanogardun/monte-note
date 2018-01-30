@@ -2,7 +2,7 @@ import * as $ from 'jquery';
 import Quill from 'quill';
 import Attachment from '../formats/attachment';
 import { ElectronMessager } from '../../electron-messaging/electronMessager';
-import { DELETE_ATTACHMENT } from '../../../constants/index';
+import { DELETE_ATTACHMENT, OPEN_ATTACHMENT } from '../../../constants/index';
 let Parchment = Quill.import('parchment');
 
 Attachment.blotName = 'attachment';
@@ -54,6 +54,11 @@ function renameAttachment(quill: Quill) {
             $('.attachment-input').hide();
             
             var attachment = $(this) as any;
+            $('#attachment-link').off('click').on('click', function(evt: JQuery.Event) {
+                evt.preventDefault();
+                ElectronMessager.sendMessageWithIpcRenderer(OPEN_ATTACHMENT, attachment.attr('href'));
+            });
+
             $('#attachment-popover').find('#edit-attachment').off('click').on('click', function(e: JQuery.Event) {
                 
                 e.preventDefault();

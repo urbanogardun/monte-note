@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog, shell } from 'electron';
 require('dotenv').load();
 var isDev = require('electron-is-dev');
 import NotebookManager from './utils/notebook-management/notebookManager';
@@ -37,7 +37,8 @@ import {
   IMAGE_UPLOADED,
   UPLOAD_ATTACHMENT,
   ATTACHMENT_UPLOADED,
-  DELETE_ATTACHMENT
+  DELETE_ATTACHMENT,
+  OPEN_ATTACHMENT
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -680,6 +681,10 @@ ipcMain.on(UPLOAD_ATTACHMENT, (event: any, data: any) => {
 
 ipcMain.on(DELETE_ATTACHMENT, (event: any, filenamePath: string) => {
   NotebookManager.deleteAttachment(filenamePath);
+});
+
+ipcMain.on(OPEN_ATTACHMENT, (event: any, filenamePath: string) => {
+  shell.openItem(filenamePath);
 });
 
 // In this file you can include the rest of your app's specific main process
