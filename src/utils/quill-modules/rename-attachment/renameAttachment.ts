@@ -23,9 +23,9 @@ function renameAttachment(quill: Quill) {
                 <div id="attachment-popover" class="attachment-popover">
                     <div class="attachment-text">
                         Open: 
-                        <a href="" id="attachment-link" target="_blank">Name of Attachment</a> 
-                        <a href="" id="edit-attachment">Edit</a> <span class="separator">|</span> 
-                        <a href="#" id="delete-attachment">Delete</a></p>
+                        <a href="" class="attachment-link" target="_blank">Name of Attachment</a> 
+                        <a href="" class="edit-attachment">Edit</a> <span class="separator">|</span> 
+                        <a href="#" class="delete-attachment">Delete</a></p>
                     </div>
                     <div class="attachment-input input-group input-group-sm mb-3">
                         <div class="input-group-prepend">
@@ -48,23 +48,22 @@ function renameAttachment(quill: Quill) {
             let cursorPosition = blot.offset(quill.scroll);
 
             let attachmentLink = $(this).attr('href');
-            $('#attachment-link').attr('href', attachmentLink as string);
+            $('.attachment-link').attr('href', attachmentLink as string);
 
             // Attachment gets opened otherwise
             event.preventDefault();
             
             var attachment = $(this) as any;
-            $('#attachment-link').text(attachment.text().trim());
+            $('.attachment-link').text(attachment.text().trim());
         
             $('.attachment-input').hide();
             
-            $('#attachment-link').off('click').on('click', function(evt: JQuery.Event) {
+            $('.attachment-link').off('click').on('click', function(evt: JQuery.Event) {
                 evt.preventDefault();
                 ElectronMessager.sendMessageWithIpcRenderer(OPEN_ATTACHMENT, attachment.attr('href'));
             });
 
-            $('#attachment-popover').find('#edit-attachment').off('click').on('click', function(e: JQuery.Event) {
-                
+            $('.attachment-popover').find('.edit-attachment').off('click').on('click', function(e: JQuery.Event) {
                 e.preventDefault();
                 
                 $('.attachment-text').hide();
@@ -88,7 +87,7 @@ function renameAttachment(quill: Quill) {
                 
             });
 
-            $('#attachment-popover').find('#delete-attachment').off('click').on('click', function(e2: JQuery.Event) {
+            $('.attachment-popover').find('.delete-attachment').off('click').on('click', function(e2: JQuery.Event) {
                 e2.preventDefault();
 
                 attachment.popover('hide');
@@ -99,15 +98,27 @@ function renameAttachment(quill: Quill) {
 
             // Popover will stay open until attachment gets its name changed,
             // gets deleted, or user clicks somewhere outside the popover.
+            let previousPopover: any;
             $('body').click(function(e: JQuery.Event) {
                 
                 if (!clickedOnAttachmentLink(e)) {
-                    
+
                     if (clickedOutsidePopover(e)) {
                         let popover = $('[data-toggle="popover"]') as any;
                         popover.popover('hide');
                     }
 
+                } else {
+                    // Close previously opened popover element when clicking
+                    // directly from one popover to another
+                    if (previousPopover) {
+                        if (previousPopover.attr('href') !== $(e.target).attr('href')) {
+                            previousPopover.popover('hide');
+                            previousPopover = $(e.target) as any;
+                        }
+                    } else {
+                        previousPopover = $(e.target) as any;
+                    }
                 }
 
             });
