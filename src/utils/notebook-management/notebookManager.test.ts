@@ -279,6 +279,16 @@ test('gets paths to all note files in all notebooks', done => {
 
 });
 
+test('generates filename for an attachment that has the same name as one that is already uploaded', done => {
+  let attachment = 'C:\\test\\test-notebooks\\Notebook\Note-1\\assets\\attachments\\25426378.mp4';
+
+  NotebookManager.getNewNameForAttachment(attachment)
+  .then((filename: string) => {
+    done();
+    expect(filename).toEqual('C:\\test\\test-notebooks\\Notebook\Note-1\\assets\\attachments\\25426378_1.mp4');
+  });
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

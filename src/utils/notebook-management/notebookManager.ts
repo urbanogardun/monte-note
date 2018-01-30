@@ -354,7 +354,7 @@ export class NotebookManager {
             let notebooksLocation = saveLocation.notebooksLocation;
             let notebook = saveLocation.notebook;
             let note = saveLocation.note;
-            let imageName = this.getNewNameForUploadedFile(imageFilename);
+            let imageName = this.getNewNameForUploadedImage(imageFilename);
 
             let absolutePathToImage = path.join(notebooksLocation, notebook, note, 'assets', 'images', imageName);
 
@@ -368,15 +368,21 @@ export class NotebookManager {
         });
     }
 
+    static getNewNameForUploadedImage(filename: string) {
+        let extension = path.extname(filename);
+        let newFilename = uuidv1(); // ⇨ 'f64f2940-fae4-11e7-8c5f-ef356f279131'
+        newFilename = newFilename + extension;
+        return newFilename;
+    }
+
     static saveAttachment(saveLocation: any, attachmentFilename: string, fileData: string) {
         return new Promise((resolve) => {
             let notebooksLocation = saveLocation.notebooksLocation;
             let notebook = saveLocation.notebook;
             let note = saveLocation.note;
-            let filename = this.getNewNameForUploadedFile(attachmentFilename);
-
             let absolutePathToAttachment = 
-            path.join(notebooksLocation, notebook, note, 'assets', 'attachments', filename);
+            path.join(notebooksLocation, notebook, note, 'assets', 'attachments', attachmentFilename);
+            let filename = this.getNewNameForAttachment(absolutePathToAttachment);
 
             fs.writeFile(absolutePathToAttachment, fileData, (err: Error) => {
                 if (err) {
@@ -388,11 +394,23 @@ export class NotebookManager {
         });
     }
 
-    static getNewNameForUploadedFile(imageFilename: string) {
-        let extension = path.extname(imageFilename);
-        let newFilename = uuidv1(); // ⇨ 'f64f2940-fae4-11e7-8c5f-ef356f279131'
-        newFilename = newFilename + extension;
-        return newFilename;
+    static getNewNameForAttachment(attachmentPath: string, filenumber: number = 1) {
+        return new Promise((resolve) => {
+
+            fs.pathExists(attachmentPath)
+            .then((exists: any) => {
+                if (!exists) {
+                    let newPathToAttachment = path.parse(attachmentPath);
+                    let attachmentFilename = newPathToAttachment.base;
+                    let extension = path.parse(attachmentFilename).ext;
+                    let newFilename = path.parse(attachmentFilename).name + '_' + filenumber + extension;
+                    newPathToAttachment = path.join(newPathToAttachment.dir, newFilename);
+                    resolve(NotebookManager.getNewNameForAttachment(newPathToAttachment, filenumber + 1));
+                } else {
+                    resolve(attachmentPath);
+                }
+            });
+        });
     }
 
     /**

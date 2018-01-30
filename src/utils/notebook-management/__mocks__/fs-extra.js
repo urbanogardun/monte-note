@@ -83,6 +83,15 @@ function ensureDir(path) {
     });
 }
 
+function pathExists(path) {
+    return new Promise(resolve => {
+        if (path === 'C:\\test\\test-notebooks\\Notebook\Note-1\\assets\\attachments\\25426378.mp4') {
+            resolve(false);
+        }
+        resolve(true);
+    })
+}
+
 fs.mkdir = mkdir;
 fs.existsSync = existsSync;
 fs.mkdirSync = mkdirSync;
@@ -98,5 +107,6 @@ fs.move = move;
 fs.remove = remove;
 fs.ensureFile = ensureFile;
 fs.ensureDir = ensureDir;
+fs.pathExists = pathExists;
 
 module.exports = fs;
