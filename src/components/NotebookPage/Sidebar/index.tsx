@@ -196,16 +196,21 @@ export class Sidebar extends React.Component<Props, State> {
 
                 <section className="trashcan">
                     <div 
+                        title={this.props.notebookName}
                         className="notebook-name-sidebar" 
                         data-toggle="collapse" 
                         data-target="#collapseExample" 
-                        aria-expanded="false"
+                        aria-expanded="true"
                     >
-                        Notes
+                        {
+                            this.props.notebookName.length > 25 ? 
+                            this.props.notebookName.slice(0, 23) + '...' : 
+                            this.props.notebookName
+                        }
                         <span className="oi oi-chevron-bottom expand-notebook" />
                         <span className="oi oi-chevron-left expand-notebook" />
                     </div>
-                    <div className="collapse notes-sidebar" id="collapseExample">
+                    <div className="collapse notes-sidebar show" id="collapseExample">
                         <ul className="list-group notes">
                             {(this.props.notes as string[]).map((name: string, index: number) => {
                                 let activeNote = 
