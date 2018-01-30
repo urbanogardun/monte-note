@@ -289,6 +289,17 @@ test('generates filename for an attachment that has the same name as one that is
   });
 });
 
+test('removes attachment from a disk', done => {
+  let pathToAttachment = 'C:\\test\\test-notebooks\\Notebook\Note-1\\assets\\attachments\\25426378.mp4';
+
+  NotebookManager.deleteAttachment(pathToAttachment)
+  .then((response: boolean) => {
+    done();
+    expect(response).toEqual(true);
+  });
+
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

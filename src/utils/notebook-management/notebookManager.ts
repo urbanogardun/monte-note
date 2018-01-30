@@ -432,6 +432,18 @@ export class NotebookManager {
         });
     }
 
+    static deleteAttachment(filePath: string) {
+        return new Promise((resolve) => {
+            fs.remove(filePath)
+            .then(() => {
+                resolve(true);
+            })
+            .catch((err: Error) => {
+                throw `Attachment could not be removed: ${err}`;
+            });
+        });
+    }
+
     /**
      * When existing note content is moved to another directory and that new
      * directory is set as new notebooks location, note assets such as images

@@ -86,9 +86,9 @@ function ensureDir(path) {
 function pathExists(path) {
     return new Promise(resolve => {
         if (path === 'C:\\test\\test-notebooks\\Notebook\Note-1\\assets\\attachments\\25426378.mp4') {
-            resolve(false);
+            resolve(true);
         }
-        resolve(true);
+        resolve(false);
     })
 }
 
