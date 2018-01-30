@@ -34,9 +34,9 @@ function renameAttachment(quill: Quill) {
                             aria-label="Small" 
                             aria-describedby="inputGroup-sizing-sm"
                         >
-                        <a href="#" class="save-attachment-name">Save</a>
+                        <a href="" class="save-attachment-name">Save</a>
                     </div>
-                    <a href="#" id="edit-attachment">Edit</a> | <a href="#" id="delete-attachment">Delete</a></p>
+                    <a href="" id="edit-attachment">Edit</a> | <a href="#" id="delete-attachment">Delete</a></p>
                 </div>`,
             html: true
         });
@@ -54,12 +54,16 @@ function renameAttachment(quill: Quill) {
             $('.attachment-input').hide();
             
             var attachment = $(this) as any;
-            $('#attachment-popover').find('#edit-attachment').off('click').on('click', function() {
+            $('#attachment-popover').find('#edit-attachment').off('click').on('click', function(e: JQuery.Event) {
+                
+                e.preventDefault();
+                
                 $('.attachment-text').hide();
                 $('.attachment-input').show();
                 $('input.rename-attachment').select();
                 $('input.rename-attachment').focus();
-                $('.save-attachment-name').on('click', function() {
+                $('.save-attachment-name').on('click', function(e1: JQuery.Event) {
+                    e1.preventDefault();
                     let attachmentName = $('input.rename-attachment').val() as string;
                     
                     quill.insertEmbed(
@@ -74,7 +78,8 @@ function renameAttachment(quill: Quill) {
                 
             });
 
-            $('#attachment-popover').find('#delete-attachment').off('click').on('click', function() {
+            $('#attachment-popover').find('#delete-attachment').off('click').on('click', function(e2: JQuery.Event) {
+                e2.preventDefault();
 
                 attachment.popover('hide');
                 ElectronMessager.sendMessageWithIpcRenderer(DELETE_ATTACHMENT, attachment.attr('href'));
