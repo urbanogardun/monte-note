@@ -18,9 +18,8 @@ function renameAttachment(quill: Quill) {
         var self = $('.attachment') as any;
         self.popover({
             placement: 'bottom',
-            title: 'Twitter Bootstrap Popover', 
             content: `
-                <div id="attachment-popover">
+                <div id="attachment-popover" class="attachment-popover">
                     <div class="attachment-text">
                         <p>
                         Open Attachment: <a href="" id="attachment-link" target="_blank">Name of Attachment</a> 
@@ -83,9 +82,38 @@ function renameAttachment(quill: Quill) {
 
             });
 
+            // Popover will stay open until attachment gets its name changed,
+            // gets deleted, or user clicks somewhere outside the popover.
+            $('body').click(function(e: JQuery.Event) {
+                
+                if (!clickedOnAttachmentLink(e)) {
+                    
+                    if (clickedOutsidePopover(e)) {
+                        let popover = $('[data-toggle="popover"]') as any;
+                        popover.popover('hide');
+                    }
+
+                }
+
+            });
+
         });
 
     });
+}
+
+function clickedOutsidePopover(e: JQuery.Event) {
+    if ( ($(e.target).parents('#attachment-popover').length) || ($(e.target).attr('id') === 'attachment-popover') ) {
+        return false;
+    }
+    return true;
+}
+
+function clickedOnAttachmentLink(e: JQuery.Event) {
+    if ($(e.target).hasClass('attachment')) {
+        return true;
+    }
+    return false;
 }
 
 export default renameAttachment;
