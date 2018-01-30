@@ -531,7 +531,7 @@ electron_1.ipcMain.on(index_1.UPLOAD_ATTACHMENT, (event, data) => {
         notebookManager_1.default.saveAttachment(noteLocation, data.filename, data.data)
             .then((absolutePathToAttachment) => {
             if (absolutePathToAttachment) {
-                let filename = path.parse(absolutePathToAttachment).base;
+                let filename = path.parse(absolutePathToAttachment).name;
                 let dataToSend = {
                     absolutePathToAttachment: absolutePathToAttachment,
                     filename: filename
