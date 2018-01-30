@@ -1,0 +1,33 @@
+.popover {
+    max-width: none !important;
+}
+
+.popover-body {
+    height: 39.5px;
+}
+
+.input-group-prepend {
+    height: 18.5px;
+}
+input.form-control.rename-attachment {
+    padding: 0px;
+}
+
+#edit-attachment {
+    margin-left: 15px;
+}
+
+a.save-attachment-name, input.form-control.rename-attachment {
+    margin-left: 10px;
+}
+
+.separator {
+    color: rgba(0,0,0,.2);
+}
+
+a.save-attachment-name:hover, 
+a#attachment-link:hover,
+a#edit-attachment,
+a#delete-attachment {
+    text-decoration: none;
+}

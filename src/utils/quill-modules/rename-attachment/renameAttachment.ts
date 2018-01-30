@@ -4,6 +4,7 @@ import Attachment from '../formats/attachment';
 import { ElectronMessager } from '../../electron-messaging/electronMessager';
 import { DELETE_ATTACHMENT, OPEN_ATTACHMENT } from '../../../constants/index';
 let Parchment = Quill.import('parchment');
+import './renameAttachment.css';
 
 Attachment.blotName = 'attachment';
 Attachment.tagName = 'a';
@@ -21,22 +22,23 @@ function renameAttachment(quill: Quill) {
             content: `
                 <div id="attachment-popover" class="attachment-popover">
                     <div class="attachment-text">
-                        <p>
-                        Open Attachment: <a href="" id="attachment-link" target="_blank">Name of Attachment</a> 
+                        Open: 
+                        <a href="" id="attachment-link" target="_blank">Name of Attachment</a> 
+                        <a href="" id="edit-attachment">Edit</a> <span class="separator">|</span> 
+                        <a href="#" id="delete-attachment">Delete</a></p>
                     </div>
                     <div class="attachment-input input-group input-group-sm mb-3">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroup-sizing-sm">Small</span>
+                            <span class="attachment-new-name" id="inputGroup-sizing-sm">Name: </span>
                         </div>
                         <input 
                             type="text" 
                             class="form-control rename-attachment" 
-                            aria-label="Small" 
+                            aria-label="Name" 
                             aria-describedby="inputGroup-sizing-sm"
                         >
                         <a href="" class="save-attachment-name">Save</a>
                     </div>
-                    <a href="" id="edit-attachment">Edit</a> | <a href="#" id="delete-attachment">Delete</a></p>
                 </div>`,
             html: true
         });
