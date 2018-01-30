@@ -22,7 +22,7 @@ function renameAttachment(quill: Quill) {
             content: `
             <div id="attachment-popover" class="attachment-popover">
                 <div class="attachment-text">
-                    Open: <a href="" class="attachment-link" target="_blank">Name of Attachment</a> 
+                    <span title="Open File" class="oi oi-file attachment-link"></span>
                     <span class="separator">|</span> 
                     <span title="Open in Explorer" class="oi oi-external-link attachment-open-external"></span>
                     <a href="" class="edit-attachment">Edit</a> 
@@ -31,7 +31,7 @@ function renameAttachment(quill: Quill) {
                 </div>
                 <div class="attachment-input input-group input-group-sm mb-3">
                     <div class="input-group-prepend">
-                        <span class="input-group-text attachment-new-name" id="inputGroup-sizing-sm">Name: </span>
+                        <span class="attachment-new-name" id="inputGroup-sizing-sm">Name: </span>
                     </div>
                     <input 
                         type="text" 
@@ -56,7 +56,7 @@ function renameAttachment(quill: Quill) {
             event.preventDefault();
             
             var attachment = $(this) as any;
-            $('.attachment-link').text(attachment.text().trim());
+            // $('.attachment-link').text(attachment.text().trim());
         
             $('.attachment-input').hide();
             
