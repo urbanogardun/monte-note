@@ -357,6 +357,13 @@ class NotebookManager {
             });
         });
     }
+    /**
+     * Checks if same filename already exists in the directory; if it does, it
+     * adds an integer to the end of the filename to make it unique.
+     * @param  {string} attachmentPath
+     * @param  {number=1} filenumber
+     * @returns {string}
+     */
     static getNewNameForAttachment(attachmentPath, filenumber = 1) {
         return new Promise((resolve) => {
             fs.pathExists(attachmentPath)

@@ -36,7 +36,8 @@ import {
   UPLOAD_IMAGE,
   IMAGE_UPLOADED,
   UPLOAD_ATTACHMENT,
-  ATTACHMENT_UPLOADED
+  ATTACHMENT_UPLOADED,
+  DELETE_ATTACHMENT
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -675,6 +676,10 @@ ipcMain.on(UPLOAD_ATTACHMENT, (event: any, data: any) => {
     });
   });
 
+});
+
+ipcMain.on(DELETE_ATTACHMENT, (event: any, filenamePath: string) => {
+  console.log(`Delete filename: ${filenamePath}`);
 });
 
 // In this file you can include the rest of your app's specific main process

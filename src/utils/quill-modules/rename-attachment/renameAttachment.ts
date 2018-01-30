@@ -1,6 +1,8 @@
 import * as $ from 'jquery';
 import Quill from 'quill';
 import Attachment from '../formats/attachment';
+import { ElectronMessager } from '../../electron-messaging/electronMessager';
+import { DELETE_ATTACHMENT } from '../../../constants/index';
 let Parchment = Quill.import('parchment');
 
 Attachment.blotName = 'attachment';
@@ -35,7 +37,7 @@ function renameAttachment(quill: Quill) {
                         >
                         <a href="#" class="save-attachment-name">Save</a>
                     </div>
-                    <a href="#" id="edit-attachment">Edit</a> | Delete</p>
+                    <a href="#" id="edit-attachment">Edit</a> | <a href="#" id="delete-attachment">Delete</a></p>
                 </div>`,
             html: true
         });
@@ -72,6 +74,17 @@ function renameAttachment(quill: Quill) {
                 });
                 
             });
+
+            $('#attachment-popover').find('#delete-attachment').off('click').on('click', function() {
+
+                console.log(`Delete attachment: ${attachmentLink}`);
+                    
+                attachment.popover('hide');
+                ElectronMessager.sendMessageWithIpcRenderer(DELETE_ATTACHMENT, attachmentLink);
+                // attachment.remove();
+
+            });
+
         });
 
     });
