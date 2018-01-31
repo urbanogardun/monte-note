@@ -78,7 +78,6 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(LOAD_NOTEBOOKS_LOCATION, (event: Event, location: string): void => {
-            console.log('SET LOCATION!');
             reduxStore.dispatch(actions.setNotebooksLocation(location));
         });
 
