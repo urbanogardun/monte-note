@@ -330,29 +330,34 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
                 if (result) {
                     notebookManager_1.default.trashNote(location, notebook, note)
                         .then((res) => {
-                        event.sender.send(index_1.DELETE_NOTE, res);
-                        let notebookLocation = path.join(location, notebook);
-                        notebookManager_1.default.getNotes(notebookLocation)
-                            .then((notes) => {
-                            notebookManager_1.default.getNotesCreationDate(notes)
-                                .then((response) => {
-                                notes = notebookManager_1.default.orderNotesBy(response, 'created_at');
-                                notes = notebookManager_1.default.formatNotes(notes);
-                                let lastCreatedNote = notes.pop();
-                                if (lastCreatedNote) {
-                                    dbMessager.setLastOpenedNote(notebook, lastCreatedNote);
-                                }
-                                else {
-                                    dbMessager.setLastOpenedNote(notebook, '');
-                                }
-                                let noteDataToSave = {
-                                    note: note,
-                                    notebook: notebook,
-                                    data: noteDataTextOnly
-                                };
-                                dbMessager.saveNoteContent(noteDataToSave);
+                        if (res) {
+                            dbMessager.markNoteAsTrash(notebook, note)
+                                .then(() => {
+                                event.sender.send(index_1.DELETE_NOTE, res);
+                                let notebookLocation = path.join(location, notebook);
+                                notebookManager_1.default.getNotes(notebookLocation)
+                                    .then((notes) => {
+                                    notebookManager_1.default.getNotesCreationDate(notes)
+                                        .then((response) => {
+                                        notes = notebookManager_1.default.orderNotesBy(response, 'created_at');
+                                        notes = notebookManager_1.default.formatNotes(notes);
+                                        let lastCreatedNote = notes.pop();
+                                        if (lastCreatedNote) {
+                                            dbMessager.setLastOpenedNote(notebook, lastCreatedNote);
+                                        }
+                                        else {
+                                            dbMessager.setLastOpenedNote(notebook, '');
+                                        }
+                                        let noteDataToSave = {
+                                            note: note,
+                                            notebook: notebook,
+                                            data: noteDataTextOnly
+                                        };
+                                        dbMessager.saveNoteContent(noteDataToSave);
+                                    });
+                                });
                             });
-                        });
+                        }
                     });
                 }
             });
@@ -404,7 +409,10 @@ electron_1.ipcMain.on(index_1.RESTORE_NOTE_FROM_TRASH, (event, data) => {
         .then((location) => {
         notebookManager_1.default.restoreNoteFromTrash(location, notebook, note)
             .then((result) => {
-            event.sender.send(index_1.RESTORE_NOTE_FROM_TRASH, result);
+            if (result) {
+                dbMessager.unmarkNoteAsTrash(notebook, note);
+                event.sender.send(index_1.RESTORE_NOTE_FROM_TRASH, result);
+            }
         });
     });
 });

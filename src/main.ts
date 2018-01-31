@@ -378,15 +378,12 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
               if (updatePreviewContent) {
                 dbMessager.getNoteTags(notebookName, noteName)
                 .then((tags: string[]) => {
-                  console.log('RETURNED TAGS: ');
-                  console.log(tags);
                   let dataToSend = {
                     notebook: notebookName,
                     note: noteName,
                     noteContent: noteData,
                     tags: tags
                   };
-                  console.log(dataToSend);
                   event.sender.send(PREVIEW_NOTE, dataToSend);
                 });
               }
@@ -400,7 +397,7 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
 
               dbMessager.getAllTags()
               .then((tags: any) => {
-                console.log(tags);
+                event.sender.send(GET_ALL_TAGS, tags);
               });
 
             });
@@ -443,32 +440,40 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
         if (result) {
           NotebookManager.trashNote(location, notebook, note)
           .then((res: boolean) => {
-            event.sender.send(DELETE_NOTE, res);
 
-            let notebookLocation = path.join(location, notebook);
-            NotebookManager.getNotes(notebookLocation)
-            .then((notes: string[]) => {
-              NotebookManager.getNotesCreationDate(notes)
-              .then((response: any) => {
-                notes = NotebookManager.orderNotesBy(response, 'created_at');
-                notes = NotebookManager.formatNotes(notes) as string[];
+            if (res) {
+              dbMessager.markNoteAsTrash(notebook, note)
+              .then(() => {
 
-                let lastCreatedNote = notes.pop();
-                if (lastCreatedNote) {
-                  dbMessager.setLastOpenedNote(notebook, lastCreatedNote);
-                } else {
-                  dbMessager.setLastOpenedNote(notebook, '');
-                }
-
-                let noteDataToSave = {
-                  note: note,
-                  notebook: notebook,
-                  data: noteDataTextOnly
-                };
-                dbMessager.saveNoteContent(noteDataToSave);
+                event.sender.send(DELETE_NOTE, res);
+    
+                let notebookLocation = path.join(location, notebook);
+                NotebookManager.getNotes(notebookLocation)
+                .then((notes: string[]) => {
+                  NotebookManager.getNotesCreationDate(notes)
+                  .then((response: any) => {
+                    notes = NotebookManager.orderNotesBy(response, 'created_at');
+                    notes = NotebookManager.formatNotes(notes) as string[];
+    
+                    let lastCreatedNote = notes.pop();
+                    if (lastCreatedNote) {
+                      dbMessager.setLastOpenedNote(notebook, lastCreatedNote);
+                    } else {
+                      dbMessager.setLastOpenedNote(notebook, '');
+                    }
+    
+                    let noteDataToSave = {
+                      note: note,
+                      notebook: notebook,
+                      data: noteDataTextOnly
+                    };
+                    dbMessager.saveNoteContent(noteDataToSave);
+    
+                  });
+                });
 
               });
-            });
+            }
 
           });
         }
@@ -527,7 +532,10 @@ ipcMain.on(RESTORE_NOTE_FROM_TRASH, (event: any, data: any) => {
   .then((location: string) => {
     NotebookManager.restoreNoteFromTrash(location, notebook, note)
     .then((result: boolean) => {
-      event.sender.send(RESTORE_NOTE_FROM_TRASH, result);
+      if (result) {
+        dbMessager.unmarkNoteAsTrash(notebook, note);
+        event.sender.send(RESTORE_NOTE_FROM_TRASH, result);
+      }
     });
   });
 });

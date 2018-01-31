@@ -61,6 +61,7 @@ class DbMessager {
     formatSearchQuery(query, tags, searchWithinNotebook = '') {
         let searchQuery = {};
         searchQuery.noteContent = query;
+        searchQuery.noteInTrash = false;
         if (tags.length) {
             searchQuery.noteContent = query;
             searchQuery.tags = { $in: tags };
@@ -111,6 +112,20 @@ class DbMessager {
             });
         });
     }
+    markNoteAsTrash(notebook, note) {
+        return new Promise((resolve) => {
+            this.db.update({ notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA' }, { $set: { noteInTrash: true } }, {}, () => {
+                resolve(true);
+            });
+        });
+    }
+    unmarkNoteAsTrash(notebook, note) {
+        return new Promise((resolve) => {
+            this.db.update({ notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA' }, { $set: { noteInTrash: false } }, {}, () => {
+                resolve(true);
+            });
+        });
+    }
     createNote(notebook, note) {
         return new Promise((resolve) => {
             let docToSave = {
@@ -118,7 +133,8 @@ class DbMessager {
                 noteName: note,
                 noteContent: '',
                 tags: [],
-                documentFor: 'NOTE_DATA'
+                documentFor: 'NOTE_DATA',
+                noteInTrash: false
             };
             this.db.insert(docToSave, (err) => {
                 if (err) {
@@ -141,7 +157,8 @@ class DbMessager {
                 noteName: notebookManager_1.NotebookManager.formatNoteName(noteLocation),
                 noteContent: '',
                 tags: [],
-                documentFor: 'NOTE_DATA'
+                documentFor: 'NOTE_DATA',
+                noteInTrash: false
             };
             notebookManager_1.NotebookManager.getOnlyTextFromNote(noteLocation)
                 .then((content) => {
@@ -232,6 +249,7 @@ class DbMessager {
                         documentFor: 'NOTE_DATA',
                         noteContent: noteContent,
                         tags: [],
+                        noteInTrash: false,
                         noteLastupdatedAt: Date.now()
                     }, () => {
                         resolve(true);
@@ -242,7 +260,7 @@ class DbMessager {
     }
     getAllTags() {
         return new Promise((resolve) => {
-            this.db.find({ documentFor: 'NOTE_DATA' }, { tags: 1 }, (err, docs) => {
+            this.db.find({ documentFor: 'NOTE_DATA', noteInTrash: false }, { tags: 1 }, (err, docs) => {
                 let allTags = docs.map((doc) => { return doc.tags; });
                 var uniqueTags = [].concat.apply([], allTags);
                 uniqueTags = uniqueTags.filter((tag, i) => { return uniqueTags.indexOf(tag) === i; });
