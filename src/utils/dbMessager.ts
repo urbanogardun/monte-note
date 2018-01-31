@@ -259,7 +259,7 @@ export class DbMessager {
                 noteName: noteName,
                 documentFor: 'NOTE_DATA'
             };
-            console.log('SAVE THIS CONTENT');
+
             this.db.findOne(docToSave, (err: Error, doc: any) => {
                 if (doc) {
                     this.db.update
@@ -349,14 +349,10 @@ export class DbMessager {
     getNoteTags(notebook: string, note: string) {
         return new Promise((resolve) => {
             let docToGet = {notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA'};
-            this.db.findOne(docToGet, (err: Error, doc: any) => {
+            this.db.findOne(docToGet, {tags: 1}, (err: Error, doc: any) => {
 
                 if (doc) {
-                    if (doc.tags) {
-                        resolve(doc.tags);
-                    } else {
-                        resolve([]);
-                    }
+                    resolve(doc.tags);
                 } else {
                     resolve([]);
                 }

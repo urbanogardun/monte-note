@@ -262,7 +262,6 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
                 notebookManager_1.default.updateNoteData(absolutePathToNote, noteData)
                     .then((result) => {
                     if (result) {
-                        console.log('Note content updated successfully');
                         let noteDataToSave = {
                             note: noteName,
                             notebook: notebookName,
@@ -274,14 +273,17 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
                             // to home page. Update content that just got saved inside the
                             // preview window of home page.
                             if (updatePreviewContent) {
-                                dbMessager.getNoteTags(data.notebook, data.note)
+                                dbMessager.getNoteTags(notebookName, noteName)
                                     .then((tags) => {
+                                    console.log('RETURNED TAGS: ');
+                                    console.log(tags);
                                     let dataToSend = {
                                         notebook: notebookName,
                                         note: noteName,
                                         noteContent: noteData,
                                         tags: tags
                                     };
+                                    console.log(dataToSend);
                                     event.sender.send(index_1.PREVIEW_NOTE, dataToSend);
                                 });
                             }

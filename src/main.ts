@@ -364,7 +364,6 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
         NotebookManager.updateNoteData(absolutePathToNote, noteData)
         .then((result: boolean) => {
           if (result) {
-            console.log('Note content updated successfully');
             let noteDataToSave = {
               note: noteName,
               notebook: notebookName,
@@ -377,14 +376,17 @@ ipcMain.on(UPDATE_NOTE, (event: any, data: any) => {
               // to home page. Update content that just got saved inside the
               // preview window of home page.
               if (updatePreviewContent) {
-                dbMessager.getNoteTags(data.notebook, data.note)
+                dbMessager.getNoteTags(notebookName, noteName)
                 .then((tags: string[]) => {
+                  console.log('RETURNED TAGS: ');
+                  console.log(tags);
                   let dataToSend = {
                     notebook: notebookName,
                     note: noteName,
                     noteContent: noteData,
                     tags: tags
                   };
+                  console.log(dataToSend);
                   event.sender.send(PREVIEW_NOTE, dataToSend);
                 });
               }

@@ -219,7 +219,6 @@ class DbMessager {
                 noteName: noteName,
                 documentFor: 'NOTE_DATA'
             };
-            console.log('SAVE THIS CONTENT');
             this.db.findOne(docToSave, (err, doc) => {
                 if (doc) {
                     this.db.update(docToSave, { $set: { noteContent: noteContent, noteLastupdatedAt: Date.now() } }, {}, () => {
@@ -286,14 +285,17 @@ class DbMessager {
     getNoteTags(notebook, note) {
         return new Promise((resolve) => {
             let docToGet = { notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA' };
-            this.db.findOne(docToGet, (err, doc) => {
+            this.db.findOne(docToGet, { tags: 1 }, (err, doc) => {
                 if (doc) {
-                    if (doc.tags) {
-                        resolve(doc.tags);
-                    }
-                    else {
-                        resolve([]);
-                    }
+                    console.log('TAGS ONLY');
+                    console.log(doc);
+                    resolve(doc.tags);
+                    // if ('tags' in doc) {
+                    //     console.log('TAGSSSS: ' JSON.stringify(doc));
+                    //     resolve(doc.tags);
+                    // } else {
+                    //     resolve([]);
+                    // }
                 }
                 else {
                     resolve([]);

@@ -100,6 +100,7 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(PREVIEW_NOTE, (event: Event, data: any): void => {
+            console.log(data);
             reduxStore.dispatch(actions.loadPreviewContent(data));
         });
 
