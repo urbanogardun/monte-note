@@ -41,13 +41,17 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                     data-toggle="collapse"
                                
                                     data-target={`#${notebook}`}
-                                    aria-expanded="false"
+                                    aria-expanded="true"
                                 >
-                                    {notebook}
+                                    {
+                                        notebook.length > 25 ? 
+                                        notebook.slice(0, 23) + '...' : 
+                                        notebook
+                                    }
                                     <span className="oi oi-chevron-bottom expand-notebook" />
                                     <span className="oi oi-chevron-left expand-notebook" />
                                 </div>
-                                <div className="collapse notes-sidebar" id={notebook}>
+                                <div className="collapse show notes-sidebar" id={notebook}>
                                     <ul className="list-group notes">
                                         {(this.props.trash[notebook].map((note: string) => {
                                             return (
