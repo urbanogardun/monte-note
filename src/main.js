@@ -328,7 +328,7 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
             notebookManager_1.default.updateNoteData(noteLocation, data.noteData)
                 .then((result) => {
                 if (result) {
-                    notebookManager_1.default.trashNote(location, notebook, note + '.html')
+                    notebookManager_1.default.trashNote(location, notebook, note)
                         .then((res) => {
                         event.sender.send(index_1.DELETE_NOTE, res);
                         let notebookLocation = path.join(location, notebook);

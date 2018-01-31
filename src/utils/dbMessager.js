@@ -287,15 +287,7 @@ class DbMessager {
             let docToGet = { notebookName: notebook, noteName: note, documentFor: 'NOTE_DATA' };
             this.db.findOne(docToGet, { tags: 1 }, (err, doc) => {
                 if (doc) {
-                    console.log('TAGS ONLY');
-                    console.log(doc);
                     resolve(doc.tags);
-                    // if ('tags' in doc) {
-                    //     console.log('TAGSSSS: ' JSON.stringify(doc));
-                    //     resolve(doc.tags);
-                    // } else {
-                    //     resolve([]);
-                    // }
                 }
                 else {
                     resolve([]);

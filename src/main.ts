@@ -441,7 +441,7 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
       NotebookManager.updateNoteData(noteLocation, data.noteData)
       .then((result: boolean) => {
         if (result) {
-          NotebookManager.trashNote(location, notebook, note + '.html')
+          NotebookManager.trashNote(location, notebook, note)
           .then((res: boolean) => {
             event.sender.send(DELETE_NOTE, res);
 
