@@ -525,7 +525,7 @@ ipcMain.on(RESTORE_NOTE_FROM_TRASH, (event: any, data: any) => {
   console.log(`Restore note: ${note} from notebook: ${notebook}`);
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
-    NotebookManager.restoreNoteFromTrash(location, notebook, note + '.html')
+    NotebookManager.restoreNoteFromTrash(location, notebook, note)
     .then((result: boolean) => {
       event.sender.send(RESTORE_NOTE_FROM_TRASH, result);
     });

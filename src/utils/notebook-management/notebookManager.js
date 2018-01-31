@@ -253,8 +253,6 @@ class NotebookManager {
     static trashNote(notebooksLocation, notebookName, noteName) {
         let oldPath = path.join(notebooksLocation, notebookName, noteName);
         let newPath = path.join(notebooksLocation, '.trashcan', notebookName, noteName);
-        console.log('oldPath: ' + oldPath);
-        console.log('newPath: ' + newPath);
         return new Promise(resolve => {
             fs.move(oldPath, newPath)
                 .then(() => {

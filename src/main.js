@@ -402,7 +402,7 @@ electron_1.ipcMain.on(index_1.RESTORE_NOTE_FROM_TRASH, (event, data) => {
     console.log(`Restore note: ${note} from notebook: ${notebook}`);
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
-        notebookManager_1.default.restoreNoteFromTrash(location, notebook, note + '.html')
+        notebookManager_1.default.restoreNoteFromTrash(location, notebook, note)
             .then((result) => {
             event.sender.send(index_1.RESTORE_NOTE_FROM_TRASH, result);
         });
