@@ -41,7 +41,7 @@ import {
   UPDATE_PREVIEW,
   PATH_TO_NEW_IMAGE, 
   PATH_TO_NEW_ATTACHMENT,
-  UPDATE_ALL_TAGS}  from '../constants/index';
+  UPDATE_ALL_TAGS }  from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {

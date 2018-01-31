@@ -29,5 +29,5 @@ export interface StoreState {
     selectedNotebook?: string;
     previewData?: PreviewData;
     pathToNewestUploadedImage?: string;
-    pathToNewestUploadedAsset?: string;
+    pathToNewestUploadedAsset?: any;
 }
