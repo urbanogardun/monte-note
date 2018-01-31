@@ -43,6 +43,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>)
         updateSearchQuery: (query: string) => dispatch(actions.updateSearchQuery(query)),
         updateSelectedNotebook: (notebook: string) => dispatch(actions.updateSelectedNotebook(notebook)),
         updatePreview: (notebook: string, note: string) => dispatch(actions.updatePreview(notebook, note)),
+        updateAllTags: (tags: string) => dispatch(actions.updateAllTags(tags))
     };
 }
 

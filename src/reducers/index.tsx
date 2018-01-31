@@ -40,7 +40,8 @@ import {
   UPDATE_SELECTED_NOTEBOOK,
   UPDATE_PREVIEW,
   PATH_TO_NEW_IMAGE, 
-  PATH_TO_NEW_ATTACHMENT}  from '../constants/index';
+  PATH_TO_NEW_ATTACHMENT,
+  UPDATE_ALL_TAGS}  from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -188,6 +189,13 @@ export function allTags(state: StoreState, action: TagsAction): StoreState {
   switch (action.type) {
     case LOAD_ALL_TAGS:
       return action.tags as StoreState;
+    case UPDATE_ALL_TAGS:
+      let tags = state as StoreState[];
+      if (tags.indexOf(action.tag as StoreState) === -1) {
+        return [...state as StoreState[], action.tag] as StoreState;
+      } else {
+        return state as StoreState;
+      }
     default:
       return state || [];
   }

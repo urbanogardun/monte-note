@@ -7,6 +7,7 @@ export interface Props {
     notebookName: string;
     noteName: string;
     updateTags: Function;
+    updateAllTags: Function;
 }
 
 export interface State {
@@ -37,6 +38,7 @@ export class TagAdder extends React.Component<Props, State> {
 
             // Update list of tags in app state with tag that is about to be added
             this.props.updateTags(notes);
+            this.props.updateAllTags(this.state.tag);
             
             this.setState({tag: ''});
         }

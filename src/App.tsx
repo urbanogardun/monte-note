@@ -24,6 +24,7 @@ interface Props {
   lastOpenedNote: string;
   updatePreview: Function;
   previewData: object;
+  updateAllTags: Function;
 }
 
 class App extends React.Component<Props, object> {
@@ -60,6 +61,7 @@ class App extends React.Component<Props, object> {
         lastOpenedNote={this.props.lastOpenedNote}
         updatePreview={this.props.updatePreview}
         previewData={this.props.previewData}
+        updateAllTags={this.props.updateAllTags}
       />);
     } else if (notebooksLocation === NOTEBOOKS_LOCATION_NOT_SET) {
       componentToRender = <Welcome name={'John'} notebooksLocation={''} />;

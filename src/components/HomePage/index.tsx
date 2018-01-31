@@ -21,6 +21,7 @@ export interface Props {
     lastOpenedNote: string;
     updatePreview: Function;
     previewData: object;
+    updateAllTags: Function;
 }
 export interface State {
     searchQuery: string;
@@ -74,6 +75,7 @@ export class HomePage extends React.Component<Props, State> {
                     updateTags={this.props.updateTags}
                     goToRoute={this.props.goToRoute}
                     lastOpenedNote={this.props.lastOpenedNote}
+                    updateAllTags={this.props.updateAllTags}
                 />
             </div>
         );

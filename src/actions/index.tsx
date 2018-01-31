@@ -95,9 +95,14 @@ export interface UpdatePreviewContentTags {
     tags: string[];
 }
 
-export interface TagsAction {
+export interface LoadAllTags {
     type: constants.LOAD_ALL_TAGS;
     tags: string[];
+}
+
+export interface UpdateAllTags {
+    type: constants.UPDATE_ALL_TAGS;
+    tag: string;
 }
 
 export interface UpdateSelectedTags {
@@ -131,6 +136,8 @@ export interface UploadedMediaAttachment {
     path: string;
     filename: string;
 }
+
+export type TagsAction = LoadAllTags | UpdateAllTags;
 
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
 
@@ -279,10 +286,17 @@ export function updatePreviewContentTags(tags: string[]): PreviewAction {
     };
 }
 
-export function loadAllTags(tags: string[]): TagsAction {
+export function loadAllTags(tags: string[]): LoadAllTags {
     return {
         type: constants.LOAD_ALL_TAGS,
         tags
+    };
+}
+
+export function updateAllTags(tag: string): UpdateAllTags {
+    return {
+        type: constants.UPDATE_ALL_TAGS,
+        tag
     };
 }
 

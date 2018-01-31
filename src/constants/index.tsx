@@ -127,6 +127,9 @@ export type GET_ALL_TAGS = typeof GET_ALL_TAGS;
 export const LOAD_ALL_TAGS = 'LOAD_ALL_TAGS';
 export type LOAD_ALL_TAGS = typeof LOAD_ALL_TAGS;
 
+export const UPDATE_ALL_TAGS = 'UPDATE_ALL_TAGS';
+export type UPDATE_ALL_TAGS = typeof UPDATE_ALL_TAGS;
+
 export const GET_NOTES_WITH_TAGS = 'GET_NOTES_WITH_TAGS';
 export type GET_NOTES_WITH_TAGS = typeof GET_NOTES_WITH_TAGS;
 

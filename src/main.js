@@ -275,15 +275,12 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
                             if (updatePreviewContent) {
                                 dbMessager.getNoteTags(notebookName, noteName)
                                     .then((tags) => {
-                                    console.log('RETURNED TAGS: ');
-                                    console.log(tags);
                                     let dataToSend = {
                                         notebook: notebookName,
                                         note: noteName,
                                         noteContent: noteData,
                                         tags: tags
                                     };
-                                    console.log(dataToSend);
                                     event.sender.send(index_1.PREVIEW_NOTE, dataToSend);
                                 });
                             }
@@ -295,7 +292,7 @@ electron_1.ipcMain.on(index_1.UPDATE_NOTE, (event, data) => {
                             });
                             dbMessager.getAllTags()
                                 .then((tags) => {
-                                console.log(tags);
+                                event.sender.send(index_1.GET_ALL_TAGS, tags);
                             });
                         });
                     }

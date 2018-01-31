@@ -38,6 +38,7 @@ it('renders without crashing', () => {
       lastOpenedNote={'test'}
       updatePreview={() => { return; }}
       previewData={{}}
+      updateAllTags={() => { return; }}
     />
   </Provider>,
   div);
