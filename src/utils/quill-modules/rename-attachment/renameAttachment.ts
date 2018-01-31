@@ -57,6 +57,13 @@ function renameAttachment(quill: Quill, options?: any) {
             <a href="" class="save-attachment-name">Save</a>
         </div>
         </div>`;
+    } else if ( (options) && ('noteInTrash' in options) ) {
+        popoverHTML = `
+        <div id="attachment-popover" class="attachment-popover">
+            <div class="attachment-text">
+                <p>To view this attachment, you should first restore the note from trash.</p>
+            </div>
+        </div>`;
     }
     quill.on('text-change', function () {
         var self = $('.attachment') as any;

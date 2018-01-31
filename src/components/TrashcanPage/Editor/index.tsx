@@ -34,7 +34,7 @@ export class TrashcanEditor extends React.Component<Props, State> {
                     ['delete-note']
                 ],
                 attachmentPopoverTrash: {
-                    quillDisabled: true
+                    noteInTrash: true
                 }
             },
             theme: 'snow'  // or 'bubble',
