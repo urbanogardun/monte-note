@@ -12,36 +12,57 @@ Attachment.tagName = 'a';
 Quill.register(Attachment);
 
 // Rename attachment element
-function renameAttachment(quill: Quill) {
-
+function renameAttachment(quill: Quill, options?: any) {
+    let popoverHTML = `
+        <div id="attachment-popover" class="attachment-popover">
+        <div class="attachment-text">
+            <span title="Open File" class="oi oi-file attachment-link"></span>
+            <span class="separator">|</span> 
+            <span title="Open in Explorer" class="oi oi-external-link attachment-open-external"></span>
+            <a href="" class="edit-attachment">Edit</a> 
+            <span class="separator">|</span> 
+            <a href="#" class="delete-attachment">Delete</a></p>
+        </div>
+        <div class="attachment-input input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="attachment-new-name" id="inputGroup-sizing-sm">Name: </span>
+            </div>
+            <input 
+                type="text" 
+                class="form-control rename-attachment" 
+                aria-label="Name" 
+                aria-describedby="inputGroup-sizing-sm"
+            >
+            <a href="" class="save-attachment-name">Save</a>
+        </div>
+        </div>`;
+    if ( (options) && ('quillDisabled' in options) ) {
+        popoverHTML = `
+        <div id="attachment-popover" class="attachment-popover">
+        <div class="attachment-text">
+            <span title="Open File" class="oi oi-file attachment-link"></span>
+            <span class="separator">|</span> 
+            <span title="Open in Explorer" class="oi oi-external-link attachment-open-external"></span>
+        </div>
+        <div class="attachment-input input-group input-group-sm mb-3">
+            <div class="input-group-prepend">
+                <span class="attachment-new-name" id="inputGroup-sizing-sm">Name: </span>
+            </div>
+            <input 
+                type="text" 
+                class="form-control rename-attachment" 
+                aria-label="Name" 
+                aria-describedby="inputGroup-sizing-sm"
+            >
+            <a href="" class="save-attachment-name">Save</a>
+        </div>
+        </div>`;
+    }
     quill.on('text-change', function () {
-
         var self = $('.attachment') as any;
         self.popover({
             placement: 'bottom',
-            content: `
-            <div id="attachment-popover" class="attachment-popover">
-                <div class="attachment-text">
-                    <span title="Open File" class="oi oi-file attachment-link"></span>
-                    <span class="separator">|</span> 
-                    <span title="Open in Explorer" class="oi oi-external-link attachment-open-external"></span>
-                    <a href="" class="edit-attachment">Edit</a> 
-                    <span class="separator">|</span> 
-                    <a href="#" class="delete-attachment">Delete</a></p>
-                </div>
-                <div class="attachment-input input-group input-group-sm mb-3">
-                    <div class="input-group-prepend">
-                        <span class="attachment-new-name" id="inputGroup-sizing-sm">Name: </span>
-                    </div>
-                    <input 
-                        type="text" 
-                        class="form-control rename-attachment" 
-                        aria-label="Name" 
-                        aria-describedby="inputGroup-sizing-sm"
-                    >
-                    <a href="" class="save-attachment-name">Save</a>
-                </div>
-            </div>`,
+            content: popoverHTML,
             html: true
         });
 

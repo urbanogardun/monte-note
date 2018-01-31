@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Quill from 'quill';
+import renameAttachment from '../../../../utils/quill-modules/rename-attachment/renameAttachment';
 
 export interface Props {
     previewContent: any;
@@ -9,6 +10,10 @@ export interface Props {
 export interface State {
     noteUpdated: boolean
 }
+
+Quill.register('modules/attachmentPopover', (quill: Quill, options: any) => {
+    renameAttachment(quill, options);
+});
 
 export class PreviewViewer extends React.Component<Props, State> {
 
@@ -24,7 +29,10 @@ export class PreviewViewer extends React.Component<Props, State> {
     componentDidMount() {
         this.quill = new Quill('#quill-container', {
             modules: {
-                toolbar: false
+                toolbar: false,
+                attachmentPopover: {
+                    quillDisabled: true
+                }
             },
             theme: 'snow'  // or 'bubble',
         });

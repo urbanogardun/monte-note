@@ -2,6 +2,7 @@ import * as React from 'react';
 import Quill from 'quill';
 import electronMessager from '../../../utils/electron-messaging/electronMessager';
 import { RESTORE_NOTE_FROM_TRASH, REMOVE_NOTE_FROM_DRIVE } from '../../../constants/index';
+import renameAttachment from '../../../utils/quill-modules/rename-attachment/renameAttachment';
 
 export interface Props {
     noteContent?: string;
@@ -12,6 +13,10 @@ export interface Props {
 }
 
 export interface State { }
+
+Quill.register('modules/attachmentPopoverTrash', (quill: Quill, options: any) => {
+    renameAttachment(quill, options);
+});
 
 export class TrashcanEditor extends React.Component<Props, State> {
 
@@ -27,7 +32,10 @@ export class TrashcanEditor extends React.Component<Props, State> {
                 toolbar: [
                     ['omega'],
                     ['delete-note']
-                ]
+                ],
+                attachmentPopoverTrash: {
+                    quillDisabled: true
+                }
             },
             theme: 'snow'  // or 'bubble',
         });
