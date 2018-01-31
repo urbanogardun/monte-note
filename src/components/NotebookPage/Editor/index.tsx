@@ -332,7 +332,8 @@ export class Editor extends React.Component<Props, State> {
                         className="ql-omega" 
                         value="" 
                         id="ql-image-attachment"
-                        type="file" 
+                        type="file"
+                        accept="image/*" 
                         onChange={
                             () => {
                                 if (this.quill.getSelection()) {
