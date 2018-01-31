@@ -8,6 +8,7 @@ import {
     DELETE_NOTE, 
     UPLOAD_IMAGE,
     UPLOAD_ATTACHMENT } from '../../../constants/index';
+import './index.css';
 import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
 import initializeResponsiveImages from '../../../utils/quill-modules/resizable-images/resizable-images-quill';
@@ -315,6 +316,11 @@ export class Editor extends React.Component<Props, State> {
                     noteContent={this.props.noteContent}
                 />
                 <div id="toolbar">
+                    <select className="ql-font">
+                        <option value="aref ruqaa">Aref Ruqaa</option>
+                        <option value="mirza">Mirza</option>
+                        <option value="roboto">Roboto</option>
+                    </select>
                     <select className="ql-size">
                         <option value="small"/>
                         <option value="large"/>

@@ -1,0 +1,54 @@
+@font-face {
+    font-family: 'Aref Ruqaa';
+    src: url('../../../assets/fonts/editor/aref-ruqaa/ArefRuqaa-Regular.woff2') format('woff2'),
+        url('../../../assets/fonts/editor/aref-ruqaa/ArefRuqaa-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Aref Ruqaa';
+    src: url('../../../assets/fonts/editor/aref-ruqaa/ArefRuqaa-Bold.woff2') format('woff2'),
+        url('../../../assets/fonts/editor/aref-ruqaa/ArefRuqaa-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Slabo 13px';
+    src: url('../../../assets/fonts/editor/slabo13px/Slabo13px-Regular.woff2') format('woff2'),
+        url('../../../assets/fonts/editor/slabo13px/Slabo13px-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Set default font-family */
+#quill-container {
+    font-family: "Aref Ruqaa";
+    font-size: 18px;
+    height: 375px;
+  }
+  
+  /* Set dropdown font-families */
+  #toolbar-container .ql-font span[data-label="Aref Ruqaa"]::before {
+    font-family: "Aref Ruqaa";
+  }
+  #toolbar-container .ql-font span[data-label="Mirza"]::before {
+    font-family: "Mirza";
+  }
+  #toolbar-container .ql-font span[data-label="Roboto"]::before {
+    font-family: "Roboto";
+  }
+  
+  /* Set content font-families */
+  .ql-font-mirza {
+    font-family: "Mirza";
+  }
+  .ql-font-roboto {
+    font-family: "Roboto";
+  }
+  .ql-font-slabo13px {
+      font-family: "Slabo 13px";
+  }
+  /* We do not set Aref Ruqaa since it is the default font */
+  
