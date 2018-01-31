@@ -38,17 +38,21 @@ export class Db {
             callback('', '');
         }, insert: (query: string, callback: any) => {
             callback('');
-        }, findOne: (query: any, callback: any) => {
+        }, findOne: (query: any, callback1: any, callback2: any) => {
             if (query.name === 'applicationSettings') {
-                callback(null, {notebooksLocation: ''});
+                callback1(null, {notebooksLocation: ''});
             } else if (query.name === 'notebooks') {
-                callback(null, {notebooks: ['book-1', 'book-2', 'book-3']});
+                callback1(null, {notebooks: ['book-1', 'book-2', 'book-3']});
             } else if ('notebook' in query) {
-                callback(null, {lastOpenedNote: 'test-note-23'});
+                callback1(null, {lastOpenedNote: 'test-note-23'});
             } else if (query.documentFor === 'NOTE_DATA') {
-                callback(null, {noteName: 'test-note', tags: ['tag-1', 'tag-2', 'tag-3']});
+                if (callback2) {
+                    callback2(null, {noteName: 'test-note', tags: ['tag-1', 'tag-2', 'tag-3']});
+                } else {
+                    callback1(null, {noteName: 'test-note', tags: ['tag-1', 'tag-2', 'tag-3']});
+                }
             } else {
-                callback();
+                callback1();
             }
         }, remove: (query: any, options: any, callback: any) => {
             callback('');
