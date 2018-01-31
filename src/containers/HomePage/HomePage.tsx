@@ -18,7 +18,8 @@ export function mapStateToProps(
         searchQuery, 
         selectedNotebook,
         lastOpenedNote,
-        previewData }: StoreState) {
+        previewData,
+        currentNoteTags }: StoreState) {
     return {
         enthusiasmLevel,
         notebooksLocation,

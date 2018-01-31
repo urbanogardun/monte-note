@@ -152,9 +152,7 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(GET_TAGS_FOR_NOTE, (event: Event, tags: string[]): void => {
-
             reduxStore.dispatch(actions.loadTagsForNote(tags));
-
         });
 
         ipcRenderer.on(SEARCH_RESULTS, (event: Event, data: any): void => {

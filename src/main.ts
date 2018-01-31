@@ -301,23 +301,28 @@ ipcMain.on(GET_NOTE_CONTENT, (event: any, data: any) => {
     let absolutePathToNote = path.join(location, notebook, note, 'index.html');
     NotebookManager.getNoteData(absolutePathToNote)
     .then((noteData: string) => {
-      if ('getContentForPreview' in data) {
 
-        dbMessager.getNoteTags(data.notebook, data.note)
-        .then((tags: string[]) => {
+      dbMessager.getNoteTags(data.notebook, data.note)
+      .then((tags: string[]) => {
+
+        if ('getContentForPreview' in data) {
+  
           let dataToSend = {
             notebook: notebook,
             note: note,
             noteContent: noteData,
             tags: tags
           };
-
+  
           event.sender.send(PREVIEW_NOTE, dataToSend);
-        });
+  
+        } else {
+          event.sender.send(LOAD_CONTENT_INTO_NOTE, noteData);
+          event.sender.send(GET_TAGS_FOR_NOTE, tags);
+        }
 
-      } else {
-        event.sender.send(LOAD_CONTENT_INTO_NOTE, noteData);
-      }
+      });
+
     });
   });
 

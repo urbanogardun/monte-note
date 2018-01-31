@@ -213,9 +213,9 @@ electron_1.ipcMain.on(index_1.GET_NOTE_CONTENT, (event, data) => {
         let absolutePathToNote = path.join(location, notebook, note, 'index.html');
         notebookManager_1.default.getNoteData(absolutePathToNote)
             .then((noteData) => {
-            if ('getContentForPreview' in data) {
-                dbMessager.getNoteTags(data.notebook, data.note)
-                    .then((tags) => {
+            dbMessager.getNoteTags(data.notebook, data.note)
+                .then((tags) => {
+                if ('getContentForPreview' in data) {
                     let dataToSend = {
                         notebook: notebook,
                         note: note,
@@ -223,11 +223,12 @@ electron_1.ipcMain.on(index_1.GET_NOTE_CONTENT, (event, data) => {
                         tags: tags
                     };
                     event.sender.send(index_1.PREVIEW_NOTE, dataToSend);
-                });
-            }
-            else {
-                event.sender.send(index_1.LOAD_CONTENT_INTO_NOTE, noteData);
-            }
+                }
+                else {
+                    event.sender.send(index_1.LOAD_CONTENT_INTO_NOTE, noteData);
+                    event.sender.send(index_1.GET_TAGS_FOR_NOTE, tags);
+                }
+            });
         });
     });
 });
