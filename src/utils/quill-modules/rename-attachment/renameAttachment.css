@@ -40,6 +40,13 @@ a#delete-attachment {
     top: 2.7px;
 }
 
+.attachment-open-external-normal {
+    font-size: 0.8rem;
+    cursor: pointer;
+    color: #007bff;
+    top: 2.7px;
+}
+
 .attachment-link {
     font-size: 0.8rem;
     cursor: pointer;
