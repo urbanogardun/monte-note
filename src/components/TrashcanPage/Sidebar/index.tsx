@@ -34,24 +34,22 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                 <section className="notebooks">
 
                     {(Object.keys(this.props.trash).map((notebook: string) => {
+                        let notebookNameForId = notebook.split(' ').join('-');
+                        let notebookNameTrimmed = notebook.length > 25 ? notebook.slice(0, 23) + '...' : notebook;
                         return (
                             <div key={notebook}>
                                 <div
                                     className="notebook-name-sidebar"
                                     data-toggle="collapse"
                                
-                                    data-target={`#${notebook}`}
+                                    data-target={`#${notebookNameForId}`}
                                     aria-expanded="false"
                                 >
-                                    {
-                                        notebook.length > 25 ? 
-                                        notebook.slice(0, 23) + '...' : 
-                                        notebook
-                                    }
+                                    {notebookNameTrimmed}
                                     <span className="oi oi-chevron-bottom expand-notebook" />
                                     <span className="oi oi-chevron-left expand-notebook" />
                                 </div>
-                                <div className="collapse notes-sidebar" id={notebook}>
+                                <div className="collapse notes-sidebar" id={notebookNameForId}>
                                     <ul className="list-group notes">
                                         {(this.props.trash[notebook].map((note: string) => {
                                             return (
