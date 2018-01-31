@@ -45,11 +45,9 @@ export class TagAdder extends React.Component<Props, State> {
             let editor = document.querySelector('.ql-editor') as Element;
             let noteContentToUpdate = editor.innerHTML;
 
-            // Only update note data in DB if it got changed
-            if (this.props.noteContent !== noteContentToUpdate) {
-                let noteDataToSave = prepareNoteData(this.props, noteContentToUpdate);
-                ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
-            }
+            let noteData = prepareNoteData(this.props, noteContentToUpdate);
+            let noteDataToSave = {...noteData, updatePreviewContent: true};
+            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
 
             // Update app state with current note content that's inside editor
             this.props.updateNoteContent(noteContentToUpdate);
