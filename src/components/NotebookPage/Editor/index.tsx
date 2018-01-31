@@ -323,6 +323,10 @@ export class Editor extends React.Component<Props, State> {
                     <button className="ql-bold"/>
                     <button className="ql-italic"/>
                     <button className="ql-underline"/>
+                    <button 
+                        className="oi oi-trash quill-custom-button"
+                        onClick={() => this.deleteNote()}
+                    />
 
                     <input 
                         className="ql-omega" 
