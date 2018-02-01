@@ -112,10 +112,30 @@ export class NotebookManager {
 
     static getNotes(location: string) {
         return new Promise(resolve => {
-            fs.readdir(`${location}`, (err: Error, files: string[]) => {
-                files = files.map((file: string) => { return path.join(location, file, 'index.html'); });
-                resolve(files);
-            });
+            let isTrashcan = path.parse(location).base === '.trashcan';
+            let noteFilesInTrash = [] as string[];
+            if (isTrashcan) {
+                fs.readdir(`${location}`, (err: Error, noteDirs: string[]) => {
+                    noteDirs.forEach((noteDir: string, i: number) => {
+
+                        fs.readdir(`${path.join(location, noteDir)}`, (error: Error, notes: string[]) => {
+                            
+                            notes = notes
+                            .map((note: string) => { return path.join(location, noteDir, note, 'index.html'); });
+                            
+                            noteFilesInTrash = [...noteFilesInTrash, ...notes];
+                            if (i === noteDirs.length - 1) {
+                                resolve(noteFilesInTrash);
+                            }
+                        });
+                    });
+                });
+            } else {
+                fs.readdir(`${location}`, (err: Error, files: string[]) => {
+                    files = files.map((file: string) => { return path.join(location, file, 'index.html'); });
+                    resolve(files);
+                });
+            }
         });
     }
 
