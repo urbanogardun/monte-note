@@ -417,12 +417,14 @@ class NotebookManager {
                     for (let i = 0; i < notes.length; i++) {
                         const note = notes[i];
                         const updatedNoteData = NotebookManager.changeAssetLinks(notebooksLocation, notebook, note);
-                        fs.writeFile(note, updatedNoteData, (err) => {
-                            if (err) {
-                                throw `Could not relink image content: ${err}`;
-                            }
-                            return;
-                        });
+                        if (updatedNoteData) {
+                            fs.writeFile(note, updatedNoteData, (err) => {
+                                if (err) {
+                                    throw `Could not relink image content: ${err}`;
+                                }
+                                return;
+                            });
+                        }
                     }
                 });
             }
@@ -430,7 +432,25 @@ class NotebookManager {
         });
     }
     static changeAssetLinks(notebooksLocation, notebook, note) {
-        const $ = cheerio.load(fs.readFileSync(note));
+        if (NotebookManager.openNoteFile(note)) {
+            return NotebookManager.noteDataWithNewLinksToAssets(notebooksLocation, notebook, note);
+        }
+        else {
+            return false;
+        }
+    }
+    static openNoteFile(note) {
+        try {
+            return fs.readFileSync(note);
+        }
+        catch (error) {
+            console.log(`Note file could not be opened: ${error}`);
+        }
+        return false;
+    }
+    static noteDataWithNewLinksToAssets(notebooksLocation, notebook, note) {
+        let noteContent = fs.readFileSync(note);
+        const $ = cheerio.load(noteContent);
         $('.image-upload, .attachment').each((ind, element) => {
             let oldLink = $(element).attr('src');
             let filename = path.parse(oldLink).base;

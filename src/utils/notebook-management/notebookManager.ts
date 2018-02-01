@@ -466,12 +466,14 @@ export class NotebookManager {
 
                         const updatedNoteData = NotebookManager.changeAssetLinks(notebooksLocation, notebook, note);
 
-                        fs.writeFile(note, updatedNoteData, (err: Error) => {
-                            if (err) {
-                                throw `Could not relink image content: ${err}`;
-                            }
-                            return;
-                        });
+                        if (updatedNoteData) {
+                            fs.writeFile(note, updatedNoteData, (err: Error) => {
+                                if (err) {
+                                    throw `Could not relink image content: ${err}`;
+                                }
+                                return;
+                            });
+                        }
 
                     }
     
@@ -482,7 +484,25 @@ export class NotebookManager {
     }
 
     static changeAssetLinks(notebooksLocation: string, notebook: string, note: string) {
-        const $ = cheerio.load(fs.readFileSync(note));
+        if (NotebookManager.openNoteFile(note)) {
+            return NotebookManager.noteDataWithNewLinksToAssets(notebooksLocation, notebook, note);
+        } else {
+            return false;
+        }
+    }
+
+    private static openNoteFile(note: string) {
+        try {
+            return fs.readFileSync(note);
+        } catch (error) {
+            console.log(`Note file could not be opened: ${error}`);
+        }
+        return false;
+    }
+
+    private static noteDataWithNewLinksToAssets(notebooksLocation: string, notebook: string, note: string) {
+        let noteContent = fs.readFileSync(note);
+        const $ = cheerio.load(noteContent);
         $('.image-upload, .attachment').each((ind: number, element: CheerioElement) => {
             let oldLink = $(element).attr('src');
             let filename = path.parse(oldLink).base;
@@ -497,6 +517,7 @@ export class NotebookManager {
                 $(element).attr('src', newLink);
             }
         });
+
         return $.html();
     }
 
