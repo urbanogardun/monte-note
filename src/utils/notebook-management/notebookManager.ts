@@ -349,6 +349,14 @@ export class NotebookManager {
         });
     }
 
+    static noteExists(noteLocation: string) {
+        return new Promise((resolve) => {
+            fs.pathExists(noteLocation, (err: Error, exists: boolean) => {
+                resolve(exists);
+            });
+        });
+    }
+
     static saveImage(saveLocation: any, imageFilename: string, imageData: string) {
         return new Promise((resolve) => {
             let notebooksLocation = saveLocation.notebooksLocation;

@@ -135,10 +135,10 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
     console.log('Created settings for app: ' + success);
     if (success) {
       let location = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
+      console.log('CHOSEN LOCATION: ' + location);
 
       NotebookManager.createNotebooksDirectory(location as string)
       .then((notebooksLocation: string) => {
-
         // In case that an absolute path to notebook directory has changed but
         // there is note content inside notebook directory, this will relink
         // that content to new directory.
@@ -151,9 +151,9 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
           NotebookManager.getAllNotes(notebooksLocation, notebooks)
           .then((notes: string[][]) => {
             
+            // console.log('NOTEBOOKS LOCATION: ' + notebooksLocation);
             dbMessager.addAllExistingNotes(notes)
             .then(() => {
-
               dbMessager.searchNotesGlobally('')
               .then((docs: any) => {
                 event.sender.send(RELOAD_SEARCH_RESULTS, docs);

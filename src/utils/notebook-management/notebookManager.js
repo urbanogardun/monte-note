@@ -315,6 +315,13 @@ class NotebookManager {
             });
         });
     }
+    static noteExists(noteLocation) {
+        return new Promise((resolve) => {
+            fs.pathExists(noteLocation, (err, exists) => {
+                resolve(exists);
+            });
+        });
+    }
     static saveImage(saveLocation, imageFilename, imageData) {
         return new Promise((resolve) => {
             let notebooksLocation = saveLocation.notebooksLocation;

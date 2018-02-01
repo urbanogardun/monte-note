@@ -193,7 +193,11 @@ export class DbMessager {
                 documentFor: 'NOTE_DATA',
                 noteInTrash: false
             };
-    
+            
+            if (noteLocation.includes('.trashcan')) {
+                data.noteInTrash = true;
+            }
+
             NotebookManager.getOnlyTextFromNote(noteLocation)
             .then((content: string) => {
                 data.noteContent = content;
@@ -210,15 +214,25 @@ export class DbMessager {
     addExistingNote(notebook: string, noteLocation: string) {
         return new Promise(resolve => {
 
-            this.prepareNoteForDb(notebook, noteLocation)
-            .then((docToSave: any) => {
-                this.db.insert(docToSave, (err: Error) => {
-                    if (err) {
-                        resolve(false);
-                    }
-                    resolve(true);
-                });
+            NotebookManager.noteExists(noteLocation)
+            .then((response: boolean) => {
+
+                if (response) {
+                    this.prepareNoteForDb(notebook, noteLocation)
+                    .then((docToSave: any) => {
+                        this.db.insert(docToSave, (err: Error) => {
+                            if (err) {
+                                resolve(false);
+                            }
+                            resolve(true);
+                        });
+                    });
+                } else {
+                    resolve(false);
+                }
+
             });
+
         });
     }
     
