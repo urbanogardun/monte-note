@@ -74,6 +74,7 @@ export interface Props {
     updateNoteContent: Function;
     pathToNewestUploadedImage: string;
     pathToNewestUploadedAsset: any;
+    updatePreviewContent: Function;
 }
 
 export interface State {
@@ -238,6 +239,17 @@ export class Editor extends React.Component<Props, State> {
         }
 
         ElectronMessager.sendMessageWithIpcRenderer(DELETE_NOTE, data);
+
+        // Remove note content from preview on home page that just got moved
+        // to trashcan. 
+        this.props.updatePreviewContent(
+            {
+                notebook: '',
+                note: '',
+                noteContent: '',
+                tags: []
+            }
+        );
     }
 
     componentWillReceiveProps(nextProps: Props) {
