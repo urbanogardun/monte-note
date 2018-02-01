@@ -109,10 +109,28 @@ class NotebookManager {
     }
     static getNotes(location) {
         return new Promise(resolve => {
-            fs.readdir(`${location}`, (err, files) => {
-                files = files.map((file) => { return path.join(location, file, 'index.html'); });
-                resolve(files);
-            });
+            let isTrashcan = path.parse(location).base === '.trashcan';
+            let noteFilesInTrash = [];
+            if (isTrashcan) {
+                fs.readdir(`${location}`, (err, noteDirs) => {
+                    noteDirs.forEach((noteDir, i) => {
+                        fs.readdir(`${path.join(location, noteDir)}`, (error, notes) => {
+                            notes = notes
+                                .map((note) => { return path.join(location, noteDir, note, 'index.html'); });
+                            noteFilesInTrash = [...noteFilesInTrash, ...notes];
+                            if (i === noteDirs.length - 1) {
+                                resolve(noteFilesInTrash);
+                            }
+                        });
+                    });
+                });
+            }
+            else {
+                fs.readdir(`${location}`, (err, files) => {
+                    files = files.map((file) => { return path.join(location, file, 'index.html'); });
+                    resolve(files);
+                });
+            }
         });
     }
     /**
@@ -128,8 +146,6 @@ class NotebookManager {
             // Get list of note files for each notebook
             for (let index = 0; index < notebooks.length; index++) {
                 const notebook = notebooks[index];
-                console.log('loc: ' + location);
-                console.log('nbook: ' + notebook);
                 notes.push(NotebookManager.getNotes(path.join(location, notebook)));
             }
             Promise.all(notes).then((files) => {
@@ -140,7 +156,6 @@ class NotebookManager {
                     const notebook = notebooks[index];
                     data[notebook] = noteFiles;
                 }
-                console.log(data);
                 resolve(data);
             });
         });
@@ -195,8 +210,11 @@ class NotebookManager {
      * @param  {string} note
      * @returns {string}
      */
-    static formatNoteName(note) {
-        return path.basename(path.dirname(note));
+    static formatNoteName(noteLocation) {
+        return path.basename(path.dirname(noteLocation));
+    }
+    static getNotebookNameFromTrashDirectory(noteLocation) {
+        return path.parse(noteLocation).name;
     }
     static formatNotes(notes) {
         let formattedNotes = [];

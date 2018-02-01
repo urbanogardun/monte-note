@@ -228,8 +228,12 @@ export class NotebookManager {
      * @param  {string} note
      * @returns {string}
      */
-    static formatNoteName(note: string): string {
-        return path.basename(path.dirname(note));
+    static formatNoteName(noteLocation: string): string {
+        return path.basename(path.dirname(noteLocation));
+    }
+
+    static getNotebookNameFromTrashDirectory(noteLocation: string): string {
+        return path.parse(noteLocation).name;
     }
 
     static formatNotes(notes: string[]): string[] {

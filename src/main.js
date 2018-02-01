@@ -102,6 +102,8 @@ electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
                         let notebooks = notebookManager_1.default.getNotebooks(notebooksLocation);
                         notebookManager_1.default.getAllNotes(notebooksLocation, notebooks)
                             .then((notes) => {
+                            console.log('NOTES WE GOT');
+                            console.log(notes);
                             // console.log('NOTEBOOKS LOCATION: ' + notebooksLocation);
                             dbMessager.addAllExistingNotes(notes)
                                 .then(() => {
@@ -415,8 +417,10 @@ electron_1.ipcMain.on(index_1.RESTORE_NOTE_FROM_TRASH, (event, data) => {
         notebookManager_1.default.restoreNoteFromTrash(location, notebook, note)
             .then((result) => {
             if (result) {
-                dbMessager.unmarkNoteAsTrash(notebook, note);
-                event.sender.send(index_1.RESTORE_NOTE_FROM_TRASH, result);
+                dbMessager.unmarkNoteAsTrash(notebook, note)
+                    .then(() => {
+                    event.sender.send(index_1.RESTORE_NOTE_FROM_TRASH, result);
+                });
             }
         });
     });

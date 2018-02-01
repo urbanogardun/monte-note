@@ -159,6 +159,8 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
               NotebookManager.getAllNotes(notebooksLocation, notebooks)
               .then((notes: string[][]) => {
                 
+                console.log('NOTES WE GOT');
+                console.log(notes);
                 // console.log('NOTEBOOKS LOCATION: ' + notebooksLocation);
                 dbMessager.addAllExistingNotes(notes)
                 .then(() => {
@@ -543,8 +545,10 @@ ipcMain.on(RESTORE_NOTE_FROM_TRASH, (event: any, data: any) => {
     NotebookManager.restoreNoteFromTrash(location, notebook, note)
     .then((result: boolean) => {
       if (result) {
-        dbMessager.unmarkNoteAsTrash(notebook, note);
-        event.sender.send(RESTORE_NOTE_FROM_TRASH, result);
+        dbMessager.unmarkNoteAsTrash(notebook, note)
+        .then(() => {
+          event.sender.send(RESTORE_NOTE_FROM_TRASH, result);
+        });
       }
     });
   });
