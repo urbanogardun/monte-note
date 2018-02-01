@@ -67,11 +67,20 @@ function renameAttachment(quill: Quill, options?: any) {
     }
     quill.on('text-change', function () {
         var self = $('.attachment') as any;
-        self.popover({
-            placement: 'bottom',
-            content: popoverHTML,
-            html: true
-        });
+        if ( (options) && ('noteInTrash' in options) ) {
+            self.popover({
+                trigger: 'focus',
+                placement: 'bottom',
+                content: popoverHTML,
+                html: true
+            });
+        } else {
+            self.popover({
+                placement: 'bottom',
+                content: popoverHTML,
+                html: true
+            });
+        }
 
         $('.attachment').on('click', function(event: JQuery.Event) {
             let blot = Parchment.find(event.target as Node);
