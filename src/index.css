@@ -73,7 +73,7 @@ ul.list-group.notes > a:hover {
 
 /* Sidebar */
 
-a.home-sidebar {
+a.home-sidebar, a.home-sidebar:hover {
   text-decoration: none;
   color: inherit;
 }

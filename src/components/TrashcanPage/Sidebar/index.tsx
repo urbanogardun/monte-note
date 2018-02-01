@@ -60,7 +60,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                             return (
                                                 <li 
                                                     key={note} 
-                                                    className="list-group-item sidebar-note"
+                                                    className="list-group-item sidebar-note home-link"
                                                     onClick={(e) => { 
                                                         this.getNoteFromTrash(notebook, note); 
                                                         this.markNoteActive(e);
