@@ -80,45 +80,52 @@ electron_1.ipcMain.on('is-location-for-notebooks-set', (event, args) => {
     event.sender.send('start-it!', notebookManager_1.default.getNotebookLocation());
 });
 electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
-    dbMessager.createSettings()
-        .then((success) => {
-        console.log('Created settings for app: ' + success);
-        if (success) {
-            let location = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
-            console.log('CHOSEN LOCATION: ' + location);
-            notebookManager_1.default.createNotebooksDirectory(location)
-                .then((notebooksLocation) => {
-                // In case that an absolute path to notebook directory has changed but
-                // there is note content inside notebook directory, this will relink
-                // that content to new directory.
-                notebookManager_1.default.relinkAttachmentContent(notebooksLocation)
-                    .then(() => {
-                    // TODO: Add existing notes to DB
-                    let notebooks = notebookManager_1.default.getNotebooks(notebooksLocation);
-                    notebookManager_1.default.getAllNotes(notebooksLocation, notebooks)
-                        .then((notes) => {
-                        // console.log('NOTEBOOKS LOCATION: ' + notebooksLocation);
-                        dbMessager.addAllExistingNotes(notes)
-                            .then(() => {
-                            dbMessager.searchNotesGlobally('')
-                                .then((docs) => {
-                                event.sender.send(index_1.RELOAD_SEARCH_RESULTS, docs);
-                            });
-                            notebookManager_1.default.createTrashcan(notebooksLocation)
+    let location;
+    try {
+        location = electron_1.dialog.showOpenDialog({ properties: ['openDirectory'] }).shift();
+    }
+    catch (error) {
+        console.log(`Location not selected: ${error}`);
+    }
+    console.log('location is: ' + location);
+    if (location) {
+        dbMessager.createSettings()
+            .then((res) => {
+            if (res) {
+                notebookManager_1.default.createNotebooksDirectory(location)
+                    .then((notebooksLocation) => {
+                    // In case that an absolute path to notebook directory has changed but
+                    // there is note content inside notebook directory, this will relink
+                    // that content to new directory.
+                    notebookManager_1.default.relinkAttachmentContent(notebooksLocation)
+                        .then(() => {
+                        // TODO: Add existing notes to DB
+                        let notebooks = notebookManager_1.default.getNotebooks(notebooksLocation);
+                        notebookManager_1.default.getAllNotes(notebooksLocation, notebooks)
+                            .then((notes) => {
+                            // console.log('NOTEBOOKS LOCATION: ' + notebooksLocation);
+                            dbMessager.addAllExistingNotes(notes)
                                 .then(() => {
-                                dbMessager.updateSettings('notebooksLocation', notebooksLocation)
-                                    .then((result) => {
-                                    if (result) {
-                                        event.sender.send('location-for-notebooks', notebooksLocation);
-                                    }
+                                dbMessager.searchNotesGlobally('')
+                                    .then((docs) => {
+                                    event.sender.send(index_1.RELOAD_SEARCH_RESULTS, docs);
+                                });
+                                notebookManager_1.default.createTrashcan(notebooksLocation)
+                                    .then(() => {
+                                    dbMessager.updateSettings('notebooksLocation', notebooksLocation)
+                                        .then((result) => {
+                                        if (result) {
+                                            event.sender.send('location-for-notebooks', notebooksLocation);
+                                        }
+                                    });
                                 });
                             });
                         });
                     });
                 });
-            });
-        }
-    });
+            }
+        });
+    }
 });
 electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, notebookName) => {
     dbMessager.getFromSettings('notebooksLocation')

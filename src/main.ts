@@ -130,59 +130,69 @@ ipcMain.on('is-location-for-notebooks-set', (event: any, args: any) => {
 });
 
 ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
-  dbMessager.createSettings()
-  .then((success: boolean) => {
-    console.log('Created settings for app: ' + success);
-    if (success) {
-      let location = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
-      console.log('CHOSEN LOCATION: ' + location);
 
-      NotebookManager.createNotebooksDirectory(location as string)
-      .then((notebooksLocation: string) => {
-        // In case that an absolute path to notebook directory has changed but
-        // there is note content inside notebook directory, this will relink
-        // that content to new directory.
-        NotebookManager.relinkAttachmentContent(notebooksLocation)
-        .then(() => {
+    let location: string | undefined;
+    try {
+      location = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
+    } catch (error) {
+      console.log(`Location not selected: ${error}`);
+    }
 
-          // TODO: Add existing notes to DB
-          let notebooks = NotebookManager.getNotebooks(notebooksLocation);
+    if (location) {
 
-          NotebookManager.getAllNotes(notebooksLocation, notebooks)
-          .then((notes: string[][]) => {
-            
-            // console.log('NOTEBOOKS LOCATION: ' + notebooksLocation);
-            dbMessager.addAllExistingNotes(notes)
+      dbMessager.createSettings()
+      .then((res: boolean) => {
+
+        if (res) {
+
+          NotebookManager.createNotebooksDirectory(location as string)
+          .then((notebooksLocation: string) => {
+            // In case that an absolute path to notebook directory has changed but
+            // there is note content inside notebook directory, this will relink
+            // that content to new directory.
+            NotebookManager.relinkAttachmentContent(notebooksLocation)
             .then(() => {
-              dbMessager.searchNotesGlobally('')
-              .then((docs: any) => {
-                event.sender.send(RELOAD_SEARCH_RESULTS, docs);
-              });
-
-              NotebookManager.createTrashcan(notebooksLocation as string)
-              .then(() => {
-        
-                dbMessager.updateSettings('notebooksLocation', notebooksLocation as string)
-                .then((result: boolean) => {
-                  if (result) {
-                    event.sender.send('location-for-notebooks', notebooksLocation);
-                  }
-                });
-        
-              });
-
-            });
-
+    
+              // TODO: Add existing notes to DB
+              let notebooks = NotebookManager.getNotebooks(notebooksLocation);
+    
+              NotebookManager.getAllNotes(notebooksLocation, notebooks)
+              .then((notes: string[][]) => {
+                
+                // console.log('NOTEBOOKS LOCATION: ' + notebooksLocation);
+                dbMessager.addAllExistingNotes(notes)
+                .then(() => {
+                  dbMessager.searchNotesGlobally('')
+                  .then((docs: any) => {
+                    event.sender.send(RELOAD_SEARCH_RESULTS, docs);
+                  });
+    
+                  NotebookManager.createTrashcan(notebooksLocation as string)
+                  .then(() => {
             
+                    dbMessager.updateSettings('notebooksLocation', notebooksLocation as string)
+                    .then((result: boolean) => {
+                      if (result) {
+                        event.sender.send('location-for-notebooks', notebooksLocation);
+                      }
+                    });
+            
+                  });
+    
+                });
+    
+              });
+    
+            });
+    
           });
 
-          
-        });
+        }
 
       });
 
     }
-  });
+
 });
 
 ipcMain.on(ADD_NOTEBOOK, (event: any, notebookName: any) => {
