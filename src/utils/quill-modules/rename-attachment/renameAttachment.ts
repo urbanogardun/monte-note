@@ -88,11 +88,13 @@ function renameAttachment(quill: Quill, options?: any) {
         
             $('.attachment-input').hide();
             
-            $('.attachment-link, .attachment-open-external').off('click').on('click', function(evt: JQuery.Event) {
+            $('.attachment-link, .attachment-open-external, .attachment-open-external-normal')
+            .off('click').on('click', function(evt: JQuery.Event) {
                 evt.preventDefault();
                 
                 let dataToSend: any;
-                if ($(evt.target).hasClass('attachment-open-external')) {
+                if ( ($(evt.target).hasClass('attachment-open-external')) 
+                || ($(evt.target).hasClass('attachment-open-external-normal')) ) {
                     dataToSend = {
                         filenamePath: attachment.attr('href'),
                         openExplorer: true
