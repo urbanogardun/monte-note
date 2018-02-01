@@ -22,6 +22,11 @@ export class TrashcanSidebar extends React.Component<Props, State> {
         electronMessager.sendMessageWithIpcRenderer(GET_NOTE_FROM_TRASH, data);
     }
 
+    markNoteActive(e: any) {
+        $('.sidebar-note').removeClass('notebook-name-sidebar-active');
+        $(e.target).addClass('notebook-name-sidebar-active');
+    }
+
     render() {
         return (
             <div className="col-2 trashcan sidebar">
@@ -56,7 +61,10 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                                 <li 
                                                     key={note} 
                                                     className="list-group-item sidebar-note"
-                                                    onClick={() => { this.getNoteFromTrash(notebook, note); }}
+                                                    onClick={(e) => { 
+                                                        this.getNoteFromTrash(notebook, note); 
+                                                        this.markNoteActive(e);
+                                                    }}
                                                 >
                                                 {note}
                                                 </li>

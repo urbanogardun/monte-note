@@ -90,10 +90,10 @@ export class TrashcanEditor extends React.Component<Props, State> {
         let newTrash = Object.assign({}, this.props.trash);
         for (const notebook in this.props.trash) {
             if (this.props.trash.hasOwnProperty(notebook)) {
-                let notes = this.props.trash[notebook];
+                let notes = this.props.trash[data.notebook as string];
                 notes = notes.filter((note: string) => { return note !== this.props.note; });
-                this.props.trash[notebook] = notes;
-                newTrash[notebook] = notes;
+                this.props.trash[data.notebook as string] = notes;
+                newTrash[data.notebook as string] = notes;
                 break;
             }
         }
