@@ -1,54 +1,333 @@
+.ql-font {
+    width: 150px !important;
+}
+
 @font-face {
     font-family: 'Aref Ruqaa';
-    src: url('../../../assets/fonts/editor/aref-ruqaa/ArefRuqaa-Regular.woff2') format('woff2'),
-        url('../../../assets/fonts/editor/aref-ruqaa/ArefRuqaa-Regular.woff') format('woff');
+    src: url('../../../assets/fonts/editor/aref-ruqaa/ArefRuqaa-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Aref Ruqaa';
-    src: url('../../../assets/fonts/editor/aref-ruqaa/ArefRuqaa-Bold.woff2') format('woff2'),
-        url('../../../assets/fonts/editor/aref-ruqaa/ArefRuqaa-Bold.woff') format('woff');
+    src: url('../../../assets/fonts/editor/aref-ruqaa/ArefRuqaa-Bold.woff2') format('woff2');
     font-weight: bold;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'Slabo 13px';
-    src: url('../../../assets/fonts/editor/slabo13px/Slabo13px-Regular.woff2') format('woff2'),
-        url('../../../assets/fonts/editor/slabo13px/Slabo13px-Regular.woff') format('woff');
+    src: url('../../../assets/fonts/editor/slabo13px/Slabo13px-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../../../assets/fonts/editor/roboto/Roboto-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../../../assets/fonts/editor/roboto/Roboto-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('../../../assets/fonts/editor/roboto/Roboto-Italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../../../assets/fonts/editor/open-sans/OpenSans-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../../../assets/fonts/editor/open-sans/OpenSans-Italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../../../assets/fonts/editor/open-sans/OpenSans-BoldItalic.woff2') format('woff2');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Open Sans';
+    src: url('../../../assets/fonts/editor/open-sans/OpenSans-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Indie Flower';
+    src: url('../../../assets/fonts/editor/indie-flower/IndieFlower.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('../../../assets/fonts/editor/lato/Lato-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('../../../assets/fonts/editor/lato/Lato-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('../../../assets/fonts/editor/lato/Lato-BoldItalic.woff2') format('woff2');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Lato';
+    src: url('../../../assets/fonts/editor/lato/Lato-Italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Lora';
+    src: url('../../../assets/fonts/editor/lora/Lora-Italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Lora';
+    src: url('../../../assets/fonts/editor/lora/Lora-BoldItalic.woff2') format('woff2');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Lora';
+    src: url('../../../assets/fonts/editor/lora/Lora-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lora';
+    src: url('../../../assets/fonts/editor/lora/Lora-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../../../assets/fonts/editor/merriweather/Merriweather-Italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../../../assets/fonts/editor/merriweather/Merriweather-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../../../assets/fonts/editor/merriweather/Merriweather-BoldItalic.woff2') format('woff2');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Merriweather';
+    src: url('../../../assets/fonts/editor/merriweather/Merriweather-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('../../../assets/fonts/editor/playfair-display/PlayfairDisplay-BoldItalic.woff2') format('woff2');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('../../../assets/fonts/editor/playfair-display/PlayfairDisplay-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Playfair Display';
+    src: url('../../../assets/fonts/editor/playfair-display/PlayfairDisplay-Italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../../../assets/fonts/editor/raleway/Raleway-BoldItalic.woff2') format('woff2');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../../../assets/fonts/editor/raleway/Raleway-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../../../assets/fonts/editor/raleway/Raleway-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: url('../../../assets/fonts/editor/raleway/Raleway-Italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Roboto Slab';
+    src: url('../../../assets/fonts/editor/roboto-slab/RobotoSlab-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Roboto Slab';
+    src: url('../../../assets/fonts/editor/roboto-slab/RobotoSlab-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../../../assets/fonts/editor/ubuntu/Ubuntu-Italic.woff2') format('woff2');
+    font-weight: normal;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../../../assets/fonts/editor/ubuntu/Ubuntu-Bold.woff2') format('woff2');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../../../assets/fonts/editor/ubuntu/Ubuntu-BoldItalic.woff2') format('woff2');
+    font-weight: bold;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Ubuntu';
+    src: url('../../../assets/fonts/editor/ubuntu/Ubuntu-Regular.woff2') format('woff2');
     font-weight: normal;
     font-style: normal;
 }
 
 /* Set default font-family */
 #quill-container {
-    font-family: "Aref Ruqaa";
-    font-size: 18px;
-    height: 375px;
-  }
+    font-family: "Raleway";
+    font-size: 16px;
+}
   
   /* Set dropdown font-families */
-  #toolbar-container .ql-font span[data-label="Aref Ruqaa"]::before {
-    font-family: "Aref Ruqaa";
-  }
-  #toolbar-container .ql-font span[data-label="Mirza"]::before {
-    font-family: "Mirza";
-  }
-  #toolbar-container .ql-font span[data-label="Roboto"]::before {
+#toolbar .ql-font span[data-label="Roboto"]::before {
     font-family: "Roboto";
-  }
+}
+#toolbar .ql-font span[data-label="Slabo 13px"]::before {
+    font-family: "Slabo 13px";
+}
+#toolbar .ql-font span[data-label="Open Sans"]::before {
+    font-family: "Open Sans";
+}
+#toolbar .ql-font span[data-label="Indie Flower"]::before {
+    font-family: "Indie Flower";
+}
+#toolbar .ql-font span[data-label="Lato"]::before {
+    font-family: "Lato";
+}
+#toolbar .ql-font span[data-label="Lora"]::before {
+    font-family: "Lora";
+}
+#toolbar .ql-font span[data-label="Merriweather"]::before {
+    font-family: "Merriweather";
+}
+#toolbar .ql-font span[data-label="Playfair Display"]::before {
+    font-family: "Playfair Display";
+}
+#toolbar .ql-font span[data-label="Raleway"]::before {
+    font-family: "Raleway";
+}
+#toolbar .ql-font span[data-label="Roboto Slab"]::before {
+    font-family: "Roboto Slab";
+}
+#toolbar .ql-font span[data-label="Ubuntu"]::before {
+    font-family: "Ubuntu";
+}
   
-  /* Set content font-families */
-  .ql-font-mirza {
-    font-family: "Mirza";
-  }
-  .ql-font-roboto {
+/* Set content font-families */
+.ql-font-roboto {
     font-family: "Roboto";
-  }
-  .ql-font-slabo13px {
-      font-family: "Slabo 13px";
-  }
+}
+.ql-font-slabo13px {
+    font-family: "Slabo 13px";
+}
+.ql-font-opensans {
+    font-family: "Open Sans";
+}
+.ql-font-indieflower {
+    font-family: "Indie Flower";
+}
+.ql-font-lato {
+    font-family: "Lato";
+}
+.ql-font-lora {
+    font-family: "Lora";
+}
+.ql-font-merriweather {
+    font-family: "Merriweather";
+}
+.ql-font-playfairdisplay {
+    font-family: "Playfair Display";
+}
+.ql-font-raleway {
+    font-family: "Raleway";
+}
+.ql-font-robotoslab {
+    font-family: "Roboto Slab";
+}
+.ql-font-ubuntu {
+    font-family: "Ubuntu";
+}
   /* We do not set Aref Ruqaa since it is the default font */
   

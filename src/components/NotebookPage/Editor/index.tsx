@@ -22,6 +22,24 @@ Quill.register('modules/renameAttachment', (quill: Quill) => {
     renameAttachment(quill);
 });
 
+// Add fonts to whitelist
+var Font = Quill.import('formats/font');
+// We do not add Aref Ruqaa since it is the default
+Font.whitelist = [
+    'slabo13px', 
+    'roboto', 
+    'opensans', 
+    'indieflower', 
+    'lato', 
+    'lora', 
+    'merriweather', 
+    'playfairdisplay',
+    'raleway',
+    'robotoslab',
+    'ubuntu'
+];
+Quill.register(Font, true);
+
 const striptags = require('../../../utils/striptags');
 
 export interface Props {
@@ -317,9 +335,17 @@ export class Editor extends React.Component<Props, State> {
                 />
                 <div id="toolbar">
                     <select className="ql-font">
-                        <option value="aref ruqaa">Aref Ruqaa</option>
-                        <option value="mirza">Mirza</option>
+                        <option value="opensans">Open Sans</option>
+                        <option value="indieflower">Indie Flower</option>
+                        <option value="lato">Lato</option>
+                        <option value="lora">Lora</option>
+                        <option value="merriweather">Merriweather</option>
+                        <option value="playfairdisplay">Playfair Display</option>
+                        <option value="raleway">Raleway</option>
                         <option value="roboto">Roboto</option>
+                        <option value="robotoslab">Roboto Slab</option>
+                        <option value="slabo13px">Slabo 13px</option>
+                        <option value="ubuntu">Ubuntu</option>
                     </select>
                     <select className="ql-size">
                         <option value="small"/>
