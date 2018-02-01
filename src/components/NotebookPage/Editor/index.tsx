@@ -40,6 +40,26 @@ Font.whitelist = [
 ];
 Quill.register(Font, true);
 
+var fontSizeStyle = Quill.import('attributors/style/size');
+fontSizeStyle.whitelist = [
+    '12px', 
+    '14px', 
+    '16px', 
+    '18px',
+    '20px',
+    '22px',
+    '24px',
+    '26px',
+    '28px',
+    '30px',
+    '32px',
+    '34px',
+    '36px',
+    '48px',
+    '72px'
+];
+Quill.register(fontSizeStyle, true);
+
 const striptags = require('../../../utils/striptags');
 
 export interface Props {
@@ -348,9 +368,21 @@ export class Editor extends React.Component<Props, State> {
                         <option value="ubuntu">Ubuntu</option>
                     </select>
                     <select className="ql-size">
-                        <option value="small"/>
-                        <option value="large"/>
-                        <option value="huge"/>
+                        <option value="12px">12</option>
+                        <option value="14px">14</option>
+                        <option value="16px">16</option>
+                        <option value="18px">18</option>
+                        <option value="20px">20</option>
+                        <option value="22px">22</option>
+                        <option value="24px">24</option>
+                        <option value="26px">26</option>
+                        <option value="28px">28</option>
+                        <option value="30px">30</option>
+                        <option value="32px">32</option>
+                        <option value="34px">34</option>
+                        <option value="36px">36</option>
+                        <option value="48px">48</option>
+                        <option value="72px">72</option>
                     </select>
                     <button className="ql-bold"/>
                     <button className="ql-italic"/>
