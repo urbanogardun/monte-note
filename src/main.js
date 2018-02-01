@@ -87,7 +87,6 @@ electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
     catch (error) {
         console.log(`Location not selected: ${error}`);
     }
-    console.log('location is: ' + location);
     if (location) {
         dbMessager.createSettings()
             .then((res) => {

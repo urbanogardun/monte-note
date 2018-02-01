@@ -128,6 +128,8 @@ class NotebookManager {
             // Get list of note files for each notebook
             for (let index = 0; index < notebooks.length; index++) {
                 const notebook = notebooks[index];
+                console.log('loc: ' + location);
+                console.log('nbook: ' + notebook);
                 notes.push(NotebookManager.getNotes(path.join(location, notebook)));
             }
             Promise.all(notes).then((files) => {
@@ -138,6 +140,7 @@ class NotebookManager {
                     const notebook = notebooks[index];
                     data[notebook] = noteFiles;
                 }
+                console.log(data);
                 resolve(data);
             });
         });
@@ -459,7 +462,7 @@ class NotebookManager {
         let noteContent = fs.readFileSync(note);
         const $ = cheerio.load(noteContent);
         $('.image-upload, .attachment').each((ind, element) => {
-            let oldLink = $(element).attr('src');
+            let oldLink = $(element).attr('href');
             let filename = path.parse(oldLink).base;
             let noteName = NotebookManager.formatNoteName(note);
             if ($(element).hasClass('image-upload')) {

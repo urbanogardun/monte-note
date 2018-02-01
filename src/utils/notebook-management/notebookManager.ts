@@ -145,7 +145,6 @@ export class NotebookManager {
                     const notebook = notebooks[index];
                     data[notebook] = noteFiles;
                 }
-
                 resolve(data);
             });
         });
@@ -512,7 +511,7 @@ export class NotebookManager {
         let noteContent = fs.readFileSync(note);
         const $ = cheerio.load(noteContent);
         $('.image-upload, .attachment').each((ind: number, element: CheerioElement) => {
-            let oldLink = $(element).attr('src');
+            let oldLink = $(element).attr('href');
             let filename = path.parse(oldLink).base;
             let noteName = NotebookManager.formatNoteName(note);
             if ($(element).hasClass('image-upload')) {
