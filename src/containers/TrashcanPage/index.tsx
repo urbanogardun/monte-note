@@ -19,7 +19,11 @@ export function mapStateToProps({ trash, noteContent, lastOpenedTrashNote, lastO
 export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>) {
     return {
         onIncrement: () => dispatch(actions.decrementEnthusiasm()),
-        updateTrash: (data: any) => dispatch(actions.loadTrash(data))
+        updateTrash: (data: any) => dispatch(actions.loadTrash(data)),
+        emptyLastOpenedTrash: () => {
+            dispatch(actions.loadLastOpenedTrashNote(''));
+            dispatch(actions.loadLastOpenedTrashNotebook(''));
+        }
     };
 }
 

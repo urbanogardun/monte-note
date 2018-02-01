@@ -115,7 +115,7 @@ export function noteContent(state: StoreState, action: LoadContentIntoNote): Sto
 export function trash(state: StoreState, action: TrashAction): StoreState {
   switch (action.type) {
     case LOAD_TRASH:
-      return action.content as StoreState;
+      return action.content || {} as StoreState;
     default:
       return state || {} as StoreState;
   }

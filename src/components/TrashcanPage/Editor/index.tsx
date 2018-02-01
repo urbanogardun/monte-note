@@ -10,6 +10,7 @@ export interface Props {
     note?: string;
     trash?: any;
     updateTrash?: Function;
+    emptyLastOpenedTrash: Function;
 }
 
 export interface State { }
@@ -69,6 +70,8 @@ export class TrashcanEditor extends React.Component<Props, State> {
 
         let deleteNoteButton = document.querySelector('.ql-delete-note') as Element;
         deleteNoteButton.removeEventListener('click', this.deleteNote);
+
+        this.props.emptyLastOpenedTrash();
     }
 
     restoreNote() {
