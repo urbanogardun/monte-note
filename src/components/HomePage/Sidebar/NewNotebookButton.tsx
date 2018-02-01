@@ -75,7 +75,7 @@ export class NewNotebookButton extends React.Component<Props, State> {
     }
 
     addNotebook(name: string) {
-        if (name) {
+        if ( (name) && (name !== '.trashcan') ) {
             ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTEBOOK, name);
             this.addedNotebook = name as string;
         }
