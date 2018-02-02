@@ -1,4 +1,5 @@
 jest.mock('../db/index');
+jest.mock('./notebook-management/notebookManager');
 import DbMessager from './dbMessager';
 
 let dbMessager: DbMessager;

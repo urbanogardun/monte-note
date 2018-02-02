@@ -225,7 +225,6 @@ export class DbMessager {
 
             NotebookManager.noteExists(noteLocation)
             .then((response: boolean) => {
-
                 if (response) {
                     this.prepareNoteForDb(notebook, noteLocation)
                     .then((docToSave: any) => {
