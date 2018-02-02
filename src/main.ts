@@ -253,7 +253,7 @@ ipcMain.on(ADD_NOTE, (event: any, args: any) => {
 
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
-    NotebookManager.addNote(`${location}\\${notebook}`, noteName)
+    NotebookManager.addNote(path.join(location, notebook), noteName)
     .then((result: boolean) => {
 
       if (result) {
@@ -582,16 +582,17 @@ ipcMain.on(ADD_TAG_TO_NOTE, (event: any, data: any) => {
     tag: tag
   };
 
-  dbMessager.addTagToNote(noteObj);
-  // .then((response: boolean) => {
-  //   if (response) {
-  //     console.log(response);
-  //     // dbMessager.getNoteContent(notebook, note)
-  //     // .then((result: any) => {
-  //     //   // console.log(result);
-  //     // });
-  //   }
-  // });
+  dbMessager.addTagToNote(noteObj)
+  .then((response: boolean) => {
+    if (response) {
+
+      dbMessager.getFromSettings('notebooksLocation')
+      .then((location: string) => {
+        NotebookManager.addTagToTagFile(path.join(location, notebook, note), tag);
+      });
+
+    }
+  });
 
 });
 
@@ -599,7 +600,15 @@ ipcMain.on(REMOVE_TAG_FROM_NOTE, (event: any, data: any) => {
   let notebook = data.notebook;
   let note = data.note;
   let tag = data.tag;
-  dbMessager.removeTagFromNote(notebook, note, tag);
+  dbMessager.removeTagFromNote(notebook, note, tag)
+  .then((response: boolean) => {
+    if (response) {
+      dbMessager.getFromSettings('notebooksLocation')
+      .then((location: string) => {
+        NotebookManager.removeTagFromTagFile(path.join(location, notebook, note), tag);
+      });
+    }
+  });
 });
 
 ipcMain.on(GET_TAGS_FOR_NOTE, (event: any, data: any) => {

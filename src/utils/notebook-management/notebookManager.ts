@@ -63,7 +63,8 @@ export class NotebookManager {
             try {
                 Promise.all([
                     this.createNoteFile(location, name),
-                    this.createNoteAssetsDirectory(location, name)
+                    this.createNoteAssetsDirectory(location, name),
+                    NotebookManager.createTagFile(path.join(location, name))
                 ])
                 .then(() => {
                     resolve(true);
@@ -80,7 +81,7 @@ export class NotebookManager {
     // Creates file inside which note content will get saved
     static createNoteFile(location: string, name: string) {
         return new Promise((resolve) => {
-            fs.ensureFile(path.join(location, name + 'index.html'))
+            fs.ensureFile(path.join(location, name, 'index.html'))
             .then(() => {
                 resolve(true);
             })
@@ -93,7 +94,7 @@ export class NotebookManager {
     static createTagFile(noteDir: string) {
         return new Promise(resolve => {
             resolve(true);
-            fs.ensureFile(noteDir + 'tags.dat')
+            fs.ensureFile(path.join(noteDir, 'tags.dat'))
             .then(() => {
                 resolve(true);
             })
@@ -105,7 +106,7 @@ export class NotebookManager {
 
     static addTagToTagFile(noteDir: string, tag: string) {
         return new Promise(resolve => {
-            fs.appendFile(noteDir + 'tags.dat', `${tag}\n`, (err: Error) => {
+            fs.appendFile(path.join(noteDir, 'tags.dat'), `${tag}\n`, (err: Error) => {
                 if (err) {
                     throw `Could not add tag to a tag file: ${err}`;
                 }
@@ -116,7 +117,7 @@ export class NotebookManager {
 
     static getTagsFromTagFile(noteDir: string) {
         return new Promise(resolve => {
-            fs.readFile(noteDir + 'tags.dat', 'utf8', (err: Error, tags: string) {
+            fs.readFile(path.join(noteDir, 'tags.dat'), 'utf8', (err: Error, tags: string) => {
                 if (err) {
                     throw `Could not read tags from the file: ${err}`;
                 }
@@ -130,7 +131,13 @@ export class NotebookManager {
             NotebookManager.getTagsFromTagFile(noteDir)
             .then((tags: string[]) => {
                 tags = tags.filter((t: string) => { return t !== tag; });
-                resolve(tags);
+                let tagsFormattedForTagFile = tags.join('\n');
+                fs.writeFile(path.join(noteDir, 'tags.dat'), tagsFormattedForTagFile, (err: Error) => {
+                    if (err) {
+                        throw `Could not overwrite tag file contents: ${err}`;
+                    }
+                    resolve(tags);
+                });
             });
         });
     }
@@ -139,9 +146,9 @@ export class NotebookManager {
     // saved
     static createNoteAssetsDirectory(location: string, name: string) {
         return new Promise((resolve) => {
-            fs.ensureDir(`${location}/${name}/assets/images`)
+            fs.ensureDir(path.join(location, name, 'assets', 'images'))
             .then(() => {
-                fs.ensureDir(`${location}/${name}/assets/attachments`)
+                fs.ensureDir(path.join(location, name, 'assets', 'attachments'))
                 .then(() => {
                     resolve(true);
                 })
@@ -665,7 +672,7 @@ export class NotebookManager {
         return new Promise(resolve => {
             if (this.notebookExists(name)) {
                 try {
-                    fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
+                    fs.mkdir(path.join(NotebookManager.directoryToSaveNotebooksAt, name), () => {
                         this.addNotebookToLog(name);
                         this.DbConnection.addNotebook(name)
                         .then((result: boolean) => {

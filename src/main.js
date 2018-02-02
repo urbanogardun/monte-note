@@ -173,7 +173,7 @@ electron_1.ipcMain.on(index_1.ADD_NOTE, (event, args) => {
     let notebook = args.notebookName;
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
-        notebookManager_1.default.addNote(`${location}\\${notebook}`, noteName)
+        notebookManager_1.default.addNote(path.join(location, notebook), noteName)
             .then((result) => {
             if (result) {
                 dbMessager.createNote(notebook, noteName);
@@ -338,29 +338,33 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
                     notebookManager_1.default.trashNote(location, notebook, note)
                         .then((res) => {
                         if (res) {
-                            dbMessager.markNoteAsTrash(notebook, note)
+                            notebookManager_1.default
+                                .changeAssetLinksForTrashedNote(path.join(location, '.trashcan'), notebook, note)
                                 .then(() => {
-                                event.sender.send(index_1.DELETE_NOTE, res);
-                                let notebookLocation = path.join(location, notebook);
-                                notebookManager_1.default.getNotes(notebookLocation)
-                                    .then((notes) => {
-                                    notebookManager_1.default.getNotesCreationDate(notes)
-                                        .then((response) => {
-                                        notes = notebookManager_1.default.orderNotesBy(response, 'created_at');
-                                        notes = notebookManager_1.default.formatNotes(notes);
-                                        let lastCreatedNote = notes.pop();
-                                        if (lastCreatedNote) {
-                                            dbMessager.setLastOpenedNote(notebook, lastCreatedNote);
-                                        }
-                                        else {
-                                            dbMessager.setLastOpenedNote(notebook, '');
-                                        }
-                                        let noteDataToSave = {
-                                            note: note,
-                                            notebook: notebook,
-                                            data: noteDataTextOnly
-                                        };
-                                        dbMessager.saveNoteContent(noteDataToSave);
+                                dbMessager.markNoteAsTrash(notebook, note)
+                                    .then(() => {
+                                    event.sender.send(index_1.DELETE_NOTE, res);
+                                    let notebookLocation = path.join(location, notebook);
+                                    notebookManager_1.default.getNotes(notebookLocation)
+                                        .then((notes) => {
+                                        notebookManager_1.default.getNotesCreationDate(notes)
+                                            .then((response) => {
+                                            notes = notebookManager_1.default.orderNotesBy(response, 'created_at');
+                                            notes = notebookManager_1.default.formatNotes(notes);
+                                            let lastCreatedNote = notes.pop();
+                                            if (lastCreatedNote) {
+                                                dbMessager.setLastOpenedNote(notebook, lastCreatedNote);
+                                            }
+                                            else {
+                                                dbMessager.setLastOpenedNote(notebook, '');
+                                            }
+                                            let noteDataToSave = {
+                                                note: note,
+                                                notebook: notebook,
+                                                data: noteDataTextOnly
+                                            };
+                                            dbMessager.saveNoteContent(noteDataToSave);
+                                        });
                                     });
                                 });
                             });
@@ -417,9 +421,13 @@ electron_1.ipcMain.on(index_1.RESTORE_NOTE_FROM_TRASH, (event, data) => {
         notebookManager_1.default.restoreNoteFromTrash(location, notebook, note)
             .then((result) => {
             if (result) {
-                dbMessager.unmarkNoteAsTrash(notebook, note)
+                notebookManager_1.default
+                    .changeAssetLinksForTrashedNote(location, notebook, note)
                     .then(() => {
-                    event.sender.send(index_1.RESTORE_NOTE_FROM_TRASH, result);
+                    dbMessager.unmarkNoteAsTrash(notebook, note)
+                        .then(() => {
+                        event.sender.send(index_1.RESTORE_NOTE_FROM_TRASH, result);
+                    });
                 });
             }
         });
@@ -435,22 +443,29 @@ electron_1.ipcMain.on(index_1.ADD_TAG_TO_NOTE, (event, data) => {
         note: note,
         tag: tag
     };
-    dbMessager.addTagToNote(noteObj);
-    // .then((response: boolean) => {
-    //   if (response) {
-    //     console.log(response);
-    //     // dbMessager.getNoteContent(notebook, note)
-    //     // .then((result: any) => {
-    //     //   // console.log(result);
-    //     // });
-    //   }
-    // });
+    dbMessager.addTagToNote(noteObj)
+        .then((response) => {
+        if (response) {
+            dbMessager.getFromSettings('notebooksLocation')
+                .then((location) => {
+                notebookManager_1.default.addTagToTagFile(path.join(location, notebook, note), tag);
+            });
+        }
+    });
 });
 electron_1.ipcMain.on(index_1.REMOVE_TAG_FROM_NOTE, (event, data) => {
     let notebook = data.notebook;
     let note = data.note;
     let tag = data.tag;
-    dbMessager.removeTagFromNote(notebook, note, tag);
+    dbMessager.removeTagFromNote(notebook, note, tag)
+        .then((response) => {
+        if (response) {
+            dbMessager.getFromSettings('notebooksLocation')
+                .then((location) => {
+                notebookManager_1.default.removeTagFromTagFile(path.join(location, notebook, note), tag);
+            });
+        }
+    });
 });
 electron_1.ipcMain.on(index_1.GET_TAGS_FOR_NOTE, (event, data) => {
     // console.log('GET TAGS FOR NOTE: ' + data.note);

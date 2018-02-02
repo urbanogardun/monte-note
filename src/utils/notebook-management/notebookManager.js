@@ -62,7 +62,8 @@ class NotebookManager {
             try {
                 Promise.all([
                     this.createNoteFile(location, name),
-                    this.createNoteAssetsDirectory(location, name)
+                    this.createNoteAssetsDirectory(location, name),
+                    NotebookManager.createTagFile(path.join(location, name))
                 ])
                     .then(() => {
                     resolve(true);
@@ -79,7 +80,7 @@ class NotebookManager {
     // Creates file inside which note content will get saved
     static createNoteFile(location, name) {
         return new Promise((resolve) => {
-            fs.ensureFile(`${location}/${name}/index.html`)
+            fs.ensureFile(path.join(location, name, 'index.html'))
                 .then(() => {
                 resolve(true);
             })
@@ -88,13 +89,60 @@ class NotebookManager {
             });
         });
     }
+    static createTagFile(noteDir) {
+        return new Promise(resolve => {
+            resolve(true);
+            fs.ensureFile(path.join(noteDir, 'tags.dat'))
+                .then(() => {
+                resolve(true);
+            })
+                .catch((err) => {
+                resolve(err);
+            });
+        });
+    }
+    static addTagToTagFile(noteDir, tag) {
+        return new Promise(resolve => {
+            fs.appendFile(path.join(noteDir, 'tags.dat'), `${tag}\n`, (err) => {
+                if (err) {
+                    throw `Could not add tag to a tag file: ${err}`;
+                }
+                resolve(true);
+            });
+        });
+    }
+    static getTagsFromTagFile(noteDir) {
+        return new Promise(resolve => {
+            fs.readFile(path.join(noteDir, 'tags.dat'), 'utf8', (err, tags) => {
+                if (err) {
+                    throw `Could not read tags from the file: ${err}`;
+                }
+                resolve(tags.split('\n'));
+            });
+        });
+    }
+    static removeTagFromTagFile(noteDir, tag) {
+        return new Promise(resolve => {
+            NotebookManager.getTagsFromTagFile(noteDir)
+                .then((tags) => {
+                tags = tags.filter((t) => { return t !== tag; });
+                let tagsFormattedForTagFile = tags.join('\n');
+                fs.writeFile(path.join(noteDir, 'tags.dat'), tagsFormattedForTagFile, (err) => {
+                    if (err) {
+                        throw `Could not overwrite tag file contents: ${err}`;
+                    }
+                    resolve(tags);
+                });
+            });
+        });
+    }
     // Creates an assets directory where all media content is going to get
     // saved
     static createNoteAssetsDirectory(location, name) {
         return new Promise((resolve) => {
-            fs.ensureDir(`${location}/${name}/assets/images`)
+            fs.ensureDir(path.join(location, name, 'assets', 'images'))
                 .then(() => {
-                fs.ensureDir(`${location}/${name}/assets/attachments`)
+                fs.ensureDir(path.join(location, name, 'assets', 'attachments'))
                     .then(() => {
                     resolve(true);
                 })
@@ -277,11 +325,7 @@ class NotebookManager {
         return new Promise(resolve => {
             fs.move(oldPath, newPath)
                 .then(() => {
-                NotebookManager
-                    .changeAssetLinksForTrashedNote(path.join(notebooksLocation, '.trashcan'), notebookName, noteName)
-                    .then(() => {
-                    resolve(true);
-                });
+                resolve(true);
             })
                 .catch((err) => {
                 resolve(false);
@@ -294,12 +338,7 @@ class NotebookManager {
         return new Promise(resolve => {
             fs.move(oldPath, newPath)
                 .then(() => {
-                // resolve(true);
-                NotebookManager
-                    .changeAssetLinksForTrashedNote(notebooksLocation, notebookName, noteName)
-                    .then(() => {
-                    resolve(true);
-                });
+                resolve(true);
             })
                 .catch((err) => {
                 resolve(false);
@@ -481,6 +520,7 @@ class NotebookManager {
             let notePath = path.join(notebooksLocation, notebook, note, 'index.html');
             let noteData = NotebookManager.changeAssetLinks(notebooksLocation, notebook, notePath);
             if (noteData) {
+                console.log('noteData: ' + noteData);
                 fs.writeFile(notePath, noteData, (err) => {
                     if (err) {
                         throw `Could not relink image content: ${err}`;
@@ -557,7 +597,7 @@ class NotebookManager {
         return new Promise(resolve => {
             if (this.notebookExists(name)) {
                 try {
-                    fs.mkdir(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`, () => {
+                    fs.mkdir(path.join(NotebookManager.directoryToSaveNotebooksAt, name), () => {
                         this.addNotebookToLog(name);
                         this.DbConnection.addNotebook(name)
                             .then((result) => {
