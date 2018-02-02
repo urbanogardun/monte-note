@@ -161,6 +161,9 @@ class NotebookManager {
             let noteFilesInTrash = [];
             if (isTrashcan) {
                 fs.readdir(`${location}`, (err, noteDirs) => {
+                    if (noteDirs.length === 0) {
+                        resolve([]);
+                    }
                     noteDirs.forEach((noteDir, i) => {
                         fs.readdir(`${path.join(location, noteDir)}`, (error, notes) => {
                             notes = notes

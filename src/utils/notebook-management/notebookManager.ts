@@ -168,8 +168,11 @@ export class NotebookManager {
             let noteFilesInTrash = [] as string[];
             if (isTrashcan) {
                 fs.readdir(`${location}`, (err: Error, noteDirs: string[]) => {
-                    noteDirs.forEach((noteDir: string, i: number) => {
+                    if (noteDirs.length === 0) {
+                        resolve([]);
+                    }
 
+                    noteDirs.forEach((noteDir: string, i: number) => {
                         fs.readdir(`${path.join(location, noteDir)}`, (error: Error, notes: string[]) => {
                             
                             notes = notes
@@ -217,6 +220,7 @@ export class NotebookManager {
                     const notebook = notebooks[index];
                     data[notebook] = noteFiles;
                 }
+
                 resolve(data);
             });
         });

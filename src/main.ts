@@ -152,10 +152,9 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
             // that content to new directory.
             NotebookManager.relinkAttachmentContent(notebooksLocation)
             .then(() => {
-    
+              
               // TODO: Add existing notes to DB
               let notebooks = NotebookManager.getNotebooks(notebooksLocation);
-    
               NotebookManager.getAllNotes(notebooksLocation, notebooks)
               .then((notes: string[][]) => {
                 
