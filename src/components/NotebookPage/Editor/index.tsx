@@ -256,8 +256,10 @@ export class Editor extends React.Component<Props, State> {
         if (nextProps.notes.length) {
             this.quill.enable();
             this.quill.focus();
+            $('.notebook-page-editor').css({'visibility': 'visible'});
         } else {
             this.quill.disable();
+            $('.notebook-page-editor').css({'visibility': 'hidden'});
         }
 
         if ( (this.state.lastOpenedNote === null) || (this.state.lastOpenedNote !== nextProps.lastOpenedNote) ) {
@@ -356,7 +358,7 @@ export class Editor extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="col-sm trashcan main-content notebook-note-editor">
+            <div className="col-sm trashcan main-content notebook-note-editor notebook-page-editor">
                 <TagAdder
                     notebookName={this.state.notebookName}
                     lastOpenedNote={this.props.lastOpenedNote}

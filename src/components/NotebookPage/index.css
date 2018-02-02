@@ -38,3 +38,7 @@ span.tag-name:hover {
 .notebook-note-editor {
     padding-top: 22px;
 }
+
+div.notebook-page-editor {
+    visibility: hidden;
+}
