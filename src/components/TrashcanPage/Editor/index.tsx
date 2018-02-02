@@ -100,6 +100,8 @@ export class TrashcanEditor extends React.Component<Props, State> {
         updateTrash(newTrash);
         this.quill.deleteText(0, this.quill.getLength());
         electronMessager.sendMessageWithIpcRenderer(RESTORE_NOTE_FROM_TRASH, data);
+
+        $('.trashcan-page-editor').css({'visibility': 'hidden'});
     }
 
     deleteNote() {
@@ -127,6 +129,8 @@ export class TrashcanEditor extends React.Component<Props, State> {
                 note: this.props.note
             };
             electronMessager.sendMessageWithIpcRenderer(REMOVE_NOTE_FROM_DRIVE, data);
+
+            $('.trashcan-page-editor').css({'visibility': 'hidden'});
         }
     }
 
@@ -136,12 +140,13 @@ export class TrashcanEditor extends React.Component<Props, State> {
         // Don't load content into editor unless user clicked on a trashed note
         if ( (nextProps.notebook !== '') && (nextProps.note !== '') ) {
             this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.noteContent as string, 'api');
+            $('.trashcan-page-editor').css({'visibility': 'visible'});
         }
     }
 
     render() {
         return (
-            <div className="col trashcan main-content">
+            <div className="col trashcan main-content trashcan-page-editor">
                 <div id="quill-container" />
             </div>
         );
