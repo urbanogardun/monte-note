@@ -117,7 +117,8 @@ class NotebookManager {
                 if (err) {
                     throw `Could not read tags from the file: ${err}`;
                 }
-                resolve(tags.split('\n'));
+                let tagsToReturn = tags.split('\n').filter((tag) => { return tag.length > 0; });
+                resolve(tagsToReturn);
             });
         });
     }
