@@ -540,7 +540,7 @@ export class NotebookManager {
                     if (err) {
                         throw `Could not relink image content: ${err}`;
                     }
-                    return;
+                    resolve(true);
                 });
             }
         });
