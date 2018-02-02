@@ -303,11 +303,7 @@ export class NotebookManager {
         return new Promise(resolve => {
             fs.move(oldPath, newPath)
             .then(() => {
-                NotebookManager
-                .changeAssetLinksForTrashedNote(path.join(notebooksLocation, '.trashcan'), notebookName, noteName)
-                .then(() => {
-                    resolve(true);
-                });
+                resolve(true);
             })
             .catch((err: Error) => {
                 resolve(false);
@@ -321,12 +317,7 @@ export class NotebookManager {
         return new Promise(resolve => {
             fs.move(oldPath, newPath)
             .then(() => {
-                // resolve(true);
-                NotebookManager
-                .changeAssetLinksForTrashedNote(notebooksLocation, notebookName, noteName)
-                .then(() => {
-                    resolve(true);
-                });
+                resolve(true);
             })
             .catch((err: Error) => {
                 resolve(false);
@@ -536,6 +527,7 @@ export class NotebookManager {
             let notePath = path.join(notebooksLocation, notebook, note, 'index.html');
             let noteData = NotebookManager.changeAssetLinks(notebooksLocation, notebook, notePath);
             if (noteData) {
+                console.log('noteData: ' + noteData);
                 fs.writeFile(notePath, noteData, (err: Error) => {
                     if (err) {
                         throw `Could not relink image content: ${err}`;

@@ -92,6 +92,10 @@ function pathExists(path) {
     })
 }
 
+function readFileSync(path) {
+    return true;
+}
+
 fs.mkdir = mkdir;
 fs.existsSync = existsSync;
 fs.mkdirSync = mkdirSync;
@@ -108,5 +112,6 @@ fs.remove = remove;
 fs.ensureFile = ensureFile;
 fs.ensureDir = ensureDir;
 fs.pathExists = pathExists;
+fs.readFileSync = readFileSync;
 
 module.exports = fs;
