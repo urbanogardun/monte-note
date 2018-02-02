@@ -562,15 +562,23 @@ export class NotebookManager {
             let oldLink = $(element).attr('href') || $(element).attr('src');
             let filename = path.parse(oldLink).base;
             let noteName = NotebookManager.formatNoteName(note);
+
+            let newLink = '';
+            if (notebook === '.trashcan') {
+                notebook = path.join('.trashcan', path.parse(path.resolve(note, '..', '..')).name);
+                newLink = path.join(notebooksLocation, notebook, noteName, 'assets');
+            } else {
+                newLink = path.join(notebooksLocation, notebook, noteName, 'assets');
+            }
+
             if ($(element).hasClass('image-upload')) {
-                let newLink = path.join(
-                    notebooksLocation, notebook, noteName, 'assets', 'images', filename);
+                newLink = path.join(newLink, 'images', filename);
                 $(element).attr('src', newLink);
             } else if ($(element).hasClass('attachment')) {
-                let newLink = path.join(
-                    notebooksLocation, notebook, noteName, 'assets', 'attachments', filename);
+                newLink = path.join(newLink, 'attachments', filename);
                 $(element).attr('href', newLink);
             }
+
         });
 
         return $.html();

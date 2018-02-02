@@ -91,7 +91,8 @@ function initializeResponsiveImages(quill: Quill) {
                         
                         quill.insertEmbed(imageIndexPosition, 'resizableImage', {
                             url: link,
-                            height: elementHeight
+                            height: elementHeight,
+                            class: 'image-upload'
                             },              'user');
                     }
                 }
