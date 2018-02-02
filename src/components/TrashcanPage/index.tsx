@@ -37,7 +37,7 @@ export class Trashcan extends React.Component<Props, State> {
                         notebook={this.props.lastOpenedTrashNotebook}
                         trash={this.props.trash}
                         updateTrash={this.props.updateTrash}
-                        emptyLastOpenedTrash={this.props.updateTrash}
+                        emptyLastOpenedTrash={this.props.emptyLastOpenedTrash}
                     />
                 </div>
             </div>

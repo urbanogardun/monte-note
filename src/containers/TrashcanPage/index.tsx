@@ -21,6 +21,7 @@ export function mapDispatchToProps(dispatch: Dispatch<actions.EnthusiasmAction>)
         onIncrement: () => dispatch(actions.decrementEnthusiasm()),
         updateTrash: (data: any) => dispatch(actions.loadTrash(data)),
         emptyLastOpenedTrash: () => {
+            console.log('empty trash');
             dispatch(actions.loadLastOpenedTrashNote(''));
             dispatch(actions.loadLastOpenedTrashNotebook(''));
         }
