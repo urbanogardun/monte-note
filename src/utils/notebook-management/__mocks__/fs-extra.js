@@ -52,7 +52,11 @@ function stat(path, callback) {
 }
 
 function readFile(location, encoding, callback) {
-    callback('', '<p>Test paragraph.</p>');
+    if (location.includes('C:\\test\\notebooks\\Notebook-1\\Chemistry Note\\')) {
+        callback('', 'tag1\ntag2\ntag3\ntag4\ntag5');
+    } else {
+        callback('', '<p>Test paragraph.</p>');
+    }
 }
 
 function move(oldPath, newPath) {
@@ -96,6 +100,10 @@ function readFileSync(path) {
     return true;
 }
 
+function appendFile(path, data, callback) {
+    callback('');
+}
+
 fs.mkdir = mkdir;
 fs.existsSync = existsSync;
 fs.mkdirSync = mkdirSync;
@@ -113,5 +121,6 @@ fs.ensureFile = ensureFile;
 fs.ensureDir = ensureDir;
 fs.pathExists = pathExists;
 fs.readFileSync = readFileSync;
+fs.appendFile = appendFile;
 
 module.exports = fs;

@@ -80,12 +80,57 @@ export class NotebookManager {
     // Creates file inside which note content will get saved
     static createNoteFile(location: string, name: string) {
         return new Promise((resolve) => {
-            fs.ensureFile(`${location}/${name}/index.html`)
+            fs.ensureFile(path.join(location, name + 'index.html'))
             .then(() => {
                 resolve(true);
             })
             .catch(() => {
                 resolve(false);
+            });
+        });
+    }
+
+    static createTagFile(noteDir: string) {
+        return new Promise(resolve => {
+            resolve(true);
+            fs.ensureFile(noteDir + 'tags.dat')
+            .then(() => {
+                resolve(true);
+            })
+            .catch((err: Error) => {
+                resolve(err);
+            });
+        });
+    }
+
+    static addTagToTagFile(noteDir: string, tag: string) {
+        return new Promise(resolve => {
+            fs.appendFile(noteDir + 'tags.dat', `${tag}\n`, (err: Error) => {
+                if (err) {
+                    throw `Could not add tag to a tag file: ${err}`;
+                }
+                resolve(true);
+            });
+        });
+    }
+
+    static getTagsFromTagFile(noteDir: string) {
+        return new Promise(resolve => {
+            fs.readFile(noteDir + 'tags.dat', 'utf8', (err: Error, tags: string) {
+                if (err) {
+                    throw `Could not read tags from the file: ${err}`;
+                }
+                resolve(tags.split('\n'));
+            });
+        });
+    }
+
+    static removeTagFromTagFile(noteDir: string, tag: string) {
+        return new Promise(resolve => {
+            NotebookManager.getTagsFromTagFile(noteDir)
+            .then((tags: string[]) => {
+                tags = tags.filter((t: string) => { return t !== tag; });
+                resolve(tags);
             });
         });
     }

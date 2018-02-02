@@ -300,6 +300,48 @@ test('removes attachment from a disk', done => {
 
 });
 
+test('creates tags file for a note', done => {
+  let noteDir = 'C:\\test\\notebooks\\Notebook-1\\Chemistry Note\\';
+
+  NotebookManager.createTagFile(noteDir)
+  .then((response: boolean) => {
+    done();
+    expect(response).toEqual(true);
+  });
+});
+
+test('appends tag inside tags file for a note', done => {
+  let noteDir = 'C:\\test\\notebooks\\Notebook-1\\Chemistry Note\\';
+  let tag = 'fruits';
+
+  NotebookManager.addTagToTagFile(noteDir, tag)
+  .then((response: boolean) => {
+    done();
+    expect(response).toEqual(true);
+  });
+});
+
+test('gets all tags from a tags file for a note', done => {
+  let noteDir = 'C:\\test\\notebooks\\Notebook-1\\Chemistry Note\\';
+
+  NotebookManager.getTagsFromTagFile(noteDir)
+  .then((response: string[]) => {
+    done();
+    expect(response).toBeTruthy();
+  });
+});
+
+test('removes tag inside tags file for a note', done => {
+  let noteDir = 'C:\\test\\notebooks\\Notebook-1\\Chemistry Note\\';
+  let tag = 'tag4';
+
+  NotebookManager.removeTagFromTagFile(noteDir, tag)
+  .then((response: string[]) => {
+    done();
+    expect(response.indexOf(tag)).toEqual(-1);
+  });
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });
