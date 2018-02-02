@@ -541,11 +541,11 @@ export class NotebookManager {
             if ($(element).hasClass('image-upload')) {
                 let newLink = path.join(
                     notebooksLocation, notebook, noteName, 'assets', 'images', filename);
-                $(element).attr('src', newLink);
+                $(element).attr('href', newLink);
             } else if ($(element).hasClass('attachment')) {
                 let newLink = path.join(
                     notebooksLocation, notebook, noteName, 'assets', 'attachments', filename);
-                $(element).attr('src', newLink);
+                $(element).attr('href', newLink);
             }
         });
 
