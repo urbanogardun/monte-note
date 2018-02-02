@@ -16,6 +16,12 @@ export class NotebookManager {
         });
     }
 
+    static getTagsFromTagFile(noteLocation: string) {
+        return new Promise(resolve => {
+            resolve(['tag-1', 'tag-2', 'tag-3']);
+        });
+    }
+
     constructor() {
         return {addNotebook: ''};
     }

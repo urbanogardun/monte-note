@@ -186,27 +186,32 @@ export class DbMessager {
      */
     prepareNoteForDb(notebook: string, noteLocation: string) {
         return new Promise(resolve => {
-            let data = {
-                notebookName: notebook,
-                noteName: NotebookManager.formatNoteName(noteLocation),
-                noteContent: '',
-                tags: [],
-                documentFor: 'NOTE_DATA',
-                noteInTrash: false
-            };
+            NotebookManager.getTagsFromTagFile(path.resolve(noteLocation, '..'))
+            .then((tags: string[]) => {
+                let data = {
+                    notebookName: notebook,
+                    noteName: NotebookManager.formatNoteName(noteLocation),
+                    noteContent: '',
+                    tags: tags,
+                    documentFor: 'NOTE_DATA',
+                    noteInTrash: false
+                };
+                
+                if (noteLocation.includes('.trashcan')) {
+                    data.noteInTrash = true;
+                    data.notebookName = NotebookManager.getNotebookNameFromTrashDirectory(noteLocation);
+                    data.noteName = notebook;
+                    noteLocation = path.join(noteLocation, notebook, 'index.html');
+                }
+    
+                NotebookManager.getOnlyTextFromNote(noteLocation)
+                .then((content: string) => {
+                    data.noteContent = content;
+                    resolve(data);
+                });
             
-            if (noteLocation.includes('.trashcan')) {
-                data.noteInTrash = true;
-                data.notebookName = NotebookManager.getNotebookNameFromTrashDirectory(noteLocation);
-                data.noteName = notebook;
-                noteLocation = path.join(noteLocation, notebook, 'index.html');
-            }
-
-            NotebookManager.getOnlyTextFromNote(noteLocation)
-            .then((content: string) => {
-                data.noteContent = content;
-                resolve(data);
             });
+
         });
     }
     
