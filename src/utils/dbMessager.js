@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const index_1 = require("../db/index");
 const notebookManager_1 = require("./notebook-management/notebookManager");
+const index_2 = require("../constants/index");
 const path = require('path');
 class DbMessager {
     constructor() {
@@ -163,7 +164,7 @@ class DbMessager {
                     documentFor: 'NOTE_DATA',
                     noteInTrash: false
                 };
-                if (noteLocation.includes('.trashcan')) {
+                if (noteLocation.includes(index_2.TRASHCAN)) {
                     data.noteInTrash = true;
                     data.notebookName = notebookManager_1.NotebookManager.getNotebookNameFromTrashDirectory(noteLocation);
                     data.noteName = notebook;
@@ -184,7 +185,7 @@ class DbMessager {
      */
     addExistingNote(notebook, noteLocation) {
         return new Promise(resolve => {
-            if (notebook === '.trashcan') {
+            if (notebook === index_2.TRASHCAN) {
                 notebook = path.parse(path.resolve(noteLocation, '..')).name;
                 noteLocation = path.resolve(noteLocation, '..', '..');
             }

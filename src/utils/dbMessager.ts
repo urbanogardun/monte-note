@@ -1,5 +1,6 @@
 import Db from '../db/index';
 import { NotebookManager } from './notebook-management/notebookManager';
+import { TRASHCAN } from '../constants/index';
 const path = require('path');
 
 export class DbMessager {
@@ -197,7 +198,7 @@ export class DbMessager {
                     noteInTrash: false
                 };
                 
-                if (noteLocation.includes('.trashcan')) {
+                if (noteLocation.includes(TRASHCAN)) {
                     data.noteInTrash = true;
                     data.notebookName = NotebookManager.getNotebookNameFromTrashDirectory(noteLocation);
                     data.noteName = notebook;
@@ -223,7 +224,7 @@ export class DbMessager {
     addExistingNote(notebook: string, noteLocation: string) {
         return new Promise(resolve => {
 
-            if (notebook === '.trashcan') {
+            if (notebook === TRASHCAN) {
                 notebook = path.parse(path.resolve(noteLocation, '..')).name;
                 noteLocation = path.resolve(noteLocation, '..', '..');
             }

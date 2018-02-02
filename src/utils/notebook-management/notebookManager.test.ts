@@ -269,7 +269,7 @@ test('gets only text stripped from HTML tags from a note file', done => {
 
 test('gets paths to all note files in all notebooks', done => {
   let noteLocation = 'C:\\Users\\seneca\\Documents\\my-notebooks';
-  let notebooks = [ '.trashcan', 'Foods' ];
+  let notebooks = [ 'Chemistry', 'Foods' ];
 
   NotebookManager.getAllNotes(noteLocation, notebooks)
   .then((result: any) => {

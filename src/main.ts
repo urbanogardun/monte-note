@@ -38,7 +38,8 @@ import {
   UPLOAD_ATTACHMENT,
   ATTACHMENT_UPLOADED,
   DELETE_ATTACHMENT,
-  OPEN_ATTACHMENT
+  OPEN_ATTACHMENT,
+  TRASHCAN
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -455,7 +456,7 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
             if (res) {
 
               NotebookManager
-              .changeAssetLinksForTrashedNote(path.join(location, '.trashcan'), notebook, note)
+              .changeAssetLinksForTrashedNote(path.join(location, TRASHCAN), notebook, note)
               .then(() => {
               
                 dbMessager.markNoteAsTrash(notebook, note)
@@ -529,7 +530,7 @@ ipcMain.on(GET_NOTE_FROM_TRASH, (event: any, data: any) => {
 
   dbMessager.getFromSettings('notebooksLocation')
   .then((location: string) => {
-    let absolutePathToNote = path.join(location, '.trashcan', notebook, note, 'index.html');
+    let absolutePathToNote = path.join(location, TRASHCAN, notebook, note, 'index.html');
     NotebookManager.getNoteData(absolutePathToNote)
     .then((noteData: string) => {
       let noteInfo = {

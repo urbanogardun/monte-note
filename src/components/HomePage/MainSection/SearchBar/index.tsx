@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ElectronMessager } from '../../../../utils/electron-messaging/electronMessager';
-import { GLOBAL_SEARCH, SEARCH_WITHIN_NOTEBOOK } from '../../../../constants/index';
+import { GLOBAL_SEARCH, SEARCH_WITHIN_NOTEBOOK, TRASHCAN } from '../../../../constants/index';
 import * as $ from 'jquery';
 
 export interface Props {
@@ -174,7 +174,7 @@ export class SearchBar extends React.Component<Props, State> {
                                 <div role="separator" className="dropdown-divider" />
 
                                 {(this.props.notebooks as string[]).map((name: string) => {
-                                    if (name !== '.trashcan') {
+                                    if (name !== TRASHCAN) {
                                         return (
                                             <a
                                                 className="dropdown-item"

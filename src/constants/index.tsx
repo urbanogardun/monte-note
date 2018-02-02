@@ -1,3 +1,6 @@
+export const TRASHCAN = '.trashcan';
+export type TRASHCAN = typeof TRASHCAN;
+
 export const INCREMENT_ENTHUSIASM = 'INCREMENT_ENTHUSIASM';
 export type INCREMENT_ENTHUSIASM = typeof INCREMENT_ENTHUSIASM;
 

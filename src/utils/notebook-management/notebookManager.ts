@@ -4,6 +4,7 @@ const uuidv1 = require('uuid/v1');
 const striptags = require('../striptags');
 import * as cheerio from 'cheerio';
 import DbMessager from '../dbMessager';
+import { TRASHCAN } from '../../constants/index';
 
 export class NotebookManager {
 
@@ -165,7 +166,7 @@ export class NotebookManager {
 
     static getNotes(location: string) {
         return new Promise(resolve => {
-            let isTrashcan = path.parse(location).base === '.trashcan';
+            let isTrashcan = path.parse(location).base === TRASHCAN;
             let noteFilesInTrash = [] as string[];
             if (isTrashcan) {
                 fs.readdir(`${location}`, (err: Error, noteDirs: string[]) => {
@@ -335,7 +336,7 @@ export class NotebookManager {
     // Creates .trashcan dir if it does not exist already
     static createTrashcan(notebooksLocation: string) {
         return new Promise(resolve => {
-            let dir = path.join(notebooksLocation, '.trashcan');
+            let dir = path.join(notebooksLocation, TRASHCAN);
 
             fs.ensureDir(dir)
             .then(() => {
@@ -356,7 +357,7 @@ export class NotebookManager {
      */
     static trashNote(notebooksLocation: string, notebookName: string, noteName: string) {
         let oldPath = path.join(notebooksLocation, notebookName, noteName);
-        let newPath = path.join(notebooksLocation, '.trashcan', notebookName, noteName);
+        let newPath = path.join(notebooksLocation, TRASHCAN, notebookName, noteName);
         return new Promise(resolve => {
             fs.move(oldPath, newPath)
             .then(() => {
@@ -369,7 +370,7 @@ export class NotebookManager {
     }
 
     static restoreNoteFromTrash(notebooksLocation: string, notebookName: string, noteName: string) {
-        let oldPath = path.join(notebooksLocation, '.trashcan', notebookName, noteName);
+        let oldPath = path.join(notebooksLocation, TRASHCAN, notebookName, noteName);
         let newPath = path.join(notebooksLocation, notebookName, noteName);
         return new Promise(resolve => {
             fs.move(oldPath, newPath)
@@ -383,7 +384,7 @@ export class NotebookManager {
     }
 
     static destroyNote(notebooksLocation: string, notebookName: string, noteName: string) {
-        let notePath = path.join(notebooksLocation, '.trashcan', notebookName, noteName);
+        let notePath = path.join(notebooksLocation, TRASHCAN, notebookName, noteName);
         return new Promise(resolve => {
             fs.remove(notePath)
             .then(() => {
@@ -401,7 +402,7 @@ export class NotebookManager {
      */
     static getTrash(notebooksLocation: string) {
         return new Promise(resolve => {
-            let pathToTrash = path.join(notebooksLocation, '.trashcan');
+            let pathToTrash = path.join(notebooksLocation, TRASHCAN);
             // Get all notebooks in trashcan
             let notebooks = NotebookManager.getNotebooks(pathToTrash);
 
@@ -613,8 +614,8 @@ export class NotebookManager {
             let noteName = NotebookManager.formatNoteName(note);
 
             let newLink = '';
-            if (notebook === '.trashcan') {
-                notebook = path.join('.trashcan', path.parse(path.resolve(note, '..', '..')).name);
+            if (notebook === TRASHCAN) {
+                notebook = path.join(TRASHCAN, path.parse(path.resolve(note, '..', '..')).name);
                 newLink = path.join(notebooksLocation, notebook, noteName, 'assets');
             } else {
                 newLink = path.join(notebooksLocation, notebook, noteName, 'assets');

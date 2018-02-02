@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
-import { GET_NOTEBOOKS } from '../../../constants/index';
+import { GET_NOTEBOOKS, TRASHCAN } from '../../../constants/index';
 import NewNotebookButton from './NewNotebookButton';
 import TagList from './TagList/index';
 
@@ -46,7 +46,7 @@ export class Sidebar extends React.Component<Props, {}> {
                     <div className="collapse notes-sidebar" id="collapseExample">
                         <ul className="list-group notes">
                             {(this.props.notebooks as string[]).map((name: string) => {
-                                if (name !== '.trashcan') {
+                                if (name !== TRASHCAN) {
                                     return (
                                     <Link 
                                         to={`/notebooks/${name}`} 

@@ -339,7 +339,7 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
                         .then((res) => {
                         if (res) {
                             notebookManager_1.default
-                                .changeAssetLinksForTrashedNote(path.join(location, '.trashcan'), notebook, note)
+                                .changeAssetLinksForTrashedNote(path.join(location, index_1.TRASHCAN), notebook, note)
                                 .then(() => {
                                 dbMessager.markNoteAsTrash(notebook, note)
                                     .then(() => {
@@ -400,7 +400,7 @@ electron_1.ipcMain.on(index_1.GET_NOTE_FROM_TRASH, (event, data) => {
     let notebook = data.notebook;
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
-        let absolutePathToNote = path.join(location, '.trashcan', notebook, note, 'index.html');
+        let absolutePathToNote = path.join(location, index_1.TRASHCAN, notebook, note, 'index.html');
         notebookManager_1.default.getNoteData(absolutePathToNote)
             .then((noteData) => {
             let noteInfo = {

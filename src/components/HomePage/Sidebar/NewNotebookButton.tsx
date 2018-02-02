@@ -1,6 +1,6 @@
 import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
-import { ADD_NOTEBOOK } from '../../../constants/index';
+import { ADD_NOTEBOOK, TRASHCAN } from '../../../constants/index';
 import './index.css';
 import * as $ from 'jquery';
 
@@ -75,7 +75,7 @@ export class NewNotebookButton extends React.Component<Props, State> {
     }
 
     addNotebook(name: string) {
-        if ( (name) && (name !== '.trashcan') ) {
+        if ( (name) && (name !== TRASHCAN) ) {
             ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTEBOOK, name);
             this.addedNotebook = name as string;
         }
