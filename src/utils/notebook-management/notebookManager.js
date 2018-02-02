@@ -277,7 +277,11 @@ class NotebookManager {
         return new Promise(resolve => {
             fs.move(oldPath, newPath)
                 .then(() => {
-                resolve(true);
+                NotebookManager
+                    .changeAssetLinksForTrashedNote(path.join(notebooksLocation, '.trashcan'), notebookName, noteName)
+                    .then(() => {
+                    resolve(true);
+                });
             })
                 .catch((err) => {
                 resolve(false);
@@ -290,7 +294,12 @@ class NotebookManager {
         return new Promise(resolve => {
             fs.move(oldPath, newPath)
                 .then(() => {
-                resolve(true);
+                // resolve(true);
+                NotebookManager
+                    .changeAssetLinksForTrashedNote(notebooksLocation, notebookName, noteName)
+                    .then(() => {
+                    resolve(true);
+                });
             })
                 .catch((err) => {
                 resolve(false);
@@ -467,6 +476,20 @@ class NotebookManager {
             return false;
         }
     }
+    static changeAssetLinksForTrashedNote(notebooksLocation, notebook, note) {
+        return new Promise((resolve) => {
+            let notePath = path.join(notebooksLocation, notebook, note, 'index.html');
+            let noteData = NotebookManager.changeAssetLinks(notebooksLocation, notebook, notePath);
+            if (noteData) {
+                fs.writeFile(notePath, noteData, (err) => {
+                    if (err) {
+                        throw `Could not relink image content: ${err}`;
+                    }
+                    return;
+                });
+            }
+        });
+    }
     static openNoteFile(note) {
         try {
             return fs.readFileSync(note);
@@ -480,12 +503,12 @@ class NotebookManager {
         let noteContent = fs.readFileSync(note);
         const $ = cheerio.load(noteContent);
         $('.image-upload, .attachment').each((ind, element) => {
-            let oldLink = $(element).attr('href');
+            let oldLink = $(element).attr('href') || $(element).attr('src');
             let filename = path.parse(oldLink).base;
             let noteName = NotebookManager.formatNoteName(note);
             if ($(element).hasClass('image-upload')) {
                 let newLink = path.join(notebooksLocation, notebook, noteName, 'assets', 'images', filename);
-                $(element).attr('href', newLink);
+                $(element).attr('src', newLink);
             }
             else if ($(element).hasClass('attachment')) {
                 let newLink = path.join(notebooksLocation, notebook, noteName, 'assets', 'attachments', filename);
