@@ -16,6 +16,10 @@ export class NotebookManager {
         });
     }
 
+    constructor() {
+        return {addNotebook: ''};
+    }
+
 }
 
 export default NotebookManager;
