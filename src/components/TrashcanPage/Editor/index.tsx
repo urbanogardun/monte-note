@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Quill from 'quill';
 import electronMessager from '../../../utils/electron-messaging/electronMessager';
-import { RESTORE_NOTE_FROM_TRASH, REMOVE_NOTE_FROM_DRIVE } from '../../../constants/index';
+import { RESTORE_NOTE_FROM_TRASH, REMOVE_NOTE_FROM_DRIVE, GET_NOTE_FROM_TRASH } from '../../../constants/index';
 import renameAttachment from '../../../utils/quill-modules/rename-attachment/renameAttachment';
 
 export interface Props {
@@ -102,7 +102,13 @@ export class TrashcanEditor extends React.Component<Props, State> {
         electronMessager.sendMessageWithIpcRenderer(RESTORE_NOTE_FROM_TRASH, data);
 
         $('.trashcan-page-editor').css({'visibility': 'hidden'});
-    }
+
+        if (moreNotesLeftInNotebook(newTrash, data.notebook as string)) {
+            data.note = newTrash[data.notebook as string][0];
+            electronMessager.sendMessageWithIpcRenderer(GET_NOTE_FROM_TRASH, data);
+            selectNextNote(data.note as string);
+        }
+    } 
 
     deleteNote() {
         if (confirm('Are you sure you want to delete this note?')) {
@@ -131,6 +137,12 @@ export class TrashcanEditor extends React.Component<Props, State> {
             electronMessager.sendMessageWithIpcRenderer(REMOVE_NOTE_FROM_DRIVE, data);
 
             $('.trashcan-page-editor').css({'visibility': 'hidden'});
+
+            if (moreNotesLeftInNotebook(newTrash, data.notebook as string)) {
+                data.note = newTrash[data.notebook as string][0];
+                electronMessager.sendMessageWithIpcRenderer(GET_NOTE_FROM_TRASH, data);
+                selectNextNote(data.note as string);
+            }
         }
     }
 
@@ -154,3 +166,16 @@ export class TrashcanEditor extends React.Component<Props, State> {
 }
 
 export default TrashcanEditor;
+
+// helpers
+function selectNextNote(noteName: string) {
+    $('ul.notes').children().each(function(this: HTMLElement) {
+        if ($(this).text().trim() === noteName) {
+            $(this).addClass('notebook-name-sidebar-active');
+        }
+    });
+}
+
+function moreNotesLeftInNotebook(trash: any, notebookName: string) {
+    return trash[notebookName].length > 0;
+}
