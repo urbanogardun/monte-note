@@ -39,41 +39,45 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                 <section className="notebooks">
 
                     {(Object.keys(this.props.trash).map((notebook: string) => {
-                        let notebookNameForId = notebook.split(' ').join('-');
-                        let notebookNameTrimmed = notebook.length > 25 ? notebook.slice(0, 23) + '...' : notebook;
-                        return (
-                            <div key={notebook}>
-                                <div
-                                    className="notebook-name-sidebar"
-                                    data-toggle="collapse"
-                               
-                                    data-target={`#${notebookNameForId}`}
-                                    aria-expanded="false"
-                                >
-                                    {notebookNameTrimmed}
-                                    <span className="oi oi-chevron-bottom expand-notebook" />
-                                    <span className="oi oi-chevron-left expand-notebook" />
+                        if (this.props.trash[notebook].length > 0) {
+                            let notebookNameForId = notebook.split(' ').join('-');
+                            let notebookNameTrimmed = notebook.length > 25 ? notebook.slice(0, 23) + '...' : notebook;
+                            return (
+                                <div key={notebook}>
+                                    <div
+                                        className="notebook-name-sidebar"
+                                        data-toggle="collapse"
+                                   
+                                        data-target={`#${notebookNameForId}`}
+                                        aria-expanded="false"
+                                    >
+                                        {notebookNameTrimmed}
+                                        <span className="oi oi-chevron-bottom expand-notebook" />
+                                        <span className="oi oi-chevron-left expand-notebook" />
+                                    </div>
+                                    <div className="collapse notes-sidebar" id={notebookNameForId}>
+                                        <ul className="list-group notes">
+                                            {(this.props.trash[notebook].map((note: string) => {
+                                                return (
+                                                    <li 
+                                                        key={note} 
+                                                        className="list-group-item sidebar-note home-link"
+                                                        onClick={(e) => { 
+                                                            this.getNoteFromTrash(notebook, note); 
+                                                            this.markNoteActive(e);
+                                                        }}
+                                                    >
+                                                    {note}
+                                                    </li>
+                                                );
+                                            }))}
+                                        </ul>
+                                    </div>
                                 </div>
-                                <div className="collapse notes-sidebar" id={notebookNameForId}>
-                                    <ul className="list-group notes">
-                                        {(this.props.trash[notebook].map((note: string) => {
-                                            return (
-                                                <li 
-                                                    key={note} 
-                                                    className="list-group-item sidebar-note home-link"
-                                                    onClick={(e) => { 
-                                                        this.getNoteFromTrash(notebook, note); 
-                                                        this.markNoteActive(e);
-                                                    }}
-                                                >
-                                                {note}
-                                                </li>
-                                            );
-                                        }))}
-                                    </ul>
-                                </div>
-                            </div>
-                        );
+                            );
+                        } else {
+                            return;
+                        }
                     }))}
                 </section>
             </div>
