@@ -21,11 +21,10 @@ export class DbMessager {
      */
     searchNotesGlobally(query: string, resultsLimit: number = 10, resultsToSkip: number = 0, tags: string[] = []) {
         return new Promise((resolve) => {
-            
-            let regex = new RegExp(query.split(' ').join('|'), 'i');
 
-            let searchQuery = this.formatSearchQuery(regex, tags);
-
+            // ^(?=.*\bmeat\b)(?=.*\bpasta\b)(?=.*\bdinner\b).+
+            // let regex = new RegExp(query.split(' ').join('|'), 'i');
+            let searchQuery = this.formatSearchQuery(query, tags);
             this.db
                 .find(searchQuery)
                 .skip(resultsToSkip)
@@ -70,14 +69,24 @@ export class DbMessager {
      * @param  {string[]} tags
      * @returns {object} search query
      */
-    formatSearchQuery(query: RegExp, tags: string[], searchWithinNotebook: string = '') {
+    formatSearchQuery(query: string, tags: string[], searchWithinNotebook: string = '') {
         let searchQuery: any = {};
 
-        searchQuery.noteContent = query;
+        let prepareQuery: any = [];
+        if (query !== '') {
+            let terms = query.split(' ');
+            terms.map((term: string) => { prepareQuery.push({noteContent: { $regex: new RegExp(term, 'i') }}); });
+        }
+
+        if (query !== '') {
+            searchQuery.$and = prepareQuery;
+        }
         searchQuery.noteInTrash = false;
         
         if (tags.length) {
-            searchQuery.noteContent = query;
+            if (query !== '') {
+                searchQuery.$and = prepareQuery;
+            }
             searchQuery.tags = { $in: tags };
         }
 
@@ -92,9 +101,9 @@ export class DbMessager {
         notebook: string, query: string, resultsLimit: number = 10, resultsToSkip: number = 0, tags: string[] = []) {
         return new Promise((resolve) => {
             
-            let regex = new RegExp(query.split(' ').join('|'), 'i');
+            // let regex = new RegExp(query.split(' ').join('|'), 'i');
 
-            let searchQuery = this.formatSearchQuery(regex, tags, notebook);
+            let searchQuery = this.formatSearchQuery(query, tags, notebook);
 
             this.db
             .find(searchQuery)

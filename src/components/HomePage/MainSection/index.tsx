@@ -121,32 +121,36 @@ export class MainSection extends React.Component<Props, {}> {
                             noteContent = highlightSearchQuery(result.noteContent, this.props.searchQuery);
                         }
                         
-                        return (
-                            <li 
-                                key={result._id} 
-                                id={`${result.notebookName}-${result.noteName}`}
-                                className={`list-group-item note-item ${highlightElement}`} 
-                                onClick={
-
-                                    (e) => { 
-                                        this.props.updatePreview(result.notebookName, result.noteName);
-                                        this.previewNote(result.notebookName, result.noteName); 
+                        if (result.notebookName) {
+                            return (
+                                <li 
+                                    key={result._id} 
+                                    id={`${result.notebookName}-${result.noteName}`}
+                                    className={`list-group-item note-item ${highlightElement}`} 
+                                    onClick={
+    
+                                        (e) => { 
+                                            this.props.updatePreview(result.notebookName, result.noteName);
+                                            this.previewNote(result.notebookName, result.noteName); 
+                                        }
                                     }
-                                }
-                            >
-                                <div className="card">
-                                    <div className="card-body">
-                                        <h5 className="card-title">{result.noteName}</h5>
-                                        <h6 className="card-subtitle mb-2 notebook-name">
-                                            <span className="oi oi-book"/> {result.notebookName}</h6>
-                                        <div 
-                                            className="card-text" 
-                                            dangerouslySetInnerHTML={{__html: noteContent}}
-                                        />
+                                >
+                                    <div className="card">
+                                        <div className="card-body">
+                                            <h5 className="card-title">{result.noteName}</h5>
+                                            <h6 className="card-subtitle mb-2 notebook-name">
+                                                <span className="oi oi-book"/> {result.notebookName}</h6>
+                                            <div 
+                                                className="card-text" 
+                                                dangerouslySetInnerHTML={{__html: noteContent}}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
-                        );
+                                </li>
+                            );
+                        } else {
+                            return;
+                        }
                     })}
                 </ul>
 

@@ -18,8 +18,9 @@ class DbMessager {
      */
     searchNotesGlobally(query, resultsLimit = 10, resultsToSkip = 0, tags = []) {
         return new Promise((resolve) => {
-            let regex = new RegExp(query.split(' ').join('|'), 'i');
-            let searchQuery = this.formatSearchQuery(regex, tags);
+            // ^(?=.*\bmeat\b)(?=.*\bpasta\b)(?=.*\bdinner\b).+
+            // let regex = new RegExp(query.split(' ').join('|'), 'i');
+            let searchQuery = this.formatSearchQuery(query, tags);
             this.db
                 .find(searchQuery)
                 .skip(resultsToSkip)
@@ -62,10 +63,21 @@ class DbMessager {
      */
     formatSearchQuery(query, tags, searchWithinNotebook = '') {
         let searchQuery = {};
-        searchQuery.noteContent = query;
-        searchQuery.noteInTrash = false;
+        let prepareQuery = [];
+        console.log('query: ' + query);
+        if (query !== '') {
+            let terms = query.split(' ');
+            // let regex = new RegExp(query.split(' ').join('|'), 'i');
+            terms.map((term) => { prepareQuery.push({ noteContent: { $regex: new RegExp(term, 'i') } }); });
+        }
+        if (query !== '') {
+            searchQuery.$and = prepareQuery;
+        }
+        // searchQuery.noteInTrash = false;
         if (tags.length) {
-            searchQuery.noteContent = query;
+            if (query !== '') {
+                searchQuery.$and = prepareQuery;
+            }
             searchQuery.tags = { $in: tags };
         }
         if (searchWithinNotebook) {
@@ -75,8 +87,8 @@ class DbMessager {
     }
     searchNotesWithinNotebook(notebook, query, resultsLimit = 10, resultsToSkip = 0, tags = []) {
         return new Promise((resolve) => {
-            let regex = new RegExp(query.split(' ').join('|'), 'i');
-            let searchQuery = this.formatSearchQuery(regex, tags, notebook);
+            // let regex = new RegExp(query.split(' ').join('|'), 'i');
+            let searchQuery = this.formatSearchQuery(query, tags, notebook);
             this.db
                 .find(searchQuery)
                 .skip(resultsToSkip)
