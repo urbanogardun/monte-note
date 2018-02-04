@@ -22,8 +22,6 @@ export class DbMessager {
     searchNotesGlobally(query: string, resultsLimit: number = 10, resultsToSkip: number = 0, tags: string[] = []) {
         return new Promise((resolve) => {
 
-            // ^(?=.*\bmeat\b)(?=.*\bpasta\b)(?=.*\bdinner\b).+
-            // let regex = new RegExp(query.split(' ').join('|'), 'i');
             let searchQuery = this.formatSearchQuery(query, tags);
             this.db
                 .find(searchQuery)
@@ -97,8 +95,6 @@ export class DbMessager {
         notebook: string, query: string, resultsLimit: number = 10, resultsToSkip: number = 0, tags: string[] = []) {
         return new Promise((resolve) => {
             
-            // let regex = new RegExp(query.split(' ').join('|'), 'i');
-
             let searchQuery = this.formatSearchQuery(query, tags, notebook);
 
             this.db
