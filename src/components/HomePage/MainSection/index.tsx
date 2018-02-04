@@ -117,7 +117,7 @@ export class MainSection extends React.Component<Props, {}> {
                         }
 
                         let noteContent = result.noteContent;
-                        if (this.props.searchQuery.length > 0) {
+                        if ( (this.props.searchQuery.length > 0) && (noteContent) ) {
                             noteContent = highlightSearchQuery(result.noteContent, this.props.searchQuery);
                         }
                         

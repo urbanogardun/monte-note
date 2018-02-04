@@ -65,9 +65,11 @@ export class SearchBar extends React.Component<Props, State> {
     }
 
     updateInputValue(e: React.ChangeEvent<HTMLInputElement>) {
-        // Save input value
-        this.setState({searchQuery: e.target.value});
-        this.props.updateSearchQuery(e.target.value);
+        // Save input 
+        let self = this;
+        this.setState({searchQuery: e.target.value}, function() {
+            self.props.updateSearchQuery(self.state.searchQuery);
+        });
     }
 
     updateSearchValue(e: React.MouseEvent<HTMLAnchorElement>) {
