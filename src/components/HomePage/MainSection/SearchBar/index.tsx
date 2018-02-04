@@ -142,7 +142,10 @@ export class SearchBar extends React.Component<Props, State> {
                             value={this.state.searchQuery}
                             onChange={e => { 
                                 this.updateInputValue(e);
-                                this.runSearch();
+                                // Don't run the search if user typed in a blank character
+                                if (e.target.value[e.target.value.length - 1] !== ' ') {
+                                    this.runSearch();
+                                }
                             }}
                             type="text"
                             className="form-control"

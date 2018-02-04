@@ -116,8 +116,9 @@ export class MainSection extends React.Component<Props, {}> {
                             highlightElement = 'highlight-note-card';
                         }
 
+                        let noteContent = result.noteContent;
                         if (this.props.searchQuery.length > 0) {
-                            result.noteContent = highlightSearchQuery(result.noteContent, this.props.searchQuery);
+                            noteContent = highlightSearchQuery(result.noteContent, this.props.searchQuery);
                         }
                         
                         return (
@@ -140,7 +141,7 @@ export class MainSection extends React.Component<Props, {}> {
                                             <span className="oi oi-book"/> {result.notebookName}</h6>
                                         <div 
                                             className="card-text" 
-                                            dangerouslySetInnerHTML={{__html: result.noteContent}}
+                                            dangerouslySetInnerHTML={{__html: noteContent}}
                                         />
                                     </div>
                                 </div>
@@ -159,8 +160,7 @@ export default MainSection;
 
 // helpers
 function highlightSearchQuery(text: string, searchQuery: string) {
-//   let searchTerms = searchQuery.split(' ');
-    let searchTerms = searchQuery.split(' ').join('|');
+    let searchTerms = searchQuery.trim().split(' ').join('|');
   
     let regexp = new RegExp(searchTerms, 'ig');
     let newText = text.replace(regexp, `<span class="search-match">$&</span>`);
