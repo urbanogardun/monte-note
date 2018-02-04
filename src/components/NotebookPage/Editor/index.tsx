@@ -253,7 +253,7 @@ export class Editor extends React.Component<Props, State> {
     }
 
     componentWillReceiveProps(nextProps: Props) {
-        if (nextProps.notes.length) {
+        if ( (nextProps.notes.length) && (nextProps.lastOpenedNote !== '') ) {
             this.quill.enable();
             this.quill.focus();
             $('.notebook-page-editor').css({'visibility': 'visible'});
