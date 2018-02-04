@@ -64,16 +64,15 @@ class DbMessager {
     formatSearchQuery(query, tags, searchWithinNotebook = '') {
         let searchQuery = {};
         let prepareQuery = [];
-        console.log('query: ' + query);
         if (query !== '') {
             let terms = query.split(' ');
-            // let regex = new RegExp(query.split(' ').join('|'), 'i');
+            // Every term is matched case-insenitive and as a possible substring in a string.
             terms.map((term) => { prepareQuery.push({ noteContent: { $regex: new RegExp(term, 'i') } }); });
         }
         if (query !== '') {
             searchQuery.$and = prepareQuery;
         }
-        // searchQuery.noteInTrash = false;
+        searchQuery.noteInTrash = false;
         if (tags.length) {
             if (query !== '') {
                 searchQuery.$and = prepareQuery;

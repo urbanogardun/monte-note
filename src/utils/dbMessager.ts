@@ -75,6 +75,7 @@ export class DbMessager {
         let prepareQuery: any = [];
         if (query !== '') {
             let terms = query.split(' ');
+            // Every term is matched case-insenitive and as a possible substring in a string.
             terms.map((term: string) => { prepareQuery.push({noteContent: { $regex: new RegExp(term, 'i') }}); });
         }
 
