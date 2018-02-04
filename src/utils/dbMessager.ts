@@ -22,7 +22,7 @@ export class DbMessager {
     searchNotesGlobally(query: string, resultsLimit: number = 10, resultsToSkip: number = 0, tags: string[] = []) {
         return new Promise((resolve) => {
             
-            let regex = new RegExp(query, 'i');
+            let regex = new RegExp(query.split(' ').join('|'), 'i');
 
             let searchQuery = this.formatSearchQuery(regex, tags);
 
@@ -92,7 +92,7 @@ export class DbMessager {
         notebook: string, query: string, resultsLimit: number = 10, resultsToSkip: number = 0, tags: string[] = []) {
         return new Promise((resolve) => {
             
-            let regex = new RegExp(query, 'i');
+            let regex = new RegExp(query.split(' ').join('|'), 'i');
 
             let searchQuery = this.formatSearchQuery(regex, tags, notebook);
 

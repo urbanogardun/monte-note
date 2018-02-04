@@ -18,7 +18,7 @@ class DbMessager {
      */
     searchNotesGlobally(query, resultsLimit = 10, resultsToSkip = 0, tags = []) {
         return new Promise((resolve) => {
-            let regex = new RegExp(query, 'i');
+            let regex = new RegExp(query.split(' ').join('|'), 'i');
             let searchQuery = this.formatSearchQuery(regex, tags);
             this.db
                 .find(searchQuery)
@@ -75,7 +75,7 @@ class DbMessager {
     }
     searchNotesWithinNotebook(notebook, query, resultsLimit = 10, resultsToSkip = 0, tags = []) {
         return new Promise((resolve) => {
-            let regex = new RegExp(query, 'i');
+            let regex = new RegExp(query.split(' ').join('|'), 'i');
             let searchQuery = this.formatSearchQuery(regex, tags, notebook);
             this.db
                 .find(searchQuery)
