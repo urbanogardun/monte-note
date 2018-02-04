@@ -65,32 +65,27 @@ export class DbMessager {
     }
 
     /** Formats a search query for fetching notes
+     * Search query is formatted in such a way that all terms have to match
+     * within a document, regardless of their order in that document.
      * @param  {RegExp} query
      * @param  {string[]} tags
      * @returns {object} search query
      */
     formatSearchQuery(query: string, tags: string[], searchWithinNotebook: string = '') {
         let searchQuery: any = {};
+        let preparedSearchQuery: any = [];
 
-        let prepareQuery: any = [];
-        if (query !== '') {
-            let terms = query.split(' ');
-            // Every term is matched case-insenitive and as a possible substring in a string.
-            terms.map((term: string) => { prepareQuery.push({noteContent: { $regex: new RegExp(term, 'i') }}); });
-        }
+        let terms = query.split(' ');
+        // Every term is matched case-insenitive and as a possible substring in a string.
+        terms.map((term: string) => { preparedSearchQuery.push({noteContent: { $regex: new RegExp(term, 'i') }}); });
 
-        if (query !== '') {
-            searchQuery.$and = prepareQuery;
-        }
+        searchQuery.$and = preparedSearchQuery;
         searchQuery.noteInTrash = false;
         
         if (tags.length) {
-            if (query !== '') {
-                searchQuery.$and = prepareQuery;
-            }
             searchQuery.tags = { $in: tags };
         }
-
+        
         if (searchWithinNotebook) {
             searchQuery.notebookName = searchWithinNotebook;
         }
