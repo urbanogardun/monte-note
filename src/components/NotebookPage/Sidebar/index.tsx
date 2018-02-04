@@ -152,6 +152,8 @@ export class Sidebar extends React.Component<Props, State> {
     }
 
     render() {
+        let expandNotebooksNoteList = this.props.notes.length > 0 ? 'true' : 'false';
+        let showNotesOrNot = this.props.notes.length > 0 ? 'show' : '';
         return (
             <div className="col-2 trashcan sidebar">
                 <section className="notebooks">
@@ -200,7 +202,7 @@ export class Sidebar extends React.Component<Props, State> {
                         className="notebook-name-sidebar" 
                         data-toggle="collapse" 
                         data-target="#collapseExample" 
-                        aria-expanded="true"
+                        aria-expanded={expandNotebooksNoteList}
                     >
                         {
                             this.props.notebookName.length > 25 ? 
@@ -210,7 +212,7 @@ export class Sidebar extends React.Component<Props, State> {
                         <span className="oi oi-chevron-bottom expand-notebook" />
                         <span className="oi oi-chevron-left expand-notebook" />
                     </div>
-                    <div className="collapse notes-sidebar show" id="collapseExample">
+                    <div className={`collapse notes-sidebar ${showNotesOrNot}`} id="collapseExample">
                         <ul className="list-group notes">
                             {(this.props.notes as string[]).map((name: string, index: number) => {
                                 let activeNote = 
@@ -218,7 +220,7 @@ export class Sidebar extends React.Component<Props, State> {
                                 return (
                                     <li
                                         key={name}
-                                        {...(name === this.props.lastOpenedNote ? '' : '') }
+                                        {...(name === this.props.lastOpenedNote ? '' : '')}
                                         className={`list-group-item sidebar-note ${activeNote}`}
                                         onClick={() => this.updateLastOpenedNote(name)}
                                     >
