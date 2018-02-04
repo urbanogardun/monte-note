@@ -69,6 +69,7 @@ export class HomePage extends React.Component<Props, State> {
                     updateSelectedNotebook={this.props.updateSelectedNotebook}
                     updatePreview={this.props.updatePreview}
                     previewData={this.props.previewData}
+                    searchQuery={this.props.searchQuery}
                 />
                 <PreviewNote 
                     previewContent={this.props.previewContent} 

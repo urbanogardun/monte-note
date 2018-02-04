@@ -208,6 +208,10 @@ span.oi.oi-delete.remove-tag:hover {
 
 /* Home page */
 
+span.search-match {
+  background-color: yellow;
+}
+
 span.trashcan {
   float: right;
 }

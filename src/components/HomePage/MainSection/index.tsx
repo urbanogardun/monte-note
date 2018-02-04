@@ -16,6 +16,7 @@ export interface Props {
     updateSelectedNotebook: Function;
     updatePreview: Function;
     previewData: any;
+    searchQuery: string;
 }
 
 export class MainSection extends React.Component<Props, {}> {
@@ -115,6 +116,10 @@ export class MainSection extends React.Component<Props, {}> {
                             highlightElement = 'highlight-note-card';
                         }
 
+                        if (this.props.searchQuery.length > 0) {
+                            result.noteContent = highlightSearchQuery(result.noteContent, this.props.searchQuery);
+                        }
+                        
                         return (
                             <li 
                                 key={result._id} 
@@ -133,7 +138,10 @@ export class MainSection extends React.Component<Props, {}> {
                                         <h5 className="card-title">{result.noteName}</h5>
                                         <h6 className="card-subtitle mb-2 notebook-name">
                                             <span className="oi oi-book"/> {result.notebookName}</h6>
-                                        <p className="card-text">{result.noteContent}</p>
+                                        <div 
+                                            className="card-text" 
+                                            dangerouslySetInnerHTML={{__html: result.noteContent}}
+                                        />
                                     </div>
                                 </div>
                             </li>
@@ -148,3 +156,14 @@ export class MainSection extends React.Component<Props, {}> {
 }
 
 export default MainSection;
+
+// helpers
+function highlightSearchQuery(text: string, searchQuery: string) {
+//   let searchTerms = searchQuery.split(' ');
+    let searchTerms = searchQuery.split(' ').join('|');
+  
+    let regexp = new RegExp(searchTerms, 'ig');
+    let newText = text.replace(regexp, `<span class="search-match">$&</span>`);
+    
+    return newText;
+}
