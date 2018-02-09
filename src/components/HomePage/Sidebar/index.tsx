@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
 import { GET_NOTEBOOKS, TRASHCAN } from '../../../constants/index';
 // import NewNotebookButton from './NewNotebookButton';
-// import TagList from './TagList/index';
+import TagList from './TagList/index';
 
 export interface Props {
     notebooks: string[];
@@ -131,7 +131,7 @@ export class Sidebar extends React.Component<Props, {}> {
                                     data-toggle="collapse" 
                                     aria-expanded="false" 
                                     aria-controls="collapseNotebooksBigSidebar"
-                                >Notebooks MD
+                                >Notebooks
                                 <span className="sidebar-item-icon oi oi-chevron-left"/>
                                 <span className="sidebar-item-icon oi oi-chevron-bottom"/>
                                 </a>
@@ -190,15 +190,12 @@ export class Sidebar extends React.Component<Props, {}> {
             
                             <div className="sidebar-collapse-content collapse" id="collapseTagsBigSidebar">
                                 <ul className="sidebar-collapsed-content list-unstyled">
-                                    <li className="sidebar-collapsed-item-text">Tag 1</li>
-                                    <li className="sidebar-collapsed-item-text">Tag 1</li>
-                                    <li className="sidebar-collapsed-item-text">Tag 1</li>
-                                    <li className="sidebar-collapsed-item-text">Tag 1</li>
-                                    <li className="sidebar-collapsed-item-text">Tag 1</li>
-                                    <li className="sidebar-collapsed-item-text">Tag 1</li>
-                                    <li className="sidebar-collapsed-item-text">Tag 1</li>
-                                    <li className="sidebar-collapsed-item-text">Tag 1</li>
-                                    <li className="sidebar-collapsed-item-text">Tag 1</li>
+                                    <TagList
+                                        allTags={this.props.allTags}
+                                        updateSelectedTags={this.props.updateSelectedTags}
+                                        searchQuery={this.props.searchQuery}
+                                        selectedNotebook={this.props.selectedNotebook}
+                                    />
                                 </ul>
                             </div>
                         </div>

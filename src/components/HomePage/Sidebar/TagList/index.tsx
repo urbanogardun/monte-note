@@ -65,35 +65,20 @@ export class TagList extends React.Component<Props, State> {
 
     render() {
         return (
-            <div>
-                <div 
-                    className="notebook-name-sidebar" 
-                    data-toggle="collapse" 
-                    data-target="#collapseExample2" 
-                    aria-expanded="false" 
-                    title="Tags"
-                >
-                    Tags
-                    <span className="oi oi-chevron-bottom expand-notebook" />
-                    <span className="oi oi-chevron-left expand-notebook" />
-                </div>
-                <div className="collapse notes-sidebar" id="collapseExample2">
-                    <ul className="list-group notes">
-                        {(this.props.allTags as string[]).map((name: string, index: number) => {
-                            return (
-                                <li 
-                                    key={name}
-                                    onClick={(e) => { this.selectTag(e, name); }} 
-                                    className={`list-group-item sidebar-note`}
-                                >
-                                    {name}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
-            </div>
-        );
+                <React.Fragment>
+                    {(this.props.allTags as string[]).map((name: string, index: number) => {
+                        return (
+                            <li 
+                                key={name}
+                                onClick={(e) => { this.selectTag(e, name); }} 
+                                className={`sidebar-collapsed-item-text`}
+                            >
+                                {name}
+                            </li>
+                        );
+                    })}
+                </React.Fragment>
+            );
     }
 }
 

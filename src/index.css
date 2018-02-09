@@ -117,11 +117,6 @@ li.list-group-item {
   float: right;
 }
 
-/* li:hover, li.tag-selected {
-  color: #fff;
-  background-color: #1E2230;
-} */
-
 div.notebook-name-sidebar {
   height: 44px;
 }
@@ -537,4 +532,9 @@ div.search-notes-md {
 a.sidebar-item-link {
   text-decoration: none !important;
   color: inherit !important;
+}
+
+li.tag-selected {
+  color: #fff;
+  background-color: #1E2230;
 }
