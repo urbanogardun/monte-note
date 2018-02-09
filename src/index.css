@@ -117,10 +117,10 @@ li.list-group-item {
   float: right;
 }
 
-li:hover, li.tag-selected {
+/* li:hover, li.tag-selected {
   color: #fff;
   background-color: #1E2230;
-}
+} */
 
 div.notebook-name-sidebar {
   height: 44px;
@@ -468,8 +468,9 @@ div.search-notes-md {
       float: right;
   }
   
-  li.sidebar-collapsed-item-text:not(:last-child) {
-      padding-bottom: 10px;
+  li.sidebar-collapsed-item-text {
+      padding-top: 5px;
+      padding-bottom: 5px;
   }
   
   div.sidebar-item-text-container {
@@ -531,4 +532,9 @@ div.search-notes-md {
       max-width: 16.666667%;
   }
 
+}
+
+a.sidebar-item-link {
+  text-decoration: none !important;
+  color: inherit !important;
 }

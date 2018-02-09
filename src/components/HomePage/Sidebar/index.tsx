@@ -1,7 +1,7 @@
 import * as React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
-import { GET_NOTEBOOKS } from '../../../constants/index';
+import { GET_NOTEBOOKS, TRASHCAN } from '../../../constants/index';
 // import NewNotebookButton from './NewNotebookButton';
 // import TagList from './TagList/index';
 
@@ -18,6 +18,41 @@ export class Sidebar extends React.Component<Props, {}> {
 
     componentWillMount() {
         ElectronMessager.sendMessageWithIpcRenderer(GET_NOTEBOOKS);
+    }
+
+    componentDidMount() {
+        $('.sidebar-notebooks-dropdown-sm')
+        .add('.sidebar-notebooks-dropdown-md')
+        .add('.sidebar-tags-dropdown-sm')
+        .add('.sidebar-tags-dropdown')
+        .add('.new-notebook-container-sm').on('click', function() {
+            if ($(this).hasClass('sidebar-notebooks-dropdown-md')) {
+                ($('#collapseNotebooksBigSidebar') as any).collapse('toggle')
+            } else if ($(this).hasClass('new-notebook-container-sm')) {
+                $('.tag-links-sm').hide();
+                $('.sidebar-notebook-links-sm').hide();
+
+                $('.new-notebook-sm').css('display') === 'block' ? 
+                $('.new-notebook-sm').hide() :
+                $('.new-notebook-sm').show();
+            } else if ($(this).hasClass('sidebar-tags-dropdown-sm')) {
+                $('.sidebar-notebook-links-sm').hide();
+                $('.new-notebook-sm').hide();
+
+                $('.tag-links-sm').css('display') === 'block' ? 
+                $('.tag-links-sm').hide() :
+                $('.tag-links-sm').show();
+            } else if ($(this).hasClass('sidebar-notebooks-dropdown-sm')) {
+                $('.tag-links-sm').hide();
+                $('.new-notebook-sm').hide();
+
+                $('.sidebar-notebook-links-sm').css('display') === 'block' ? 
+                $('.sidebar-notebook-links-sm').hide() :
+                $('.sidebar-notebook-links-sm').show();
+            } else if ($(this).hasClass('sidebar-tags-dropdown')) {
+                ($('#collapseTagsBigSidebar') as any).collapse('toggle');
+            }
+        });
     }
 
     render() {
@@ -104,14 +139,23 @@ export class Sidebar extends React.Component<Props, {}> {
                         
                             <div className="sidebar-collapse-content collapse" id="collapseNotebooksBigSidebar">
                                 <ul className="sidebar-collapsed-content list-unstyled">
-                                    <li className="sidebar-collapsed-item-text">Notebook And Foundational Concepts on Behavioral 1</li>
-                                    <li className="sidebar-collapsed-item-text">Notebook 1</li>
-                                    <li className="sidebar-collapsed-item-text">Notebook 1</li>
-                                    <li className="sidebar-collapsed-item-text">Notebook 1</li>
-                                    <li className="sidebar-collapsed-item-text">Notebook 1</li>
-                                    <li className="sidebar-collapsed-item-text">Notebook 1</li>
-                                    <li className="sidebar-collapsed-item-text">Notebook 1</li>
-                                    <li className="sidebar-collapsed-item-text">Notebook 1</li>
+                                    {(this.props.notebooks as string[]).map((name: string) => {
+                                        if (name !== TRASHCAN) {
+                                            return (
+                                                <Link
+                                                        to={`/notebooks/${name}`}
+                                                        key={name}
+                                                        className="sidebar-item-link"
+                                                >
+                                                    <li className="sidebar-collapsed-item-text">
+                                                            {name}
+                                                    </li>
+                                                </Link>
+                                            );
+                                        } else {
+                                            return;
+                                        }
+                                    })}
                                 </ul>
                             </div>
                         </div>
@@ -189,14 +233,23 @@ export class Sidebar extends React.Component<Props, {}> {
                 <div className="col-2 sidebar-extension-sm sidebar-notebook-links-sm">
                     <div className="sidebar-collapse-content">
                         <ul className="sidebar-collapsed-content list-unstyled">
-                            <li className="sidebar-collapsed-item-text">Notebook And Foundational Concepts on Behavioral 1</li>
-                            <li className="sidebar-collapsed-item-text">Notebook 1</li>
-                            <li className="sidebar-collapsed-item-text">Notebook 1</li>
-                            <li className="sidebar-collapsed-item-text">Notebook 1</li>
-                            <li className="sidebar-collapsed-item-text">Notebook 1</li>
-                            <li className="sidebar-collapsed-item-text">Notebook 1</li>
-                            <li className="sidebar-collapsed-item-text">Notebook 1</li>
-                            <li className="sidebar-collapsed-item-text">Notebook 1</li>
+                            {(this.props.notebooks as string[]).map((name: string) => {
+                                if (name !== TRASHCAN) {
+                                    return (
+                                        <Link
+                                            to={`/notebooks/${name}`}
+                                            key={name}
+                                            className="sidebar-item-link"
+                                        >
+                                            <li className="sidebar-collapsed-item-text">
+                                                {name}
+                                            </li>
+                                        </Link>
+                                    );
+                                } else {
+                                    return;
+                                }
+                            })}
                         </ul>
                     </div>
                 </div>
@@ -278,9 +331,23 @@ export class Sidebar extends React.Component<Props, {}> {
                                         Notebooks
                                     </a>
                                     <div className="dropdown-menu" aria-labelledby="navbarDropdownNotebooksLink">
-                                        <a className="dropdown-item" href="#">Action</a>
-                                        <a className="dropdown-item" href="#">Another action</a>
-                                        <a className="dropdown-item" href="#">Something else here</a>
+                                        <ul className="sidebar-collapsed-content list-unstyled">
+                                            {(this.props.notebooks as string[]).map((name: string) => {
+                                                if (name !== TRASHCAN) {
+                                                    return (
+                                                        <Link
+                                                            to={`/notebooks/${name}`}
+                                                            key={name}
+                                                            className="dropdown-item"
+                                                        >
+                                                                {name}
+                                                        </Link>
+                                                    );
+                                                } else {
+                                                    return;
+                                                }
+                                            })}
+                                        </ul>
                                     </div>
                                 </li>
                                 <li className="nav-item dropdown">
