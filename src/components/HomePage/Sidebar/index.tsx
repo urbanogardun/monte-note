@@ -253,15 +253,12 @@ export class Sidebar extends React.Component<Props, {}> {
                 <div className="col-2 sidebar-extension-sm sidebar-links-sm tag-links-sm">
                     <div className="sidebar-collapse-content">
                         <ul className="sidebar-collapsed-content list-unstyled">
-                            <li className="sidebar-collapsed-item-text">Tag 1</li>
-                            <li className="sidebar-collapsed-item-text">Tag 1</li>
-                            <li className="sidebar-collapsed-item-text">Tag 1</li>
-                            <li className="sidebar-collapsed-item-text">Tag 1</li>
-                            <li className="sidebar-collapsed-item-text">Tag 1</li>
-                            <li className="sidebar-collapsed-item-text">Tag 1</li>
-                            <li className="sidebar-collapsed-item-text">Tag 1</li>
-                            <li className="sidebar-collapsed-item-text">Tag 1</li>
-                            <li className="sidebar-collapsed-item-text">Tag 1</li>
+                            <TagList
+                                allTags={this.props.allTags}
+                                updateSelectedTags={this.props.updateSelectedTags}
+                                searchQuery={this.props.searchQuery}
+                                selectedNotebook={this.props.selectedNotebook}
+                            />
                         </ul>
                     </div>
                 </div>
@@ -358,10 +355,17 @@ export class Sidebar extends React.Component<Props, {}> {
                                     >
                                         Tags
                                     </a>
-                                    <div className="dropdown-menu" aria-labelledby="navbarDropdownTagsLink">
-                                        <a className="dropdown-item" href="#">Action</a>
-                                        <a className="dropdown-item" href="#">Another action</a>
-                                        <a className="dropdown-item" href="#">Something else here</a>
+                                    <div 
+                                        className="dropdown-menu tags-dropdown-hamburger-container" 
+                                        aria-labelledby="navbarDropdownTagsLink"
+                                    >
+                                        <TagList
+                                            allTags={this.props.allTags}
+                                            updateSelectedTags={this.props.updateSelectedTags}
+                                            searchQuery={this.props.searchQuery}
+                                            selectedNotebook={this.props.selectedNotebook}
+                                            forHamburgerMenu={true}
+                                        />
                                     </div>
                                 </li>
                                 <li className="nav-item">

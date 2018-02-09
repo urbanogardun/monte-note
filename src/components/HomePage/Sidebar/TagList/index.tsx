@@ -8,6 +8,7 @@ export interface Props {
     updateSelectedTags: Function;
     searchQuery: string;
     selectedNotebook: string;
+    forHamburgerMenu?: boolean;
 }
 
 export interface State {
@@ -23,12 +24,22 @@ export class TagList extends React.Component<Props, State> {
         };
     }
 
-    selectTag(event: React.MouseEvent<HTMLLIElement>, name: string) {
+    selectTag(event: React.MouseEvent<HTMLLIElement | HTMLParagraphElement>, name: string) {
         
         let tags: string[] = [];
         
+        // Add/Remove checkbox for tags inside hamburger menu
+        if ($(event.target).hasClass('hamburger-menu-tag-element')) {
+            if ($(event.target).children().length) {
+                $(event.target).children().remove();
+            } else {
+                let tag = $(event.target).text().trim();
+                $(event.target).html(`${tag} <span class="oi oi-circle-check float-right"></span>`)
+            }
+        }
+
         if ( this.isTagSelected(event.target) ) {
-            let tagToRemove = $(event.target).text();
+            let tagToRemove = $(event.target).text().trim();
             tags = this.state.selectedTags.filter((tag: string) => { return tag !== tagToRemove; });
             $(event.target).removeClass('tag-selected');
         } else {
@@ -64,18 +75,32 @@ export class TagList extends React.Component<Props, State> {
     }
 
     render() {
+        // let checkboxIcon = this.props.forHamburgerMenu ? (<span className="oi oi-circle-check float-right"/>) : '';
+        let renderForHamburgerMenu = this.props.forHamburgerMenu;
         return (
                 <React.Fragment>
                     {(this.props.allTags as string[]).map((name: string, index: number) => {
-                        return (
-                            <li 
-                                key={name}
-                                onClick={(e) => { this.selectTag(e, name); }} 
-                                className={`sidebar-collapsed-item-text`}
-                            >
-                                {name}
-                            </li>
-                        );
+                        if (renderForHamburgerMenu) {
+                            return (
+                                <p
+                                    key={name}
+                                    onClick={(e) => { this.selectTag(e, name); }}
+                                    className="hamburger-menu-tag-element" 
+                                >
+                                    {name}
+                                </p>
+                            );
+                        } else {
+                            return (
+                                <li 
+                                    key={name}
+                                    onClick={(e) => { this.selectTag(e, name); }} 
+                                    className={`sidebar-collapsed-item-text`}
+                                >
+                                    {name}
+                                </li>
+                            );
+                        }
                     })}
                 </React.Fragment>
             );

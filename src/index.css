@@ -430,8 +430,9 @@ div.search-notes-md {
 }
 
 @media (max-width: 700px) {
-  div.sidebar-container {
-      display: none;
+  div.sidebar-container,
+  .sidebar-extension-sm {
+      display: none !important;
   }
 }
 
@@ -537,4 +538,13 @@ a.sidebar-item-link {
 li.tag-selected {
   color: #fff;
   background-color: #1E2230;
+}
+
+.dropdown-menu.tags-dropdown-hamburger-container.show > li {
+  color: black !important;
+  cursor: pointer;
+}
+
+.dropdown-menu.tags-dropdown-hamburger-container.show > li:hover {
+  background-color: initial !important;
 }
