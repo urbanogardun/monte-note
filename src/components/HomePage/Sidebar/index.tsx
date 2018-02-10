@@ -281,7 +281,7 @@ export class Sidebar extends React.Component<Props, {}> {
                 </div>
                 <div className="col-2 sidebar-extension-sm sidebar-links-sm tag-links-sm">
                     <div className="sidebar-collapse-content">
-                        <ul className="sidebar-collapsed-content list-unstyled new-notebook-sidebar-md">
+                        <ul className="sidebar-collapsed-content list-unstyled tag-list-sidebar-md">
                             <TagList
                                 allTags={this.props.allTags}
                                 updateSelectedTags={this.props.updateSelectedTags}

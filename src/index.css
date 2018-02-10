@@ -641,7 +641,8 @@ div.new-notebook-sidebar-md {
   padding-top: 13px;
 }
 
-ul.new-notebook-sidebar-md > li {
+ul.new-notebook-sidebar-md > li,
+ul.tag-list-sidebar-md > li {
  cursor: pointer;
 }
 

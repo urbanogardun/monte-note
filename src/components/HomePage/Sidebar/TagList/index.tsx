@@ -28,24 +28,31 @@ export class TagList extends React.Component<Props, State> {
         
         let tags: string[] = [];
         
-        // Add/Remove checkbox for tags inside hamburger menu
-        if ($(event.target).hasClass('hamburger-menu-tag-element')) {
-            if ($(event.target).children().length) {
-                $(event.target).children().remove();
-            } else {
-                let tag = $(event.target).text().trim();
-                $(event.target).html(`${tag} <span class="oi oi-circle-check float-right"></span>`)
-            }
-        }
-
         if ( this.isTagSelected(event.target) ) {
             let tagToRemove = $(event.target).text().trim();
             tags = this.state.selectedTags.filter((tag: string) => { return tag !== tagToRemove; });
-            $(event.target).removeClass('tag-selected');
+
+            $(`li.sidebar-collapsed-item-text:contains("${name}")`)
+            .removeClass('tag-selected');
+            
+            $('.tags-dropdown-hamburger-container')
+            .find(`p:contains("${tagToRemove}")`)
+            .removeClass('tag-selected')
+            .html(`${tagToRemove}`);
         } else {
             tags = this.state.selectedTags;
             tags.push(name);
-            $(event.target).addClass('tag-selected');
+
+            // Marks tag selected on all 3 sidebar versions so when user is
+            // resizing the app selected tags will be tracked on each sidebar
+            // version.
+            $(`li.sidebar-collapsed-item-text:contains("${name}")`)
+            .addClass('tag-selected');
+
+            $('.tags-dropdown-hamburger-container')
+            .find(`p:contains("${name}")`)
+            .addClass('tag-selected')
+            .html(`${name} <span class="oi oi-circle-check float-right"></span>`);
         }
 
         this.setState({
