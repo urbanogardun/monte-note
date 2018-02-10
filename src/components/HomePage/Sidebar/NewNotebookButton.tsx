@@ -12,6 +12,7 @@ export interface Props {
     handleFocusOut?: void;
     goToRoute: Function;
     notebooks: string[];
+    forHamburgerMenu?: boolean;
 }
 
 export interface State {
@@ -32,10 +33,9 @@ export class NewNotebookButton extends React.Component<Props, State> {
         this.addNotebook = this.addNotebook.bind(this);
     }
 
-    showInput() {
+    showInput(whereToRender?: string) {
         let showInput = this.state.showInput === 'visible' ? 'hidden' : 'visible';
         this.setState({showInput: showInput});
-
         $('li.open-input').hide();
     }
 
@@ -89,30 +89,66 @@ export class NewNotebookButton extends React.Component<Props, State> {
     }
 
     render() {
-        return (
-            <div className="add-notebook-form">
-                <li 
-                    className="open-input list-group-item sidebar-note sidebar-link" 
-                    onClick={() => this.showInput()}
-                >
-                    New Notebook <span className="oi oi-book home-icon add-notebook"/>
-                </li>
+        let newNotebookButton;
+        if (this.props.forHamburgerMenu) {
+            newNotebookButton = (
+                <React.Fragment>
+                    <li className="nav-item open-input">
+                        <a
+                            className="nav-link"
+                            href="#"
+                            onClick={(e) => { this.showInput(); }}
+                        >
+                            New Notebook (Component)
+                        </a>
+                    </li>
+                    <li className="nav-item new-notebook-input-hamburger">
+                        <div className={`input-group input-group-sm ${this.state.showInput}`}>
+                            <input
+                                value={this.state.inputValue}
+                                onChange={e => this.updateInputValue(e)}
+                                pattern="^[a-zA-Z0-9]+$"
+                                ref={input => input && input.focus()}
+                                onKeyPress={(e) => this.handleKeyPress(e)}
+                                onBlur={() => this.handleFocusOut()}
+                                type="text" 
+                                className="form-control sidebar-app-form" 
+                                aria-label="Notebook" 
+                                aria-describedby="sizing-addon2"
+                            />
+                        </div>
+                    </li>
+                </React.Fragment>
+            );
+        } else {
+            newNotebookButton = (
+                <div className="add-notebook-form">
+                    <li 
+                        className="open-input list-group-item sidebar-note sidebar-link" 
+                        onClick={() => this.showInput()}
+                    >
+                        New Notebook <span className="oi oi-book home-icon add-notebook"/>
+                    </li>
 
-                <div className={`sidebar-app-form input-group input-group-sm ${this.state.showInput}`}>
-                    <input 
-                        value={this.state.inputValue}
-                        onChange={e => this.updateInputValue(e)}
-                        pattern="^[a-zA-Z0-9]+$"
-                        ref={input => input && input.focus()}
-                        onKeyPress={(e) => this.handleKeyPress(e)}
-                        onBlur={() => this.handleFocusOut()}
-                        type="text" 
-                        className="form-control sidebar-app-form" 
-                        aria-label="Notebook" 
-                        aria-describedby="sizing-addon2"
-                    />
+                    <div className={`sidebar-app-form input-group input-group-sm ${this.state.showInput}`}>
+                        <input 
+                            value={this.state.inputValue}
+                            onChange={e => this.updateInputValue(e)}
+                            pattern="^[a-zA-Z0-9]+$"
+                            ref={input => input && input.focus()}
+                            onKeyPress={(e) => this.handleKeyPress(e)}
+                            onBlur={() => this.handleFocusOut()}
+                            type="text" 
+                            className="form-control sidebar-app-form" 
+                            aria-label="Notebook" 
+                            aria-describedby="sizing-addon2"
+                        />
+                    </div>
                 </div>
-            </div>
+            );
+        }
+        return (
+            newNotebookButton
         );
     }
 }

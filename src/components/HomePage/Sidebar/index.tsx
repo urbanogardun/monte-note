@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { ElectronMessager } from '../../../utils/electron-messaging/electronMessager';
 import { GET_NOTEBOOKS, TRASHCAN } from '../../../constants/index';
-// import NewNotebookButton from './NewNotebookButton';
+import NewNotebookButton from './NewNotebookButton';
 import TagList from './TagList/index';
 
 export interface Props {
@@ -333,8 +333,22 @@ export class Sidebar extends React.Component<Props, {}> {
                                     </a>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">New Notebook</a>
+                                    <a 
+                                        className="nav-link" 
+                                        href="#"
+                                        onClick={(e) => {
+                                            $(e.target).hide();
+                                            $('.new-notebook-input-hamburger').show();
+                                        }}
+                                    >
+                                    New Notebook
+                                    </a>
                                 </li>
+                                <NewNotebookButton
+                                    goToRoute={this.props.goToRoute}
+                                    notebooks={this.props.notebooks}
+                                    forHamburgerMenu={true}
+                                />
                                 <li className="nav-item dropdown">
                                     <a 
                                         className="nav-link dropdown-toggle" 
