@@ -60,6 +60,9 @@ export class HomePage extends React.Component<Props, State> {
                     updateSelectedTags={this.props.updateSelectedTags}
                     searchQuery={this.props.searchQuery}
                     selectedNotebook={this.props.selectedNotebook}
+                    selectedTags={this.props.selectedTags}
+                    updateSelectedNotebook={this.props.updateSelectedNotebook}
+                    updateSearchQuery={this.props.updateSearchQuery}
                 />
                 <MainSection 
                     searchResults={this.props.searchResults} 

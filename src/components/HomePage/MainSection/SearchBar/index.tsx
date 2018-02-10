@@ -8,6 +8,7 @@ export interface Props {
     selectedTags: string[];
     updateSearchQuery: Function;
     updateSelectedNotebook: Function;
+    forHamburgerMenu?: boolean;
 }
 
 export interface State {
@@ -136,10 +137,14 @@ export class SearchBar extends React.Component<Props, State> {
     }
 
     render() {
-        return (
-            <li className="list-group-item note-item search-home">
-                <div className="input-group input-group-sm mb-3">
-                    <div className="input-group input-group-sm mb-3 add-tags">
+        let forHamburgerMenu = '';
+        let searchBar;
+        if (this.props.forHamburgerMenu) {
+            forHamburgerMenu = 'search-home-hamburger';
+            searchBar = (
+
+                <form className="form-inline search-sm">
+                    <div className="input-group input-group-sm">
                         <input
                             value={this.state.searchQuery}
                             onChange={e => { 
@@ -155,7 +160,7 @@ export class SearchBar extends React.Component<Props, State> {
                             placeholder="Search"
                             aria-describedby="inputGroup-sizing-sm"
                         />
-
+        
                         <div className="input-group-append">
                             <button
                                 className="btn btn-outline-secondary dropdown-toggle home-search"
@@ -177,7 +182,7 @@ export class SearchBar extends React.Component<Props, State> {
                                     <span className="oi oi-check notebook-check" /> All Notebooks
                                 </a>
                                 <div role="separator" className="dropdown-divider" />
-
+        
                                 {(this.props.notebooks as string[]).map((name: string) => {
                                     if (name !== TRASHCAN) {
                                         return (
@@ -198,10 +203,81 @@ export class SearchBar extends React.Component<Props, State> {
                                 })}
                             </div>
                         </div>
-
                     </div>
-                </div>
-            </li>
+                </form>
+        
+            );
+        } else {
+            searchBar = (
+                <li className={`list-group-item note-item search-home ${forHamburgerMenu}`}>
+                    <div className="input-group input-group-sm mb-3">
+                        <div className="input-group input-group-sm mb-3 add-tags">
+                            <input
+                                value={this.state.searchQuery}
+                                onChange={e => { 
+                                    this.updateInputValue(e);
+                                    // Don't run the search if user typed in a blank character
+                                    if (e.target.value[e.target.value.length - 1] !== ' ') {
+                                        this.runSearch();
+                                    }
+                                }}
+                                type="text"
+                                className="form-control"
+                                aria-label="Small"
+                                placeholder="Search"
+                                aria-describedby="inputGroup-sizing-sm"
+                            />
+    
+                            <div className="input-group-append">
+                                <button
+                                    className="btn btn-outline-secondary dropdown-toggle home-search"
+                                    type="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                >
+                                    <span className="oi oi-chevron-bottom search-dropdown" />
+                                </button>
+                                <div className="dropdown-menu">
+                                    <a 
+                                        className="dropdown-item" 
+                                        href="#" 
+                                        onClick={(e) => {
+                                            this.updateSearchValue(e);
+                                        }}
+                                    >
+                                        <span className="oi oi-check notebook-check" /> All Notebooks
+                                    </a>
+                                    <div role="separator" className="dropdown-divider" />
+    
+                                    {(this.props.notebooks as string[]).map((name: string) => {
+                                        if (name !== TRASHCAN) {
+                                            return (
+                                                <a
+                                                    className="dropdown-item"
+                                                    onClick={(e) => {
+                                                        this.updateSearchValue(e);
+                                                    }}
+                                                    href="#"
+                                                    key={name}
+                                                >
+                                                    {name}
+                                                </a>
+                                            );
+                                        } else {
+                                            return;
+                                        }
+                                    })}
+                                </div>
+                            </div>
+    
+                        </div>
+                    </div>
+                </li>
+            );
+        }
+        return (
+            searchBar
         );
     }
 }

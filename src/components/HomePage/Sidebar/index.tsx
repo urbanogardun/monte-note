@@ -4,6 +4,7 @@ import { ElectronMessager } from '../../../utils/electron-messaging/electronMess
 import { GET_NOTEBOOKS, TRASHCAN } from '../../../constants/index';
 import NewNotebookButton from './NewNotebookButton';
 import TagList from './TagList/index';
+import { SearchBar } from '../MainSection/SearchBar/index';
 
 export interface Props {
     notebooks: string[];
@@ -12,6 +13,9 @@ export interface Props {
     updateSelectedTags: Function;
     searchQuery: string;
     selectedNotebook: string;
+    selectedTags: string[];
+    updateSearchQuery: Function;
+    updateSelectedNotebook: Function;
 }
 
 export class Sidebar extends React.Component<Props, {}> {
@@ -306,14 +310,21 @@ export class Sidebar extends React.Component<Props, {}> {
                 <div className="col-12 navbar-sm-container">
                     <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
                         <a className="navbar-brand" href="#">Logo</a>
-                        <form className="form-inline search-sm">
+                        {/* <form className="form-inline search-sm">
                             <input 
                                 className="form-control search-notes" 
                                 type="search" 
                                 placeholder="Search" 
                                 aria-label="Search"
                             />
-                        </form>
+                        </form> */}
+                        <SearchBar 
+                            notebooks={this.props.notebooks} 
+                            selectedTags={this.props.selectedTags}
+                            updateSearchQuery={this.props.updateSearchQuery}
+                            updateSelectedNotebook={this.props.updateSelectedNotebook}
+                            forHamburgerMenu={true}
+                        />
                         <button 
                             className="navbar-toggler" 
                             type="button" 

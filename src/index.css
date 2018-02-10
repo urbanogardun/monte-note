@@ -451,6 +451,10 @@ li.search-home {
   display: none;
 }
 
+li.search-home-hamburger {
+  display: initial;
+}
+
 @media (max-width: 700px) {
   div.sidebar-container,
   .sidebar-extension-sm {
@@ -470,7 +474,7 @@ li.search-home {
   div.search-notes-md {
       display: flex;
   }
-  
+
   div.preview-note-section {
       display: block;
   }
