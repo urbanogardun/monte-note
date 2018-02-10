@@ -636,3 +636,11 @@ button.search-filters:hover {
   border: 1px solid #ccc;
   color: #868e96 !important;
 }
+
+div.new-notebook-sidebar-md {
+  padding-top: 13px;
+}
+
+ul.new-notebook-sidebar-md > li {
+ cursor: pointer;
+}

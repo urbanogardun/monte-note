@@ -39,6 +39,7 @@ export class Sidebar extends React.Component<Props, {}> {
                 $('.new-notebook-sm').css('display') === 'block' ? 
                 $('.new-notebook-sm').hide() :
                 $('.new-notebook-sm').show();
+                $('input.sidebar-md').focus();
             } else if ($(this).hasClass('sidebar-tags-dropdown-sm')) {
                 $('.sidebar-notebook-links-sm').hide();
                 $('.new-notebook-sm').hide();
@@ -278,7 +279,7 @@ export class Sidebar extends React.Component<Props, {}> {
                 </div>
                 <div className="col-2 sidebar-extension-sm sidebar-links-sm tag-links-sm">
                     <div className="sidebar-collapse-content">
-                        <ul className="sidebar-collapsed-content list-unstyled">
+                        <ul className="sidebar-collapsed-content list-unstyled new-notebook-sidebar-md">
                             <TagList
                                 allTags={this.props.allTags}
                                 updateSelectedTags={this.props.updateSelectedTags}
@@ -291,15 +292,12 @@ export class Sidebar extends React.Component<Props, {}> {
 
                 {/* <!-- Add Notebook Extension --> */}
                 <div className="col-2 sidebar-extension-sm sidebar-links-sm new-notebook-sm">
-                    <div className="sidebar-collapse-content">
-                        <div className="input-group input-group-sm mb-3">
-                            <input 
-                                type="text" 
-                                className="form-control" 
-                                aria-label="Small" 
-                                aria-describedby="inputGroup-sizing-sm"
-                            />
-                        </div>
+                    <div className="sidebar-collapse-content new-notebook-sidebar-md">
+                        <NewNotebookButton
+                            goToRoute={this.props.goToRoute}
+                            notebooks={this.props.notebooks}
+                            forMediumSidebar={true}
+                        />
                     </div>
                 </div>
                 {/* <!-- /Add Notebook Extension --> */}

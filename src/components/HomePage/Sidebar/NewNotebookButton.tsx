@@ -13,6 +13,7 @@ export interface Props {
     goToRoute: Function;
     notebooks: string[];
     forHamburgerMenu?: boolean;
+    forMediumSidebar?: boolean;
 }
 
 export interface State {
@@ -125,6 +126,24 @@ export class NewNotebookButton extends React.Component<Props, State> {
                         </div>
                     </li>
                 </React.Fragment>
+            );
+        } else if (this.props.forMediumSidebar) {
+            newNotebookButton = (
+                <div className={`sidebar-app-form input-group input-group-sm visible`}>
+                    <input
+                        value={this.state.inputValue}
+                        onChange={e => this.updateInputValue(e)}
+                        pattern="^[a-zA-Z0-9]+$"
+                        ref={input => input && input.focus()}
+                        onKeyPress={(e) => this.handleKeyPress(e)}
+                        onKeyDown={(e) => this.exitIfEscPressed(e)}
+                        onBlur={() => this.handleFocusOut()}
+                        type="text"
+                        className="form-control sidebar-app-form sidebar-md"
+                        aria-label="Notebook"
+                        aria-describedby="sizing-addon2"
+                    />
+                </div>
             );
         } else {
             newNotebookButton = (
