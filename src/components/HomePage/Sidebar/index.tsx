@@ -53,6 +53,13 @@ export class Sidebar extends React.Component<Props, {}> {
                 ($('#collapseTagsBigSidebar') as any).collapse('toggle');
             }
         });
+
+        // Don't close tags dropdown in hamburger menu on tag click
+        $('#navbarDropdownTagsLink').on('click', function() {
+            $(this).attr('aria-expanded', 'true');
+            $('.tags-dropdown-hamburger-container').toggleClass('show');
+        });
+
     }
 
     render() {
@@ -349,7 +356,6 @@ export class Sidebar extends React.Component<Props, {}> {
                                         className="nav-link dropdown-toggle" 
                                         href="#" 
                                         id="navbarDropdownTagsLink" 
-                                        data-toggle="dropdown" 
                                         aria-haspopup="true" 
                                         aria-expanded="false"
                                     >
