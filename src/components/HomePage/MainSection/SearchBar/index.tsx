@@ -155,7 +155,7 @@ export class SearchBar extends React.Component<Props, State> {
                                 }
                             }}
                             type="text"
-                            className="form-control"
+                            className="form-control search-notes"
                             aria-label="Small"
                             placeholder="Search"
                             aria-describedby="inputGroup-sizing-sm"
@@ -163,7 +163,7 @@ export class SearchBar extends React.Component<Props, State> {
         
                         <div className="input-group-append">
                             <button
-                                className="btn btn-outline-secondary dropdown-toggle home-search"
+                                className="btn btn-outline-secondary dropdown-toggle home-search search-filters"
                                 type="button"
                                 data-toggle="dropdown"
                                 aria-haspopup="true"
@@ -222,7 +222,7 @@ export class SearchBar extends React.Component<Props, State> {
                                     }
                                 }}
                                 type="text"
-                                className="form-control"
+                                className="form-control search-notes"
                                 aria-label="Small"
                                 placeholder="Search"
                                 aria-describedby="inputGroup-sizing-sm"
@@ -230,7 +230,7 @@ export class SearchBar extends React.Component<Props, State> {
     
                             <div className="input-group-append">
                                 <button
-                                    className="btn btn-outline-secondary dropdown-toggle home-search"
+                                    className="btn btn-outline-secondary dropdown-toggle home-search search-filters"
                                     type="button"
                                     data-toggle="dropdown"
                                     aria-haspopup="true"

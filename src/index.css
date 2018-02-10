@@ -624,3 +624,15 @@ button.navbar-toggler:active,
 button.navbar-toggler:focus {
   outline: 0 !important;
 }
+
+.show>.btn-outline-secondary.dropdown-toggle {
+  background-color: transparent !important;
+  border-color: #ccc !important;
+  color: #868e96 !important;
+}
+
+button.search-filters:hover {
+  background-color: transparent !important;
+  border: 1px solid #ccc;
+  color: #868e96 !important;
+}

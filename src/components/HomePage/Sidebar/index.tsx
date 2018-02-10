@@ -310,14 +310,6 @@ export class Sidebar extends React.Component<Props, {}> {
                 <div className="col-12 navbar-sm-container">
                     <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
                         <a className="navbar-brand" href="#">Logo</a>
-                        {/* <form className="form-inline search-sm">
-                            <input 
-                                className="form-control search-notes" 
-                                type="search" 
-                                placeholder="Search" 
-                                aria-label="Search"
-                            />
-                        </form> */}
                         <SearchBar 
                             notebooks={this.props.notebooks} 
                             selectedTags={this.props.selectedTags}
