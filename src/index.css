@@ -480,7 +480,18 @@ li.search-home-hamburger {
   }
 }
 
+@media (max-width: 1065px) {
+  div#collapseTagsBigSidebar, 
+  div#collapseNotebooksBigSidebar {
+    display: none !important;
+  }
+}
+
 @media (min-width: 1065px) {
+
+  div.sidebar-extension-sm {
+    display: none !important;
+  }
 
   div.sidebar-container {
       padding-right: 15px;
