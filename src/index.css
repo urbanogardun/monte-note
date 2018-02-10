@@ -46,8 +46,16 @@ we're at the bottom of the page. Find a fix for this */
   overflow:auto;
 }
 
+.col-12.navbar-sm-container {
+  height: auto;
+}
+.notes-index {
+  height: 100%;
+}
+
 .preview-note-content {
-  max-height: 100vh;
+  /* max-height: 100vh; */
+  display: none;
 }
 
 input.sidebar-app-form {
@@ -413,6 +421,8 @@ div.navbar-sm-container {
   position: sticky;
   top: 0px;
   padding-left: 0px !important;
+  padding-right: 0px !important;
+  /* background-color: #fff; */
   z-index: 1000;
 }
 

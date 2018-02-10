@@ -55,9 +55,24 @@ export class Sidebar extends React.Component<Props, {}> {
         });
 
         // Don't close tags dropdown in hamburger menu on tag click
-        $('#navbarDropdownTagsLink').on('click', function() {
+        $('#navbarDropdownTagsLink').on('click', function(event: any) {
+            event.preventDefault();
+            $(window).scrollTop(0);
             $(this).attr('aria-expanded', 'true');
             $('.tags-dropdown-hamburger-container').toggleClass('show');
+        });
+
+        // Always scroll to top on any hamburger menu link that opens a dropdown.
+        // This is to prevent navbar jumping out of our window view due to
+        // CSS settings that keep it stickied.
+        $('#navbarDropdownNotebooksLink').on('click', function(event: any) {
+            event.preventDefault();
+            $(window).scrollTop(0);
+        });
+
+        $('button.navbar-toggler').on('click', function(event: any) {
+            $('#navbarDropdownTagsLink').attr('aria-expanded', 'false');
+            $('.tags-dropdown-hamburger-container').removeClass('show');
         });
 
     }
@@ -289,7 +304,7 @@ export class Sidebar extends React.Component<Props, {}> {
 
                 {/* <!-- Navbar for Smallest Devices --> */}
                 <div className="col-12 navbar-sm-container">
-                    <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                    <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
                         <a className="navbar-brand" href="#">Logo</a>
                         <form className="form-inline search-sm">
                             <input 

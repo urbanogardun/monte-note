@@ -52,7 +52,7 @@ export class HomePage extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="row">
+            <div className="row home-page">
                 <Sidebar 
                     notebooks={this.props.notebooks} 
                     goToRoute={this.props.goToRoute}
