@@ -644,3 +644,8 @@ div.new-notebook-sidebar-md {
 ul.new-notebook-sidebar-md > li {
  cursor: pointer;
 }
+
+a.sidebar-link-md {
+  display: inline-flex !important;
+  text-decoration: none !important;
+}

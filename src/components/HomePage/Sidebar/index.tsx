@@ -234,18 +234,20 @@ export class Sidebar extends React.Component<Props, {}> {
                                 <a 
                                     href="" 
                                     className="sidebar-item-text"
-                                >Trash <span className="sidebar-item-icon oi oi-trash"/></a>
+                                >Trash <span className="sidebar-item-icon oi oi-trash"/>
+                                </a>
                             </div>
                         </div>
         
                         <div className="sidebar-item sidebar-item-sm">
                             <div className="sidebar-item-text-container sidebar-item-text-container-sm">
-                                <a 
-                                    href="" 
-                                    title="Trash" 
-                                    className="sidebar-item-text"
-                                ><span className="sidebar-item-icon sidebar-item-icon-sm oi oi-trash"/>
-                                </a>
+                                <Link
+                                    to={'/trashcan'}
+                                    className="sidebar-item-text sidebar-link-md"
+                                    title="Trash"
+                                >
+                                    <span className="sidebar-item-icon sidebar-item-icon-sm oi oi-trash trashcan" />
+                                </Link>
                             </div>
                         </div>
                         {/* <!-- /Trash --> */}
