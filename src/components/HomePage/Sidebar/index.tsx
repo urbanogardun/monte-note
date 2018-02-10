@@ -230,11 +230,13 @@ export class Sidebar extends React.Component<Props, {}> {
                         {/* <!-- Trash --> */}
                         <div className="sidebar-item sidebar-item-md">
                             <div className="sidebar-item-text-container">
-                                <a 
-                                    href="" 
-                                    className="sidebar-item-text"
-                                >Trash <span className="sidebar-item-icon oi oi-trash"/>
-                                </a>
+                                    <Link
+                                        to={'/trashcan'}
+                                        className="sidebar-item-text sidebar-link-lg"
+                                        title="Trash"
+                                    >
+                                        Trash <span className="sidebar-item-icon oi oi-trash"/>
+                                    </Link>
                             </div>
                         </div>
         

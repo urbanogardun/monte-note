@@ -676,3 +676,10 @@ span.notebook-icon-sidebar-lg {
 input.sidebar-lg {
   height: 20px !important;
 }
+div.sidebar-item-md {
+  min-height: 45px !important;
+}
+a.sidebar-link-lg {
+  display: block;
+  width: inherit;
+}
