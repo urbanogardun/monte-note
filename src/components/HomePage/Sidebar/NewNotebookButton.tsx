@@ -147,15 +147,18 @@ export class NewNotebookButton extends React.Component<Props, State> {
             );
         } else {
             newNotebookButton = (
-                <div className="add-notebook-form">
+                <React.Fragment>
                     <li 
-                        className="open-input list-group-item sidebar-note sidebar-link" 
+                        className="open-input list-group-item sidebar-note sidebar-link new-notebook-sidebar-link-lg" 
                         onClick={() => this.showInput()}
                     >
-                        New Notebook <span className="oi oi-book home-icon add-notebook"/>
+                        New Notebook <span className="oi oi-book home-icon add-notebook notebook-icon-sidebar-lg"/>
                     </li>
 
-                    <div className={`sidebar-app-form input-group input-group-sm ${this.state.showInput}`}>
+                    <div 
+                        className={`sidebar-app-form 
+                        input-group input-group-sm ${this.state.showInput} new-notebook-sidebar-lg`}
+                    >
                         <input 
                             value={this.state.inputValue}
                             onChange={e => this.updateInputValue(e)}
@@ -165,12 +168,12 @@ export class NewNotebookButton extends React.Component<Props, State> {
                             onKeyDown={(e) => this.exitIfEscPressed(e)}
                             onBlur={() => this.handleFocusOut()}
                             type="text" 
-                            className="form-control sidebar-app-form" 
+                            className="form-control sidebar-app-form sidebar-lg" 
                             aria-label="Notebook" 
                             aria-describedby="sizing-addon2"
                         />
                     </div>
-                </div>
+                </React.Fragment>
             );
         }
         return (

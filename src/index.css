@@ -661,3 +661,18 @@ a.sidebar-link-md {
   display: inline-flex !important;
   text-decoration: none !important;
 }
+
+li.new-notebook-sidebar-link-lg {
+  padding: 0px !important;
+  line-height: 40px;
+}
+li.new-notebook-sidebar-link-lg:hover {
+  background-color: #1E2230;
+  color: #fff;
+}
+span.notebook-icon-sidebar-lg {
+  line-height: 35px;
+}
+input.sidebar-lg {
+  height: 20px !important;
+}

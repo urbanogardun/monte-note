@@ -112,11 +112,10 @@ export class Sidebar extends React.Component<Props, {}> {
 
                         <div className="sidebar-item sidebar-item-md">
                             <div className="sidebar-item-text-container">
-                                <a 
-                                    href="" 
-                                    className="sidebar-item-text"
-                                >New Notebook <span className="sidebar-item-icon oi oi-book"/>
-                                </a>
+                                <NewNotebookButton
+                                    goToRoute={this.props.goToRoute}
+                                    notebooks={this.props.notebooks}
+                                />
                             </div>
                         </div>
 
