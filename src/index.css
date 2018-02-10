@@ -580,6 +580,11 @@ li.tag-selected {
   background-color: #6574a0 !important;
 }
 
+p.hamburger-menu-tag-element.dropdown-item:active {
+  background-color: transparent !important;
+  color: #212529 !important;
+}
+
 input.new-notebook-hamburger {
   background-color: inherit;
   border: none;
@@ -595,4 +600,13 @@ input.new-notebook-hamburger:focus {
 
 a.hamburger-menu-link {
   text-decoration: none !important;
+}
+
+button.navbar-toggler {
+  border: 0px !important;
+}
+
+button.navbar-toggler:active,
+button.navbar-toggler:focus {
+  outline: 0 !important;
 }
