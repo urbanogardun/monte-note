@@ -396,10 +396,10 @@ export class Sidebar extends React.Component<Props, {}> {
                                         to={'/trashcan'}
                                         className="hamburger-menu-link"
                                     >
-                                        <li
+                                        <p
                                             className="nav-link"
                                         >Trash
-                                        </li>
+                                        </p>
                                     </Link>
                                 </li>
                             </ul>

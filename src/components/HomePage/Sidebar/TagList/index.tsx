@@ -85,7 +85,7 @@ export class TagList extends React.Component<Props, State> {
                                 <p
                                     key={name}
                                     onClick={(e) => { this.selectTag(e, name); }}
-                                    className="hamburger-menu-tag-element" 
+                                    className="hamburger-menu-tag-element dropdown-item" 
                                 >
                                     {name}
                                 </p>

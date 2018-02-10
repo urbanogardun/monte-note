@@ -569,6 +569,15 @@ li.tag-selected {
 
 .hamburger-menu-tag-element {
   cursor: pointer;
+  margin-bottom: 0px;
+}
+
+.hamburger-menu-tag-element > span {
+  top: 4px;
+}
+
+.dropdown-item:active {
+  background-color: #6574a0 !important;
 }
 
 input.new-notebook-hamburger {
