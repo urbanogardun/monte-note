@@ -63,6 +63,12 @@ input.sidebar-app-form {
   border: none;
 }
 
+input.new-notebook-hamburger {
+  height: 30px !important;
+  margin-top: 5px !important;
+  margin-bottom: 5px !important;
+}
+
 div.sidebar-app-form {
   width: 90%;
   margin: auto;
@@ -563,4 +569,17 @@ li.tag-selected {
 
 .hamburger-menu-tag-element {
   cursor: pointer;
+}
+
+input.new-notebook-hamburger {
+  background-color: inherit;
+  border: none;
+}
+
+input.new-notebook-hamburger:focus {
+  border: 1px solid #ccc !important;
+  box-shadow: none !important;
+  transition: none !important;
+  background-color: transparent;
+  color: initial;
 }

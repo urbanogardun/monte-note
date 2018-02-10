@@ -48,13 +48,18 @@ export class NewNotebookButton extends React.Component<Props, State> {
         }
     }
 
-    // Creates notebook when input field loses focus
+    // Sets input field to blank value when focus is lost
     handleFocusOut() {
-        let notebook = this.prepareNotebook(this.state.inputValue as string);
-        this.addNotebook(notebook);
         this.resetComponentState();
 
         $('li.open-input').show();
+    }
+
+    exitIfEscPressed(e: React.KeyboardEvent<HTMLInputElement>) {
+        if (e.key === 'Escape') {
+            this.resetComponentState();
+            $('li.open-input').show();
+        }
     }
 
     // After notebook name gets submitted through the input field, resets the
@@ -99,7 +104,7 @@ export class NewNotebookButton extends React.Component<Props, State> {
                             href="#"
                             onClick={(e) => { this.showInput(); }}
                         >
-                            New Notebook (Component)
+                            New Notebook
                         </a>
                     </li>
                     <li className="nav-item new-notebook-input-hamburger">
@@ -110,9 +115,10 @@ export class NewNotebookButton extends React.Component<Props, State> {
                                 pattern="^[a-zA-Z0-9]+$"
                                 ref={input => input && input.focus()}
                                 onKeyPress={(e) => this.handleKeyPress(e)}
+                                onKeyDown={(e) => this.exitIfEscPressed(e)}
                                 onBlur={() => this.handleFocusOut()}
                                 type="text" 
-                                className="form-control sidebar-app-form" 
+                                className="form-control new-notebook-hamburger" 
                                 aria-label="Notebook" 
                                 aria-describedby="sizing-addon2"
                             />
@@ -137,6 +143,7 @@ export class NewNotebookButton extends React.Component<Props, State> {
                             pattern="^[a-zA-Z0-9]+$"
                             ref={input => input && input.focus()}
                             onKeyPress={(e) => this.handleKeyPress(e)}
+                            onKeyDown={(e) => this.exitIfEscPressed(e)}
                             onBlur={() => this.handleFocusOut()}
                             type="text" 
                             className="form-control sidebar-app-form" 
