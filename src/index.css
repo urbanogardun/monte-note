@@ -447,6 +447,10 @@ div.search-notes-md {
   margin-top: 5px;
 }
 
+li.search-home {
+  display: none;
+}
+
 @media (max-width: 700px) {
   div.sidebar-container,
   .sidebar-extension-sm {
@@ -455,12 +459,18 @@ div.search-notes-md {
 }
 
 @media (min-width: 700px) {
+  li.search-home {
+    display: initial;
+  }
+
   div.navbar-sm-container {
       display: none;
   }
+
   div.search-notes-md {
       display: flex;
   }
+  
   div.preview-note-section {
       display: block;
   }
