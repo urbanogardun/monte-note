@@ -392,7 +392,15 @@ export class Sidebar extends React.Component<Props, {}> {
                                     </div>
                                 </li>
                                 <li className="nav-item">
-                                    <a className="nav-link" href="#">Trash</a>
+                                    <Link
+                                        to={'/trashcan'}
+                                        className="hamburger-menu-link"
+                                    >
+                                        <li
+                                            className="nav-link"
+                                        >Trash
+                                        </li>
+                                    </Link>
                                 </li>
                             </ul>
                         </div>

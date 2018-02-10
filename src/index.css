@@ -583,3 +583,7 @@ input.new-notebook-hamburger:focus {
   background-color: transparent;
   color: initial;
 }
+
+a.hamburger-menu-link {
+  text-decoration: none !important;
+}
