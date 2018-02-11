@@ -332,28 +332,6 @@ export class Sidebar extends React.Component<Props, State> {
                         </div>
                         {/* <!-- /Notebooks Dropdown --> */}
         
-                        {/* <!-- /Tags Dropdown --> */}
-                        <div className="sidebar-item">
-
-                            <div className="sidebar-item-text-container sidebar-item-text-container-md sidebar-tags-dropdown">
-                                <a 
-                                    className="sidebar-item-text" 
-                                    href="#collapseTagsBigSidebar" 
-                                    data-toggle="collapse" 
-                                    aria-expanded="false"
-                                    aria-controls="collapseTagsBigSidebar"
-                                >Tags
-                                <span className="sidebar-item-icon oi oi-chevron-left"/>
-                                <span className="sidebar-item-icon oi oi-chevron-bottom"/>
-                                </a>
-                            </div>
-            
-                            <div className="sidebar-collapse-content collapse" id="collapseTagsBigSidebar">
-                                <ul className="sidebar-collapsed-content list-unstyled"/>
-                            </div>
-                        </div>
-                        {/* <!-- /Tags Dropdown --> */}
-
                         {/* <!-- Trash --> */}
                         <div className="sidebar-item sidebar-item-md">
                             <div className="sidebar-item-text-container">
