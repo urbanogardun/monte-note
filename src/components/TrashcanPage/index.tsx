@@ -28,7 +28,7 @@ export class Trashcan extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="container-fluid trashcan-container">
+            <div className="container-fluid notebook-container">
                 <div className="row">
                     <TrashcanSidebar trash={this.props.trash} />
                     <TrashcanEditor 
