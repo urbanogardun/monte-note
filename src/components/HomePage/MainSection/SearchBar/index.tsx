@@ -74,6 +74,7 @@ export class SearchBar extends React.Component<Props, State> {
     }
 
     updateSearchValue(e: React.MouseEvent<HTMLAnchorElement>) {
+        e.preventDefault();
         let notebookName = $(e.target).text().trim();
         
         let isnotebookAlreadySelected = $(e.target).children().hasClass('notebook-check');

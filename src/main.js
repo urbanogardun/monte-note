@@ -526,6 +526,7 @@ electron_1.ipcMain.on(index_1.SEARCH_WITHIN_NOTEBOOK, (event, searchData) => {
     let searchResultsPerPage = searchData.searchResultsPerPage;
     let returnSearchResultsFrom = (searchPageNumber - 1) * searchResultsPerPage;
     let selectedTags = searchData.selectedTags;
+    let appendSearchResults = searchData.appendSearchResults;
     console.log('selectedTags: ' + selectedTags);
     dbMessager
         .searchNotesWithinNotebook(notebook, searchQuery, searchResultsPerPage, returnSearchResultsFrom, selectedTags)
@@ -535,7 +536,12 @@ electron_1.ipcMain.on(index_1.SEARCH_WITHIN_NOTEBOOK, (event, searchData) => {
             query: searchQuery,
             notebook: notebook
         };
-        event.sender.send(index_1.SEARCH_RESULTS, data);
+        if (appendSearchResults) {
+            event.sender.send(index_1.APPEND_SEARCH_RESULTS, data);
+        }
+        else {
+            event.sender.send(index_1.SEARCH_RESULTS, data);
+        }
     });
 });
 electron_1.ipcMain.on(index_1.UPLOAD_IMAGE, (event, data) => {

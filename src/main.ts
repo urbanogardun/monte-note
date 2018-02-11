@@ -680,6 +680,7 @@ ipcMain.on(SEARCH_WITHIN_NOTEBOOK, (event: any, searchData: any) => {
   let searchResultsPerPage = searchData.searchResultsPerPage;
   let returnSearchResultsFrom = (searchPageNumber - 1) * searchResultsPerPage;
   let selectedTags = searchData.selectedTags;
+  let appendSearchResults = searchData.appendSearchResults;
   
   console.log('selectedTags: ' + selectedTags);
   dbMessager
@@ -690,7 +691,13 @@ ipcMain.on(SEARCH_WITHIN_NOTEBOOK, (event: any, searchData: any) => {
       query: searchQuery,
       notebook: notebook
     };
-    event.sender.send(SEARCH_RESULTS, data);
+
+    if (appendSearchResults) {
+      event.sender.send(APPEND_SEARCH_RESULTS, data);
+    } else {
+      event.sender.send(SEARCH_RESULTS, data);
+    }
+
   });
 });
 
