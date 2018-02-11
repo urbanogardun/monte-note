@@ -173,7 +173,7 @@ export class Sidebar extends React.Component<Props, {}> {
                                                         key={name}
                                                         className="sidebar-item-link"
                                                 >
-                                                    <li className="sidebar-collapsed-item-text">
+                                                    <li className="list-group-item list-group-item-tag sidebar-collapsed-item-text">
                                                             {name}
                                                     </li>
                                                 </Link>
@@ -268,7 +268,7 @@ export class Sidebar extends React.Component<Props, {}> {
                                             key={name}
                                             className="sidebar-item-link"
                                         >
-                                            <li className="sidebar-collapsed-item-text">
+                                            <li className="list-group-item list-group-item-tag sidebar-collapsed-item-text">
                                                 {name}
                                             </li>
                                         </Link>

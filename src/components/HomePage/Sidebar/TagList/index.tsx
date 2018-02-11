@@ -102,7 +102,7 @@ export class TagList extends React.Component<Props, State> {
                                 <li 
                                     key={name}
                                     onClick={(e) => { this.selectTag(e, name); }} 
-                                    className={`sidebar-collapsed-item-text`}
+                                    className={`list-group-item list-group-item-tag sidebar-collapsed-item-text`}
                                 >
                                     {name}
                                 </li>

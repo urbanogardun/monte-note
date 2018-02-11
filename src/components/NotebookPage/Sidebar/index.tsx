@@ -151,6 +151,42 @@ export class Sidebar extends React.Component<Props, State> {
         }
     }
 
+    componentDidMount() {
+        $('.sidebar-notebooks-dropdown-sm')
+        .add('.sidebar-notebooks-dropdown-md')
+        .add('.sidebar-tags-dropdown-sm')
+        .add('.sidebar-tags-dropdown')
+        .add('.new-notebook-container-sm').on('click', function() {
+            if ($(this).hasClass('sidebar-notebooks-dropdown-md')) {
+                ($('#collapseNotebooksBigSidebar') as any).collapse('toggle')
+            } else if ($(this).hasClass('new-notebook-container-sm')) {
+                $('.tag-links-sm').hide();
+                $('.sidebar-notebook-links-sm').hide();
+
+                $('.new-notebook-sm').css('display') === 'block' ? 
+                $('.new-notebook-sm').hide() :
+                $('.new-notebook-sm').show();
+                $('input.sidebar-md').focus();
+            } else if ($(this).hasClass('sidebar-tags-dropdown-sm')) {
+                $('.sidebar-notebook-links-sm').hide();
+                $('.new-notebook-sm').hide();
+
+                $('.tag-links-sm').css('display') === 'block' ? 
+                $('.tag-links-sm').hide() :
+                $('.tag-links-sm').show();
+            } else if ($(this).hasClass('sidebar-notebooks-dropdown-sm')) {
+                $('.tag-links-sm').hide();
+                $('.new-notebook-sm').hide();
+
+                $('.sidebar-notebook-links-sm').css('display') === 'block' ? 
+                $('.sidebar-notebook-links-sm').hide() :
+                $('.sidebar-notebook-links-sm').show();
+            } else if ($(this).hasClass('sidebar-tags-dropdown')) {
+                ($('#collapseTagsBigSidebar') as any).collapse('toggle');
+            }
+        });
+    }
+
     render() {
         // let expandNotebooksNoteList = this.props.notes.length > 0 ? 'true' : 'false';
         // let showNotesOrNot = this.props.notes.length > 0 ? 'show' : '';
@@ -313,7 +349,22 @@ export class Sidebar extends React.Component<Props, State> {
                 </div>
                 <div className="col-2 sidebar-extension-sm sidebar-links-sm tag-links-sm">
                     <div className="sidebar-collapse-content">
-                        <ul className="sidebar-collapsed-content list-unstyled tag-list-sidebar-md"/>
+                        <ul className="sidebar-collapsed-content list-unstyled tag-list-sidebar-md">
+                            {(this.props.notes as string[]).map((name: string, index: number) => {
+                                let activeNote =
+                                    name === this.props.lastOpenedNote ? 'notebook-name-sidebar-active' : '';
+                                return (
+                                    <li
+                                        key={name}
+                                        {...(name === this.props.lastOpenedNote ? '' : '') }
+                                        className={`list-group-item sidebar-note ${activeNote}`}
+                                        onClick={() => this.updateLastOpenedNote(name)}
+                                    >
+                                        {name}
+                                    </li>
+                                );
+                            })}
+                        </ul>
                     </div>
                 </div>
 

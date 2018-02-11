@@ -107,7 +107,7 @@ div.sidebar {
   padding-left: 0px;
 }
 
-.sidebar, ul.notes, li.sidebar-note {
+.sidebar, ul.notes, li.sidebar-note, li.list-group-item-tag {
   background-color: #282E3F;
   color: #9EA6C2;
 }
@@ -371,6 +371,7 @@ div.sidebar-extension-sm {
   height: 100vh;
   display: block;
   top: 0;
+  overflow: auto;
 }
 
 div.sidebar-extension-sm,
@@ -505,11 +506,6 @@ li.search-home-hamburger {
 
   span.sidebar-item-icon {
       float: right;
-  }
-  
-  li.sidebar-collapsed-item-text {
-      padding-top: 5px;
-      padding-bottom: 5px;
   }
   
   div.sidebar-item-text-container {
