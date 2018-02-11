@@ -233,11 +233,11 @@ export class Sidebar extends React.Component<Props, State> {
                             <div className="sidebar-item-text-container">
                                 <ul className="list-group notes">
                                     <li
-                                        className="list-group-item open-input sidebar-note sidebar-link"
+                                        className="open-input list-group-item sidebar-note sidebar-link new-notebook-sidebar-link-lg"
                                         onClick={() => this.showInput()}
                                     >
                                         New Note
-                                        <span className="oi oi-document document-icon home-icon" />
+                                        <span className="oi oi-document document-icon home-icon add-notebook notebook-icon-sidebar-lg " />
                                     </li>
                                 </ul>
 
@@ -251,7 +251,7 @@ export class Sidebar extends React.Component<Props, State> {
                                         onKeyDown={(e) => this.exitIfEscPressed(e)}
                                         onBlur={() => this.handleFocusOut()}
                                         type="text"
-                                        className="form-control add-note sidebar-app-form"
+                                        className="form-control sidebar-lg sidebar-app-form"
                                         aria-label="Note"
                                         aria-describedby="sizing-addon2"
                                     />
