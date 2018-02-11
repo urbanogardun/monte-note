@@ -117,33 +117,6 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                             </div>
                         </div>
                         {/* <!-- /Notebooks Dropdown --> */}
-        
-                        {/* <!-- Trash --> */}
-                        <div className="sidebar-item sidebar-item-md">
-                            <div className="sidebar-item-text-container">
-                                <Link
-                                    to={'/trashcan'}
-                                    className="sidebar-item-text sidebar-link-lg"
-                                    title="Trash"
-                                >
-                                    Trash <span className="sidebar-item-icon oi oi-trash"/>
-                                </Link>
-                            </div>
-                        </div>
-        
-                        <div className="sidebar-item sidebar-item-sm">
-                            <div className="sidebar-item-text-container sidebar-item-text-container-sm">
-                                <Link
-                                    to={'/trashcan'}
-                                    className="sidebar-item-text sidebar-link-md"
-                                    title="Trash"
-                                >
-                                    <span className="sidebar-item-icon sidebar-item-icon-sm oi oi-trash trashcan" />
-                                </Link>
-                            </div>
-                        </div>
-                        {/* <!-- /Trash --> */}
-        
                     </div>
                 </div>
 
