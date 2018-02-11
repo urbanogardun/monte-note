@@ -683,3 +683,7 @@ a.sidebar-link-lg {
   display: block;
   width: inherit;
 }
+
+span.currently-opened-note-sidebar-sm {
+  border-bottom: 2px solid #6574a0;
+}
