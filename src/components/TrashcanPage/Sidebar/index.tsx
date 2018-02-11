@@ -234,34 +234,6 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                         return;
                                     }
                                 }))}
-
-                                <li
-                                    className="nav-item open-input"
-                                >
-                                    <a
-                                        className="nav-link"
-                                        href="#"
-                                    >
-                                        New Note
-                                    </a>
-                                </li>
-
-                                <li className="nav-item dropdown active">
-
-                                    <div className="dropdown-menu" aria-labelledby="navbarDropdownNotesLink"/>
-
-                                </li>
-                                <li className="nav-item">
-                                    <Link
-                                        to={'/trashcan'}
-                                        className="hamburger-menu-link"
-                                    >
-                                        <p
-                                            className="nav-link"
-                                        >Trash
-                                        </p>
-                                    </Link>
-                                </li>
                             </ul>
                         </div>
                     </nav>
