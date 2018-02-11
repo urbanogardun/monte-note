@@ -714,3 +714,7 @@ a.trash-notebook-sidebar-md:hover,
   border-radius: 0px !important;
 }
 
+li.list-group-item {
+  border-radius: 0px !important;
+}
+
