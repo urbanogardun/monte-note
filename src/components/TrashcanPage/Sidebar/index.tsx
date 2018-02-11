@@ -110,25 +110,6 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                             </div>
                         </div>
 
-                        <div className="sidebar-item sidebar-item-md">
-                            <div className="sidebar-item-text-container">
-                                <ul className="list-group notes"/>
-                            </div>
-                        </div>
-
-                        <div className="sidebar-item sidebar-item-sm">
-                            <div 
-                                className="sidebar-item-text-container sidebar-item-text-container-sm new-notebook-container-sm"
-                            >
-                                <a 
-                                    href="#newNotebook" 
-                                    title="New Note" 
-                                    className="sidebar-item-text"
-                                ><span className="sidebar-item-icon sidebar-item-icon-sm oi oi-document"/>
-                                </a>
-                            </div>
-                        </div>
-        
                         {/* <!-- Notebooks Dropdown --> */}
                         <div className="sidebar-item sidebar-item-sm">
                             <div className="sidebar-item-text-container sidebar-notebooks-dropdown sidebar-notebooks-dropdown-sm sidebar-item-text-container-sm">
