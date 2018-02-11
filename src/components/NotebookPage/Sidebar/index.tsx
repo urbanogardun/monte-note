@@ -216,11 +216,12 @@ export class Sidebar extends React.Component<Props, State> {
 
                         <div className="sidebar-item sidebar-item-sm">
                             <div className="sidebar-item-text-container sidebar-item-text-container-sm">
-                                <a 
-                                    href="" 
-                                    className="sidebar-item-text"
-                                ><span className="sidebar-item-icon sidebar-item-icon-sm oi oi-home"/>
-                                </a>
+                                <Link
+                                    to={'/'}
+                                    title="Home"
+                                >
+                                    <span className="sidebar-item-icon sidebar-item-icon-sm oi oi-home" />
+                                </Link>
                             </div>
                         </div>
 
@@ -272,7 +273,7 @@ export class Sidebar extends React.Component<Props, State> {
                             <div className="sidebar-item-text-container sidebar-notebooks-dropdown sidebar-notebooks-dropdown-sm sidebar-item-text-container-sm">
                                 <a 
                                     className="sidebar-item-text" 
-                                    title="Notebooks" 
+                                    title="Notes" 
                                     href="#collapseNotebooksSmallSidebar" 
                                     data-toggle="collapse" 
                                     aria-expanded="false" 
@@ -325,13 +326,13 @@ export class Sidebar extends React.Component<Props, State> {
                         {/* <!-- Trash --> */}
                         <div className="sidebar-item sidebar-item-md">
                             <div className="sidebar-item-text-container">
-                                    <Link
-                                        to={'/trashcan'}
-                                        className="sidebar-item-text sidebar-link-lg"
-                                        title="Trash"
-                                    >
-                                        Trash <span className="sidebar-item-icon oi oi-trash"/>
-                                    </Link>
+                                <Link
+                                    to={'/trashcan'}
+                                    className="sidebar-item-text sidebar-link-lg"
+                                    title="Trash"
+                                >
+                                    Trash <span className="sidebar-item-icon oi oi-trash"/>
+                                </Link>
                             </div>
                         </div>
         
