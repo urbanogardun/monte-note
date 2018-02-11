@@ -137,6 +137,12 @@ export class SearchBar extends React.Component<Props, State> {
         }
     }
 
+    componentWillMount() {
+        // Resets previous search query results
+        this.props.updateSearchQuery('');
+        this.props.updateSelectedNotebook('');
+    }
+
     render() {
         let forHamburgerMenu = '';
         let searchBar;
