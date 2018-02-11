@@ -262,7 +262,7 @@ export class Sidebar extends React.Component<Props, State> {
                                     href="#newNotebook" 
                                     title="New Note" 
                                     className="sidebar-item-text"
-                                ><span className="sidebar-item-icon sidebar-item-icon-sm oi oi-book"/>
+                                ><span className="sidebar-item-icon sidebar-item-icon-sm oi oi-document"/>
                                 </a>
                             </div>
                         </div>
