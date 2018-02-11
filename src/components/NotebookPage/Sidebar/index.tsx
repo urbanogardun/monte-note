@@ -130,6 +130,13 @@ export class Sidebar extends React.Component<Props, State> {
         ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, noteToSwitchTo);
     }
 
+    exitIfEscPressed(e: React.KeyboardEvent<HTMLInputElement>) {
+        if (e.key === 'Escape') {
+            this.resetComponentState();
+            $('li.open-input').show();
+        }
+    }
+
     componentWillUnmount() {
         // When resizing images, on images that have been hovered over, regardless
         // if they have been resized, a css style class for displaying/hiding 
@@ -236,6 +243,7 @@ export class Sidebar extends React.Component<Props, State> {
                                         pattern="^[a-zA-Z0-9]+$"
                                         ref={input => input && input.focus()}
                                         onKeyPress={(e) => this.handleKeyPress(e)}
+                                        onKeyDown={(e) => this.exitIfEscPressed(e)}
                                         onBlur={() => this.handleFocusOut()}
                                         type="text"
                                         className="form-control add-note sidebar-app-form"
@@ -243,6 +251,19 @@ export class Sidebar extends React.Component<Props, State> {
                                         aria-describedby="sizing-addon2"
                                     />
                                 </div>
+                            </div>
+                        </div>
+
+                        <div className="sidebar-item sidebar-item-sm">
+                            <div 
+                                className="sidebar-item-text-container sidebar-item-text-container-sm new-notebook-container-sm"
+                            >
+                                <a 
+                                    href="#newNotebook" 
+                                    title="New Note" 
+                                    className="sidebar-item-text"
+                                ><span className="sidebar-item-icon sidebar-item-icon-sm oi oi-book"/>
+                                </a>
                             </div>
                         </div>
         
@@ -343,9 +364,7 @@ export class Sidebar extends React.Component<Props, State> {
 
                 {/* <!-- Sidebar Extension for Medium & Small Devices --> */}
                 <div className="col-2 sidebar-extension-sm sidebar-notebook-links-sm">
-                    <div className="sidebar-collapse-content">
-                        <ul className="sidebar-collapsed-content list-unstyled"/>
-                    </div>
+                    <div className="sidebar-collapse-content"/>
                 </div>
                 <div className="col-2 sidebar-extension-sm sidebar-links-sm tag-links-sm">
                     <div className="sidebar-collapse-content">
@@ -368,11 +387,27 @@ export class Sidebar extends React.Component<Props, State> {
                     </div>
                 </div>
 
-                {/* <!-- Add Notebook Extension --> */}
+                {/* <!-- Add Note Extension --> */}
                 <div className="col-2 sidebar-extension-sm sidebar-links-sm new-notebook-sm">
-                    <div className="sidebar-collapse-content new-notebook-sidebar-md"/>
+                    <div className="sidebar-collapse-content new-notebook-sidebar-md">
+                        <div className={`sidebar-app-form input-group input-group-sm visible`}>
+                            <input
+                                value={this.state.inputValue}
+                                onChange={e => this.updateInputValue(e)}
+                                pattern="^[a-zA-Z0-9]+$"
+                                ref={input => input && input.focus()}
+                                onKeyPress={(e) => this.handleKeyPress(e)}
+                                onKeyDown={(e) => this.exitIfEscPressed(e)}
+                                onBlur={() => this.handleFocusOut()}
+                                type="text"
+                                className="form-control add-note sidebar-app-form sidebar-md"
+                                aria-label="Note"
+                                aria-describedby="sizing-addon2"
+                            />
+                        </div>
+                    </div>
                 </div>
-                {/* <!-- /Add Notebook Extension --> */}
+                {/* <!-- /Add Note Extension --> */}
 
                 {/* <!-- /Sidebar Extension for Medium & Small Devices --> */}
 
@@ -426,6 +461,7 @@ export class Sidebar extends React.Component<Props, State> {
                                             pattern="^[a-zA-Z0-9]+$"
                                             ref={input => input && input.focus()}
                                             onKeyPress={(e) => this.handleKeyPress(e)}
+                                            onKeyDown={(e) => this.exitIfEscPressed(e)}
                                             onBlur={() => this.handleFocusOut()}
                                             type="text"
                                             className="form-control new-notebook-hamburger"
