@@ -342,10 +342,16 @@ export class Sidebar extends React.Component<Props, State> {
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul className="navbar-nav">
-                                <li className="nav-item active">
-                                    <a className="nav-link" href="#">Home
-                                        <span className="sr-only">(current)</span>
-                                    </a>
+                                <li className="nav-item">
+                                    <Link
+                                        to={'/'}
+                                        className="hamburger-menu-link"
+                                    >
+                                        <p
+                                            className="nav-link"
+                                        >Home
+                                        </p>
+                                    </Link>
                                 </li>
 
 
@@ -378,7 +384,7 @@ export class Sidebar extends React.Component<Props, State> {
                                     </div>
                                 </li>
 
-                                <li className="nav-item dropdown">
+                                <li className="nav-item dropdown active">
 
                                     <a
                                         title={this.props.notebookName}

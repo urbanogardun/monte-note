@@ -687,3 +687,6 @@ a.sidebar-link-lg {
 span.currently-opened-note-sidebar-sm {
   border-bottom: 2px solid #6574a0;
 }
+p.nav-link {
+  margin-bottom: 0px;
+}
