@@ -364,8 +364,24 @@ export class Sidebar extends React.Component<Props, State> {
 
                 {/* <!-- Sidebar Extension for Medium & Small Devices --> */}
                 <div className="col-2 sidebar-extension-sm sidebar-notebook-links-sm">
-                    <div className="sidebar-collapse-content"/>
+                    <div className="sidebar-collapse-content">
+                        {(this.props.notes as string[]).map((name: string, index: number) => {
+                            let activeNote =
+                                name === this.props.lastOpenedNote ? 'currently-opened-note-sidebar-md' : '';
+                            return (
+                                <p
+                                    key={name}
+                                    {...(name === this.props.lastOpenedNote ? '' : '')}
+                                    className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md ${activeNote}`}
+                                    onClick={() => this.updateLastOpenedNote(name)}
+                                >
+                                    {name}
+                                </p>
+                            );
+                        })}
+                    </div>
                 </div>
+
                 <div className="col-2 sidebar-extension-sm sidebar-links-sm tag-links-sm">
                     <div className="sidebar-collapse-content">
                         <ul className="sidebar-collapsed-content list-unstyled tag-list-sidebar-md">

@@ -107,9 +107,18 @@ div.sidebar {
   padding-left: 0px;
 }
 
-.sidebar, ul.notes, li.sidebar-note, li.list-group-item-tag {
+.sidebar, 
+ul.notes, 
+li.sidebar-note, 
+li.list-group-item-tag,
+p.notes-sidebar-md {
   background-color: #282E3F;
   color: #9EA6C2;
+}
+
+p.notes-sidebar-md {
+  cursor: pointer !important;
+  border: none !important;
 }
 
 div.notebook-name-sidebar {
@@ -574,7 +583,7 @@ a.sidebar-item-link {
   color: inherit !important;
 }
 
-li.tag-selected {
+li.tag-selected, p.currently-opened-note-sidebar-md {
   color: #fff;
   background-color: #1E2230;
 }
