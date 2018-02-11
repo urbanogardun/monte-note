@@ -22,7 +22,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
         electronMessager.sendMessageWithIpcRenderer(GET_NOTE_FROM_TRASH, data);
     }
 
-    markNoteActive(e: any, sidebar?: string) {
+    markNoteActive(e: any, sidebar?: string, elementClass?: any) {
         $('.sidebar-note').removeClass('notebook-name-sidebar-active');
         $('.currently-opened-note-sidebar-sm').removeClass('currently-opened-note-sidebar-sm');
         $('.currently-opened-note-sidebar-md').removeClass('currently-opened-note-sidebar-md');
@@ -38,6 +38,26 @@ export class TrashcanSidebar extends React.Component<Props, State> {
         } else {
             $(e.target).addClass('notebook-name-sidebar-active');
         }
+
+        $(`li.sidebar-collapsed-item-text:contains("${name}")`)
+        .removeClass('tag-selected');
+        
+        $(`li.sidebar-collapsed-item-text:contains("${name}")`)
+        .removeClass('tag-selected');
+
+        $('.trashed-notes-sidebar-sm')
+        .find(`p.${elementClass}`)
+        .children()
+        .addClass('currently-opened-note-sidebar-sm');
+
+        $('.trashed-notes-sidebar-md')
+        .find(`p.${elementClass}`)
+        .addClass('currently-opened-note-sidebar-md');
+
+        $('.trashed-notes-sidebar-lg')
+        .find(`p.${elementClass}`)
+        .addClass('currently-opened-note-sidebar-md');
+
     }
 
     componentDidMount() {
@@ -122,15 +142,17 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                             </a>
                                         </div>
                                         <div className="sidebar-collapse-content collapse" id={notebookNameForId}>
-                                            <ul className="sidebar-collapsed-content list-unstyled">
+                                            <ul className="sidebar-collapsed-content list-unstyled trashed-notes-sidebar-lg">
                                                 {(this.props.trash[notebook].map((note: string, index: number) => {
+                                                    let noteName = note.split(' ').join('-');
                                                     return (
                                                         <p
                                                             key={note + index}
-                                                            className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md`}
+                                                            className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md ${notebookNameForId}-${noteName}`}
                                                             onClick={(e) => {
                                                                 this.getNoteFromTrash(notebook, note);
-                                                                this.markNoteActive(e, 'md');
+                                                                this.markNoteActive(
+                                                                    e, 'md', `${notebookNameForId}-${noteName}`);
                                                             }}
                                                         >
                                                             {note}
@@ -191,23 +213,24 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                         title={notebook} 
                                         className="nav-link trash-notebook-sidebar-md" 
                                         data-toggle="collapse" 
-                                        href={`#${notebookNameForId}`} 
-                                        role="button" 
+                                        href={`#${notebookNameForId}md`} 
                                         aria-expanded="false" 
-                                        aria-controls={notebookNameForId}
+                                        aria-controls={`${notebookNameForId}md`}
                                     >
                                         {notebookNameTrimmed}
                                     </a>
-                                    <div className="collapse" id={notebookNameForId}>
-                                        <ul className="sidebar-collapsed-content list-unstyled">
+                                    <div className="collapse" id={`${notebookNameForId}md`}>
+                                        <ul className="sidebar-collapsed-content list-unstyled trashed-notes-sidebar-md">
                                             {(this.props.trash[notebook].map((note: string, index: number) => {
+                                                let noteName = note.split(' ').join('-');
                                                 return (
                                                     <p
-                                                        key={note + index}
-                                                        className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md`}
+                                                        key={note + index + 'trashed-notes-md'}
+                                                        className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md ${notebookNameForId}-${noteName}`}
                                                         onClick={(e) => {
                                                             this.getNoteFromTrash(notebook, note);
-                                                            this.markNoteActive(e, 'md');
+                                                            this.markNoteActive(
+                                                                e, 'md', `${notebookNameForId}-${noteName}`);
                                                         }}
                                                     >
                                                         {note}
@@ -268,7 +291,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
 
                                 {(Object.keys(this.props.trash).map((notebook: string) => {
                                     if (this.props.trash[notebook].length > 0) {
-                                        // let notebookNameForId = notebook.split(' ').join('-');
+                                        let notebookNameForId = notebook.split(' ').join('-');
                                         // let notebookNameTrimmed = notebook.length > 25 ? notebook.slice(0, 23) + '...' : notebook;
                                         return (
                                             <li 
@@ -285,15 +308,20 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                                     {notebook}
                                                 </a>
                                                 <div className="dropdown-menu" aria-labelledby="navbarDropdownNotesLink">
-                                                    <ul className="sidebar-collapsed-content list-unstyled">
+                                                    <ul className="sidebar-collapsed-content list-unstyled trashed-notes-sidebar-sm">
                                                         {(this.props.trash[notebook].map((note: string, index: number) => {
+                                                            let noteName = note.split(' ').join('-');
                                                             return (
                                                                 <p
                                                                     key={note + index}
-                                                                    className={`hamburger-menu-tag-element dropdown-item`}
+                                                                    className={`hamburger-menu-tag-element dropdown-item ${notebookNameForId}-${noteName}`}
                                                                     onClick={(e) => {
-                                                                        this.getNoteFromTrash(notebook, note);
-                                                                        this.markNoteActive(e, 'sm');
+                                                                    this.getNoteFromTrash(notebook, note);
+                                                                    this.markNoteActive(
+                                                                        e, 
+                                                                        'sm', 
+                                                                        `${notebookNameForId}-${noteName}`
+                                                                    );
                                                                     }}
                                                                 >
                                                                     <span>{note}</span>
