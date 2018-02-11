@@ -290,17 +290,44 @@ export class Sidebar extends React.Component<Props, State> {
 
                         <div className="sidebar-item">
 
-                            <div className="sidebar-item-text-container sidebar-notebooks-dropdown sidebar-notebooks-dropdown-md sidebar-item-text-container-md">
+                            <div 
+                                className="sidebar-item-text-container sidebar-notebooks-dropdown sidebar-notebooks-dropdown-md sidebar-item-text-container-md"
+                                title={this.props.notebookName.length > 25 ? this.props.notebookName : ''}
+                            >
                                 <a 
                                     className="sidebar-item-text" 
                                     href="#collapseNotebooksBigSidebar" 
                                     data-toggle="collapse" 
                                     aria-expanded="false" 
                                     aria-controls="collapseNotebooksBigSidebar"
-                                >Notebooks
+                                >
+                                {
+                                    this.props.notebookName.length > 25 ?
+                                    this.props.notebookName.slice(0, 23) + '...' :
+                                    this.props.notebookName
+                                }
                                 <span className="sidebar-item-icon oi oi-chevron-left"/>
                                 <span className="sidebar-item-icon oi oi-chevron-bottom"/>
                                 </a>
+                            </div>
+
+                            <div className="sidebar-collapse-content collapse" id="collapseNotebooksBigSidebar">
+                                <ul className="sidebar-collapsed-content list-unstyled">
+                                    {(this.props.notes as string[]).map((name: string, index: number) => {
+                                        let activeNote =
+                                            name === this.props.lastOpenedNote ? 'currently-opened-note-sidebar-md' : '';
+                                        return (
+                                            <p
+                                                key={name}
+                                                {...(name === this.props.lastOpenedNote ? '' : '') }
+                                                className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md ${activeNote}`}
+                                                onClick={() => this.updateLastOpenedNote(name)}
+                                            >
+                                                {name}
+                                            </p>
+                                        );
+                                    })}
+                                </ul>
                             </div>
                         </div>
                         {/* <!-- /Notebooks Dropdown --> */}

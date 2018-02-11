@@ -151,7 +151,8 @@ span.expand-notebook {
   vertical-align: middle;
 }
 
-div.notebook-name-sidebar:hover, li.list-group-item.sidebar-note.notebook-name-sidebar-active {
+div.notebook-name-sidebar:hover, li.list-group-item.sidebar-note.notebook-name-sidebar-active,
+p.list-group-item-tag:hover {
   background-color: #1E2230;
   color: #fff;
 }
