@@ -18,8 +18,6 @@ class DbMessager {
      */
     searchNotesGlobally(query, resultsLimit = 10, resultsToSkip = 0, tags = []) {
         return new Promise((resolve) => {
-            // ^(?=.*\bmeat\b)(?=.*\bpasta\b)(?=.*\bdinner\b).+
-            // let regex = new RegExp(query.split(' ').join('|'), 'i');
             let searchQuery = this.formatSearchQuery(query, tags);
             this.db
                 .find(searchQuery)
@@ -57,6 +55,8 @@ class DbMessager {
         return true;
     }
     /** Formats a search query for fetching notes
+     * Search query is formatted in such a way that all terms have to match
+     * within a document, regardless of their order in that document.
      * @param  {RegExp} query
      * @param  {string[]} tags
      * @returns {object} search query
@@ -79,7 +79,6 @@ class DbMessager {
     }
     searchNotesWithinNotebook(notebook, query, resultsLimit = 10, resultsToSkip = 0, tags = []) {
         return new Promise((resolve) => {
-            // let regex = new RegExp(query.split(' ').join('|'), 'i');
             let searchQuery = this.formatSearchQuery(query, tags, notebook);
             this.db
                 .find(searchQuery)
