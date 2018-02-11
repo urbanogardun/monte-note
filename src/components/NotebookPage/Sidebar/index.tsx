@@ -301,17 +301,6 @@ export class Sidebar extends React.Component<Props, State> {
                         {/* <!-- /Notebooks Dropdown --> */}
         
                         {/* <!-- /Tags Dropdown --> */}
-                        <div className="sidebar-item sidebar-item-sm">
-                            <div className="sidebar-item-text-container sidebar-tags-dropdown-sm sidebar-item-text-container-sm">
-                                <a 
-                                    className="sidebar-item-text" 
-                                    title="Tags" 
-                                    href="#collapseTagsSmallSidebar"
-                                >
-                                    <span className="sidebar-item-icon sidebar-item-icon-sm oi oi-tags"/>
-                                </a>
-                            </div>
-                        </div>
                         <div className="sidebar-item">
 
                             <div className="sidebar-item-text-container sidebar-item-text-container-md sidebar-tags-dropdown">
@@ -379,27 +368,6 @@ export class Sidebar extends React.Component<Props, State> {
                                 </p>
                             );
                         })}
-                    </div>
-                </div>
-
-                <div className="col-2 sidebar-extension-sm sidebar-links-sm tag-links-sm">
-                    <div className="sidebar-collapse-content">
-                        <ul className="sidebar-collapsed-content list-unstyled tag-list-sidebar-md">
-                            {(this.props.notes as string[]).map((name: string, index: number) => {
-                                let activeNote =
-                                    name === this.props.lastOpenedNote ? 'notebook-name-sidebar-active' : '';
-                                return (
-                                    <li
-                                        key={name}
-                                        {...(name === this.props.lastOpenedNote ? '' : '') }
-                                        className={`list-group-item sidebar-note ${activeNote}`}
-                                        onClick={() => this.updateLastOpenedNote(name)}
-                                    >
-                                        {name}
-                                    </li>
-                                );
-                            })}
-                        </ul>
                     </div>
                 </div>
 
