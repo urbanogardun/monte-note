@@ -700,3 +700,17 @@ p.nav-link {
 p.link-sidebar-lg {
   margin-bottom: 0px;
 }
+
+a.trash-notebook-sidebar-md {
+  text-decoration: none;
+  background-color: #282E3F;
+  color: #9EA6C2;
+}
+
+a.trash-notebook-sidebar-md:hover,
+.currently-opened-note-sidebar-md {
+  background-color: #1E2230;
+  color: #fff;
+  border-radius: 0px !important;
+}
+

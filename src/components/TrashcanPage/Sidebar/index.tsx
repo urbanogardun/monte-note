@@ -25,6 +25,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
     markNoteActive(e: any, sidebar?: string) {
         $('.sidebar-note').removeClass('notebook-name-sidebar-active');
         $('.currently-opened-note-sidebar-sm').removeClass('currently-opened-note-sidebar-sm');
+        $('.currently-opened-note-sidebar-md').removeClass('currently-opened-note-sidebar-md');
         if (sidebar === 'sm') {
             let tagName = $(e.target).prop('tagName').toLowerCase();
             if (tagName === 'p') {
@@ -32,9 +33,47 @@ export class TrashcanSidebar extends React.Component<Props, State> {
             } else {
                 $(e.target).addClass('currently-opened-note-sidebar-sm');
             }
+        } else if (sidebar === 'md') {
+            $(e.target).addClass('currently-opened-note-sidebar-md');
         } else {
             $(e.target).addClass('notebook-name-sidebar-active');
         }
+    }
+
+    componentDidMount() {
+        $('.sidebar-notebooks-dropdown-sm')
+        .add('.sidebar-notebooks-dropdown-md')
+        .add('.sidebar-tags-dropdown-sm')
+        .add('.sidebar-tags-dropdown')
+        .add('.new-notebook-container-sm').on('click', function() {
+            if ($(this).hasClass('sidebar-notebooks-dropdown-md')) {
+                ($('#collapseNotebooksBigSidebar') as any).collapse('toggle')
+            } else if ($(this).hasClass('new-notebook-container-sm')) {
+                $('.tag-links-sm').hide();
+                $('.sidebar-notebook-links-sm').hide();
+
+                $('.new-notebook-sm').css('display') === 'block' ? 
+                $('.new-notebook-sm').hide() :
+                $('.new-notebook-sm').show();
+                $('input.sidebar-md').focus();
+            } else if ($(this).hasClass('sidebar-tags-dropdown-sm')) {
+                $('.sidebar-notebook-links-sm').hide();
+                $('.new-notebook-sm').hide();
+
+                $('.tag-links-sm').css('display') === 'block' ? 
+                $('.tag-links-sm').hide() :
+                $('.tag-links-sm').show();
+            } else if ($(this).hasClass('sidebar-notebooks-dropdown-sm')) {
+                $('.tag-links-sm').hide();
+                $('.new-notebook-sm').hide();
+
+                $('.sidebar-notebook-links-sm').css('display') === 'block' ? 
+                $('.sidebar-notebook-links-sm').hide() :
+                $('.sidebar-notebook-links-sm').show();
+            } else if ($(this).hasClass('sidebar-tags-dropdown')) {
+                ($('#collapseTagsBigSidebar') as any).collapse('toggle');
+            }
+        });
     }
 
     render() {
@@ -122,7 +161,81 @@ export class TrashcanSidebar extends React.Component<Props, State> {
 
                 {/* <!-- Sidebar Extension for Medium & Small Devices --> */}
                 <div className="col-2 sidebar-extension-sm sidebar-notebook-links-sm">
-                    <div className="sidebar-collapse-content"/>
+                    <div className="sidebar-collapse-content">
+
+                        {(Object.keys(this.props.trash).map((notebook: string) => {
+                            if (this.props.trash[notebook].length > 0) {
+                                let notebookNameForId = notebook.split(' ').join('-');
+                                let notebookNameTrimmed = notebook.length > 25 ? notebook.slice(0, 23) + '...' : notebook;
+                                return (
+                                    <React.Fragment>
+                                    <a
+                                        title={notebook} 
+                                        className="nav-link trash-notebook-sidebar-md" 
+                                        data-toggle="collapse" 
+                                        href={`#${notebookNameForId}`} 
+                                        role="button" 
+                                        aria-expanded="false" 
+                                        aria-controls={notebookNameForId}
+                                    >
+                                        {notebookNameTrimmed}
+                                    </a>
+                                    <div className="collapse" id={notebookNameForId}>
+                                        <ul className="sidebar-collapsed-content list-unstyled">
+                                            {(this.props.trash[notebook].map((note: string, index: number) => {
+                                                return (
+                                                    <p
+                                                        key={note + index}
+                                                        className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md`}
+                                                        onClick={(e) => {
+                                                            this.getNoteFromTrash(notebook, note);
+                                                            this.markNoteActive(e, 'md');
+                                                        }}
+                                                    >
+                                                        {note}
+                                                    </p>
+                                                );
+                                            }))}
+                                        </ul>
+                                    </div>
+                                    </React.Fragment>
+                                    // <div key={notebook} className="sidebar-collapse-content">
+                                    //     <a
+                                    //         className="nav-link dropdown-toggle"
+                                    //         href="#"
+                                    //         id={notebook}
+                                    //         data-toggle="dropdown"
+                                    //         aria-haspopup="true"
+                                    //         aria-expanded="false"
+                                    //     >
+                                    //         {notebook}
+                                    //     </a>
+                                    //     <div className="sidebar-collapse-content collapse" id={notebook}>
+                                    //         <ul className="sidebar-collapsed-content list-unstyled">
+                                    //             {(this.props.trash[notebook].map((note: string, index: number) => {
+                                    //                 return (
+                                    //                     <p
+                                    //                         key={note + index}
+                                    //                         className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md`}
+                                    //                         onClick={(e) => {
+                                    //                             this.getNoteFromTrash(notebook, note);
+                                    //                             this.markNoteActive(e, 'sm');
+                                    //                         }}
+                                    //                     >
+                                    //                         <span>{note}</span>
+                                    //                     </p>
+                                    //                 );
+                                    //             }))}
+                                    //         </ul>
+                                    //     </div>
+                                    // </div>
+                                );
+                            } else {
+                                return;
+                            }
+                        }))}
+
+                    </div>
                 </div>
 
                 {/* <!-- Add Note Extension --> */}
