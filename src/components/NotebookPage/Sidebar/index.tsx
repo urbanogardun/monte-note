@@ -206,11 +206,15 @@ export class Sidebar extends React.Component<Props, State> {
                     <div className="sidebar">
                         <div className="sidebar-item sidebar-item-md">
                             <div className="sidebar-item-text-container">
-                                <a 
-                                    href="" 
+                                <Link
+                                    to={'/'}
+                                    title="Home"
                                     className="sidebar-item-text"
-                                >Home <span className="sidebar-item-icon oi oi-home"/>
-                                </a>
+                                >
+                                <p className="link-sidebar-lg">
+                                    Home <span className="sidebar-item-icon oi oi-home"/>
+                                </p>
+                                </Link>
                             </div>
                         </div>
 
