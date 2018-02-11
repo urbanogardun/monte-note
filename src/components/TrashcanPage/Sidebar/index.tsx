@@ -99,6 +99,53 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                             </div>
                         </div>
 
+                        {(Object.keys(this.props.trash).map((notebook: string) => {
+                            if (this.props.trash[notebook].length > 0) {
+                                let notebookNameForId = notebook.split(' ').join('-');
+                                let notebookNameTrimmed = notebook.length > 25 ? notebook.slice(0, 23) + '...' : notebook;
+                                return (
+                                    <div className="sidebar-item sidebar-item-lg">
+                                        <div 
+                                            className="sidebar-item-text-container sidebar-notebooks-dropdown sidebar-notebooks-dropdown-md sidebar-item-text-container-md"
+                                        >
+                                            <a
+                                                title={notebook} 
+                                                className="sidebar-item-text" 
+                                                data-toggle="collapse" 
+                                                href={`#${notebookNameForId}`} 
+                                                aria-expanded="false" 
+                                                aria-controls={notebookNameForId}
+                                            >
+                                                {notebookNameTrimmed}
+                                                <span className="oi oi-chevron-bottom sidebar-item-icon" />
+                                                <span className="oi oi-chevron-left sidebar-item-icon" />
+                                            </a>
+                                        </div>
+                                        <div className="sidebar-collapse-content collapse" id={notebookNameForId}>
+                                            <ul className="sidebar-collapsed-content list-unstyled">
+                                                {(this.props.trash[notebook].map((note: string, index: number) => {
+                                                    return (
+                                                        <p
+                                                            key={note + index}
+                                                            className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md`}
+                                                            onClick={(e) => {
+                                                                this.getNoteFromTrash(notebook, note);
+                                                                this.markNoteActive(e, 'md');
+                                                            }}
+                                                        >
+                                                            {note}
+                                                        </p>
+                                                    );
+                                                }))}
+                                            </ul>
+                                        </div>
+                                    </div>
+                                );
+                            } else {
+                                return;
+                            }
+                        }))}
+
                         <div className="sidebar-item sidebar-item-sm">
                             <div className="sidebar-item-text-container sidebar-item-text-container-sm">
                                 <Link
@@ -126,16 +173,6 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                             </div>
                         </div>
 
-                        <div className="sidebar-item">
-
-                            <div 
-                                className="sidebar-item-text-container sidebar-notebooks-dropdown sidebar-notebooks-dropdown-md sidebar-item-text-container-md"
-                            />
-
-                            <div className="sidebar-collapse-content collapse" id="collapseNotebooksBigSidebar">
-                                <ul className="sidebar-collapsed-content list-unstyled"/>
-                            </div>
-                        </div>
                         {/* <!-- /Notebooks Dropdown --> */}
                     </div>
                 </div>
@@ -180,36 +217,6 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                         </ul>
                                     </div>
                                     </React.Fragment>
-                                    // <div key={notebook} className="sidebar-collapse-content">
-                                    //     <a
-                                    //         className="nav-link dropdown-toggle"
-                                    //         href="#"
-                                    //         id={notebook}
-                                    //         data-toggle="dropdown"
-                                    //         aria-haspopup="true"
-                                    //         aria-expanded="false"
-                                    //     >
-                                    //         {notebook}
-                                    //     </a>
-                                    //     <div className="sidebar-collapse-content collapse" id={notebook}>
-                                    //         <ul className="sidebar-collapsed-content list-unstyled">
-                                    //             {(this.props.trash[notebook].map((note: string, index: number) => {
-                                    //                 return (
-                                    //                     <p
-                                    //                         key={note + index}
-                                    //                         className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md`}
-                                    //                         onClick={(e) => {
-                                    //                             this.getNoteFromTrash(notebook, note);
-                                    //                             this.markNoteActive(e, 'sm');
-                                    //                         }}
-                                    //                     >
-                                    //                         <span>{note}</span>
-                                    //                     </p>
-                                    //                 );
-                                    //             }))}
-                                    //         </ul>
-                                    //     </div>
-                                    // </div>
                                 );
                             } else {
                                 return;

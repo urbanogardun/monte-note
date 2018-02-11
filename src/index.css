@@ -493,7 +493,8 @@ li.search-home-hamburger {
 
 @media (max-width: 1065px) {
   div#collapseTagsBigSidebar, 
-  div#collapseNotebooksBigSidebar {
+  div#collapseNotebooksBigSidebar,
+  div.sidebar-item-lg {
     display: none !important;
   }
 }
@@ -512,6 +513,7 @@ li.search-home-hamburger {
       word-wrap: break-word;
       color: #9EA6C2 !important;
       text-decoration: none !important;
+      display: block;
   }
 
   span.sidebar-item-icon {
