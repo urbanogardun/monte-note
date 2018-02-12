@@ -124,7 +124,10 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                 let notebookNameForId = notebook.split(' ').join('-');
                                 let notebookNameTrimmed = notebook.length > 25 ? notebook.slice(0, 23) + '...' : notebook;
                                 return (
-                                    <div className="sidebar-item sidebar-item-lg">
+                                    <div 
+                                        key={notebook}
+                                        className="sidebar-item sidebar-item-lg"
+                                    >
                                         <div 
                                             className="sidebar-item-text-container sidebar-notebooks-dropdown sidebar-notebooks-dropdown-md sidebar-item-text-container-md"
                                         >
@@ -203,12 +206,12 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                 <div className="col-2 sidebar-extension-sm sidebar-notebook-links-sm">
                     <div className="sidebar-collapse-content">
 
-                        {(Object.keys(this.props.trash).map((notebook: string) => {
+                        {(Object.keys(this.props.trash).map((notebook: string, i: number) => {
                             if (this.props.trash[notebook].length > 0) {
                                 let notebookNameForId = notebook.split(' ').join('-');
                                 let notebookNameTrimmed = notebook.length > 25 ? notebook.slice(0, 23) + '...' : notebook;
                                 return (
-                                    <React.Fragment>
+                                    <React.Fragment key={notebook}>
                                     <a
                                         title={notebook} 
                                         className="nav-link trash-notebook-sidebar-md" 
