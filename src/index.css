@@ -467,6 +467,12 @@ li.search-home-hamburger {
   display: initial;
 }
 
+div.notebooks-search-filter-list {
+  height: auto;
+  max-height: 250px;
+  overflow-x: hidden;
+}
+
 @media (max-width: 700px) {
   div.sidebar-container,
   .sidebar-extension-sm {

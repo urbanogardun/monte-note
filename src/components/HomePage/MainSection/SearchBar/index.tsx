@@ -178,7 +178,7 @@ export class SearchBar extends React.Component<Props, State> {
                             >
                                 <span className="oi oi-chevron-bottom search-dropdown" />
                             </button>
-                            <div className="dropdown-menu">
+                            <div className="dropdown-menu notebooks-search-filter-list">
                                 <a 
                                     className="dropdown-item" 
                                     href="#" 
@@ -245,7 +245,7 @@ export class SearchBar extends React.Component<Props, State> {
                                 >
                                     <span className="oi oi-chevron-bottom search-dropdown" />
                                 </button>
-                                <div className="dropdown-menu">
+                                <div className="dropdown-menu notebooks-search-filter-list">
                                     <a 
                                         className="dropdown-item" 
                                         href="#" 
