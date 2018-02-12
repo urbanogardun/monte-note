@@ -22,29 +22,14 @@ export class TrashcanSidebar extends React.Component<Props, State> {
         electronMessager.sendMessageWithIpcRenderer(GET_NOTE_FROM_TRASH, data);
     }
 
-    markNoteActive(e: any, sidebar?: string, elementClass?: any) {
+    markNoteActive(e: any, elementClass: string) {
         $('.sidebar-note').removeClass('notebook-name-sidebar-active');
         $('.currently-opened-note-sidebar-sm').removeClass('currently-opened-note-sidebar-sm');
         $('.currently-opened-note-sidebar-md').removeClass('currently-opened-note-sidebar-md');
-        if (sidebar === 'sm') {
-            let tagName = $(e.target).prop('tagName').toLowerCase();
-            if (tagName === 'p') {
-                $(e.target).children().addClass('currently-opened-note-sidebar-sm');
-            } else {
-                $(e.target).addClass('currently-opened-note-sidebar-sm');
-            }
-        } else if (sidebar === 'md') {
-            $(e.target).addClass('currently-opened-note-sidebar-md');
-        } else {
-            $(e.target).addClass('notebook-name-sidebar-active');
-        }
 
-        $(`li.sidebar-collapsed-item-text:contains("${name}")`)
+        $(`li.sidebar-collapsed-item-text`)
         .removeClass('tag-selected');
         
-        $(`li.sidebar-collapsed-item-text:contains("${name}")`)
-        .removeClass('tag-selected');
-
         $('.trashed-notes-sidebar-sm')
         .find(`p.${elementClass}`)
         .children()
@@ -57,7 +42,6 @@ export class TrashcanSidebar extends React.Component<Props, State> {
         $('.trashed-notes-sidebar-lg')
         .find(`p.${elementClass}`)
         .addClass('currently-opened-note-sidebar-md');
-
     }
 
     componentDidMount() {
@@ -155,7 +139,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                                             onClick={(e) => {
                                                                 this.getNoteFromTrash(notebook, note);
                                                                 this.markNoteActive(
-                                                                    e, 'md', `${notebookNameForId}-${noteName}`);
+                                                                    e, `${notebookNameForId}-${noteName}`);
                                                             }}
                                                         >
                                                             {note}
@@ -233,7 +217,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                                         onClick={(e) => {
                                                             this.getNoteFromTrash(notebook, note);
                                                             this.markNoteActive(
-                                                                e, 'md', `${notebookNameForId}-${noteName}`);
+                                                                e, `${notebookNameForId}-${noteName}`);
                                                         }}
                                                     >
                                                         {note}
@@ -322,7 +306,6 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                                                     this.getNoteFromTrash(notebook, note);
                                                                     this.markNoteActive(
                                                                         e, 
-                                                                        'sm', 
                                                                         `${notebookNameForId}-${noteName}`
                                                                     );
                                                                     }}
