@@ -101,6 +101,14 @@ export class MainSection extends React.Component<Props, {}> {
 
     componentDidMount() {
         this.handleScroll();
+        if (this.props.previewData.notebook) {
+            let data = {
+                notebook: this.props.previewData.notebook,
+                note: this.props.previewData.note,
+                getContentForPreview: true
+            };
+            ElectronMessager.sendMessageWithIpcRenderer(GET_NOTE_CONTENT, data);
+        }
     }
 
     componentWillMount() {
