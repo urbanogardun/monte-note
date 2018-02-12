@@ -47,13 +47,13 @@ export class TagList extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="tags">
+            <div className="preview-note-tags tags-notebook-page">
                 {(this.props.currentNoteTags as string[]).map((name: string, index: number) => {
                     return (
                         <span 
                             key={name}
-                            className="badge badge-primary tag-name"
-                        >{name} <span className="oi oi-delete remove-tag" onClick={() => { this.removeTag(name); }}/>
+                            className="badge badge-light tag-pill"
+                        >{name} <span className="oi oi-delete delete-tag" onClick={() => { this.removeTag(name); }}/>
                         </span>
                     );
                 })}

@@ -9,9 +9,8 @@
     margin-bottom: 0px !important;
 }
 
-.tags {
+.tags-notebook-page {
     padding-top: 10px;
-    padding-bottom: 20px;
 }
 
 .tags > span.badge {
