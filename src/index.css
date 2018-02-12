@@ -321,7 +321,8 @@ div.sidebar::-webkit-scrollbar {
   background: transparent;  /* optional: just make scrollbar invisible */
 }
 
-input.search-notes {
+input.search-notes,
+input.add-tag {
   outline: none;
   box-shadow:none !important;
   border:1px solid #ccc !important;
@@ -722,6 +723,10 @@ li.list-group-item {
 
 /* Preview Note */
 
+div.preview-note {
+  padding-top: 22px;
+}
+
 div.add-tag {
   margin-bottom: 20px;
 }
@@ -767,12 +772,13 @@ div#editor {
   height: 90vh;
 }
 
-.highres-page {
+.highres-page,
+div.preview-note {
   display: none;
 }
 
-@media (min-width: 768px) {
-  .highres-page {
-      display: flex;
+@media (min-width: 965px) {
+  div.preview-note {
+    display: block;
   }
 }

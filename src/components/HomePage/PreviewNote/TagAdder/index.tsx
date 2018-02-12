@@ -50,12 +50,12 @@ export class TagAdder extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="input-group input-group-sm mb-3">
+            <div className="input-group input-group-sm add-tag">
                 <input
                     value={this.state.tag}
                     onChange={e => this.updateInputValue(e)}
                     type="text"
-                    className="form-control"
+                    className="form-control add-tag"
                     aria-label="Small"
                     placeholder="Add a tag..."
                     aria-describedby="inputGroup-sizing-sm"
