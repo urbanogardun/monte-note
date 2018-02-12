@@ -39,7 +39,8 @@ import {
   ATTACHMENT_UPLOADED,
   DELETE_ATTACHMENT,
   OPEN_ATTACHMENT,
-  TRASHCAN
+  TRASHCAN,
+  OPEN_HTTP_LINK
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -759,6 +760,16 @@ ipcMain.on(OPEN_ATTACHMENT, (event: any, data: any) => {
     shell.openItem(filenamePath);
   }
 
+});
+
+ipcMain.on(OPEN_HTTP_LINK, (event: any, link: string) => {
+
+  link = link.toLowerCase();
+  if (!/^https?:\/\//i.test(link)) {
+    link = 'http://' + link;
+  }
+
+  shell.openExternal(link);
 });
 
 // In this file you can include the rest of your app's specific main process

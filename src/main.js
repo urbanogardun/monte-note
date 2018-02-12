@@ -595,5 +595,12 @@ electron_1.ipcMain.on(index_1.OPEN_ATTACHMENT, (event, data) => {
         electron_1.shell.openItem(filenamePath);
     }
 });
+electron_1.ipcMain.on(index_1.OPEN_HTTP_LINK, (event, link) => {
+    link = link.toLowerCase();
+    if (!/^https?:\/\//i.test(link)) {
+        link = 'http://' + link;
+    }
+    electron_1.shell.openExternal(link);
+});
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here. 

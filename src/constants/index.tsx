@@ -177,3 +177,6 @@ export type DELETE_ATTACHMENT = typeof DELETE_ATTACHMENT;
 
 export const OPEN_ATTACHMENT = 'OPEN_ATTACHMENT';
 export type OPEN_ATTACHMENT = typeof OPEN_ATTACHMENT;
+
+export const OPEN_HTTP_LINK = 'OPEN_HTTP_LINK';
+export type OPEN_HTTP_LINK = typeof OPEN_HTTP_LINK;

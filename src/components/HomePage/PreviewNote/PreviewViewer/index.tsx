@@ -1,6 +1,8 @@
 import * as React from 'react';
 import Quill from 'quill';
 import renameAttachment from '../../../../utils/quill-modules/rename-attachment/renameAttachment';
+import openHyperlinksInBrowser from 
+'../../../../utils/quill-modules/open-hyperlinks-in-browser/openHyperlinksInBrowser';
 
 export interface Props {
     previewContent: any;
@@ -13,6 +15,10 @@ export interface State {
 
 Quill.register('modules/attachmentPopover', (quill: Quill, options: any) => {
     renameAttachment(quill, options);
+});
+
+Quill.register('modules/openHyperlinksInBrowser', (quill: Quill, options: any) => {
+    openHyperlinksInBrowser(quill);
 });
 
 export class PreviewViewer extends React.Component<Props, State> {
@@ -32,7 +38,8 @@ export class PreviewViewer extends React.Component<Props, State> {
                 toolbar: false,
                 attachmentPopover: {
                     quillDisabled: true
-                }
+                },
+                openHyperlinksInBrowser: {}
             },
             theme: 'snow'  // or 'bubble',
         });
