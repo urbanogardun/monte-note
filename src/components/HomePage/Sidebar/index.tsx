@@ -92,26 +92,6 @@ export class Sidebar extends React.Component<Props, {}> {
                     <div className="sidebar">
                         <div className="sidebar-item sidebar-item-md">
                             <div className="sidebar-item-text-container">
-                                <a 
-                                    href="" 
-                                    className="sidebar-item-text"
-                                >Home <span className="sidebar-item-icon oi oi-home"/>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div className="sidebar-item sidebar-item-sm">
-                            <div className="sidebar-item-text-container sidebar-item-text-container-sm">
-                                <a 
-                                    href="" 
-                                    className="sidebar-item-text"
-                                ><span className="sidebar-item-icon sidebar-item-icon-sm oi oi-home"/>
-                                </a>
-                            </div>
-                        </div>
-
-                        <div className="sidebar-item sidebar-item-md">
-                            <div className="sidebar-item-text-container">
                                 <NewNotebookButton
                                     goToRoute={this.props.goToRoute}
                                     notebooks={this.props.notebooks}
@@ -331,11 +311,6 @@ export class Sidebar extends React.Component<Props, {}> {
                         </button>
                         <div className="collapse navbar-collapse" id="navbarNavDropdown">
                             <ul className="navbar-nav">
-                                <li className="nav-item active">
-                                    <a className="nav-link" href="#">Home
-                                        <span className="sr-only">(current)</span>
-                                    </a>
-                                </li>
                                 <NewNotebookButton
                                     goToRoute={this.props.goToRoute}
                                     notebooks={this.props.notebooks}
@@ -413,69 +388,6 @@ export class Sidebar extends React.Component<Props, {}> {
                 {/* <!-- /Navbar for Smallest Devices --> */}
 
                 {/* <!-- /Sidebar --> */}
-
-                {/* <div className="col-2 trashcan sidebar">
-                    <section className="notebooks">
-                        <section className="trashcan">
-                            <ul className="list-group notes">
-                                <NewNotebookButton 
-                                    goToRoute={this.props.goToRoute} 
-                                    notebooks={this.props.notebooks} 
-                                />
-                            </ul>
-                        </section>
-                
-                        <div 
-                            className="notebook-name-sidebar" 
-                            data-toggle="collapse" 
-                            data-target="#collapseExample" 
-                            aria-expanded="false"
-                        >
-                            Notebooks
-                            <span className="oi oi-chevron-bottom expand-notebook" />
-                            <span className="oi oi-chevron-left expand-notebook" />
-                        </div>
-                        <div className="collapse notes-sidebar" id="collapseExample">
-                            <ul className="list-group notes">
-                                {(this.props.notebooks as string[]).map((name: string) => {
-                                    if (name !== TRASHCAN) {
-                                        return (
-                                        <Link 
-                                            to={`/notebooks/${name}`} 
-                                            key={name}
-                                        >
-                                            <li className="list-group-item sidebar-note">{name}</li>
-                                        </Link>
-                                        );
-                                    } else {
-                                        return;
-                                    }
-                                })}
-                            </ul>
-                        </div>
-                        <TagList 
-                            allTags={this.props.allTags} 
-                            updateSelectedTags={this.props.updateSelectedTags}
-                            searchQuery={this.props.searchQuery}
-                            selectedNotebook={this.props.selectedNotebook}
-                        />
-                    </section>
-                
-                    <section className="trashcan">
-                        <ul className="list-group notes">
-                            <Link 
-                                to={'/trashcan'} 
-                            >
-                                <li 
-                                    className="list-group-item sidebar-note sidebar-link"
-                                >Trash <span className="oi oi-trash trashcan" />
-                                </li>
-                            </Link>
-                        </ul>
-                    </section>
-                
-                </div>
-                            */}
             </React.Fragment>
         );
     }
