@@ -27,7 +27,7 @@ export class PreviewViewer extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        this.quill = new Quill('#quill-container', {
+        this.quill = new Quill('#preview-note-editor', {
             modules: {
                 toolbar: false,
                 attachmentPopover: {
@@ -48,6 +48,7 @@ export class PreviewViewer extends React.Component<Props, State> {
             this.quill.deleteText(0, this.quill.getLength());
             this.quill.clipboard.dangerouslyPasteHTML(0, nextProps.previewContent.noteContent as string, 'api');
         }
+
     }
 
     componentWillMount() {
@@ -61,7 +62,7 @@ export class PreviewViewer extends React.Component<Props, State> {
 
     render() {
         return (
-            <div id="quill-container" className="preview-note-container" />
+            <div id="preview-note-editor" className="preview-note-container" />
         );
     }
 }

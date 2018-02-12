@@ -61,18 +61,20 @@ export class GoToNote extends React.Component<Props, State> {
 
     render() {
         return (
-            <Route 
-                render={({ history}) => (
-                <a
-                    // to={`/notebooks/${this.props.notebookName}`} 
-                    onClick={() => { 
-                        this.openNote();
-                    }}
-                >
-                  Open Note
-                </a>
-              )} 
-            />
+            <div className="alert alert-warning open-note-alert text-center">
+                <Route 
+                    render={({ history}) => (
+                    <a
+                        // to={`/notebooks/${this.props.notebookName}`} 
+                        onClick={() => { 
+                            this.openNote();
+                        }}
+                    >
+                    View Note
+                    </a>
+                )} 
+                />
+            </div>
         );
     }
 }

@@ -35,17 +35,17 @@ export class PreviewNote extends React.Component<Props, State> {
                     updateTags={this.props.updateTags}
                     updateAllTags={this.props.updateAllTags}
                 />
-                <GoToNote
-                    notebookName={this.props.previewContent.notebook}
-                    noteName={this.props.previewContent.note}
-                    goToRoute={this.props.goToRoute}
-                    lastOpenedNote={this.props.lastOpenedNote}
-                />
                 <TagList
                     tags={this.props.previewContent.tags}
                     notebookName={this.props.previewContent.notebook}
                     noteName={this.props.previewContent.note}
                     updateTags={this.props.updateTags}
+                />
+                <GoToNote
+                    notebookName={this.props.previewContent.notebook}
+                    noteName={this.props.previewContent.note}
+                    goToRoute={this.props.goToRoute}
+                    lastOpenedNote={this.props.lastOpenedNote}
                 />
                 <PreviewViewer previewContent={this.props.previewContent} />
             </div>

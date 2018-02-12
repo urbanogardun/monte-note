@@ -781,6 +781,7 @@ div#editor {
 .highres-page,
 div.preview-note {
   display: none;
+  overflow: auto;
 }
 
 @media (min-width: 965px) {
@@ -788,3 +789,4 @@ div.preview-note {
     display: block;
   }
 }
+
