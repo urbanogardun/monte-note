@@ -8,6 +8,7 @@ import './renameAttachment.css';
 
 Attachment.blotName = 'attachment';
 Attachment.tagName = 'a';
+Attachment.className = 'attachment';
 
 Quill.register(Attachment);
 
