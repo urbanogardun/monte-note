@@ -45,12 +45,13 @@ export class TagAdder extends React.Component<Props, State> {
             let editor = document.querySelector('.ql-editor') as Element;
             let noteContentToUpdate = editor.innerHTML;
 
-            let noteData = prepareNoteData(this.props, noteContentToUpdate);
-            let noteDataToSave = {...noteData, updatePreviewContent: true};
-            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
-
-            // Update app state with current note content that's inside editor
-            this.props.updateNoteContent(noteContentToUpdate);
+            if (this.props.noteContent !== noteContentToUpdate) {
+                let noteData = prepareNoteData(this.props, noteContentToUpdate);
+                let noteDataToSave = {...noteData, updatePreviewContent: true};
+                ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
+                // Update app state with current note content that's inside editor
+                this.props.updateNoteContent(noteContentToUpdate);
+            }
 
             this.setState({tag: ''});
         }
