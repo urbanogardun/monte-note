@@ -398,43 +398,81 @@ export class Editor extends React.Component<Props, State> {
                         <option value="48px">48</option>
                         <option value="72px">72</option>
                     </select>
-                    <button className="ql-bold"/>
-                    <button className="ql-italic"/>
-                    <button className="ql-underline"/>
+                    <span className="ql-formats">
+                        <button className="ql-bold"/>
+                        <button className="ql-italic"/>
+                        <button className="ql-underline"/>
+                        <button className="ql-strike"/>
+                    </span>
+                    <span className="ql-formats">
+                        <select className="ql-color"/>
+                        <select className="ql-background"/>
+                    </span>
+                    <span className="ql-formats">
+                        <button className="ql-script" value="sub"/>
+                        <button className="ql-script" value="super"/>
+                    </span>
+                    <span className="ql-formats">
+                        <button className="ql-header" value="1"/>
+                        <button className="ql-header" value="2"/>
+                        <button className="ql-blockquote"/>
+                        <button className="ql-code-block"/>
+                    </span>
+                    <span className="ql-formats">
+                        <button className="ql-list" value="ordered"/>
+                        <button className="ql-list" value="bullet"/>
+                        <button className="ql-indent" value="-1"/>
+                        <button className="ql-indent" value="+1"/>
+                    </span>
+                    <span className="ql-formats">
+                        <button className="ql-direction" value="rtl"/>
+                        <select className="ql-align"/>
+                    </span>
+                    <span className="ql-formats">
+                        <button className="ql-link"/>
+                        <label className="image-attachment">
+                            <span className="oi oi-image image-attachment-icon"/>
+                            <input 
+                                className="ql-omega" 
+                                value="" 
+                                id="ql-image-attachment"
+                                type="file"
+                                accept="image/*" 
+                                onChange={
+                                    () => {
+                                        if (this.quill.getSelection()) {
+                                            this.currentCursorPosition = this.quill.getSelection().index;
+                                        }
+                                        this.handleImageUpload();
+                                    }
+                                }
+                            />
+                        </label>
+                        <label className="file-attachment">
+                        <span className="oi oi-paperclip file-attachment-icon"/>
+                        <input
+                            className="ql-attachment"
+                            value=""
+                            id="ql-attachment"
+                            type="file"
+                            onChange={
+                                () => {
+                                    if (this.quill.getSelection()) {
+                                        this.currentCursorPosition = this.quill.getSelection().index;
+                                    }
+                                    this.handleAttachmentUpload();
+                                }
+                            }
+                        />
+                        </label>
+                        <button className="ql-formula"/>
+                    </span>
+                    <span className="ql-formats">
+                        <button className="ql-clean"/>
+                    </span>
                     <button 
                         className="oi oi-trash quill-custom-button"
                         onClick={() => this.deleteNote()}
-                    />
-
-                    <input 
-                        className="ql-omega" 
-                        value="" 
-                        id="ql-image-attachment"
-                        type="file"
-                        accept="image/*" 
-                        onChange={
-                            () => {
-                                if (this.quill.getSelection()) {
-                                    this.currentCursorPosition = this.quill.getSelection().index;
-                                }
-                                this.handleImageUpload();
-                            }
-                        }
-                    />
-
-                    <input
-                        className="ql-attachment"
-                        value=""
-                        id="ql-attachment"
-                        type="file"
-                        onChange={
-                            () => {
-                                if (this.quill.getSelection()) {
-                                    this.currentCursorPosition = this.quill.getSelection().index;
-                                }
-                                this.handleAttachmentUpload();
-                            }
-                        }
                     />
                 </div>
                 <div id="quill-container" />

@@ -380,3 +380,32 @@
 
   /* We do not set Aref Ruqaa since it is the default font */
   
+input#ql-image-attachment[type="file"],
+input#ql-attachment[type="file"] {
+    display: none;
+}
+label.image-attachment,
+label.file-attachment {
+    cursor: pointer;
+    margin-bottom: 0px;
+    font-size: 12px;
+    padding: 3px 5px;
+    float: left;
+}
+.file-attachment {
+    bottom: 4px;
+}
+span.file-attachment-icon {
+    top: 1px !important;
+}
+span.image-attachment-icon {
+    top: 2px !important;
+}
+.image-attachment:hover,
+.file-attachment:hover {
+    color: #007bff;
+}
+
+.ql-tooltip.ql-editing {
+    left: 10px !important;
+}
