@@ -406,6 +406,7 @@ span.image-attachment-icon {
     color: #007bff;
 }
 
+.ql-tooltip,
 .ql-tooltip.ql-editing {
     left: 10px !important;
 }
