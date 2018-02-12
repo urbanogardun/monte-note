@@ -83,16 +83,22 @@ function renameAttachment(quill: Quill, options?: any) {
         }
 
         $('.attachment').on('click', function(event: JQuery.Event) {
+            var attachment = $(this) as any;
+            let attachmentLink = $(this).attr('href');
+
             let blot = Parchment.find(event.target as Node);
+            if ($(event.target).hasClass('oi-paperclip')) {
+                blot = Parchment.find($(event.target).parent()[0] as Node);
+                attachment = $(event.target).parent();
+                attachmentLink = $(event.target).parent().attr('href');
+            }
             let cursorPosition = blot.offset(quill.scroll);
 
-            let attachmentLink = $(this).attr('href');
             $('.attachment-link').attr('href', attachmentLink as string);
 
             // Attachment gets opened otherwise
             event.preventDefault();
             
-            var attachment = $(this) as any;
             // $('.attachment-link').text(attachment.text().trim());
         
             $('.attachment-input').hide();
@@ -190,7 +196,7 @@ function clickedOutsidePopover(e: JQuery.Event) {
 }
 
 function clickedOnAttachmentLink(e: JQuery.Event) {
-    if ($(e.target).hasClass('attachment')) {
+    if ($(e.target).hasClass('attachment') || ($(e.target).parent().hasClass('attachment'))) {
         return true;
     }
     return false;

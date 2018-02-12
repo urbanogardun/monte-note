@@ -10,7 +10,7 @@ class Attachment extends BlockEmbed {
         node.setAttribute('data-toggle', 'popover');
         node.setAttribute('tabindex', '0');
         node.setAttribute('attachment-name', value.attachmentName);
-        node.innerHTML = value.attachmentName;
+        node.innerHTML = `<span class="oi oi-paperclip"></span> ${value.attachmentName}`;
 
         return node;
     }
