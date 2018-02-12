@@ -720,3 +720,59 @@ li.list-group-item {
   border-radius: 0px !important;
 }
 
+/* Preview Note */
+
+div.add-tag {
+  margin-bottom: 20px;
+}
+
+span.tag-pill {
+  border: 1px solid #ced4da;
+  padding: 5px;
+  margin-right: 5px;
+  margin-top: 10px;
+}
+
+span.delete-tag {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+span.delete-tag:hover {
+  color: #9EA6C2;
+}
+
+div.preview-note-tags {
+  margin-bottom: 20px;
+}
+
+div.open-note-alert {
+  padding: 0.2rem;
+  margin-bottom: 0px;
+  border-radius: 0;
+  border: 1px solid #ced4da;
+  border-bottom: transparent;
+  cursor: pointer;
+  background-color: #fff;
+}
+
+div.open-note-alert > a {
+  text-decoration: none;
+  color: inherit;
+  font-size: 0.8rem;
+  display: block;
+}
+
+div#editor {
+  height: 90vh;
+}
+
+.highres-page {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .highres-page {
+      display: flex;
+  }
+}

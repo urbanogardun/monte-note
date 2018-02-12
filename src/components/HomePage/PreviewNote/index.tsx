@@ -27,7 +27,7 @@ export class PreviewNote extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="col preview-note-content">
+            <div className="col preview-note">
                 <TagAdder
                     tags={this.props.previewContent.tags}
                     notebookName={this.props.previewContent.notebook}
