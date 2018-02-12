@@ -473,7 +473,7 @@ li.search-home-hamburger {
   }
 }
 
-@media (min-width: 700px) {
+@media (min-width: 701px) {
   li.search-home {
     display: initial;
   }
@@ -491,7 +491,7 @@ li.search-home-hamburger {
   }
 }
 
-@media (max-width: 1065px) {
+@media (max-width: 1064px) {
   div#collapseTagsBigSidebar, 
   div#collapseNotebooksBigSidebar,
   div.sidebar-item-lg {
