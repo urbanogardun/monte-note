@@ -12,6 +12,10 @@
 	background-color: #F5F5F5;
 }
 
+div.notebooks-search-filter-list::-webkit-scrollbar {
+  width: 5px;
+}
+
 ::-webkit-scrollbar-thumb
 {
   background-color: transparent;
@@ -19,8 +23,9 @@
 
 /* Show scrollbar only when element is hovered over  */
 div.notes-index:hover::-webkit-scrollbar-thumb,
-div.preview-note-content:hover::-webkit-scrollbar-thumb,
-div.main-content:hover::-webkit-scrollbar-thumb {
+div.preview-note:hover::-webkit-scrollbar-thumb,
+div.main-content:hover::-webkit-scrollbar-thumb,
+div.notebooks-search-filter-list:hover::-webkit-scrollbar-thumb {
   background-color: #d3d3d3;
 }
 
