@@ -470,10 +470,12 @@ export class Editor extends React.Component<Props, State> {
                     <span className="ql-formats">
                         <button className="ql-clean"/>
                     </span>
-                    <button 
-                        className="oi oi-trash quill-custom-button"
-                        onClick={() => this.deleteNote()}
-                    />
+                    <span className="ql-formats">
+                        <button 
+                            className="oi oi-trash quill-custom-button trash-note-icon"
+                            onClick={() => this.deleteNote()}
+                        />
+                    </span>
                 </div>
                 <div id="quill-container" />
             </div>
