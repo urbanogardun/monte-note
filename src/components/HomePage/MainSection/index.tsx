@@ -34,7 +34,7 @@ export class MainSection extends React.Component<Props, {}> {
 
         $('div.card').removeClass('note-selected');
         // Highlight selected note
-        $(`#${notebook}-${note}`).children().first().addClass('note-selected');
+        $(`li[entryname="${notebook}-${note}"]`).children().addClass('note-selected');
     }
 
     handleScroll() {
@@ -113,18 +113,6 @@ export class MainSection extends React.Component<Props, {}> {
 
     render() {
 
-        // let loadMoreButton = ( <div /> );
-        // if ( (this.props.searchResults.results.length > 9) && (this.props.searchResults.results.length < 11) ) {
-        //     loadMoreButton = 
-        //     ( 
-        //         <LoadMoreButton 
-        //             searchQuery={this.props.searchResults.query} 
-        //             notebook={this.props.searchResults.notebook}
-        //             selectedTags={this.props.selectedTags}
-        //         />
-        //     );
-        // }
-
         return (
             <div className="col notes-index">
                 <ul className="list-group">
@@ -152,7 +140,7 @@ export class MainSection extends React.Component<Props, {}> {
                             return (
                                 <li 
                                     key={result._id} 
-                                    id={`${result.notebookName}-${result.noteName}`}
+                                    data-entryname={`${result.notebookName}-${result.noteName}`}
                                     className={`list-group-item note-item ${highlightElement}`} 
                                     onClick={
     
