@@ -377,13 +377,13 @@ export class Editor extends React.Component<Props, State> {
                 />
                 <div id="toolbar">
                     <select className="ql-font">
-                        <option value="opensans">Open Sans</option>
+                        <option value="raleway">Raleway</option>
                         <option value="indieflower">Indie Flower</option>
                         <option value="lato">Lato</option>
                         <option value="lora">Lora</option>
                         <option value="merriweather">Merriweather</option>
+                        <option value="opensans">Open Sans</option>
                         <option value="playfairdisplay">Playfair Display</option>
-                        <option value="raleway">Raleway</option>
                         <option value="roboto">Roboto</option>
                         <option value="robotoslab">Roboto Slab</option>
                         <option value="slabo13px">Slabo 13px</option>
