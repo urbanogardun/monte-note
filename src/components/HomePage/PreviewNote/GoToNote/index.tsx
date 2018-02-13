@@ -8,6 +8,7 @@ export interface Props {
     noteName: string;
     goToRoute: Function;
     lastOpenedNote: string;
+    forNotesList?: boolean;
 }
 
 export interface State {
@@ -60,21 +61,38 @@ export class GoToNote extends React.Component<Props, State> {
     }
 
     render() {
-        return (
-            <div className="alert alert-warning open-note-alert text-center">
-                <Route 
-                    render={({ history}) => (
-                    <a
-                        // to={`/notebooks/${this.props.notebookName}`} 
-                        onClick={() => { 
-                            this.openNote();
-                        }}
-                    >
+        let goToLink;
+        if (this.props.forNotesList) {
+            goToLink = (
+                <a
+                    className="notes-list-open-note"
+                    onClick={() => {
+                        this.openNote();
+                    }}
+                >
                     Open Note
-                    </a>
-                )} 
-                />
-            </div>
+                </a>
+            );
+        } else {
+            goToLink = (
+                <div className="alert alert-warning open-note-alert text-center">
+                    <Route
+                        render={({ history }) => (
+                            <a
+                                // to={`/notebooks/${this.props.notebookName}`} 
+                                onClick={() => {
+                                    this.openNote();
+                                }}
+                            >
+                                Open Note
+                            </a>
+                        )}
+                    />
+                </div>
+            );
+        }
+        return (
+            goToLink
         );
     }
 }

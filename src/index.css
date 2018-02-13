@@ -791,8 +791,22 @@ div.preview-note {
   overflow: auto;
 }
 
+a.notes-list-open-note {
+  display: inline-block;
+  margin-top: 20px;
+}
+
+a.notes-list-open-note:hover {
+  text-decoration: underline !important;
+  color: #007bff !important;
+}
+
 @media (min-width: 965px) {
   div.preview-note {
     display: block;
+  }
+
+  a.notes-list-open-note {
+    display: none;
   }
 }

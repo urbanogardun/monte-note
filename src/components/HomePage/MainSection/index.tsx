@@ -6,6 +6,7 @@ import {
     GET_NOTE_CONTENT, 
     GLOBAL_SEARCH, 
     SEARCH_WITHIN_NOTEBOOK } from '../../../constants/index';
+import GoToNote from '../PreviewNote/GoToNote/index';
 import * as $ from 'jquery';
 
 export interface Props {
@@ -17,6 +18,9 @@ export interface Props {
     updatePreview: Function;
     previewData: any;
     searchQuery: string;
+    previewContent: any;
+    goToRoute: Function;
+    lastOpenedNote: string;
 }
 
 export class MainSection extends React.Component<Props, {}> {
@@ -167,6 +171,15 @@ export class MainSection extends React.Component<Props, {}> {
                                                 className="card-text" 
                                                 dangerouslySetInnerHTML={{__html: noteContent}}
                                             />
+                                            <div className="link-to-note">
+                                                <GoToNote
+                                                    notebookName={this.props.previewContent.notebook}
+                                                    noteName={this.props.previewContent.note}
+                                                    goToRoute={this.props.goToRoute}
+                                                    lastOpenedNote={this.props.lastOpenedNote}
+                                                    forNotesList={true}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </li>
