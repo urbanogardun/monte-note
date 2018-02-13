@@ -146,6 +146,9 @@ export class MainSection extends React.Component<Props, {}> {
                         let noteContent = result.noteContent;
                         if ( (this.props.searchQuery.length > 0) && (noteContent) ) {
                             noteContent = highlightSearchQuery(result.noteContent, this.props.searchQuery);
+                        } else {
+                            noteContent = noteContent.length > 250 ? 
+                            noteContent.substring(0, 250) + '...' : noteContent;
                         }
                         
                         if (result.notebookName) {
@@ -204,6 +207,39 @@ function highlightSearchQuery(text: string, searchQuery: string) {
   
     let regexp = new RegExp(searchTerms, 'ig');
     let newText = text.replace(regexp, `<span class="search-match">$&</span>`);
+
+    let searchPosition = newText.indexOf(`<span class="search-match">`);
+    if (searchPosition > -1) {
+
+        if (text.length <= 250) {
+            return newText;
+        } else if (searchPosition >= (text.length - 250)) {
+            // In cases where search gets matches with results at the end of the
+            // note content. This will get text before and append to it 3 dots.
+            let searchMatchAt = newText.indexOf(`<span class="search-match">`);
+            return '...' + newText.substr(searchMatchAt - 250);
+        } else {
+            // When a match is somewhere in note content. We first get a substring
+            // beginning from our first match inside a note. Then we add that
+            // content as innerHTML inside a temporary div node. This will sanitize
+            // that content so that we don't get fragments of HTML tags as text
+            // inside a note preview results. After we get bare text content,
+            // we cut that note content to a specified number of characters
+            // and call replace function again to highlight relevant search
+            // match(es).
+            newText = newText.substr(searchPosition).trim();
+
+            var temp = document.createElement('div');
+            temp.innerHTML = newText.substr(newText.indexOf(`<span class="search-match">`)).trim();
+            var sanitized = temp.textContent || temp.innerText;
+            
+            newText = sanitized.slice(0, 250) + '...';
+            newText = newText.replace(regexp, `<span class="search-match">$&</span>`);
+        }
+
+        return newText;
+    } else {
+        return text = text.length > 250 ? text.substring(0, 250) + '...' : text;
+    }
     
-    return newText;
 }
