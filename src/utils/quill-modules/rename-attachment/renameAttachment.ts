@@ -97,8 +97,6 @@ function renameAttachment(quill: Quill, options?: any) {
             // Attachment gets opened otherwise
             event.preventDefault();
             
-            // $('.attachment-link').text(attachment.text().trim());
-        
             $('.attachment-input').hide();
             
             $('.attachment-link, .attachment-open-external, .attachment-open-external-normal')
@@ -157,10 +155,9 @@ function renameAttachment(quill: Quill, options?: any) {
             // Popover will stay open until attachment gets its name changed,
             // gets deleted, or user clicks somewhere outside the popover.
             let previousPopover: any;
-            $('body').click(function(e: JQuery.Event) {
+            $('body').off('click').on('click', function(e: JQuery.Event) {
                 
                 if (!clickedOnAttachmentLink(e)) {
-
                     if (clickedOutsidePopover(e)) {
                         let popover = $('[data-toggle="popover"]') as any;
                         popover.popover('hide');
