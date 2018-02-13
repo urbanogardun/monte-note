@@ -86,7 +86,7 @@ export class TagList extends React.Component<Props, State> {
         let renderForHamburgerMenu = this.props.forHamburgerMenu;
         return (
                 <React.Fragment>
-                    {(this.props.allTags as string[]).map((name: string, index: number) => {
+                    {(this.props.allTags.sort() as string[]).map((name: string, index: number) => {
                         if (renderForHamburgerMenu) {
                             return (
                                 <p
