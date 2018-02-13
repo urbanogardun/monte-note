@@ -13,6 +13,7 @@ import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
 import initializeResponsiveImages from '../../../utils/quill-modules/resizable-images/resizable-images-quill';
 import renameAttachment from '../../../utils/quill-modules/rename-attachment/renameAttachment';
+import openHyperlinksInBrowser from '../../../utils/quill-modules/open-hyperlinks-in-browser/openHyperlinksInBrowser';
 
 Quill.register('modules/resizableImages', (quill: Quill) => {
     initializeResponsiveImages(quill);
@@ -20,6 +21,10 @@ Quill.register('modules/resizableImages', (quill: Quill) => {
 
 Quill.register('modules/renameAttachment', (quill: Quill) => {
     renameAttachment(quill);
+});
+
+Quill.register('modules/openHyperlinks', (quill: Quill, options: any) => {
+    openHyperlinksInBrowser(quill, options);
 });
 
 // Add fonts to whitelist
@@ -151,7 +156,10 @@ export class Editor extends React.Component<Props, State> {
                 // ['trash'],
                 // ],
                 resizableImages: {},
-                renameAttachment: {}
+                renameAttachment: {},
+                openHyperlinks: {
+                    editorEnabled: true
+                }
             },
             placeholder: 'Take notes...',
             theme: 'snow',  // or 'bubble'
