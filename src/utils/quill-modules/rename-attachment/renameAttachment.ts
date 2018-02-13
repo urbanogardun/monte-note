@@ -18,10 +18,8 @@ function renameAttachment(quill: Quill, options?: any) {
         <div id="attachment-popover" class="attachment-popover">
         <div class="attachment-text">
             <span title="Open File" class="oi oi-file attachment-link"></span>
-            <span class="separator">|</span> 
             <span title="Open in Explorer" class="oi oi-external-link attachment-open-external"></span>
             <a href="" class="edit-attachment">Edit</a> 
-            <span class="separator">|</span> 
             <a href="#" class="delete-attachment">Delete</a></p>
         </div>
         <div class="attachment-input input-group input-group-sm mb-3">
@@ -129,7 +127,7 @@ function renameAttachment(quill: Quill, options?: any) {
                 
                 $('.attachment-text').hide();
                 $('.attachment-input').show();
-                $('input.rename-attachment').val(attachment.text());
+                $('input.rename-attachment').val(attachment.text().trim());
                 $('input.rename-attachment').select();
                 $('input.rename-attachment').focus();
                 $('.save-attachment-name').on('click', function(e1: JQuery.Event) {

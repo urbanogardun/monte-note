@@ -1,4 +1,4 @@
-.popover {
+/* .popover {
     max-width: none !important;
 }
 
@@ -52,4 +52,86 @@ a#delete-attachment {
     cursor: pointer;
     color: #007bff;
     top: 2.7px;
-}
+} */
+
+div.popover {
+    max-width: none !important;
+    border-radius: 0px !important;
+    font-family: "Raleway";
+    font-size: 16px;
+  }
+  div.arrow {
+    display: none !important;
+  }
+  div.popover-body {
+    background-color: #fff;
+    -webkit-box-shadow: 0px 0px 5px #ddd;
+    box-shadow: 0px 0px 5px #ddd;
+    color: #444;
+    padding: 5px 12px;
+    white-space: nowrap;
+    font-size: 16px !important;
+
+    line-height: 26px;
+    margin-right: 8px;
+
+    height: 38px !important;
+    
+  }
+  a.edit-attachment, a.edit-attachment:hover,
+  a.delete-attachment, a.delete-attachment:hover {
+    color: #444 !important;
+    text-decoration: none;
+    padding-right: 10px;
+    cursor: pointer;
+  }
+
+  a.delete-attachment, a.delete-attachment:hover {
+    padding-right: 0px;
+  }
+
+  a.save-attachment-name, a.save-attachment-name:hover {
+    color: #444 !important;
+    text-decoration: none;
+    padding-left: 10px;
+    cursor: pointer;
+  }
+
+  .oi-file.attachment-link, .oi-external-link.attachment-open-external {
+      cursor: pointer;
+  }
+
+  .oi-file.attachment-link:hover, .oi-external-link.attachment-open-external:hover {
+    color: #007bff;
+  }
+
+  a.edit-attachment, .oi-file.attachment-link {
+    border-right: 1px solid #ccc;
+    padding-right: 10px;
+  }
+
+  a.delete-attachment, .oi-external-link.attachment-open-external {
+    padding-left: 8px;
+  }
+
+  .oi-external-link.attachment-open-external {
+      margin-right: 20px;
+  }
+  
+  input.rename-attachment {
+    border: 1px solid #ccc !important;
+    font-size: 13px !important;
+    height: 26px !important;
+    margin: 0px !important;
+    padding: 3px 5px !important;
+    width: 170px !important;
+    border: none !important;
+    -webkit-box-shadow: none !important;
+    -moz-box-shadow: none !important;
+    box-shadow: none !important;
+    margin-left: 10px !important;
+  }
+  
+  input.rename-attachment:focus {
+    outline: -webkit-focus-ring-color auto 5px !important;
+  }
