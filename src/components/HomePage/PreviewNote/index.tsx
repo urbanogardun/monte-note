@@ -19,9 +19,9 @@ export class PreviewNote extends React.Component<Props, State> {
 
     componentWillUpdate(nextProps: Props) {
         if (nextProps.previewContent.note) {
-            $('.preview-note-content').children().show();
+            $('.preview-note').children().show();
         } else {
-            $('.preview-note-content').children().hide();
+            $('.preview-note').children().hide();
         }
     }
 

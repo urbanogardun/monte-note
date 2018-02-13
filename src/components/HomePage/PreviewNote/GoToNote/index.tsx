@@ -70,7 +70,7 @@ export class GoToNote extends React.Component<Props, State> {
                             this.openNote();
                         }}
                     >
-                    View Note
+                    Open Note
                     </a>
                 )} 
                 />
