@@ -97,11 +97,13 @@ div.popover {
     cursor: pointer;
   }
 
-  .oi-file.attachment-link, .oi-external-link.attachment-open-external {
+  .oi-file.attachment-link, .oi-external-link.attachment-open-external,
+  .attachment-open-external-normal {
       cursor: pointer;
   }
 
-  .oi-file.attachment-link:hover, .oi-external-link.attachment-open-external:hover {
+  .oi-file.attachment-link:hover, .oi-external-link.attachment-open-external:hover,
+  .attachment-open-external-normal:hover {
     color: #007bff;
   }
 
@@ -110,7 +112,8 @@ div.popover {
     padding-right: 10px;
   }
 
-  a.delete-attachment, .oi-external-link.attachment-open-external {
+  a.delete-attachment, .oi-external-link.attachment-open-external,
+  .attachment-open-external-normal {
     padding-left: 8px;
   }
 

@@ -40,7 +40,6 @@ function renameAttachment(quill: Quill, options?: any) {
         <div id="attachment-popover" class="attachment-popover">
         <div class="attachment-text">
             <span title="Open File" class="oi oi-file attachment-link"></span>
-            <span class="separator">|</span> 
             <span title="Open in Explorer" class="oi oi-external-link attachment-open-external-normal"></span>
         </div>
         <div class="attachment-input input-group input-group-sm mb-3">
