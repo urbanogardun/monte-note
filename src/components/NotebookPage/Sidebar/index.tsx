@@ -213,6 +213,8 @@ export class Sidebar extends React.Component<Props, State> {
         if (nextProps.noteToRename !== '') {
             if (nextProps.noteToRename !== this.props.noteToRename) {
                 console.log('Rename note: ' + nextProps.noteToRename.note);
+                $(`p[data-entryname="${nextProps.noteToRename.notebook}-${nextProps.noteToRename.note}"]`).hide();
+                $(`div[data-entryname="${nextProps.noteToRename.notebook}-${nextProps.noteToRename.note}"]`).show();
             }
         }
     }
@@ -338,17 +340,50 @@ export class Sidebar extends React.Component<Props, State> {
                                 <ul className="sidebar-collapsed-content list-unstyled">
                                     {(this.props.notes as string[]).map((name: string, index: number) => {
                                         let activeNote =
-                                            name === this.props.lastOpenedNote ? 'currently-opened-note-sidebar-md' : '';
+                                            name === this.props.lastOpenedNote ? 
+                                            'currently-opened-note-sidebar-md' : '';
                                         return (
-                                            <p
-                                                key={name}
-                                                {...(name === this.props.lastOpenedNote ? '' : '') }
-                                                className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md ${activeNote}`}
-                                                onClick={() => this.updateLastOpenedNote(name)}
-                                                onContextMenu={() => this.openNoteMenu(name)}
-                                            >
-                                                {name}
-                                            </p>
+                                            <React.Fragment key={name}>
+                                                <p
+                                                    {...(name === this.props.lastOpenedNote ? '' : '')}
+                                                    className={`
+                                                        list-group-item 
+                                                        list-group-item-tag 
+                                                        sidebar-collapsed-item-text 
+                                                        notes-sidebar-md 
+                                                        ${activeNote}`
+                                                    }
+                                                    onClick={() => this.updateLastOpenedNote(name)}
+                                                    onContextMenu={() => this.openNoteMenu(name)}
+                                                    data-entryname={`${this.props.notebookName}-${name}`}
+                                                >
+                                                    {name}
+                                                </p>
+
+                                                <div 
+                                                    className={
+                                                    `sidebar-app-form 
+                                                    input-group 
+                                                    input-group-sm 
+                                                    rename-note`
+                                                    }
+                                                    data-entryname={`${this.props.notebookName}-${name}`}
+                                                >
+                                                    <input
+                                                        value={this.state.inputValue}
+                                                        onChange={e => this.updateInputValue(e)}
+                                                        pattern="^[a-zA-Z0-9]+$"
+                                                        ref={input => input && input.focus()}
+                                                        onKeyPress={(e) => this.handleKeyPress(e)}
+                                                        onKeyDown={(e) => this.exitIfEscPressed(e)}
+                                                        onBlur={() => this.handleFocusOut()}
+                                                        type="text"
+                                                        className="form-control sidebar-lg sidebar-app-form rename-note"
+                                                        aria-label="Note"
+                                                        aria-describedby="sizing-addon2"
+                                                    />
+                                                </div>
+                                            </React.Fragment>
                                         );
                                     })}
                                 </ul>

@@ -814,3 +814,13 @@ a.notes-list-open-note:hover {
     display: none;
   }
 }
+
+div.rename-note {
+  display: none;
+  height: 48px !important;
+  padding: .75rem 0.2rem !important;
+}
+
+input.rename-note {
+  width: 100% !important;
+}
