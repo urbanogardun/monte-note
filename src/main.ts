@@ -41,7 +41,8 @@ import {
   OPEN_ATTACHMENT,
   TRASHCAN,
   OPEN_HTTP_LINK,
-  EDIT_NOTE_CONTEXT_MENU
+  EDIT_NOTE_CONTEXT_MENU,
+  RENAME_NOTE
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -306,6 +307,14 @@ ipcMain.on(ADD_NOTE, (event: any, args: any) => {
     });
   });
 
+});
+
+ipcMain.on(RENAME_NOTE, (event: any, data: any) => {
+  // TODO:
+  // Get notebook name, old note name & new note name
+  // Rename note
+  // After renaming note, relink assets for that note
+  // Update db entry that has old note name with new note name
 });
 
 ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
