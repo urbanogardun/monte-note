@@ -176,8 +176,8 @@ export class MainSection extends React.Component<Props, {}> {
                                             />
                                             <div className="link-to-note">
                                                 <GoToNote
-                                                    notebookName={this.props.previewContent.notebook}
-                                                    noteName={this.props.previewContent.note}
+                                                    notebookName={result.notebookName}
+                                                    noteName={result.noteName}
                                                     goToRoute={this.props.goToRoute}
                                                     lastOpenedNote={this.props.lastOpenedNote}
                                                     forNotesList={true}
