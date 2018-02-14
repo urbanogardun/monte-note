@@ -46,7 +46,7 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 electron_1.app.on('ready', createWindow);
-electron_1.ipcMain.on('EDIT_NOTE_CONTEXT_MENU', (event, args) => {
+electron_1.ipcMain.on(index_1.EDIT_NOTE_CONTEXT_MENU, (event, args) => {
     let contextMenu = new electron_1.Menu();
     contextMenu.append(new electron_1.MenuItem({
         label: 'Undo',
@@ -79,9 +79,6 @@ electron_1.ipcMain.on('EDIT_NOTE_CONTEXT_MENU', (event, args) => {
         accelerator: 'CmdOrCtrl+A',
         role: 'selectall'
     }));
-    // mainWindow.webContents.on('context-menu', function() {
-    //   contextMenu.popup(mainWindow);
-    // });
     contextMenu.popup(mainWindow);
 });
 // Quit when all windows are closed.

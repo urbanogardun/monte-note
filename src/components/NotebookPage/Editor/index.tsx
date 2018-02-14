@@ -7,7 +7,8 @@ import {
     GET_NOTE_CONTENT, 
     DELETE_NOTE, 
     UPLOAD_IMAGE,
-    UPLOAD_ATTACHMENT } from '../../../constants/index';
+    UPLOAD_ATTACHMENT, 
+    EDIT_NOTE_CONTEXT_MENU} from '../../../constants/index';
 import './index.css';
 import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
@@ -213,7 +214,7 @@ export class Editor extends React.Component<Props, State> {
 
         $('#quill-container').on('contextmenu', function() {
             console.log('CONTEXT MENU');
-            ElectronMessager.sendMessageWithIpcRenderer('EDIT_NOTE_CONTEXT_MENU');
+            ElectronMessager.sendMessageWithIpcRenderer(EDIT_NOTE_CONTEXT_MENU);
         });
 
     }

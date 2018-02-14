@@ -40,7 +40,8 @@ import {
   DELETE_ATTACHMENT,
   OPEN_ATTACHMENT,
   TRASHCAN,
-  OPEN_HTTP_LINK
+  OPEN_HTTP_LINK,
+  EDIT_NOTE_CONTEXT_MENU
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -91,7 +92,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
-ipcMain.on('EDIT_NOTE_CONTEXT_MENU', (event: any, args: any) => {
+ipcMain.on(EDIT_NOTE_CONTEXT_MENU, (event: any, args: any) => {
   let contextMenu = new Menu();
   contextMenu.append(new MenuItem({
     label: 'Undo',
