@@ -210,12 +210,48 @@ export class Sidebar extends React.Component<Props, State> {
     }
 
     componentWillReceiveProps(nextProps: Props) {
-        if (nextProps.noteToRename !== '') {
+        if (nextProps.noteToRename.notebook !== '') {
             if (nextProps.noteToRename !== this.props.noteToRename) {
-                console.log('Rename note: ' + nextProps.noteToRename.note);
+                if (this.props.noteToRename.notebook !== '') {
+                    $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).show();
+                    $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();
+                }
                 $(`p[data-entryname="${nextProps.noteToRename.notebook}-${nextProps.noteToRename.note}"]`).hide();
-                $(`div[data-entryname="${nextProps.noteToRename.notebook}-${nextProps.noteToRename.note}"]`).show();
+                
+                console.log('Rename note: ' + nextProps.noteToRename.note);
+                
+                this.setState({inputValue: ''}, () => {
+                    let inputDiv = $(`div[data-entryname="${nextProps.noteToRename.notebook}-${nextProps.noteToRename.note}"]`);
+                    $(inputDiv).find('input').val('');
+                    inputDiv.show();
+                    $(inputDiv).find('input').focus();
+                });
+                
             }
+        }
+    }
+
+    renameNote(e: any) {
+        let inputDiv = $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`);
+        let newNoteName = inputDiv.find('input').val() as string;
+        if (newNoteName.length > 0) {
+            $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).show();
+            inputDiv.hide();
+            // TODO: Send to ipc main process name of notebook, previous note name & new note name
+        }
+    }
+
+    renameNoteOrExit(e: React.KeyboardEvent<HTMLInputElement>) {
+        if (e.key === 'Enter') {
+            $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();
+            $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).show();
+            // TODO: Send to ipc main process name of notebook, previous note name & new note name
+            console.log('Rename note after Enter is pressed: ' + this.state.inputValue);
+        } else if (e.key === 'Escape') {
+            this.setState({inputValue: ''}, () => {
+                $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();
+                $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).show();
+            });
         }
     }
 
@@ -374,9 +410,8 @@ export class Sidebar extends React.Component<Props, State> {
                                                         onChange={e => this.updateInputValue(e)}
                                                         pattern="^[a-zA-Z0-9]+$"
                                                         ref={input => input && input.focus()}
-                                                        onKeyPress={(e) => this.handleKeyPress(e)}
-                                                        onKeyDown={(e) => this.exitIfEscPressed(e)}
-                                                        onBlur={() => this.handleFocusOut()}
+                                                        onBlur={(e) => this.renameNote(e)}
+                                                        onKeyDown={(e) => this.renameNoteOrExit(e)}
                                                         type="text"
                                                         className="form-control sidebar-lg sidebar-app-form rename-note"
                                                         aria-label="Note"
