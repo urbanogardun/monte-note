@@ -132,13 +132,6 @@ ipcMain.on(EDIT_NOTE_CONTENT_CONTEXT_MENU, (event: any, args: any) => {
 });
 
 ipcMain.on(EDIT_NOTE_ITEM_CONTEXT_MENU, (event: any, data: any) => {
-  // let notebook = data.notebook;
-  // let note = data.note;
-  // TODO:
-  // Get notebook name, old note name & new note name
-  // Rename note
-  // After renaming note, relink assets for that note
-  // Update db entry that has old note name with new note name
   let contextMenu = new Menu();
   contextMenu.append(new MenuItem({
     label: 'Rename',
@@ -154,6 +147,20 @@ ipcMain.on(EDIT_NOTE_ITEM_CONTEXT_MENU, (event: any, data: any) => {
 
   contextMenu.popup(mainWindow);
 
+});
+
+ipcMain.on(RENAME_NOTE, (event: any, data: any) => {
+  let notebook = data.notebook;
+  let oldNote = data.oldNote;
+  let newNote = data.newNote;
+  // TODO:
+  // Get notebook name, old note name & new note name
+  // Rename note
+  // After renaming note, relink assets for that note
+  // Update db entry that has old note name with new note name
+  console.log('nbook: ' + notebook);
+  console.log('old note name: ' + oldNote);
+  console.log('new note name: ' + newNote);
 });
 
 // Quit when all windows are closed.

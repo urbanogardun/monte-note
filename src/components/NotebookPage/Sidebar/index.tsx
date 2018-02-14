@@ -6,7 +6,8 @@ import {
     UPDATE_NOTE_STATE, 
     GET_NOTES, 
     UPDATE_NOTE,
-    EDIT_NOTE_ITEM_CONTEXT_MENU 
+    EDIT_NOTE_ITEM_CONTEXT_MENU, 
+    RENAME_NOTE
 } from '../../../constants/index';
 import { Link } from 'react-router-dom';
 import * as $ from 'jquery';
@@ -231,22 +232,23 @@ export class Sidebar extends React.Component<Props, State> {
         }
     }
 
-    renameNote(e: any) {
-        let inputDiv = $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`);
-        let newNoteName = inputDiv.find('input').val() as string;
-        if (newNoteName.length > 0) {
+    focusOutFromRenameNoteInput(e: any) {
+        this.setState({inputValue: ''}, () => {
             $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).show();
-            inputDiv.hide();
-            // TODO: Send to ipc main process name of notebook, previous note name & new note name
-        }
+            $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();
+        });
     }
 
     renameNoteOrExit(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'Enter') {
             $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();
             $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).show();
-            // TODO: Send to ipc main process name of notebook, previous note name & new note name
-            console.log('Rename note after Enter is pressed: ' + this.state.inputValue);
+            let data = {
+                notebook: this.props.noteToRename.notebook,
+                oldNote: this.props.noteToRename.note,
+                newNote: this.state.inputValue
+            };
+            ElectronMessager.sendMessageWithIpcRenderer(RENAME_NOTE, data);
         } else if (e.key === 'Escape') {
             this.setState({inputValue: ''}, () => {
                 $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();
@@ -410,7 +412,7 @@ export class Sidebar extends React.Component<Props, State> {
                                                         onChange={e => this.updateInputValue(e)}
                                                         pattern="^[a-zA-Z0-9]+$"
                                                         ref={input => input && input.focus()}
-                                                        onBlur={(e) => this.renameNote(e)}
+                                                        onBlur={(e) => this.focusOutFromRenameNoteInput(e)}
                                                         onKeyDown={(e) => this.renameNoteOrExit(e)}
                                                         type="text"
                                                         className="form-control sidebar-lg sidebar-app-form rename-note"
