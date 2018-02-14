@@ -342,6 +342,18 @@ test('removes tag inside tags file for a note', done => {
   });
 });
 
+test('renames a note', done => {
+  let notebookDir = 'C:\\test\\notebooks\\Notebook-1\\';
+  let oldNoteName = 'Chemistry Note';
+  let newNoteName = 'Chemistry Foundations';
+
+  NotebookManager.renameNote(notebookDir, oldNoteName, newNoteName)
+  .then((response: boolean) => {
+    done();
+    expect(response).toEqual(true);
+  });
+});
+
 afterEach(() => {
   notebookManager.deleteEverything();
 });

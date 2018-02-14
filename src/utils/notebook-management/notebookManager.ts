@@ -79,6 +79,20 @@ export class NotebookManager {
         });
     }
 
+    static renameNote(notebookLocation: string, oldNoteName: string, newNoteName: string) {
+        return new Promise(resolve => {
+            let oldPath = path.join(notebookLocation, oldNoteName);
+            let newPath = path.join(notebookLocation, newNoteName);
+            fs.move(oldPath, newPath)
+            .then(() => {
+                resolve(true);
+            })
+            .catch((err: Error) => {
+                resolve(false);
+            });
+        });
+    }
+
     // Creates file inside which note content will get saved
     static createNoteFile(location: string, name: string) {
         return new Promise((resolve) => {
