@@ -46,6 +46,44 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 electron_1.app.on('ready', createWindow);
+electron_1.ipcMain.on('EDIT_NOTE_CONTEXT_MENU', (event, args) => {
+    let contextMenu = new electron_1.Menu();
+    contextMenu.append(new electron_1.MenuItem({
+        label: 'Undo',
+        accelerator: 'CmdOrCtrl+Z',
+        role: 'undo'
+    }));
+    contextMenu.append(new electron_1.MenuItem({
+        label: 'Redo',
+        accelerator: 'CmdOrCtrl+Y',
+        role: 'redo'
+    }));
+    contextMenu.append(new electron_1.MenuItem({ type: 'separator' }));
+    contextMenu.append(new electron_1.MenuItem({
+        label: 'Cut',
+        accelerator: 'CmdOrCtrl+X',
+        role: 'cut'
+    }));
+    contextMenu.append(new electron_1.MenuItem({
+        label: 'Copy',
+        accelerator: 'CmdOrCtrl+C',
+        role: 'copy'
+    }));
+    contextMenu.append(new electron_1.MenuItem({
+        label: 'Paste',
+        accelerator: 'CmdOrCtrl+V',
+        role: 'paste'
+    }));
+    contextMenu.append(new electron_1.MenuItem({
+        label: 'Select All',
+        accelerator: 'CmdOrCtrl+A',
+        role: 'selectall'
+    }));
+    // mainWindow.webContents.on('context-menu', function() {
+    //   contextMenu.popup(mainWindow);
+    // });
+    contextMenu.popup(mainWindow);
+});
 // Quit when all windows are closed.
 electron_1.app.on('window-all-closed', () => {
     // On OS X it is common for applications and their menu bar

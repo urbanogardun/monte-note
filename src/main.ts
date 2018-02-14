@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, dialog, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, dialog, shell, Menu, MenuItem } from 'electron';
 require('dotenv').load();
 var isDev = require('electron-is-dev');
 import NotebookManager from './utils/notebook-management/notebookManager';
@@ -84,13 +84,49 @@ function createWindow() {
     // when you should delete the corresponding element.
     // mainWindow = null;
   });
-
 }
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
+
+ipcMain.on('EDIT_NOTE_CONTEXT_MENU', (event: any, args: any) => {
+  let contextMenu = new Menu();
+  contextMenu.append(new MenuItem({
+    label: 'Undo',
+    accelerator: 'CmdOrCtrl+Z',
+    role: 'undo'
+  }));
+  contextMenu.append(new MenuItem({
+    label: 'Redo',
+    accelerator: 'CmdOrCtrl+Y',
+    role: 'redo'
+  }));
+  contextMenu.append(new MenuItem({type: 'separator'}))
+  contextMenu.append(new MenuItem({
+    label: 'Cut',
+    accelerator: 'CmdOrCtrl+X',
+    role: 'cut'
+  }));
+  contextMenu.append(new MenuItem({
+    label: 'Copy',
+    accelerator: 'CmdOrCtrl+C',
+    role: 'copy'
+  }));
+  contextMenu.append(new MenuItem({
+    label: 'Paste',
+    accelerator: 'CmdOrCtrl+V',
+    role: 'paste'
+  }));
+  contextMenu.append(new MenuItem({
+    label: 'Select All',
+    accelerator: 'CmdOrCtrl+A',
+    role: 'selectall'
+  }));
+
+  contextMenu.popup(mainWindow);
+});
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {

@@ -211,6 +211,11 @@ export class Editor extends React.Component<Props, State> {
 
         });
 
+        $('#quill-container').on('contextmenu', function() {
+            console.log('CONTEXT MENU');
+            ElectronMessager.sendMessageWithIpcRenderer('EDIT_NOTE_CONTEXT_MENU');
+        });
+
     }
 
     deleteNote() {
