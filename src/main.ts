@@ -41,8 +41,8 @@ import {
   OPEN_ATTACHMENT,
   TRASHCAN,
   OPEN_HTTP_LINK,
-  EDIT_NOTE_CONTEXT_MENU,
-  RENAME_NOTE
+  EDIT_NOTE_CONTENT_CONTEXT_MENU,
+  EDIT_NOTE_ITEM_CONTEXT_MENU,
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -93,7 +93,7 @@ function createWindow() {
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
-ipcMain.on(EDIT_NOTE_CONTEXT_MENU, (event: any, args: any) => {
+ipcMain.on(EDIT_NOTE_CONTENT_CONTEXT_MENU, (event: any, args: any) => {
   let contextMenu = new Menu();
   contextMenu.append(new MenuItem({
     label: 'Undo',
@@ -128,6 +128,29 @@ ipcMain.on(EDIT_NOTE_CONTEXT_MENU, (event: any, args: any) => {
   }));
 
   contextMenu.popup(mainWindow);
+});
+
+ipcMain.on(EDIT_NOTE_ITEM_CONTEXT_MENU, (event: any, data: any) => {
+  // TODO:
+  // Get notebook name, old note name & new note name
+  // Rename note
+  // After renaming note, relink assets for that note
+  // Update db entry that has old note name with new note name
+  let contextMenu = new Menu();
+  contextMenu.append(new MenuItem({
+    label: 'Rename',
+    accelerator: 'F2',
+    click: function() {
+      console.log('RENAME THIS NOTE');
+      // Send to renderer process event telling it to open input field
+      // Update app state with new props
+      // When sidebar component is about to get updated, check if
+      // a note rename input should be displayed - display if true
+    }
+  }));
+
+  contextMenu.popup(mainWindow);
+
 });
 
 // Quit when all windows are closed.
@@ -307,14 +330,6 @@ ipcMain.on(ADD_NOTE, (event: any, args: any) => {
     });
   });
 
-});
-
-ipcMain.on(RENAME_NOTE, (event: any, data: any) => {
-  // TODO:
-  // Get notebook name, old note name & new note name
-  // Rename note
-  // After renaming note, relink assets for that note
-  // Update db entry that has old note name with new note name
 });
 
 ipcMain.on(GET_NOTES, (event: any, notebook: string) => {

@@ -46,7 +46,7 @@ function createWindow() {
 // initialization and is ready to create browser windows.
 // Some APIs can only be used after this event occurs.
 electron_1.app.on('ready', createWindow);
-electron_1.ipcMain.on(index_1.EDIT_NOTE_CONTEXT_MENU, (event, args) => {
+electron_1.ipcMain.on(index_1.EDIT_NOTE_CONTENT_CONTEXT_MENU, (event, args) => {
     let contextMenu = new electron_1.Menu();
     contextMenu.append(new electron_1.MenuItem({
         label: 'Undo',
@@ -78,6 +78,26 @@ electron_1.ipcMain.on(index_1.EDIT_NOTE_CONTEXT_MENU, (event, args) => {
         label: 'Select All',
         accelerator: 'CmdOrCtrl+A',
         role: 'selectall'
+    }));
+    contextMenu.popup(mainWindow);
+});
+electron_1.ipcMain.on(index_1.EDIT_NOTE_ITEM_CONTEXT_MENU, (event, data) => {
+    // TODO:
+    // Get notebook name, old note name & new note name
+    // Rename note
+    // After renaming note, relink assets for that note
+    // Update db entry that has old note name with new note name
+    let contextMenu = new electron_1.Menu();
+    contextMenu.append(new electron_1.MenuItem({
+        label: 'Rename',
+        accelerator: 'F2',
+        click: function () {
+            console.log('RENAME THIS NOTE');
+            // Send to renderer process event telling it to open input field
+            // Update app state with new props
+            // When sidebar component is about to get updated, check if
+            // a note rename input should be displayed - display if true
+        }
     }));
     contextMenu.popup(mainWindow);
 });

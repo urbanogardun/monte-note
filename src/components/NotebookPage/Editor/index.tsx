@@ -8,7 +8,7 @@ import {
     DELETE_NOTE, 
     UPLOAD_IMAGE,
     UPLOAD_ATTACHMENT, 
-    EDIT_NOTE_CONTEXT_MENU} from '../../../constants/index';
+    EDIT_NOTE_CONTENT_CONTEXT_MENU} from '../../../constants/index';
 import './index.css';
 import Quill, { DeltaStatic } from 'quill';
 import '../../../assets/css/quill.snow.css';
@@ -211,12 +211,6 @@ export class Editor extends React.Component<Props, State> {
             });
 
         });
-
-        $('#quill-container').on('contextmenu', function() {
-            console.log('CONTEXT MENU');
-            ElectronMessager.sendMessageWithIpcRenderer(EDIT_NOTE_CONTEXT_MENU);
-        });
-
     }
 
     deleteNote() {
@@ -370,6 +364,10 @@ export class Editor extends React.Component<Props, State> {
         }
     }
 
+    contextMenuForEditor() {
+        ElectronMessager.sendMessageWithIpcRenderer(EDIT_NOTE_CONTENT_CONTEXT_MENU);
+    }
+
     render() {
         return (
             <div className="col-sm trashcan main-content notebook-note-editor notebook-page-editor">
@@ -491,7 +489,7 @@ export class Editor extends React.Component<Props, State> {
                         />
                     </span>
                 </div>
-                <div id="quill-container" />
+                <div id="quill-container" onContextMenu={() => this.contextMenuForEditor()} />
             </div>
         );
     }

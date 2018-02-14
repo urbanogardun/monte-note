@@ -1,7 +1,13 @@
 import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
 // import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE, DELETE_NOTE } from '../../../constants/index';
-import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE } from '../../../constants/index';
+import { 
+    ADD_NOTE, 
+    UPDATE_NOTE_STATE, 
+    GET_NOTES, 
+    UPDATE_NOTE,
+    EDIT_NOTE_ITEM_CONTEXT_MENU 
+} from '../../../constants/index';
 import { Link } from 'react-router-dom';
 import * as $ from 'jquery';
 var striptags = require('../../../utils/striptags');
@@ -135,6 +141,10 @@ export class Sidebar extends React.Component<Props, State> {
             this.resetComponentState();
             $('li.open-input').show();
         }
+    }
+
+    openNoteMenu(note: string) {
+        ElectronMessager.sendMessageWithIpcRenderer(EDIT_NOTE_ITEM_CONTEXT_MENU, note);
     }
 
     componentWillUnmount() {
@@ -322,6 +332,7 @@ export class Sidebar extends React.Component<Props, State> {
                                                 {...(name === this.props.lastOpenedNote ? '' : '') }
                                                 className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md ${activeNote}`}
                                                 onClick={() => this.updateLastOpenedNote(name)}
+                                                onContextMenu={() => this.openNoteMenu(name)}
                                             >
                                                 {name}
                                             </p>
@@ -373,6 +384,7 @@ export class Sidebar extends React.Component<Props, State> {
                                     {...(name === this.props.lastOpenedNote ? '' : '')}
                                     className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md ${activeNote}`}
                                     onClick={() => this.updateLastOpenedNote(name)}
+                                    onContextMenu={() => this.openNoteMenu(name)}
                                 >
                                     {name}
                                 </p>
@@ -491,6 +503,7 @@ export class Sidebar extends React.Component<Props, State> {
                                                         {...(name === this.props.lastOpenedNote ? '' : '') }
                                                         className={`hamburger-menu-tag-element dropdown-item`}
                                                         onClick={() => this.updateLastOpenedNote(name)}
+                                                        onContextMenu={() => this.openNoteMenu(name)}
                                                     >
                                                         <span className={activeNote}>
                                                             {name}
