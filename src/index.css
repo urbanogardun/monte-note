@@ -376,6 +376,10 @@ li.sidebar-collapsed-item-text {
   word-wrap: break-word;
 }
 
+div.sidebar-collapse-content {
+  word-wrap: break-word;
+}
+
 div.sidebar-item-text-container:hover,
 li.sidebar-collapsed-item-text:hover {
   background-color: #1E2230;

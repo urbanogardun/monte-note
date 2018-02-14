@@ -144,7 +144,11 @@ export class Sidebar extends React.Component<Props, State> {
     }
 
     openNoteMenu(note: string) {
-        ElectronMessager.sendMessageWithIpcRenderer(EDIT_NOTE_ITEM_CONTEXT_MENU, note);
+        let noteData = {
+            notebook: this.props.notebookName,
+            note: note
+        };
+        ElectronMessager.sendMessageWithIpcRenderer(EDIT_NOTE_ITEM_CONTEXT_MENU, noteData);
     }
 
     componentWillUnmount() {

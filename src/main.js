@@ -90,9 +90,9 @@ electron_1.ipcMain.on(index_1.EDIT_NOTE_ITEM_CONTEXT_MENU, (event, data) => {
     let contextMenu = new electron_1.Menu();
     contextMenu.append(new electron_1.MenuItem({
         label: 'Rename',
-        accelerator: 'F2',
         click: function () {
             console.log('RENAME THIS NOTE');
+            event.sender.send(index_1.RENAME_NOTE, data);
             // Send to renderer process event telling it to open input field
             // Update app state with new props
             // When sidebar component is about to get updated, check if

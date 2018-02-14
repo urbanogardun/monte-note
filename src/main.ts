@@ -43,6 +43,7 @@ import {
   OPEN_HTTP_LINK,
   EDIT_NOTE_CONTENT_CONTEXT_MENU,
   EDIT_NOTE_ITEM_CONTEXT_MENU,
+  RENAME_NOTE,
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 var path = require('path');
@@ -131,6 +132,8 @@ ipcMain.on(EDIT_NOTE_CONTENT_CONTEXT_MENU, (event: any, args: any) => {
 });
 
 ipcMain.on(EDIT_NOTE_ITEM_CONTEXT_MENU, (event: any, data: any) => {
+  // let notebook = data.notebook;
+  // let note = data.note;
   // TODO:
   // Get notebook name, old note name & new note name
   // Rename note
@@ -139,9 +142,9 @@ ipcMain.on(EDIT_NOTE_ITEM_CONTEXT_MENU, (event: any, data: any) => {
   let contextMenu = new Menu();
   contextMenu.append(new MenuItem({
     label: 'Rename',
-    accelerator: 'F2',
     click: function() {
       console.log('RENAME THIS NOTE');
+      event.sender.send(RENAME_NOTE, data);
       // Send to renderer process event telling it to open input field
       // Update app state with new props
       // When sidebar component is about to get updated, check if

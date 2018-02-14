@@ -24,7 +24,8 @@ import {
     GET_ALL_TAGS,
     APPEND_SEARCH_RESULTS,
     IMAGE_UPLOADED,
-    ATTACHMENT_UPLOADED
+    ATTACHMENT_UPLOADED,
+    RENAME_NOTE
 } from '../../constants/index';
 import ElectronMessager from '../electron-messaging/electronMessager';
     
@@ -83,6 +84,11 @@ export function ipcRendererEventsBootstrap() {
 
         ipcRenderer.on(ADD_NOTE, (event: Event, arg: any): void => {
             reduxStore.dispatch(actions.addNote(arg));
+        });
+
+        ipcRenderer.on(RENAME_NOTE, (event: Event, data: any): void => {
+            console.log('about to rename a note');
+            console.log(data);
         });
 
         ipcRenderer.on(GET_NOTES, (event: Event, notes: string[]): void => {
