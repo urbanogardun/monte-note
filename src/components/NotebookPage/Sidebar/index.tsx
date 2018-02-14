@@ -21,6 +21,7 @@ export interface Props {
     updateNotes: Function;
     updateLastOpenedNote: Function;
     updateNoteContent: Function;
+    noteToRename: any;
 }
 
 export interface State {
@@ -206,6 +207,14 @@ export class Sidebar extends React.Component<Props, State> {
                 ($('#collapseTagsBigSidebar') as any).collapse('toggle');
             }
         });
+    }
+
+    componentWillReceiveProps(nextProps: Props) {
+        if (nextProps.noteToRename !== '') {
+            if (nextProps.noteToRename !== this.props.noteToRename) {
+                console.log('Rename note: ' + nextProps.noteToRename.note);
+            }
+        }
     }
 
     render() {

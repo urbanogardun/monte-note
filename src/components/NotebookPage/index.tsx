@@ -18,6 +18,7 @@ export interface Props {
     pathToNewestUploadedImage: string;
     pathToNewestUploadedAsset: any;
     updatePreviewContent: Function;
+    noteToRename: any;
 }
 
 export interface State {
@@ -45,6 +46,7 @@ export class Notebook extends React.Component<Props, State> {
                         updateNotes={this.props.updateNotes}
                         updateLastOpenedNote={this.props.updateLastOpenedNote}
                         updateNoteContent={this.props.updateNoteContent}
+                        noteToRename={this.props.noteToRename}
                     />
                     <Editor 
                         notebookName={this.state.notebookName}

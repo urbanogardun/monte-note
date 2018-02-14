@@ -11,6 +11,7 @@ const sidebar = enzyme.shallow(
     updateNotes={() => { return; }}
     updateLastOpenedNote={() => { return; }}
     updateNoteContent={() => { return; }} 
+    noteToRename={{notebook: 'test', note: 'test-note'}}
 />
 );
 const instance = sidebar.instance() as Sidebar; // explicitly declare type
