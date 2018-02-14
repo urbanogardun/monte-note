@@ -13,7 +13,8 @@ import { EnthusiasmAction,
   UpdateSearchQuery,
   UpdateSelectedNotebook,
   UpdatePreview,
-  UploadedAction } from '../actions';
+  UploadedAction, 
+  RenameNote} from '../actions';
 import { StoreState, SearchData } from '../types/index';
 import { 
   INCREMENT_ENTHUSIASM, 
@@ -41,7 +42,8 @@ import {
   UPDATE_PREVIEW,
   PATH_TO_NEW_IMAGE, 
   PATH_TO_NEW_ATTACHMENT,
-  UPDATE_ALL_TAGS }  from '../constants/index';
+  UPDATE_ALL_TAGS,
+  RENAME_NOTE }  from '../constants/index';
 import { combineReducers, Reducer  } from 'redux';
 
 export function enthusiasmLevel(state: StoreState, action: EnthusiasmAction): StoreState {
@@ -255,6 +257,15 @@ export function pathToNewestUploadedAsset(state: StoreState, action: UploadedAct
   }
 }
 
+export function noteToRename(state: StoreState, action: RenameNote) {
+  switch (action.type) {
+    case RENAME_NOTE:
+      return action;
+    default:
+      return state || {notebook: '', note: ''} as StoreState;
+  }
+}
+
 const rootReducers: Reducer<StoreState> = combineReducers(
   { 
     enthusiasmLevel, 
@@ -275,7 +286,8 @@ const rootReducers: Reducer<StoreState> = combineReducers(
     selectedNotebook,
     previewData,
     pathToNewestUploadedImage,
-    pathToNewestUploadedAsset
+    pathToNewestUploadedAsset,
+    noteToRename
   }
 );
 

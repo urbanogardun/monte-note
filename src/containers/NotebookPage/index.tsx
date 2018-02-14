@@ -14,14 +14,16 @@ export function mapStateToProps(
         noteContent, 
         currentNoteTags, 
         pathToNewestUploadedImage, 
-        pathToNewestUploadedAsset }: StoreState) {
+        pathToNewestUploadedAsset,
+        noteToRename }: StoreState) {
     return {
         notes,
         lastOpenedNote,
         noteContent,
         currentNoteTags,
         pathToNewestUploadedImage,
-        pathToNewestUploadedAsset
+        pathToNewestUploadedAsset,
+        noteToRename
     };
 }
 

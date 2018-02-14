@@ -137,6 +137,12 @@ export interface UploadedMediaAttachment {
     filename: string;
 }
 
+export interface RenameNote {
+    type: constants.RENAME_NOTE;
+    notebook: string;
+    note: string;
+}
+
 export type TagsAction = LoadAllTags | UpdateAllTags;
 
 export type EnthusiasmAction = IncrementEnthusiasm | DecrementEnthusiasm;
@@ -341,5 +347,13 @@ export function pathToNewUploadedAttachment(path: string, filename: string): Upl
         type: constants.PATH_TO_NEW_ATTACHMENT,
         path,
         filename
+    };
+}
+
+export function renameNote(notebook: string, note: string): RenameNote {
+    return {
+        type: constants.RENAME_NOTE,
+        notebook,
+        note
     };
 }

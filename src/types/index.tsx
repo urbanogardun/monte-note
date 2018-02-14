@@ -9,6 +9,11 @@ export interface PreviewData {
     note: string;
 }
 
+export interface RenameNote {
+    notebook: string;
+    note: string;
+}
+
 export interface StoreState {
     enthusiasmLevel?: number;
     notebooksLocation?: string;
@@ -30,4 +35,5 @@ export interface StoreState {
     previewData?: PreviewData;
     pathToNewestUploadedImage?: string;
     pathToNewestUploadedAsset?: any;
+    noteToRename?: RenameNote;
 }
