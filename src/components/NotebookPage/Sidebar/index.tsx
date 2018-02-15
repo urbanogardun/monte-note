@@ -152,6 +152,7 @@ export class Sidebar extends React.Component<Props, State> {
         // Updates note data only if the note we right clicked on is one that is
         // currently open and the data of that note got changed
         if ((this.props.lastOpenedNote === note) && (noteContentToUpdate !== this.props.noteContent)) {
+            this.props.updateNoteContent(noteContentToUpdate);
             let noteDataToSave = {
                 noteName: note,
                 notebookName: this.props.notebookName,
