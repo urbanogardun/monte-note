@@ -16,6 +16,10 @@ div.notebooks-search-filter-list::-webkit-scrollbar {
   width: 5px;
 }
 
+div.sidebar-extension-sm::-webkit-scrollbar {
+  width: 0px;
+}
+
 ::-webkit-scrollbar-thumb
 {
   background-color: transparent;
