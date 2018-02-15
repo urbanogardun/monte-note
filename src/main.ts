@@ -154,7 +154,7 @@ ipcMain.on(RENAME_NOTE, (event: any, data: any) => {
   let oldNote = data.oldNote;
   let newNote = data.newNote;
   // TODO:
-  // Get notebook name, old note name & new note name
+  // Get notebook name, old note name & new note name - DONE
   // Rename note
   // After renaming note, relink assets for that note
   // Update db entry that has old note name with new note name

@@ -450,11 +450,11 @@ export class Editor extends React.Component<Props, State> {
                                 id="ql-image-attachment"
                                 type="file"
                                 accept="image/*" 
+                                onClick={
+                                    () => this.currentCursorPosition = this.quill.getSelection(true).index
+                                }
                                 onChange={
                                     () => {
-                                        if (this.quill.getSelection()) {
-                                            this.currentCursorPosition = this.quill.getSelection().index;
-                                        }
                                         this.handleImageUpload();
                                     }
                                 }
@@ -467,11 +467,11 @@ export class Editor extends React.Component<Props, State> {
                             value=""
                             id="ql-attachment"
                             type="file"
+                            onClick={
+                                () => this.currentCursorPosition = this.quill.getSelection(true).index
+                            }
                             onChange={
                                 () => {
-                                    if (this.quill.getSelection()) {
-                                        this.currentCursorPosition = this.quill.getSelection().index;
-                                    }
                                     this.handleAttachmentUpload();
                                 }
                             }
