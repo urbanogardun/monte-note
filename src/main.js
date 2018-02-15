@@ -101,13 +101,32 @@ electron_1.ipcMain.on(index_1.RENAME_NOTE, (event, data) => {
     let oldNote = data.oldNote;
     let newNote = data.newNote;
     // TODO:
-    // Get notebook name, old note name & new note name
+    // Get notebook name, old note name & new note name - DONE
     // Rename note
     // After renaming note, relink assets for that note
     // Update db entry that has old note name with new note name
     console.log('nbook: ' + notebook);
     console.log('old note name: ' + oldNote);
     console.log('new note name: ' + newNote);
+    dbMessager.getFromSettings('notebooksLocation')
+        .then((location) => {
+        let pathToNotebook = path.join(location, notebook);
+        notebookManager_1.default.renameNote(pathToNotebook, oldNote, newNote)
+            .then((result) => {
+            if (result) {
+                // Relink Assets for that Note
+                let newNotePath = path.join(location, notebook, newNote, 'index.html');
+                let updatedNoteData = notebookManager_1.default.changeAssetLinks(location, notebook, newNotePath);
+                if (updatedNoteData) {
+                    notebookManager_1.default.updateNoteData(newNotePath, updatedNoteData)
+                        .then(() => {
+                        // Update DB entry with new note name
+                        dbMessager.changeNoteName(notebook, oldNote, newNote);
+                    });
+                }
+            }
+        });
+    });
 });
 // Quit when all windows are closed.
 electron_1.app.on('window-all-closed', () => {

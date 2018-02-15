@@ -280,6 +280,22 @@ export class DbMessager {
         });
     }
 
+    changeNoteName(notebook: string, oldNoteName: string, newNoteName: string): any {
+        return new Promise((resolve) => {
+            let docToFind = {
+                notebookName: notebook,
+                noteName: oldNoteName,
+                documentFor: 'NOTE_DATA'
+            };
+            this.db.update(docToFind, { $set: { noteName: newNoteName } }, {}, (err: Error) => {
+                if (err) {
+                    resolve(false);
+                }
+                resolve(true);
+            });
+        });
+    }
+
     removeNote(notebook: string, note: string): any {
         return new Promise((resolve) => {
             let docToRemove = {

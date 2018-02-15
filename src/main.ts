@@ -153,14 +153,28 @@ ipcMain.on(RENAME_NOTE, (event: any, data: any) => {
   let notebook = data.notebook;
   let oldNote = data.oldNote;
   let newNote = data.newNote;
-  // TODO:
-  // Get notebook name, old note name & new note name - DONE
-  // Rename note
-  // After renaming note, relink assets for that note
-  // Update db entry that has old note name with new note name
-  console.log('nbook: ' + notebook);
-  console.log('old note name: ' + oldNote);
-  console.log('new note name: ' + newNote);
+
+  dbMessager.getFromSettings('notebooksLocation')
+  .then((location: any) => {
+    let pathToNotebook = path.join(location, notebook);
+    NotebookManager.renameNote(pathToNotebook, oldNote, newNote)
+    .then((result: boolean) => {
+      if (result) {
+        // Relink Assets for that Note
+        let newNotePath = path.join(location, notebook, newNote, 'index.html');
+        let updatedNoteData = NotebookManager.changeAssetLinks(location, notebook, newNotePath);
+
+        if (updatedNoteData) {
+          NotebookManager.updateNoteData(newNotePath, updatedNoteData)
+          .then(() => {
+            // Update DB entry with new note name
+            dbMessager.changeNoteName(notebook, oldNote, newNote);
+          });
+
+        }
+      }
+    });
+  });
 });
 
 // Quit when all windows are closed.

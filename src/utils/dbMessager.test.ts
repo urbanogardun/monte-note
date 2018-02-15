@@ -224,3 +224,15 @@ test('adds all existing notes to database', done => {
     });
 
 });
+
+test('renames note', done => {
+    let notebookName = 'test-notebook';
+    let oldNoteName = 'test-note';
+    let newNoteName = 'new-note';
+
+    dbMessager.changeNoteName(notebookName, oldNoteName, newNoteName)
+    .then((response: boolean) => {
+        done();
+        expect(response).toEqual(true);
+    });
+});

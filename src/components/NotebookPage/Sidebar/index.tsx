@@ -242,6 +242,7 @@ export class Sidebar extends React.Component<Props, State> {
     renameNoteOrExit(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'Enter') {
             $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();
+            $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).text(this.state.inputValue);
             $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).show();
             let data = {
                 notebook: this.props.noteToRename.notebook,
