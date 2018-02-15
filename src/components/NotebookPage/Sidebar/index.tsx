@@ -640,17 +640,42 @@ export class Sidebar extends React.Component<Props, State> {
                                                 let activeNote =
                                                     name === this.props.lastOpenedNote ? 'currently-opened-note-sidebar-sm' : '';
                                                 return (
-                                                    <p
-                                                        key={name}
-                                                        {...(name === this.props.lastOpenedNote ? '' : '') }
-                                                        className={`hamburger-menu-tag-element dropdown-item`}
-                                                        onClick={() => this.updateLastOpenedNote(name)}
-                                                        onContextMenu={() => this.openNoteMenu(name)}
-                                                    >
-                                                        <span className={activeNote}>
-                                                            {name}
-                                                        </span> 
-                                                    </p>
+                                                    <React.Fragment key={name}>
+                                                        <p
+                                                            {...(name === this.props.lastOpenedNote ? '' : '')}
+                                                            className={`hamburger-menu-tag-element dropdown-item`}
+                                                            onClick={() => this.updateLastOpenedNote(name)}
+                                                            onContextMenu={() => this.openNoteMenu(name)}
+                                                            data-entryname={`${this.props.notebookName}-${name}`}
+                                                        >
+                                                            <span className={activeNote}>
+                                                                {name}
+                                                            </span> 
+                                                        </p>
+                        
+                                                        <div 
+                                                            className={
+                                                            `sidebar-app-form 
+                                                            input-group 
+                                                            input-group-sm 
+                                                            rename-note`
+                                                            }
+                                                            data-entryname={`${this.props.notebookName}-${name}`}
+                                                        >
+                                                            <input
+                                                                value={this.state.inputValue}
+                                                                onChange={e => this.updateInputValue(e)}
+                                                                pattern="^[a-zA-Z0-9]+$"
+                                                                ref={input => input && input.focus()}
+                                                                onBlur={(e) => this.focusOutFromRenameNoteInput(e)}
+                                                                onKeyDown={(e) => this.renameNoteOrExit(e)}
+                                                                type="text"
+                                                                className="form-control new-notebook-hamburger rename-note"
+                                                                aria-label="Note"
+                                                                aria-describedby="sizing-addon2"
+                                                            />
+                                                        </div>
+                                                    </React.Fragment>
                                                 );
                                             })}
                                         </ul>

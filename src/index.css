@@ -805,6 +805,28 @@ a.notes-list-open-note:hover {
   color: #007bff !important;
 }
 
+div.rename-note {
+  display: none;
+  height: 48px !important;
+  padding: .75rem 0.2rem !important;
+}
+
+input.rename-note {
+  width: 100% !important;
+}
+
+@media (max-width: 700px) {
+  input.rename-note {
+    height: 24px !important;
+  }
+  div.rename-note {
+    display: none;
+    height: 32px !important;
+    padding: .25rem 1.5rem !important;
+    width: 100%;
+  }
+}
+
 @media (min-width: 965px) {
   div.preview-note {
     display: block;
@@ -815,12 +837,3 @@ a.notes-list-open-note:hover {
   }
 }
 
-div.rename-note {
-  display: none;
-  height: 48px !important;
-  padding: .75rem 0.2rem !important;
-}
-
-input.rename-note {
-  width: 100% !important;
-}
