@@ -286,7 +286,7 @@ electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
             .then((notes) => {
             notebookManager_1.default.getNotesCreationDate(notes)
                 .then((result) => {
-                notes = notebookManager_1.default.orderNotesBy(result, 'created_at');
+                // notes = NotebookManager.orderNotesBy(result, 'created_at');
                 notes = notebookManager_1.default.formatNotes(notes);
                 notes = notes.sort((a, b) => {
                     return a.toLowerCase().localeCompare(b.toLowerCase());
@@ -445,7 +445,7 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
                                         .then((notes) => {
                                         notebookManager_1.default.getNotesCreationDate(notes)
                                             .then((response) => {
-                                            notes = notebookManager_1.default.orderNotesBy(response, 'created_at');
+                                            // notes = NotebookManager.orderNotesBy(response, 'created_at');
                                             notes = notebookManager_1.default.formatNotes(notes);
                                             notes = notes.sort((a, b) => {
                                                 return a.toLowerCase().localeCompare(b.toLowerCase());

@@ -388,7 +388,7 @@ ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
     .then((notes: string[]) => {
       NotebookManager.getNotesCreationDate(notes)
       .then((result: any) => {
-        notes = NotebookManager.orderNotesBy(result, 'created_at');
+        // notes = NotebookManager.orderNotesBy(result, 'created_at');
         notes = NotebookManager.formatNotes(notes);
         notes = notes.sort((a: string, b: string) => {
           return a.toLowerCase().localeCompare(b.toLowerCase());
@@ -583,7 +583,7 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
                   .then((notes: string[]) => {
                     NotebookManager.getNotesCreationDate(notes)
                     .then((response: any) => {
-                      notes = NotebookManager.orderNotesBy(response, 'created_at');
+                      // notes = NotebookManager.orderNotesBy(response, 'created_at');
                       notes = NotebookManager.formatNotes(notes) as string[];
                       notes = notes.sort((a: string, b: string) => {
                         return a.toLowerCase().localeCompare(b.toLowerCase());

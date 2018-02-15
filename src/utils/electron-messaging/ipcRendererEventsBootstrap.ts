@@ -87,18 +87,7 @@ export function ipcRendererEventsBootstrap() {
         });
 
         ipcRenderer.on(RENAME_NOTE, (event: Event, data: any): void => {
-            // TODO:
-            // Dispatch action for renaming a note
-            // When component receives props for renaming a note
-            console.log('about to rename a note');
-            console.log(data);
             reduxStore.dispatch(actions.renameNote(data.notebook, data.note))
-
-            // Find that note field in a list and show the input field instead
-            // of the note name there
-            
-            // When user hits enter, send to ipc main process a RENAME_NOTE
-            // message with new note name and do the remaining logic there
         });
         
         ipcRenderer.on(GET_NOTES, (event: Event, notes: string[]): void => {
