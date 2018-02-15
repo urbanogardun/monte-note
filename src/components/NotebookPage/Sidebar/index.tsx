@@ -495,15 +495,41 @@ export class Sidebar extends React.Component<Props, State> {
                             let activeNote =
                                 name === this.props.lastOpenedNote ? 'currently-opened-note-sidebar-md' : '';
                             return (
+
+                                <React.Fragment key={name}>
                                 <p
-                                    key={name}
                                     {...(name === this.props.lastOpenedNote ? '' : '')}
                                     className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md ${activeNote}`}
                                     onClick={() => this.updateLastOpenedNote(name)}
                                     onContextMenu={() => this.openNoteMenu(name)}
+                                    data-entryname={`${this.props.notebookName}-${name}`}
                                 >
                                     {name}
                                 </p>
+
+                                <div 
+                                    className={
+                                    `sidebar-app-form 
+                                    input-group 
+                                    input-group-sm 
+                                    rename-note`
+                                    }
+                                    data-entryname={`${this.props.notebookName}-${name}`}
+                                >
+                                    <input
+                                        value={this.state.inputValue}
+                                        onChange={e => this.updateInputValue(e)}
+                                        pattern="^[a-zA-Z0-9]+$"
+                                        ref={input => input && input.focus()}
+                                        onBlur={(e) => this.focusOutFromRenameNoteInput(e)}
+                                        onKeyDown={(e) => this.renameNoteOrExit(e)}
+                                        type="text"
+                                        className="form-control sidebar-lg sidebar-app-form rename-note"
+                                        aria-label="Note"
+                                        aria-describedby="sizing-addon2"
+                                    />
+                                </div>
+                            </React.Fragment>
                             );
                         })}
                     </div>
