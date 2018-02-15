@@ -50,8 +50,7 @@ export class Sidebar extends React.Component<Props, State> {
         let showInput = this.state.showInput === 'visible' ? 'hidden' : 'visible';
         this.setState({showInput: showInput});
 
-        let editor = document.querySelector('.ql-editor') as Element;
-        let noteContentToUpdate = editor.innerHTML;
+        let noteContentToUpdate = $('.ql-editor').html();
 
         // Save note data only if there are notes in notebook
         if (this.props.notes.length) {
@@ -119,8 +118,7 @@ export class Sidebar extends React.Component<Props, State> {
     // Switches to selected note and loads its content. Saves content of
     // the note we are switching from as well (if needed).
     updateLastOpenedNote(name: string) {
-        let editor = document.querySelector('.ql-editor') as Element;
-        let noteContentToUpdate = editor.innerHTML;
+        let noteContentToUpdate = $('.ql-editor').html();
 
         let noteDataToSave = prepareNoteData(this.props, noteContentToUpdate);
 
@@ -146,8 +144,7 @@ export class Sidebar extends React.Component<Props, State> {
     }
 
     openNoteMenu(note: string) {
-        let editor = document.querySelector('.ql-editor') as Element;
-        let noteContentToUpdate = editor.innerHTML;
+        let noteContentToUpdate = $('.ql-editor').html();
 
         // Updates note data only if the note we right clicked on is one that is
         // currently open and the data of that note got changed
@@ -179,8 +176,7 @@ export class Sidebar extends React.Component<Props, State> {
             $('.ql-editor').find('img').removeAttr('style');
         }
 
-        let editor = $('.ql-editor')[0];
-        let noteContentToUpdate = editor.innerHTML;
+        let noteContentToUpdate = $('.ql-editor').html();
         let noteData = prepareNoteData(this.props, noteContentToUpdate);
         let noteDataToSave = {...noteData, updatePreviewContent: true};
 

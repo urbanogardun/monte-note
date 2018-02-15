@@ -599,7 +599,6 @@ export class NotebookManager {
             let notePath = path.join(notebooksLocation, notebook, note, 'index.html');
             let noteData = NotebookManager.changeAssetLinks(notebooksLocation, notebook, notePath);
             if (noteData) {
-                console.log('noteData: ' + noteData);
                 fs.writeFile(notePath, noteData, (err: Error) => {
                     if (err) {
                         throw `Could not relink image content: ${err}`;
@@ -645,7 +644,7 @@ export class NotebookManager {
 
         });
 
-        return $.html();
+        return $('body').html();
     }
 
     constructor() {

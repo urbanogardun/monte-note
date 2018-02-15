@@ -181,8 +181,7 @@ export class Editor extends React.Component<Props, State> {
             
             let noteName = this.props.lastOpenedNote;
             let notebookName = this.state.notebookName;
-            let editor = document.querySelector('.ql-editor') as Element;
-            let noteData = editor.innerHTML;
+            let noteData = $('.ql-editor').html();
             
             
             if (source === 'user') {
@@ -214,8 +213,7 @@ export class Editor extends React.Component<Props, State> {
     }
 
     deleteNote() {
-        let editor = document.querySelector('.ql-editor') as Element;
-        let noteData = editor.innerHTML;
+        let noteData = $('.ql-editor').html();
 
         let data = {
             noteName: this.props.lastOpenedNote,

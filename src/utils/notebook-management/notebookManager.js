@@ -538,7 +538,6 @@ class NotebookManager {
             let notePath = path.join(notebooksLocation, notebook, note, 'index.html');
             let noteData = NotebookManager.changeAssetLinks(notebooksLocation, notebook, notePath);
             if (noteData) {
-                console.log('noteData: ' + noteData);
                 fs.writeFile(notePath, noteData, (err) => {
                     if (err) {
                         throw `Could not relink image content: ${err}`;
@@ -581,7 +580,7 @@ class NotebookManager {
                 $(element).attr('href', newLink);
             }
         });
-        return $.html();
+        return $('body').html();
     }
     getNotebooksLocation() {
         return new Promise(resolve => {
