@@ -241,15 +241,31 @@ export class Sidebar extends React.Component<Props, State> {
 
     renameNoteOrExit(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'Enter') {
-            $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();
-            $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).text(this.state.inputValue);
-            $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).show();
             let data = {
                 notebook: this.props.noteToRename.notebook,
                 oldNote: this.props.noteToRename.note,
-                newNote: this.state.inputValue
+                newNote: this.state.inputValue,
+                renameCurrentlyOpenedNote: false
             };
-            ElectronMessager.sendMessageWithIpcRenderer(RENAME_NOTE, data);
+        
+            // TODO:
+            // Check that data is inputted inside field
+            // If opened note is the one we are renaming, save content to that note first.
+
+            // If last opened note is note we are about to rename, update its
+            // value to new name of the note
+            console.log(data);
+            if (this.props.noteToRename.note === this.props.lastOpenedNote) {
+                this.props.updateLastOpenedNote(data.newNote);
+                data.renameCurrentlyOpenedNote = true;
+                ElectronMessager.sendMessageWithIpcRenderer(RENAME_NOTE, data);
+                $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).text(this.state.inputValue);
+            } else {
+                ElectronMessager.sendMessageWithIpcRenderer(RENAME_NOTE, data);
+            }
+
+            // ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES, this.props.notebookName);
+
         } else if (e.key === 'Escape') {
             this.setState({inputValue: ''}, () => {
                 $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();

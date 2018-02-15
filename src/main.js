@@ -100,14 +100,6 @@ electron_1.ipcMain.on(index_1.RENAME_NOTE, (event, data) => {
     let notebook = data.notebook;
     let oldNote = data.oldNote;
     let newNote = data.newNote;
-    // TODO:
-    // Get notebook name, old note name & new note name - DONE
-    // Rename note
-    // After renaming note, relink assets for that note
-    // Update db entry that has old note name with new note name
-    console.log('nbook: ' + notebook);
-    console.log('old note name: ' + oldNote);
-    console.log('new note name: ' + newNote);
     dbMessager.getFromSettings('notebooksLocation')
         .then((location) => {
         let pathToNotebook = path.join(location, notebook);
@@ -121,7 +113,25 @@ electron_1.ipcMain.on(index_1.RENAME_NOTE, (event, data) => {
                     notebookManager_1.default.updateNoteData(newNotePath, updatedNoteData)
                         .then(() => {
                         // Update DB entry with new note name
-                        dbMessager.changeNoteName(notebook, oldNote, newNote);
+                        dbMessager.changeNoteName(notebook, oldNote, newNote)
+                            .then(() => {
+                            // TODO:
+                            // If note that is currently opened is renamed, update lastOpenedNote to that new one
+                            if (data.renameCurrentlyOpenedNote) {
+                                event.sender.send(index_1.LOAD_CONTENT_INTO_NOTE, updatedNoteData);
+                            }
+                            else {
+                                notebookManager_1.default.getNotes(path.join(location, notebook))
+                                    .then((notes) => {
+                                    notebookManager_1.default.getNotesCreationDate(notes)
+                                        .then((res) => {
+                                        notes = notebookManager_1.default.orderNotesBy(res, 'created_at');
+                                        notes = notebookManager_1.default.formatNotes(notes);
+                                        event.sender.send(index_1.GET_NOTES, notes);
+                                    });
+                                });
+                            }
+                        });
                     });
                 }
             }
