@@ -776,6 +776,11 @@ div.open-note-alert {
   border-bottom: transparent;
   cursor: pointer;
   background-color: #fff;
+  transition: color 0.5s ease;
+}
+
+div.open-note-alert:hover {
+  color: #9EA6C2;
 }
 
 div.open-note-alert > a {
