@@ -175,19 +175,19 @@ ipcMain.on(RENAME_NOTE, (event: any, data: any) => {
               // If note that is currently opened is renamed, update lastOpenedNote to that new one
               if (data.renameCurrentlyOpenedNote) {
                 event.sender.send(LOAD_CONTENT_INTO_NOTE, updatedNoteData);
-              } else {
-                NotebookManager.getNotes(path.join(location, notebook))
-                .then((notes: string[]) => {
-                  NotebookManager.getNotesCreationDate(notes)
-                  .then((res: any) => {
-                    notes = NotebookManager.orderNotesBy(res, 'created_at');
-                    notes = NotebookManager.formatNotes(notes);
-                    
-                    event.sender.send(GET_NOTES, notes);
-                    
-                  });
-                });
               }
+              
+              NotebookManager.getNotes(path.join(location, notebook))
+              .then((notes: string[]) => {
+                NotebookManager.getNotesCreationDate(notes)
+                .then((res: any) => {
+                  notes = NotebookManager.orderNotesBy(res, 'created_at');
+                  notes = NotebookManager.formatNotes(notes);
+                  
+                  event.sender.send(GET_NOTES, notes);
+                  
+                });
+              });
 
             });
 

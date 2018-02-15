@@ -146,6 +146,21 @@ export class Sidebar extends React.Component<Props, State> {
     }
 
     openNoteMenu(note: string) {
+        let editor = document.querySelector('.ql-editor') as Element;
+        let noteContentToUpdate = editor.innerHTML;
+
+        // Updates note data only if the note we right clicked on is one that is
+        // currently open and the data of that note got changed
+        if ((this.props.lastOpenedNote === note) && (noteContentToUpdate !== this.props.noteContent)) {
+            let noteDataToSave = {
+                noteName: note,
+                notebookName: this.props.notebookName,
+                noteData: noteContentToUpdate,
+                noteDataTextOnly: striptags(noteContentToUpdate, [], '\n')
+            };
+            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
+        }
+
         let noteData = {
             notebook: this.props.notebookName,
             note: note
@@ -254,12 +269,10 @@ export class Sidebar extends React.Component<Props, State> {
 
             // If last opened note is note we are about to rename, update its
             // value to new name of the note
-            console.log(data);
             if (this.props.noteToRename.note === this.props.lastOpenedNote) {
                 this.props.updateLastOpenedNote(data.newNote);
                 data.renameCurrentlyOpenedNote = true;
                 ElectronMessager.sendMessageWithIpcRenderer(RENAME_NOTE, data);
-                $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).text(this.state.inputValue);
             } else {
                 ElectronMessager.sendMessageWithIpcRenderer(RENAME_NOTE, data);
             }
