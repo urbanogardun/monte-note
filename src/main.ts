@@ -176,14 +176,17 @@ ipcMain.on(RENAME_NOTE, (event: any, data: any) => {
               if (data.renameCurrentlyOpenedNote) {
                 event.sender.send(LOAD_CONTENT_INTO_NOTE, updatedNoteData);
               }
-              
+
               NotebookManager.getNotes(path.join(location, notebook))
               .then((notes: string[]) => {
                 NotebookManager.getNotesCreationDate(notes)
                 .then((res: any) => {
-                  notes = NotebookManager.orderNotesBy(res, 'created_at');
+                  // notes = NotebookManager.orderNotesBy(res, 'created_at');
                   notes = NotebookManager.formatNotes(notes);
-                  
+                  notes = notes.sort((a: string, b: string) => {
+                    return a.toLowerCase().localeCompare(b.toLowerCase());
+                  });
+
                   event.sender.send(GET_NOTES, notes);
                   
                 });
@@ -387,6 +390,9 @@ ipcMain.on(GET_NOTES, (event: any, notebook: string) => {
       .then((result: any) => {
         notes = NotebookManager.orderNotesBy(result, 'created_at');
         notes = NotebookManager.formatNotes(notes);
+        notes = notes.sort((a: string, b: string) => {
+          return a.toLowerCase().localeCompare(b.toLowerCase());
+        });
         
         event.sender.send(GET_NOTES, notes);
         
@@ -579,6 +585,9 @@ ipcMain.on(DELETE_NOTE, (event: any, data: any) => {
                     .then((response: any) => {
                       notes = NotebookManager.orderNotesBy(response, 'created_at');
                       notes = NotebookManager.formatNotes(notes) as string[];
+                      notes = notes.sort((a: string, b: string) => {
+                        return a.toLowerCase().localeCompare(b.toLowerCase());
+                      });
       
                       let lastCreatedNote = notes.pop();
                       if (lastCreatedNote) {

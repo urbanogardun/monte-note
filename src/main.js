@@ -124,8 +124,11 @@ electron_1.ipcMain.on(index_1.RENAME_NOTE, (event, data) => {
                                 .then((notes) => {
                                 notebookManager_1.default.getNotesCreationDate(notes)
                                     .then((res) => {
-                                    notes = notebookManager_1.default.orderNotesBy(res, 'created_at');
+                                    // notes = NotebookManager.orderNotesBy(res, 'created_at');
                                     notes = notebookManager_1.default.formatNotes(notes);
+                                    notes = notes.sort((a, b) => {
+                                        return a.toLowerCase().localeCompare(b.toLowerCase());
+                                    });
                                     event.sender.send(index_1.GET_NOTES, notes);
                                 });
                             });
@@ -285,6 +288,9 @@ electron_1.ipcMain.on(index_1.GET_NOTES, (event, notebook) => {
                 .then((result) => {
                 notes = notebookManager_1.default.orderNotesBy(result, 'created_at');
                 notes = notebookManager_1.default.formatNotes(notes);
+                notes = notes.sort((a, b) => {
+                    return a.toLowerCase().localeCompare(b.toLowerCase());
+                });
                 event.sender.send(index_1.GET_NOTES, notes);
                 // dbMessager.getLastOpenedNote(notebook)
                 // .then((note: string) => {
@@ -441,6 +447,9 @@ electron_1.ipcMain.on(index_1.DELETE_NOTE, (event, data) => {
                                             .then((response) => {
                                             notes = notebookManager_1.default.orderNotesBy(response, 'created_at');
                                             notes = notebookManager_1.default.formatNotes(notes);
+                                            notes = notes.sort((a, b) => {
+                                                return a.toLowerCase().localeCompare(b.toLowerCase());
+                                            });
                                             let lastCreatedNote = notes.pop();
                                             if (lastCreatedNote) {
                                                 dbMessager.setLastOpenedNote(notebook, lastCreatedNote);
