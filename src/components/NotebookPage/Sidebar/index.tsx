@@ -231,8 +231,6 @@ export class Sidebar extends React.Component<Props, State> {
                 }
                 $(`p[data-entryname="${nextProps.noteToRename.notebook}-${nextProps.noteToRename.note}"]`).hide();
                 
-                console.log('Rename note: ' + nextProps.noteToRename.note);
-                
                 this.setState({inputValue: ''}, () => {
                     let inputDiv = $(`div[data-entryname="${nextProps.noteToRename.notebook}-${nextProps.noteToRename.note}"]`);
                     $(inputDiv).find('input').val('');
