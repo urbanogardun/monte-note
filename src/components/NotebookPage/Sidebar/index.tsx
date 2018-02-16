@@ -3,7 +3,6 @@ import ElectronMessager from '../../../utils/electron-messaging/electronMessager
 import NewNote from './NewNote/index';
 // import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE, DELETE_NOTE } from '../../../constants/index';
 import { 
-    ADD_NOTE, 
     UPDATE_NOTE_STATE, 
     GET_NOTES, 
     UPDATE_NOTE,
@@ -47,73 +46,12 @@ export class Sidebar extends React.Component<Props, State> {
         ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES, this.props.notebookName);
     }
 
-    showInput() {
-        let showInput = this.state.showInput === 'visible' ? 'hidden' : 'visible';
-        this.setState({showInput: showInput});
-
-        let noteContentToUpdate = $('.ql-editor').html();
-
-        // Save note data only if there are notes in notebook
-        if (this.props.notes.length) {
-
-            let noteDataToSave = prepareNoteData(this.props, noteContentToUpdate);
-    
-            // Updates note data only if the data got changed
-            if (noteDataToSave.noteData !== this.props.noteContent) {
-                ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
-            }
-
-        }
-
-        $('li.open-input').hide();
-    }
-
-    // Creates notebook on Enter key press
-    handleKeyPress(e: React.KeyboardEvent<HTMLInputElement>) {
-        if (e.key === 'Enter') {
-            let note = this.prepareNote(this.state.inputValue as string);
-            this.addNote(note);
-            this.resetComponentState();
-        }
-    }
-
-    // Creates notebook when input field loses focus
-    handleFocusOut() {
-        let note = this.prepareNote(this.state.inputValue as string);
-        this.addNote(note);
-        this.resetComponentState();
-
-        $('li.open-input').show();
-    }
-
-    // After notebook name gets submitted through the input field, resets the
-    // component state to default
-    resetComponentState() {
-        this.setState({
-            showInput: 'hidden',
-            inputValue: '',
-        });
-    }
-
     updateInputValue(e: React.ChangeEvent<HTMLInputElement>) {
         this.setState({inputValue: e.target.value});
     }
 
     prepareNote(name: string) {
         return name.trim();
-    }
-
-    addNote(name: string) {
-        if ( (name) && (this.props.notes.indexOf(name) === -1) ) {
-            this.setState(
-                {lastOpenedNote: name,
-                noteContent: '',
-                notes: this.props.notes}
-            );
-            let data = {notebookName: this.props.notebookName, noteName: name};
-            ElectronMessager.sendMessageWithIpcRenderer(ADD_NOTE, data);
-            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, data);
-        }
     }
 
     // Switches to selected note and loads its content. Saves content of
@@ -135,13 +73,6 @@ export class Sidebar extends React.Component<Props, State> {
 
         // Switch to another note and get that note's content
         ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, noteToSwitchTo);
-    }
-
-    exitIfEscPressed(e: React.KeyboardEvent<HTMLInputElement>) {
-        if (e.key === 'Escape') {
-            this.resetComponentState();
-            $('li.open-input').show();
-        }
     }
 
     openNoteMenu(note: string) {

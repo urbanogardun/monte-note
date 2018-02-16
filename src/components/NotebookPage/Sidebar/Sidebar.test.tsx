@@ -27,7 +27,6 @@ it('renders the input on button click', () => {
 
 it('resets component state when input field gets out of focus', () => {
     sidebar.setState({inputValue: 'test-note'});
-    instance.handleFocusOut();
     expect(sidebar.state('inputValue')).toEqual('');
 });
 
