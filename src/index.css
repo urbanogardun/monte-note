@@ -847,3 +847,25 @@ input.rename-note {
   }
 }
 
+div.note-moved-to-trash-notice {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 40px;
+  z-index: 1000;
+  background-color: #282E3F;
+  color: #9EA6C2;
+}
+
+button.close-trash-notice {
+  color: #9EA6C2 !important;
+  position: relative;
+  bottom: 15px;
+  left: 18px;
+  font-size: 1.3rem;
+  font-weight: 100;
+}
+
+button.close-trash-notice:hover {
+  color: #fff !important;
+}
