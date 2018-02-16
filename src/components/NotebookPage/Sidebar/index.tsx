@@ -258,10 +258,6 @@ export class Sidebar extends React.Component<Props, State> {
                 renameCurrentlyOpenedNote: false
             };
         
-            // TODO:
-            // Check that data is inputted inside field
-            // If opened note is the one we are renaming, save content to that note first.
-
             // If last opened note is note we are about to rename, update its
             // value to new name of the note
             if (this.props.noteToRename.note === this.props.lastOpenedNote) {
@@ -272,8 +268,6 @@ export class Sidebar extends React.Component<Props, State> {
                 ElectronMessager.sendMessageWithIpcRenderer(RENAME_NOTE, data);
             }
 
-            // ElectronMessager.sendMessageWithIpcRenderer(GET_NOTES, this.props.notebookName);
-
         } else if (e.key === 'Escape') {
             this.setState({inputValue: ''}, () => {
                 $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();
@@ -283,13 +277,9 @@ export class Sidebar extends React.Component<Props, State> {
     }
 
     render() {
-        // let expandNotebooksNoteList = this.props.notes.length > 0 ? 'true' : 'false';
-        // let showNotesOrNot = this.props.notes.length > 0 ? 'show' : '';
         return (
             <React.Fragment>
-            
                 {/* <!-- Sidebar --> */}
-
                 <div className="col-2 sidebar-container col-1-sidebar-container-sm">
                     <div className="sidebar">
                         <div className="sidebar-item sidebar-item-md">
@@ -694,86 +684,6 @@ export class Sidebar extends React.Component<Props, State> {
                 {/* <!-- /Navbar for Smallest Devices --> */}
             
             </React.Fragment>
-
-            // <div className="col-2 trashcan sidebar">
-            //     <section className="notebooks">
-            //         <ul className="list-group notes">
-            //             <Link 
-            //                 to={'/'} 
-            //             >
-            //                 <li 
-            //                     className="list-group-item sidebar-note sidebar-link"
-            //                 >Home <span className="oi oi-home trashcan" />
-            //                 </li>
-            //             </Link>
-            //         </ul>
-            //     </section>
-
-            //     <section className="trashcan">
-            //         <ul className="list-group notes">
-            //             <li
-            //                 className="list-group-item open-input sidebar-note sidebar-link"
-            //                 onClick={() => this.showInput()}
-            //             >
-            //                 New Note
-            //                 <span className="oi oi-document document-icon home-icon" />
-            //             </li>
-            //         </ul>
-
-            //         <div className={`sidebar-app-form input-group input-group-sm ${this.state.showInput}`}>
-            //             <input
-            //                 value={this.state.inputValue}
-            //                 onChange={e => this.updateInputValue(e)}
-            //                 pattern="^[a-zA-Z0-9]+$"
-            //                 ref={input => input && input.focus()}
-            //                 onKeyPress={(e) => this.handleKeyPress(e)}
-            //                 onBlur={() => this.handleFocusOut()}
-            //                 type="text"
-            //                 className="form-control add-note sidebar-app-form"
-            //                 aria-label="Note"
-            //                 aria-describedby="sizing-addon2"
-            //             />
-            //         </div>
-            //     </section>
-
-            //     <section className="trashcan">
-            //         <div 
-            //             title={this.props.notebookName}
-            //             className="notebook-name-sidebar" 
-            //             data-toggle="collapse" 
-            //             data-target="#collapseExample" 
-            //             aria-expanded={expandNotebooksNoteList}
-            //         >
-            //             {
-            //                 this.props.notebookName.length > 25 ? 
-            //                 this.props.notebookName.slice(0, 23) + '...' : 
-            //                 this.props.notebookName
-            //             }
-            //             <span className="oi oi-chevron-bottom expand-notebook" />
-            //             <span className="oi oi-chevron-left expand-notebook" />
-            //         </div>
-            //         <div className={`collapse notes-sidebar ${showNotesOrNot}`} id="collapseExample">
-            //             <ul className="list-group notes">
-            //                 {(this.props.notes as string[]).map((name: string, index: number) => {
-            //                     let activeNote = 
-            //                     name === this.props.lastOpenedNote ? 'notebook-name-sidebar-active' : '';
-            //                     return (
-            //                         <li
-            //                             key={name}
-            //                             {...(name === this.props.lastOpenedNote ? '' : '')}
-            //                             className={`list-group-item sidebar-note ${activeNote}`}
-            //                             onClick={() => this.updateLastOpenedNote(name)}
-            //                         >
-            //                             {name}
-            //                         </li>
-            //                     );
-            //                 })}
-            //             </ul>
-
-            //         </div>
-            //     </section>
-
-            // </div>
         );
     }
 }
