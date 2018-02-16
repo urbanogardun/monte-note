@@ -186,7 +186,7 @@ export class Sidebar extends React.Component<Props, State> {
             let data = {
                 notebook: this.props.noteToRename.notebook,
                 oldNote: this.props.noteToRename.note,
-                newNote: this.state.inputValue,
+                newNote: this.state.inputValue.trim(),
                 renameCurrentlyOpenedNote: false
             };
         

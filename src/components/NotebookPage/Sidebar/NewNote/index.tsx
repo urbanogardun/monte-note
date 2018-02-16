@@ -5,8 +5,6 @@ import {
     UPDATE_NOTE_STATE, 
     GET_NOTES, 
     UPDATE_NOTE,
-    EDIT_NOTE_ITEM_CONTEXT_MENU, 
-    RENAME_NOTE
 } from '../../../../constants/index';
 import * as $ from 'jquery';
 var striptags = require('../../../../utils/striptags');
@@ -114,164 +112,10 @@ export class NewNote extends React.Component<Props, State> {
         }
     }
 
-    // Switches to selected note and loads its content. Saves content of
-    // the note we are switching from as well (if needed).
-    updateLastOpenedNote(name: string) {
-        let noteContentToUpdate = $('.ql-editor').html();
-
-        let noteDataToSave = prepareNoteData(this.props, noteContentToUpdate);
-
-        let noteToSwitchTo = {
-            notebookName: this.props.notebookName, 
-            noteName: name
-        };
-
-        // Updates note data only if the data got changed
-        if (noteDataToSave.noteData !== this.props.noteContent) {
-            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
-        }
-
-        // Switch to another note and get that note's content
-        ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE_STATE, noteToSwitchTo);
-    }
-
     exitIfEscPressed(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === 'Escape') {
             this.resetComponentState();
             $('li.open-input').show();
-        }
-    }
-
-    openNoteMenu(note: string) {
-        let noteContentToUpdate = $('.ql-editor').html();
-
-        // Updates note data only if the note we right clicked on is one that is
-        // currently open and the data of that note got changed
-        if ((this.props.lastOpenedNote === note) && (noteContentToUpdate !== this.props.noteContent)) {
-            this.props.updateNoteContent(noteContentToUpdate);
-            let noteDataToSave = {
-                noteName: note,
-                notebookName: this.props.notebookName,
-                noteData: noteContentToUpdate,
-                noteDataTextOnly: striptags(noteContentToUpdate, [], '\n')
-            };
-            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
-        }
-
-        let noteData = {
-            notebook: this.props.notebookName,
-            note: note
-        };
-        ElectronMessager.sendMessageWithIpcRenderer(EDIT_NOTE_ITEM_CONTEXT_MENU, noteData);
-    }
-
-    componentWillUnmount() {
-        // When resizing images, on images that have been hovered over, regardless
-        // if they have been resized, a css style class for displaying/hiding 
-        // a resize frame will be added. In cases when nothing inside a note
-        // doesn't change, note will get updated as latest modified inside the
-        // db regardless. This check will remove that resize frame style.
-        if ($('.ql-editor').find('img').attr('style') === 'border: none; cursor: inherit;') {
-            $('.ql-editor').find('img').removeAttr('style');
-        }
-
-        let noteContentToUpdate = $('.ql-editor').html();
-        let noteData = prepareNoteData(this.props, noteContentToUpdate);
-        let noteDataToSave = {...noteData, updatePreviewContent: true};
-
-        // Updates note data only if the data got changed
-        if (noteDataToSave.noteData !== this.props.noteContent) {
-            ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
-        }
-    }
-
-    componentDidMount() {
-        $('.sidebar-notebooks-dropdown-sm')
-        .add('.sidebar-notebooks-dropdown-md')
-        .add('.sidebar-tags-dropdown-sm')
-        .add('.sidebar-tags-dropdown')
-        .add('.new-notebook-container-sm').on('click', function() {
-            if ($(this).hasClass('sidebar-notebooks-dropdown-md')) {
-                ($('#collapseNotebooksBigSidebar') as any).collapse('toggle')
-            } else if ($(this).hasClass('new-notebook-container-sm')) {
-                $('.tag-links-sm').hide();
-                $('.sidebar-notebook-links-sm').hide();
-
-                $('.new-notebook-sm').css('display') === 'block' ? 
-                $('.new-notebook-sm').hide() :
-                $('.new-notebook-sm').show();
-                $('input.sidebar-md').focus();
-            } else if ($(this).hasClass('sidebar-tags-dropdown-sm')) {
-                $('.sidebar-notebook-links-sm').hide();
-                $('.new-notebook-sm').hide();
-
-                $('.tag-links-sm').css('display') === 'block' ? 
-                $('.tag-links-sm').hide() :
-                $('.tag-links-sm').show();
-            } else if ($(this).hasClass('sidebar-notebooks-dropdown-sm')) {
-                $('.tag-links-sm').hide();
-                $('.new-notebook-sm').hide();
-
-                $('.sidebar-notebook-links-sm').css('display') === 'block' ? 
-                $('.sidebar-notebook-links-sm').hide() :
-                $('.sidebar-notebook-links-sm').show();
-            } else if ($(this).hasClass('sidebar-tags-dropdown')) {
-                ($('#collapseTagsBigSidebar') as any).collapse('toggle');
-            }
-        });
-    }
-
-    componentWillReceiveProps(nextProps: Props) {
-        if (nextProps.noteToRename.notebook !== '') {
-            if (nextProps.noteToRename !== this.props.noteToRename) {
-                if (this.props.noteToRename.notebook !== '') {
-                    $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).show();
-                    $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();
-                }
-                $(`p[data-entryname="${nextProps.noteToRename.notebook}-${nextProps.noteToRename.note}"]`).hide();
-                
-                this.setState({inputValue: ''}, () => {
-                    let inputDiv = $(`div[data-entryname="${nextProps.noteToRename.notebook}-${nextProps.noteToRename.note}"]`);
-                    $(inputDiv).find('input').val('');
-                    inputDiv.show();
-                    $(inputDiv).find('input').focus();
-                });
-                
-            }
-        }
-    }
-
-    focusOutFromRenameNoteInput(e: any) {
-        this.setState({inputValue: ''}, () => {
-            $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).show();
-            $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();
-        });
-    }
-
-    renameNoteOrExit(e: React.KeyboardEvent<HTMLInputElement>) {
-        if (e.key === 'Enter') {
-            let data = {
-                notebook: this.props.noteToRename.notebook,
-                oldNote: this.props.noteToRename.note,
-                newNote: this.state.inputValue,
-                renameCurrentlyOpenedNote: false
-            };
-        
-            // If last opened note is note we are about to rename, update its
-            // value to new name of the note
-            if (this.props.noteToRename.note === this.props.lastOpenedNote) {
-                this.props.updateLastOpenedNote(data.newNote);
-                data.renameCurrentlyOpenedNote = true;
-                ElectronMessager.sendMessageWithIpcRenderer(RENAME_NOTE, data);
-            } else {
-                ElectronMessager.sendMessageWithIpcRenderer(RENAME_NOTE, data);
-            }
-
-        } else if (e.key === 'Escape') {
-            this.setState({inputValue: ''}, () => {
-                $(`div[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).hide();
-                $(`p[data-entryname="${this.props.noteToRename.notebook}-${this.props.noteToRename.note}"]`).show();
-            });
         }
     }
 
