@@ -31,16 +31,16 @@ export class TrashcanSidebar extends React.Component<Props, State> {
         .removeClass('tag-selected');
         
         $('.trashed-notes-sidebar-sm')
-        .find(`p.${elementClass}`)
+        .find(`p[data-entryname="${elementClass}"]`)
         .children()
         .addClass('currently-opened-note-sidebar-sm');
 
         $('.trashed-notes-sidebar-md')
-        .find(`p.${elementClass}`)
+        .find(`p[data-entryname="${elementClass}"]`)
         .addClass('currently-opened-note-sidebar-md');
 
         $('.trashed-notes-sidebar-lg')
-        .find(`p.${elementClass}`)
+        .find(`p[data-entryname="${elementClass}"]`)
         .addClass('currently-opened-note-sidebar-md');
     }
 
@@ -135,11 +135,12 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                                     return (
                                                         <p
                                                             key={note + index}
-                                                            className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md ${notebookNameForId}-${noteName}`}
+                                                            className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md`}
+                                                            data-entryname={`${notebook}-${noteName}`}
                                                             onClick={(e) => {
                                                                 this.getNoteFromTrash(notebook, note);
                                                                 this.markNoteActive(
-                                                                    e, `${notebookNameForId}-${noteName}`);
+                                                                    e, `${notebook}-${noteName}`);
                                                             }}
                                                         >
                                                             {note}
@@ -213,7 +214,8 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                                 return (
                                                     <p
                                                         key={note + index + 'trashed-notes-md'}
-                                                        className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md ${notebookNameForId}-${noteName}`}
+                                                        className={`list-group-item list-group-item-tag sidebar-collapsed-item-text notes-sidebar-md`}
+                                                        data-entryname={`${notebook}-${noteName}`}
                                                         onClick={(e) => {
                                                             this.getNoteFromTrash(notebook, note);
                                                             this.markNoteActive(
@@ -278,7 +280,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
 
                                 {(Object.keys(this.props.trash).map((notebook: string) => {
                                     if (this.props.trash[notebook].length > 0) {
-                                        let notebookNameForId = notebook.split(' ').join('-');
+                                        // let notebookNameForId = notebook.split(' ').join('-');
                                         // let notebookNameTrimmed = notebook.length > 25 ? notebook.slice(0, 23) + '...' : notebook;
                                         return (
                                             <li 
@@ -288,6 +290,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                                     className="nav-link dropdown-toggle" 
                                                     href="#" 
                                                     id={notebook}
+                                                    data-entryname={notebook}
                                                     data-toggle="dropdown" 
                                                     aria-haspopup="true" 
                                                     aria-expanded="false"
@@ -301,12 +304,13 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                                             return (
                                                                 <p
                                                                     key={note + index}
-                                                                    className={`hamburger-menu-tag-element dropdown-item ${notebookNameForId}-${noteName}`}
+                                                                    className={`hamburger-menu-tag-element dropdown-item`}
+                                                                    data-entryname={`${notebook}-${noteName}`}
                                                                     onClick={(e) => {
                                                                     this.getNoteFromTrash(notebook, note);
                                                                     this.markNoteActive(
                                                                         e, 
-                                                                        `${notebookNameForId}-${noteName}`
+                                                                        `${notebook}-${noteName}`
                                                                     );
                                                                     }}
                                                                 >
