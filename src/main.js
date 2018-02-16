@@ -6,33 +6,50 @@ var isDev = require('electron-is-dev');
 const notebookManager_1 = require("./utils/notebook-management/notebookManager");
 const index_1 = require("./constants/index");
 const dbMessager_1 = require("./utils/dbMessager");
+const Store = require('electron-store');
+const store = new Store();
 var path = require('path');
 // let db = new Db().getDb() as Nedb;
 let mainWindow;
 // let notebookManager: NotebookManager;
 let dbMessager = new dbMessager_1.default();
 function createWindow() {
+    let options = store.get('winBounds', { height: 600, width: 800 });
+    options.webPreferences = {
+        webSecurity: false
+    };
+    let isWindowFullScreen = store.get('winFullScreen', false);
+    if (isWindowFullScreen) {
+        options.fullscreen = true;
+    }
     // Create the browser window.
-    mainWindow = new electron_1.BrowserWindow({
-        height: 600,
-        width: 800,
-        webPreferences: {
-            webSecurity: false
-        }
+    mainWindow = new electron_1.BrowserWindow(options);
+    let isWindowMaximized = store.get('winMaximized', false);
+    if (isWindowMaximized) {
+        mainWindow.maximize();
+    }
+    // Logs whether the app gets maximized or is in fullscreen. Next time the
+    // app gets ran the application will get resized appropriately.
+    mainWindow.on('maximize', function () {
+        store.set('winMaximized', true);
     });
-    // // and load the index.html of the app.
-    // mainWindow.loadURL(url.format({
-    //     pathname: path.join(__dirname, '../index.html'),
-    //     protocol: 'file:',
-    //     slashes: true,
-    // }));
-    // mainWindow.loadURL('http://localhost:3000');
-    // isDev = true;
+    mainWindow.on('unmaximize', function () {
+        store.set('winMaximized', false);
+    });
+    mainWindow.on('enter-full-screen', function () {
+        store.set('winFullScreen', true);
+    });
+    mainWindow.on('leave-full-screen', function () {
+        store.set('winFullScreen', false);
+    });
+    // and load the index.html of the app.
     mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, '../build/index.html')}`);
     // Open the DevTools.
     mainWindow.webContents.openDevTools();
     mainWindow.on('close', () => {
         mainWindow.webContents.send(index_1.EXIT_APP_SAVE_CONTENT);
+        // Save current size of the application
+        store.set('winBounds', mainWindow.getBounds());
     });
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {
