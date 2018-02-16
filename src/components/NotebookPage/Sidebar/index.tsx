@@ -1,5 +1,6 @@
 import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
+import NewNote from './NewNote/index';
 // import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE, DELETE_NOTE } from '../../../constants/index';
 import { 
     ADD_NOTE, 
@@ -309,31 +310,17 @@ export class Sidebar extends React.Component<Props, State> {
 
                         <div className="sidebar-item sidebar-item-md">
                             <div className="sidebar-item-text-container">
-                                <ul className="list-group notes">
-                                    <li
-                                        className="open-input list-group-item sidebar-note sidebar-link new-notebook-sidebar-link-lg"
-                                        onClick={() => this.showInput()}
-                                    >
-                                        New Note
-                                        <span className="oi oi-document document-icon home-icon add-notebook notebook-icon-sidebar-lg " />
-                                    </li>
-                                </ul>
-
-                                <div className={`sidebar-app-form input-group input-group-sm ${this.state.showInput}`}>
-                                    <input
-                                        value={this.state.inputValue}
-                                        onChange={e => this.updateInputValue(e)}
-                                        pattern="^[a-zA-Z0-9]+$"
-                                        ref={input => input && input.focus()}
-                                        onKeyPress={(e) => this.handleKeyPress(e)}
-                                        onKeyDown={(e) => this.exitIfEscPressed(e)}
-                                        onBlur={() => this.handleFocusOut()}
-                                        type="text"
-                                        className="form-control sidebar-lg sidebar-app-form"
-                                        aria-label="Note"
-                                        aria-describedby="sizing-addon2"
-                                    />
-                                </div>
+                                <NewNote 
+                                    notebookName={this.props.notebookName}
+                                    notes={this.props.notes}
+                                    noteContent={this.props.noteContent}
+                                    lastOpenedNote={this.props.lastOpenedNote}
+                                    updateNotes={this.props.updateNotes}
+                                    updateLastOpenedNote={this.props.updateLastOpenedNote}
+                                    updateNoteContent={this.props.updateNoteContent}
+                                    noteToRename={this.props.noteToRename}
+                                    sidebarSize={'lg'}
+                                />
                             </div>
                         </div>
 
@@ -522,21 +509,17 @@ export class Sidebar extends React.Component<Props, State> {
                 {/* <!-- Add Note Extension --> */}
                 <div className="col-2 sidebar-extension-sm sidebar-links-sm new-notebook-sm">
                     <div className="sidebar-collapse-content new-notebook-sidebar-md">
-                        <div className={`sidebar-app-form input-group input-group-sm visible`}>
-                            <input
-                                value={this.state.inputValue}
-                                onChange={e => this.updateInputValue(e)}
-                                pattern="^[a-zA-Z0-9]+$"
-                                ref={input => input && input.focus()}
-                                onKeyPress={(e) => this.handleKeyPress(e)}
-                                onKeyDown={(e) => this.exitIfEscPressed(e)}
-                                onBlur={() => this.handleFocusOut()}
-                                type="text"
-                                className="form-control add-note sidebar-app-form sidebar-md"
-                                aria-label="Note"
-                                aria-describedby="sizing-addon2"
-                            />
-                        </div>
+                        <NewNote 
+                            notebookName={this.props.notebookName}
+                            notes={this.props.notes}
+                            noteContent={this.props.noteContent}
+                            lastOpenedNote={this.props.lastOpenedNote}
+                            updateNotes={this.props.updateNotes}
+                            updateLastOpenedNote={this.props.updateLastOpenedNote}
+                            updateNoteContent={this.props.updateNoteContent}
+                            noteToRename={this.props.noteToRename}
+                            sidebarSize={'md'}
+                        />
                     </div>
                 </div>
                 {/* <!-- /Add Note Extension --> */}
@@ -572,36 +555,17 @@ export class Sidebar extends React.Component<Props, State> {
                                     </Link>
                                 </li>
 
-
-                                <li
-                                    className="nav-item open-input"
-                                >
-                                    <a
-                                        className="nav-link"
-                                        href="#"
-                                        onClick={() => this.showInput()}
-                                    >
-                                        New Note
-                                    </a>
-                                </li>
-
-                                <li className="nav-item new-notebook-input-hamburger">
-                                    <div className={`input-group input-group-sm ${this.state.showInput}`}>
-                                        <input
-                                            value={this.state.inputValue}
-                                            onChange={e => this.updateInputValue(e)}
-                                            pattern="^[a-zA-Z0-9]+$"
-                                            ref={input => input && input.focus()}
-                                            onKeyPress={(e) => this.handleKeyPress(e)}
-                                            onKeyDown={(e) => this.exitIfEscPressed(e)}
-                                            onBlur={() => this.handleFocusOut()}
-                                            type="text"
-                                            className="form-control new-notebook-hamburger"
-                                            aria-label="Note"
-                                            aria-describedby="sizing-addon2"
-                                        />
-                                    </div>
-                                </li>
+                                <NewNote
+                                    notebookName={this.props.notebookName}
+                                    notes={this.props.notes}
+                                    noteContent={this.props.noteContent}
+                                    lastOpenedNote={this.props.lastOpenedNote}
+                                    updateNotes={this.props.updateNotes}
+                                    updateLastOpenedNote={this.props.updateLastOpenedNote}
+                                    updateNoteContent={this.props.updateNoteContent}
+                                    noteToRename={this.props.noteToRename}
+                                    sidebarSize={'sm'}
+                                />
 
                                 <li className="nav-item dropdown active">
 
