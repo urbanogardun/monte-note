@@ -291,8 +291,6 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
               NotebookManager.getAllNotes(notebooksLocation, notebooks)
               .then((notes: string[][]) => {
                 
-                console.log('NOTES WE GOT');
-                console.log(notes);
                 // console.log('NOTEBOOKS LOCATION: ' + notebooksLocation);
                 dbMessager.addAllExistingNotes(notes)
                 .then(() => {

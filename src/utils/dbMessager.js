@@ -155,9 +155,10 @@ class DbMessager {
      * @param  {string} notebook
      * @param  {string} noteLocation
      */
-    prepareNoteForDb(notebook, noteLocation) {
+    prepareNoteForDb(notebook, noteLocation, fullNoteLocation) {
         return new Promise(resolve => {
-            notebookManager_1.NotebookManager.getTagsFromTagFile(path.resolve(noteLocation, '..'))
+            let noteDir = path.resolve(fullNoteLocation, '..');
+            notebookManager_1.NotebookManager.getTagsFromTagFile(noteDir)
                 .then((tags) => {
                 let data = {
                     notebookName: notebook,
@@ -172,6 +173,9 @@ class DbMessager {
                     data.notebookName = notebookManager_1.NotebookManager.getNotebookNameFromTrashDirectory(noteLocation);
                     data.noteName = notebook;
                     noteLocation = path.join(noteLocation, notebook, 'index.html');
+                }
+                if (fullNoteLocation) {
+                    noteLocation = fullNoteLocation;
                 }
                 notebookManager_1.NotebookManager.getOnlyTextFromNote(noteLocation)
                     .then((content) => {
@@ -188,6 +192,7 @@ class DbMessager {
      */
     addExistingNote(notebook, noteLocation) {
         return new Promise(resolve => {
+            let fullNoteLocation = noteLocation;
             if (notebook === index_2.TRASHCAN) {
                 notebook = path.parse(path.resolve(noteLocation, '..')).name;
                 noteLocation = path.resolve(noteLocation, '..', '..');
@@ -195,7 +200,7 @@ class DbMessager {
             notebookManager_1.NotebookManager.noteExists(noteLocation)
                 .then((response) => {
                 if (response) {
-                    this.prepareNoteForDb(notebook, noteLocation)
+                    this.prepareNoteForDb(notebook, noteLocation, fullNoteLocation)
                         .then((docToSave) => {
                         this.db.insert(docToSave, (err) => {
                             if (err) {

@@ -186,9 +186,10 @@ export class DbMessager {
      * @param  {string} notebook
      * @param  {string} noteLocation
      */
-    prepareNoteForDb(notebook: string, noteLocation: string) {
+    prepareNoteForDb(notebook: string, noteLocation: string, fullNoteLocation?: string) {
         return new Promise(resolve => {
-            NotebookManager.getTagsFromTagFile(path.resolve(noteLocation, '..'))
+            let noteDir = path.resolve(fullNoteLocation, '..');
+            NotebookManager.getTagsFromTagFile(noteDir)
             .then((tags: string[]) => {
                 let data = {
                     notebookName: notebook,
@@ -204,6 +205,10 @@ export class DbMessager {
                     data.notebookName = NotebookManager.getNotebookNameFromTrashDirectory(noteLocation);
                     data.noteName = notebook;
                     noteLocation = path.join(noteLocation, notebook, 'index.html');
+                }
+
+                if (fullNoteLocation) {
+                    noteLocation = fullNoteLocation;
                 }
     
                 NotebookManager.getOnlyTextFromNote(noteLocation)
@@ -225,6 +230,7 @@ export class DbMessager {
     addExistingNote(notebook: string, noteLocation: string) {
         return new Promise(resolve => {
 
+            let fullNoteLocation = noteLocation;
             if (notebook === TRASHCAN) {
                 notebook = path.parse(path.resolve(noteLocation, '..')).name;
                 noteLocation = path.resolve(noteLocation, '..', '..');
@@ -233,7 +239,7 @@ export class DbMessager {
             NotebookManager.noteExists(noteLocation)
             .then((response: boolean) => {
                 if (response) {
-                    this.prepareNoteForDb(notebook, noteLocation)
+                    this.prepareNoteForDb(notebook, noteLocation, fullNoteLocation)
                     .then((docToSave: any) => {
                         this.db.insert(docToSave, (err: Error) => {
                             if (err) {
