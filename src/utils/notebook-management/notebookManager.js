@@ -25,13 +25,13 @@ class NotebookManager {
     }
     static getNotebooks(directory) {
         return fs.readdirSync(directory).filter(function (file) {
-            return fs.statSync(directory + '/' + file).isDirectory();
+            return fs.statSync(path.join(directory, file)).isDirectory();
         });
     }
     static addNotebook(location, name) {
         return new Promise(resolve => {
             try {
-                fs.mkdir(`${location}\\${name}`, () => {
+                fs.mkdir(path.join(location, name), () => {
                     resolve(true);
                 });
             }
@@ -175,12 +175,12 @@ class NotebookManager {
             let isTrashcan = path.parse(location).base === index_1.TRASHCAN;
             let noteFilesInTrash = [];
             if (isTrashcan) {
-                fs.readdir(`${location}`, (err, noteDirs) => {
+                fs.readdir(location, (err, noteDirs) => {
                     if (noteDirs.length === 0) {
                         resolve([]);
                     }
                     noteDirs.forEach((noteDir, i) => {
-                        fs.readdir(`${path.join(location, noteDir)}`, (error, notes) => {
+                        fs.readdir(path.join(location, noteDir), (error, notes) => {
                             notes = notes
                                 .map((note) => { return path.join(location, noteDir, note, 'index.html'); });
                             noteFilesInTrash = [...noteFilesInTrash, ...notes];
@@ -192,7 +192,7 @@ class NotebookManager {
                 });
             }
             else {
-                fs.readdir(`${location}`, (err, files) => {
+                fs.readdir(location, (err, files) => {
                     files = files.map((file) => { return path.join(location, file, 'index.html'); });
                     resolve(files);
                 });
@@ -649,7 +649,7 @@ class NotebookManager {
      */
     getNotebooks() {
         return fs.readdirSync(NotebookManager.directoryToSaveNotebooksAt).filter(function (file) {
-            return fs.statSync(NotebookManager.directoryToSaveNotebooksAt + '/' + file).isDirectory();
+            return fs.statSync(path.join(NotebookManager.directoryToSaveNotebooksAt, file)).isDirectory();
         });
     }
     /**
@@ -665,7 +665,7 @@ class NotebookManager {
      * @returns boolean
      */
     notebookExists(name) {
-        return (!fs.existsSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`));
+        return (!fs.existsSync(path.join(NotebookManager.directoryToSaveNotebooksAt, name)));
     }
     /**
      * Keeps track of notebooks that were created during a session
@@ -690,7 +690,7 @@ class NotebookManager {
     deleteDirectory(directoryPath) {
         if (fs.existsSync(directoryPath)) {
             fs.readdirSync(directoryPath).forEach(function (file) {
-                var curPath = `${directoryPath}/${file}`;
+                var curPath = path.join(directoryPath, file);
                 if (fs.lstatSync(curPath).isDirectory()) {
                     this.deleteDirectory(curPath);
                 }

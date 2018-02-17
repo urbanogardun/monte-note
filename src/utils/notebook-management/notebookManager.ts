@@ -24,14 +24,14 @@ export class NotebookManager {
 
     static getNotebooks(directory: string) {
         return fs.readdirSync(directory).filter(function(file: string) {
-            return fs.statSync(directory + '/' + file).isDirectory();
+            return fs.statSync(path.join(directory, file)).isDirectory();
         });
     }
 
     static addNotebook(location: string, name: string) {
         return new Promise(resolve => {
             try {
-                fs.mkdir(`${location}\\${name}`, () => {
+                fs.mkdir(path.join(location, name), () => {
                     resolve(true);
                 });
             } catch (error) {
@@ -183,13 +183,13 @@ export class NotebookManager {
             let isTrashcan = path.parse(location).base === TRASHCAN;
             let noteFilesInTrash = [] as string[];
             if (isTrashcan) {
-                fs.readdir(`${location}`, (err: Error, noteDirs: string[]) => {
+                fs.readdir(location, (err: Error, noteDirs: string[]) => {
                     if (noteDirs.length === 0) {
                         resolve([]);
                     }
 
                     noteDirs.forEach((noteDir: string, i: number) => {
-                        fs.readdir(`${path.join(location, noteDir)}`, (error: Error, notes: string[]) => {
+                        fs.readdir(path.join(location, noteDir), (error: Error, notes: string[]) => {
                             
                             notes = notes
                             .map((note: string) => { return path.join(location, noteDir, note, 'index.html'); });
@@ -202,7 +202,7 @@ export class NotebookManager {
                     });
                 });
             } else {
-                fs.readdir(`${location}`, (err: Error, files: string[]) => {
+                fs.readdir(location, (err: Error, files: string[]) => {
                     files = files.map((file: string) => { return path.join(location, file, 'index.html'); });
                     resolve(files);
                 });
@@ -727,7 +727,7 @@ export class NotebookManager {
      */
     getNotebooks() {
         return fs.readdirSync(NotebookManager.directoryToSaveNotebooksAt).filter(function(file: string) {
-            return fs.statSync(NotebookManager.directoryToSaveNotebooksAt + '/' + file).isDirectory();
+            return fs.statSync(path.join(NotebookManager.directoryToSaveNotebooksAt, file)).isDirectory();
         });
     }
 
@@ -745,7 +745,7 @@ export class NotebookManager {
      * @returns boolean
      */
     private notebookExists(name: string): boolean {
-        return (!fs.existsSync(`${NotebookManager.directoryToSaveNotebooksAt}\\${name}`));
+        return (!fs.existsSync(path.join(NotebookManager.directoryToSaveNotebooksAt, name)));
     }
 
     /**
@@ -774,7 +774,7 @@ export class NotebookManager {
         if (fs.existsSync(directoryPath)) {
             
             fs.readdirSync(directoryPath).forEach(function(this: NotebookManager, file: string) {
-                var curPath = `${directoryPath}/${file}`;
+                var curPath = path.join(directoryPath, file);
                 
                 if (fs.lstatSync(curPath).isDirectory()) { // recurse
                     this.deleteDirectory(curPath);
