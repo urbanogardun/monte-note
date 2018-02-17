@@ -108,12 +108,20 @@ export class Sidebar extends React.Component<Props, State> {
             $('.ql-editor').find('img').removeAttr('style');
         }
 
-        let noteContentToUpdate = $('.ql-editor').html();
+        let noteContentToUpdate = $('.ql-editor').html().trim();
         let noteData = prepareNoteData(this.props, noteContentToUpdate);
         let noteDataToSave = {...noteData, updatePreviewContent: true};
 
-        // Updates note data only if the data got changed
-        if (noteDataToSave.noteData !== this.props.noteContent) {
+        // Sort the note content string and compare the results with old note content
+        // to check if a note got updated and if it did, to save it.
+        let newContent = noteDataToSave.noteData.split('').sort((a: string, b: string) => {
+            return a.localeCompare(b);
+        }).join();
+        let oldContent = this.props.noteContent.split('').sort((a: string, b: string) => {
+            return a.localeCompare(b);
+        }).join();
+
+        if (newContent !== oldContent) {
             ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
         }
     }
