@@ -112,16 +112,7 @@ export class Sidebar extends React.Component<Props, State> {
         let noteData = prepareNoteData(this.props, noteContentToUpdate);
         let noteDataToSave = {...noteData, updatePreviewContent: true};
 
-        // Sort the note content string and compare the results with old note content
-        // to check if a note got updated and if it did, to save it.
-        let newContent = noteDataToSave.noteData.split('').sort((a: string, b: string) => {
-            return a.localeCompare(b);
-        }).join();
-        let oldContent = this.props.noteContent.split('').sort((a: string, b: string) => {
-            return a.localeCompare(b);
-        }).join();
-
-        if (newContent !== oldContent) {
+        if (noteContentChanged(this.props.noteContent, noteDataToSave.noteData)) {
             ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
         }
     }
@@ -604,4 +595,17 @@ function prepareNoteData(props: Props, noteData: string) {
         noteDataTextOnly: striptags(noteData, [], '\n')
     };
     return noteDataToSave;
+}
+
+// Sort the note content string and compare the results with old note content
+// to check if a note got updated and if it did, to save it.
+function noteContentChanged(oldContent: string, newContent: string) {
+    oldContent = oldContent.split('').sort((a: string, b: string) => {
+        return a.localeCompare(b);
+    }).join();
+    newContent = newContent.split('').sort((a: string, b: string) => {
+        return a.localeCompare(b);
+    }).join();
+
+    return oldContent !== newContent ? true : false;
 }
