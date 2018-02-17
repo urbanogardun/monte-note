@@ -67,7 +67,7 @@ export class Sidebar extends React.Component<Props, State> {
         };
 
         // Updates note data only if the data got changed
-        if (noteDataToSave.noteData !== this.props.noteContent) {
+        if (noteContentChanged(this.props.noteContent, noteDataToSave.noteData)) {
             ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
         }
 
@@ -124,7 +124,7 @@ export class Sidebar extends React.Component<Props, State> {
         .add('.sidebar-tags-dropdown')
         .add('.new-notebook-container-sm').on('click', function() {
             if ($(this).hasClass('sidebar-notebooks-dropdown-md')) {
-                ($('#collapseNotebooksBigSidebar') as any).collapse('toggle')
+                ($('#collapseNotebooksBigSidebar') as any).collapse('toggle');
             } else if ($(this).hasClass('new-notebook-container-sm')) {
                 $('.tag-links-sm').hide();
                 $('.sidebar-notebook-links-sm').hide();
