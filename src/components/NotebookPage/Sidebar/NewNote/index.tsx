@@ -7,7 +7,7 @@ import {
     UPDATE_NOTE,
 } from '../../../../constants/index';
 import * as $ from 'jquery';
-var striptags = require('../../../../utils/striptags');
+import { prepareNoteData, noteContentChanged } from '../../helpers';
 
 export interface Props {
     location?: any;
@@ -55,7 +55,7 @@ export class NewNote extends React.Component<Props, State> {
             let noteDataToSave = prepareNoteData(this.props, noteContentToUpdate);
     
             // Updates note data only if the data got changed
-            if (noteDataToSave.noteData !== this.props.noteContent) {
+            if (noteContentChanged(this.props.noteContent, noteDataToSave.noteData)) {
                 ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
             }
 
@@ -211,16 +211,3 @@ export class NewNote extends React.Component<Props, State> {
 }
 
 export default NewNote;
-
-// Helpers
-
-// Creates note data object for sending out to the ipcMain process
-function prepareNoteData(props: Props, noteData: string) {
-    let noteDataToSave = {
-        noteName: props.lastOpenedNote,
-        notebookName: props.notebookName,
-        noteData: noteData,
-        noteDataTextOnly: striptags(noteData, [], '\n')
-    };
-    return noteDataToSave;
-}

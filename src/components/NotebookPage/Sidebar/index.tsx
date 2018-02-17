@@ -1,6 +1,7 @@
 import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
 import NewNote from './NewNote/index';
+import { prepareNoteData, noteContentChanged } from '../helpers';
 // import { ADD_NOTE, UPDATE_NOTE_STATE, GET_NOTES, UPDATE_NOTE, DELETE_NOTE } from '../../../constants/index';
 import { 
     UPDATE_NOTE_STATE, 
@@ -583,29 +584,3 @@ export class Sidebar extends React.Component<Props, State> {
 }
 
 export default Sidebar;
-
-// Helpers
-
-// Creates note data object for sending out to the ipcMain process
-function prepareNoteData(props: Props, noteData: string) {
-    let noteDataToSave = {
-        noteName: props.lastOpenedNote,
-        notebookName: props.notebookName,
-        noteData: noteData,
-        noteDataTextOnly: striptags(noteData, [], '\n')
-    };
-    return noteDataToSave;
-}
-
-// Sort the note content string and compare the results with old note content
-// to check if a note got updated and if it did, to save it.
-function noteContentChanged(oldContent: string, newContent: string) {
-    oldContent = oldContent.split('').sort((a: string, b: string) => {
-        return a.localeCompare(b);
-    }).join();
-    newContent = newContent.split('').sort((a: string, b: string) => {
-        return a.localeCompare(b);
-    }).join();
-
-    return oldContent !== newContent ? true : false;
-}

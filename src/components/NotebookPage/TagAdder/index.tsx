@@ -2,7 +2,7 @@ import * as React from 'react';
 import TagList from '../TagList/index';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
 import { ADD_TAG_TO_NOTE, UPDATE_NOTE } from '../../../constants/index';
-const striptags = require('../../../utils/striptags');
+import { prepareNoteData, noteContentChanged } from '../helpers';
 
 export interface Props {
     notebookName: string;
@@ -45,7 +45,8 @@ export class TagAdder extends React.Component<Props, State> {
             let editor = document.querySelector('.ql-editor') as Element;
             let noteContentToUpdate = editor.innerHTML;
 
-            if (this.props.noteContent !== noteContentToUpdate) {
+            // Updates note data only if the data got changed
+            if (noteContentChanged(this.props.noteContent, noteContentToUpdate)) {
                 let noteData = prepareNoteData(this.props, noteContentToUpdate);
                 let noteDataToSave = {...noteData, updatePreviewContent: true};
                 ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, noteDataToSave);
@@ -88,16 +89,3 @@ export class TagAdder extends React.Component<Props, State> {
 }
 
 export default TagAdder;
-
-// Helpers
-
-// Creates note data object for sending out to the ipcMain process
-function prepareNoteData(props: Props, noteData: string) {
-    let noteDataToSave = {
-        noteName: props.lastOpenedNote,
-        notebookName: props.notebookName,
-        noteData: noteData,
-        noteDataTextOnly: striptags(noteData, [], '\n')
-    };
-    return noteDataToSave;
-}
