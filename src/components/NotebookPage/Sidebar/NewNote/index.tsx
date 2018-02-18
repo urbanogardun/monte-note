@@ -178,7 +178,7 @@ export class NewNote extends React.Component<Props, State> {
                         <a
                             className="nav-link"
                             href="#"
-                            onClick={() => this.showInput()}
+                            onClick={(e) => { e.preventDefault(); this.showInput(); }}
                         >
                             New Note
                         </a>

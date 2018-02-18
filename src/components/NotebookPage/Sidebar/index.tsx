@@ -123,7 +123,8 @@ export class Sidebar extends React.Component<Props, State> {
         .add('.sidebar-notebooks-dropdown-md')
         .add('.sidebar-tags-dropdown-sm')
         .add('.sidebar-tags-dropdown')
-        .add('.new-notebook-container-sm').on('click', function() {
+        .add('.new-notebook-container-sm').on('click', function(event: any) {
+            event.preventDefault();
             if ($(this).hasClass('sidebar-notebooks-dropdown-md')) {
                 ($('#collapseNotebooksBigSidebar') as any).collapse('toggle');
             } else if ($(this).hasClass('new-notebook-container-sm')) {

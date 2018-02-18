@@ -29,7 +29,8 @@ export class Sidebar extends React.Component<Props, {}> {
         .add('.sidebar-notebooks-dropdown-md')
         .add('.sidebar-tags-dropdown-sm')
         .add('.sidebar-tags-dropdown')
-        .add('.new-notebook-container-sm').on('click', function() {
+        .add('.new-notebook-container-sm').on('click', function(event: any) {
+            event.preventDefault();
             if ($(this).hasClass('sidebar-notebooks-dropdown-md')) {
                 ($('#collapseNotebooksBigSidebar') as any).collapse('toggle')
             } else if ($(this).hasClass('new-notebook-container-sm')) {
@@ -76,6 +77,7 @@ export class Sidebar extends React.Component<Props, {}> {
         });
 
         $('button.navbar-toggler').on('click', function(event: any) {
+            event.preventDefault();
             $('#navbarDropdownTagsLink').attr('aria-expanded', 'false');
             $('.tags-dropdown-hamburger-container').removeClass('show');
         });
