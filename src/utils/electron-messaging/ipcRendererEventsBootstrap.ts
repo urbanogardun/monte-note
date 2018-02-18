@@ -25,7 +25,7 @@ import {
     APPEND_SEARCH_RESULTS,
     IMAGE_UPLOADED,
     ATTACHMENT_UPLOADED,
-    RENAME_NOTE
+    RENAME_NOTE,
 } from '../../constants/index';
 import ElectronMessager from '../electron-messaging/electronMessager';
     

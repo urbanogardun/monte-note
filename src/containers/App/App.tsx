@@ -8,7 +8,7 @@ export function mergeProps(stateProps: Object, dispatchProps: Object, ownProps: 
 }
 
 export function mapStateToProps({ enthusiasmLevel, notebooksLocation, notebooks, searchResults }: StoreState) {
-    // console.log(notebooksLocation);
+    console.log(notebooksLocation);
     return {
         notebooksLocation,
         notebooks,

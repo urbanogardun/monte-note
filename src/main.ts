@@ -272,7 +272,7 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
     }
 
     if (location) {
-
+      console.log('LOC IS SET');
       dbMessager.createSettings()
       .then((res: boolean) => {
 
@@ -328,6 +328,9 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
 
       });
 
+    } else {
+      console.log('LOC STILL NOT SET');
+      event.sender.send(LOAD_NOTEBOOKS_LOCATION, 'NOTEBOOKS_LOCATION_NOT_SET');
     }
 
 });

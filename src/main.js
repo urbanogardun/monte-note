@@ -200,6 +200,7 @@ electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
         console.log(`Location not selected: ${error}`);
     }
     if (location) {
+        console.log('LOC IS SET');
         dbMessager.createSettings()
             .then((res) => {
             if (res) {
@@ -240,6 +241,10 @@ electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
                 });
             }
         });
+    }
+    else {
+        console.log('LOC STILL NOT SET');
+        event.sender.send(index_1.LOAD_NOTEBOOKS_LOCATION, 'NOTEBOOKS_LOCATION_NOT_SET');
     }
 });
 electron_1.ipcMain.on(index_1.ADD_NOTEBOOK, (event, notebookName) => {

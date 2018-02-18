@@ -929,3 +929,19 @@ div.montenote-welcome > p {
         margin: auto;
     }
 }
+
+img.loader {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 122px;
+  transform: translate(-50%, -50%);
+  transform: -webkit-translate(-50%, -50%);
+  transform: -moz-translate(-50%, -50%);
+  transform: -ms-translate(-50%, -50%);
+  display: none;
+}
+
+div.welcome-screen-container {
+  padding: 0px !important;
+}

@@ -38,6 +38,7 @@ class App extends React.Component<Props, object> {
   }
 
   render() {
+    console.log(this.props);
     let notebooksLocation = this.props.notebooksLocation as string;
 
     let componentToRender = ( <div /> );
@@ -45,34 +46,37 @@ class App extends React.Component<Props, object> {
     // if it got set by user
     if ( (notebooksLocation !== NOTEBOOKS_LOCATION_NOT_SET) && (notebooksLocation.length) ) {
       componentToRender = (
-      <HomePage 
-        notebooks={this.props.notebooks} 
-        searchResults={this.props.searchResults}
-        previewContent={this.props.previewContent} 
-        updateTags={this.props.updateTags}
-        goToRoute={this.props.history.push}
-        allTags={this.props.allTags}
-        updateSelectedTags={this.props.updateSelectedTags}
-        selectedTags={this.props.selectedTags}
-        updateSearchQuery={this.props.updateSearchQuery}
-        searchQuery={this.props.searchQuery}
-        updateSelectedNotebook={this.props.updateSelectedNotebook}
-        selectedNotebook={this.props.selectedNotebook}
-        lastOpenedNote={this.props.lastOpenedNote}
-        updatePreview={this.props.updatePreview}
-        previewData={this.props.previewData}
-        updateAllTags={this.props.updateAllTags}
-      />);
+        <div className="container-fluid notebook-container">
+          <HomePage 
+            notebooks={this.props.notebooks} 
+            searchResults={this.props.searchResults}
+            previewContent={this.props.previewContent} 
+            updateTags={this.props.updateTags}
+            goToRoute={this.props.history.push}
+            allTags={this.props.allTags}
+            updateSelectedTags={this.props.updateSelectedTags}
+            selectedTags={this.props.selectedTags}
+            updateSearchQuery={this.props.updateSearchQuery}
+            searchQuery={this.props.searchQuery}
+            updateSelectedNotebook={this.props.updateSelectedNotebook}
+            selectedNotebook={this.props.selectedNotebook}
+            lastOpenedNote={this.props.lastOpenedNote}
+            updatePreview={this.props.updatePreview}
+            previewData={this.props.previewData}
+            updateAllTags={this.props.updateAllTags}
+          />
+        </div>
+      );
     } else if (notebooksLocation === NOTEBOOKS_LOCATION_NOT_SET) {
-      componentToRender = <Welcome name={'John'} notebooksLocation={''} />;
+      componentToRender = (
+        <div className="container-fluid notebook-container welcome-screen-container">
+          <Welcome name={'John'} notebooksLocation={''} />
+        </div>
+      );
     }
 
     return (
-      <div className="container-fluid notebook-container">
-        
-        {componentToRender}
-
-      </div>
+        componentToRender
     );
   }
 }
