@@ -869,3 +869,63 @@ button.close-trash-notice {
 button.close-trash-notice:hover {
   color: #fff !important;
 }
+
+/* Welcome Screen */
+
+div.welcome-screen,
+div.welcome-row {
+    text-align: center;
+    height: 100%;
+}
+
+div.welcome-screen {
+    background-color: #282E3F;
+    color: #fff;
+}
+
+button.select-notebooks-directory {
+    background-color: #1E2230 !important;
+    border: none !important;
+}
+
+button.select-notebooks-directory:hover {
+    background-color: #9EA6C2 !important;
+}
+
+button.select-notebooks-directory:focus {
+  box-shadow: none !important;
+}
+
+div.montenote-welcome > p {
+    margin-bottom: 20px !important;
+    width: 100%;
+    margin: auto;
+}
+
+@media (min-width: 576px) {
+    div.montenote-welcome > p {
+        width: 100%;
+        margin: auto;
+    }
+}
+
+@media (min-width: 768px) {
+    div.montenote-welcome > p {
+        width: 90%;
+        margin: auto;
+    }
+}
+
+@media (min-width: 992px) {
+    div.montenote-welcome > p {
+        width: 70%;
+        margin: auto;
+    }
+}
+
+@media (min-width: 1200px) {
+    div.montenote-welcome > p {
+        width: 60%;
+        margin: auto;
+    }
+}
