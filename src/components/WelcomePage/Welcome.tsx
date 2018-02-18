@@ -11,10 +11,11 @@ class Welcome extends React.Component<Props, object> {
     
     chooseNotebooksLocation(): void {
         ElectronMessager.chooseLocationForNotebooks();
+        $('img.loader').show();
     }
 
     componentWillReceiveProps() {
-        console.log(this.props);
+        $('img.loader').hide();
     }
 
     render() {

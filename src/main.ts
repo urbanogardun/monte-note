@@ -44,6 +44,7 @@ import {
   EDIT_NOTE_CONTENT_CONTEXT_MENU,
   EDIT_NOTE_ITEM_CONTEXT_MENU,
   RENAME_NOTE,
+  NOTEBOOKS_LOCATION_NOT_SET,
  } from './constants/index';
 import DbMessager from './utils/dbMessager';
 const Store = require('electron-store');
@@ -269,10 +270,10 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
       location = dialog.showOpenDialog({properties: ['openDirectory']}).shift();
     } catch (error) {
       console.log(`Location not selected: ${error}`);
+      event.sender.send(LOAD_NOTEBOOKS_LOCATION, `${NOTEBOOKS_LOCATION_NOT_SET}_${Date.now()}`);
     }
 
     if (location) {
-      console.log('LOC IS SET');
       dbMessager.createSettings()
       .then((res: boolean) => {
 
@@ -328,9 +329,6 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
 
       });
 
-    } else {
-      console.log('LOC STILL NOT SET');
-      event.sender.send(LOAD_NOTEBOOKS_LOCATION, 'NOTEBOOKS_LOCATION_NOT_SET');
     }
 
 });

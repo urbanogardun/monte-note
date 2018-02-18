@@ -38,13 +38,12 @@ class App extends React.Component<Props, object> {
   }
 
   render() {
-    console.log(this.props);
     let notebooksLocation = this.props.notebooksLocation as string;
 
     let componentToRender = ( <div /> );
     // Render HomePage component only when notebookslocation prop value gets received and
     // if it got set by user
-    if ( (notebooksLocation !== NOTEBOOKS_LOCATION_NOT_SET) && (notebooksLocation.length) ) {
+    if ( (!notebooksLocation.includes(NOTEBOOKS_LOCATION_NOT_SET)) && (notebooksLocation.length) ) {
       componentToRender = (
         <div className="container-fluid notebook-container">
           <HomePage 
@@ -67,7 +66,7 @@ class App extends React.Component<Props, object> {
           />
         </div>
       );
-    } else if (notebooksLocation === NOTEBOOKS_LOCATION_NOT_SET) {
+    } else if (notebooksLocation.includes(NOTEBOOKS_LOCATION_NOT_SET)) {
       componentToRender = (
         <div className="container-fluid notebook-container welcome-screen-container">
           <Welcome name={'John'} notebooksLocation={''} />
