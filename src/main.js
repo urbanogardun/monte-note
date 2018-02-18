@@ -221,6 +221,10 @@ electron_1.ipcMain.on(index_1.CHOOSE_LOCATION_FOR_NOTEBOOKS, (event, args) => {
                                     .then((docs) => {
                                     event.sender.send(index_1.RELOAD_SEARCH_RESULTS, docs);
                                 });
+                                dbMessager.getAllTags()
+                                    .then((tags) => {
+                                    event.sender.send(index_1.GET_ALL_TAGS, tags);
+                                });
                                 notebookManager_1.default.createTrashcan(notebooksLocation)
                                     .then(() => {
                                     dbMessager.updateSettings('notebooksLocation', notebooksLocation)

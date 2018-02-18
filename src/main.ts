@@ -298,6 +298,11 @@ ipcMain.on(CHOOSE_LOCATION_FOR_NOTEBOOKS, (event: any, args: any) => {
                   .then((docs: any) => {
                     event.sender.send(RELOAD_SEARCH_RESULTS, docs);
                   });
+
+                  dbMessager.getAllTags()
+                  .then((tags: any) => {
+                    event.sender.send(GET_ALL_TAGS, tags);
+                  });
     
                   NotebookManager.createTrashcan(notebooksLocation as string)
                   .then(() => {
