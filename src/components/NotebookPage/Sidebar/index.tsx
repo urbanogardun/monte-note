@@ -298,8 +298,8 @@ export class Sidebar extends React.Component<Props, State> {
                                     aria-controls="collapseNotebooksBigSidebar"
                                 >
                                 {
-                                    this.props.notebookName.length > 25 ?
-                                    this.props.notebookName.slice(0, 23) + '...' :
+                                    this.props.notebookName.length > 22 ?
+                                    this.props.notebookName.slice(0, 20) + '...' :
                                     this.props.notebookName
                                 }
                                 <span className="sidebar-item-icon oi oi-chevron-left"/>

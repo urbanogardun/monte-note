@@ -106,7 +106,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                         {(Object.keys(this.props.trash).map((notebook: string) => {
                             if (this.props.trash[notebook].length > 0) {
                                 let notebookNameForId = notebook.split(' ').join('-');
-                                let notebookNameTrimmed = notebook.length > 25 ? notebook.slice(0, 23) + '...' : notebook;
+                                let notebookNameTrimmed = notebook.length > 22 ? notebook.slice(0, 20) + '...' : notebook;
                                 return (
                                     <div 
                                         key={notebook}
@@ -194,7 +194,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                         {(Object.keys(this.props.trash).map((notebook: string, i: number) => {
                             if (this.props.trash[notebook].length > 0) {
                                 let notebookNameForId = notebook.split(' ').join('-');
-                                let notebookNameTrimmed = notebook.length > 25 ? notebook.slice(0, 23) + '...' : notebook;
+                                let notebookNameTrimmed = notebook.length > 22 ? notebook.slice(0, 20) + '...' : notebook;
                                 return (
                                     <React.Fragment key={notebook}>
                                     <a
