@@ -189,7 +189,7 @@ test('gets tags from all note documents', done => {
 });
 
 test('formats a note file data for database save', done => {
-  let noteLocation = 'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-1\\index.html';
+  let noteLocation = 'C:\\Users\\seneca\\Documents\\my-notebooks\\MonteNote Notebooks\\note-1\\index.html';
 
   dbMessager.prepareNoteForDb('note-1', noteLocation)
   .then((doc: any) => {
@@ -206,14 +206,14 @@ test('formats a note file data for database save', done => {
 test('adds all existing notes to database', done => {
     let testData = {
             'Chemistry': [
-                'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-1\\index.html',
-                'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-2\\index.html',
-                'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-3\\index.html',
+                'C:\\Users\\seneca\\Documents\\my-notebooks\\MonteNote Notebooks\\note-1\\index.html',
+                'C:\\Users\\seneca\\Documents\\my-notebooks\\MonteNote Notebooks\\note-2\\index.html',
+                'C:\\Users\\seneca\\Documents\\my-notebooks\\MonteNote Notebooks\\note-3\\index.html',
             ],
             'Biking': [
-                'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-1\\index.html',
-                'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-1\\index.html',
-                'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-1\\index.html',
+                'C:\\Users\\seneca\\Documents\\my-notebooks\\MonteNote Notebooks\\note-1\\index.html',
+                'C:\\Users\\seneca\\Documents\\my-notebooks\\MonteNote Notebooks\\note-1\\index.html',
+                'C:\\Users\\seneca\\Documents\\my-notebooks\\MonteNote Notebooks\\note-1\\index.html',
             ]
         };
 

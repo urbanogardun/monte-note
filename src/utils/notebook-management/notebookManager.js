@@ -48,7 +48,7 @@ class NotebookManager {
      */
     static createNotebooksDirectory(location) {
         return new Promise(resolve => {
-            let notebooksDirectory = path.join(location, 'NinjaNote Notebooks');
+            let notebooksDirectory = path.join(location, 'MonteNote Notebooks');
             fs.ensureDir(notebooksDirectory)
                 .then(() => {
                 resolve(notebooksDirectory);

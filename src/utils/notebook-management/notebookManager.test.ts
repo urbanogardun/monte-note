@@ -240,7 +240,7 @@ test('creates directory for notebooks', done => {
   NotebookManager.createNotebooksDirectory(notebooksLocation)
   .then((result: string) => {
     done();
-    expect(result).toEqual('C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks');
+    expect(result).toEqual('C:\\Users\\seneca\\Documents\\my-notebooks\\MonteNote Notebooks');
   });
 
 });
@@ -257,7 +257,7 @@ test('changes absolute path of note attachment images', done => {
 });
 
 test('gets only text stripped from HTML tags from a note file', done => {
-  let noteLocation = 'C:\\Users\\seneca\\Documents\\my-notebooks\\NinjaNote Notebooks\\note-1\\index.html';
+  let noteLocation = 'C:\\Users\\seneca\\Documents\\my-notebooks\\MonteNote Notebooks\\note-1\\index.html';
 
   NotebookManager.getOnlyTextFromNote(noteLocation)
   .then((text: string) => {
