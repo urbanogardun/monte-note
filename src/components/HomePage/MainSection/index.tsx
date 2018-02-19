@@ -148,7 +148,7 @@ export class MainSection extends React.Component<Props, {}> {
                             noteContent = highlightSearchQuery(result.noteContent, this.props.searchQuery);
                         } else {
                             noteContent = noteContent.length > 250 ? 
-                            noteContent.substring(0, 250) + '...' : noteContent;
+                            noteContent.substring(0, 250).trim() + '...' : noteContent;
                         }
                         
                         if (result.notebookName) {
@@ -239,7 +239,7 @@ function highlightSearchQuery(text: string, searchQuery: string) {
 
         return newText;
     } else {
-        return text = text.length > 250 ? text.substring(0, 250) + '...' : text;
+        return text = text.length > 250 ? text.substring(0, 250).trim() + '...' : text;
     }
     
 }
