@@ -444,6 +444,7 @@ export class Editor extends React.Component<Props, State> {
                     <span className="ql-formats">
                         <button className="ql-list" value="ordered"/>
                         <button className="ql-list" value="bullet"/>
+                        <button className="ql-list" value="check"/>
                         <button className="ql-indent" value="-1"/>
                         <button className="ql-indent" value="+1"/>
                     </span>

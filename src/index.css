@@ -954,3 +954,8 @@ div#toolbar {
   z-index: 1000;
   background-color: #fff;
 }
+
+.ql-editor ul[data-checked=true] > li::before {
+  content: '\2713' !important;
+  color: #dc3545 !important;
+}
