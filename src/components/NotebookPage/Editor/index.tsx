@@ -210,6 +210,11 @@ export class Editor extends React.Component<Props, State> {
             });
 
         });
+
+        $('div#toolbar').on('mousedown', function(event: any) {
+            event.preventDefault();
+            event.stopPropagation();
+        });
     }
 
     deleteNote() {
