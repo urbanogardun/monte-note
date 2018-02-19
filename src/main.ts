@@ -109,6 +109,8 @@ function createWindow() {
     // when you should delete the corresponding element.
     // mainWindow = null;
   });
+
+  mainWindow.setMenu(null);
 }
 
 // This method will be called when Electron has finished
