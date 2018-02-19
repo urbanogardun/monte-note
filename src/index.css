@@ -945,3 +945,12 @@ img.loader {
 div.welcome-screen-container {
   padding: 0px !important;
 }
+
+/* General */
+
+div#toolbar {
+  position: sticky;
+  top: 0px;
+  z-index: 1000;
+  background-color: #fff;
+}
