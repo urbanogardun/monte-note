@@ -375,7 +375,7 @@ export class Editor extends React.Component<Props, State> {
 
     render() {
         return (
-            <div className="col-sm trashcan main-content notebook-note-editor notebook-page-editor">
+            <div className="col-sm trashcan main-content notebook-note-editor notebook-page-editor note-edit-page-editor">
                 <div className="alert alert-info note-moved-to-trash-notice" role="alert">
                     Note moved to trash.
                     <button type="button" className="close close-trash-notice" data-dismiss="alert" aria-label="Close">

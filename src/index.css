@@ -955,6 +955,17 @@ div#toolbar {
   background-color: #fff;
 }
 
+@media (max-width: 700px) {
+  div.sidebar-sm-note-edit-page {
+    height: 63px !important;
+    z-index: 2000;
+  }
+  div.note-edit-page-editor {
+    height: calc(100% - 63px);
+  }
+}
+
+
 .ql-editor ul[data-checked=true] > li::before {
   content: '\2713' !important;
   color: #dc3545 !important;

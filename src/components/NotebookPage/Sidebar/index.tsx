@@ -459,7 +459,7 @@ export class Sidebar extends React.Component<Props, State> {
                 {/* <!-- /Sidebar Extension for Medium & Small Devices --> */}
 
                 {/* <!-- Navbar for Smallest Devices --> */}
-                <div className="col-12 navbar-sm-container">
+                <div className="col-12 navbar-sm-container sidebar-sm-note-edit-page">
                     <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
                         <a className="navbar-brand" href="#">Logo</a>
                         <button 
