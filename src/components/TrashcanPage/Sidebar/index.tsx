@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import electronMessager from '../../../utils/electron-messaging/electronMessager';
 import { GET_NOTE_FROM_TRASH } from '../../../constants/index';
 
+var logo = require('../../../assets/icons/png/48x48.png');
+
 export interface Props {
     trash: object;
 }
@@ -252,7 +254,12 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                 {/* <!-- Navbar for Smallest Devices --> */}
                 <div className="col-12 navbar-sm-container">
                     <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
-                        <a className="navbar-brand" href="#">Logo</a>
+                        <Link
+                            to={'/'}
+                            className="navbar-brand"
+                        >
+                            <img src={logo} alt="" />
+                        </Link>
                         <button 
                             className="navbar-toggler" 
                             type="button" 

@@ -12,7 +12,9 @@ import {
 } from '../../../constants/index';
 import { Link } from 'react-router-dom';
 import * as $ from 'jquery';
+
 var striptags = require('../../../utils/striptags');
+var logo = require('../../../assets/icons/png/48x48.png');
 
 export interface Props {
     location?: any;
@@ -461,7 +463,12 @@ export class Sidebar extends React.Component<Props, State> {
                 {/* <!-- Navbar for Smallest Devices --> */}
                 <div className="col-12 navbar-sm-container sidebar-sm-note-edit-page">
                     <nav className="navbar navbar-expand-lg navbar-light bg-light navbar-fixed-top">
-                        <a className="navbar-brand" href="#">Logo</a>
+                        <Link
+                            to={'/'}
+                            className="navbar-brand"
+                        >
+                            <img src={logo} alt=""/>
+                        </Link>
                         <button 
                             className="navbar-toggler" 
                             type="button" 
