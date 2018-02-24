@@ -970,3 +970,13 @@ div#toolbar {
   content: '\2713' !important;
   color: #dc3545 !important;
 }
+
+@media (max-width: 362px) {
+  a.navbar-brand > img {
+    height: 38px !important;
+  }
+
+  a.navbar-brand {
+    margin-right: 5px !important;
+  }
+}
