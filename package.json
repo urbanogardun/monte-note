@@ -85,6 +85,7 @@
     "@types/sinon": "^4.1.2",
     "electron": "1.7.9",
     "electron-rebuild": "^1.6.0",
+    "electron-winstaller": "^2.6.4",
     "enzyme": "^3.2.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "react-addons-test-utils": "^15.6.2",
