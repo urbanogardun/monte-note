@@ -28,6 +28,8 @@ import {
     RENAME_NOTE,
 } from '../../constants/index';
 import ElectronMessager from '../electron-messaging/electronMessager';
+
+var striptags = require('../striptags');
     
 let ipcRenderer: IpcRenderer;
 
@@ -146,9 +148,13 @@ export function ipcRendererEventsBootstrap() {
                 let data = {
                     noteName: note,
                     notebookName: notebook,
-                    noteData: noteData
+                    noteData: noteData,
+                    noteDataTextOnly: striptags(noteData, [], '\n'),
+                    exitApp: true
                 };
                 ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, data);
+            } else {
+                ElectronMessager.sendMessageWithIpcRenderer(UPDATE_NOTE, {exitApp: true});
             }
 
         });

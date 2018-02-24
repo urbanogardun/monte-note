@@ -51,10 +51,19 @@ function createWindow() {
         // Open the DevTools.
         mainWindow.webContents.openDevTools();
     }
-    mainWindow.on('close', () => {
-        mainWindow.webContents.send(index_1.EXIT_APP_SAVE_CONTENT);
-        // Save current size of the application
-        store.set('winBounds', mainWindow.getBounds());
+    let contentSavedBeforeExit = false;
+    mainWindow.on('close', (event) => {
+        if (!contentSavedBeforeExit) {
+            event.preventDefault();
+            // Check if 'close' event got fired 2 consecutively. The first time
+            // this event fires is when user clicks on close button inside app. The
+            // second time the event fires is programmatically after note content
+            // gets updated.
+            contentSavedBeforeExit = true;
+            mainWindow.webContents.send(index_1.EXIT_APP_SAVE_CONTENT);
+            // Save current size of the application
+            store.set('winBounds', mainWindow.getBounds());
+        }
     });
     // Emitted when the window is closed.
     mainWindow.on('closed', () => {
@@ -442,6 +451,7 @@ else {
         let noteData = data.noteData;
         let noteDataTextOnly = data.noteDataTextOnly;
         let updatePreviewContent = data.updatePreviewContent;
+        let exitApp = data.exitApp;
         if (noteName && notebookName) {
             dbMessager.getFromSettings('notebooksLocation')
                 .then((location) => {
@@ -457,6 +467,9 @@ else {
                             };
                             dbMessager.saveNoteContent(noteDataToSave)
                                 .then(() => {
+                                if (exitApp) {
+                                    electron_1.app.quit();
+                                }
                                 // For cases when user edits note content and immediately goes back
                                 // to home page. Update content that just got saved inside the
                                 // preview window of home page.
@@ -487,6 +500,9 @@ else {
                     });
                 }
             });
+        }
+        else if (exitApp) {
+            electron_1.app.quit();
         }
     });
     electron_1.ipcMain.on(index_1.GET_ALL_TAGS, (event, args) => {

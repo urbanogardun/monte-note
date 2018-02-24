@@ -100,10 +100,22 @@ function createWindow() {
     mainWindow.webContents.openDevTools();
   }
 
-  mainWindow.on('close', () => {
-    mainWindow.webContents.send(EXIT_APP_SAVE_CONTENT);
-    // Save current size of the application
-    store.set('winBounds', mainWindow.getBounds());
+  let contentSavedBeforeExit = false;
+  mainWindow.on('close', (event: any) => {
+    if (!contentSavedBeforeExit) {
+      event.preventDefault();
+      // Check if 'close' event got fired 2 consecutively. The first time
+      // this event fires is when user clicks on close button inside app. The
+      // second time the event fires is programmatically after note content
+      // gets updated.
+      contentSavedBeforeExit = true;
+
+      mainWindow.webContents.send(EXIT_APP_SAVE_CONTENT);
+  
+      // Save current size of the application
+      store.set('winBounds', mainWindow.getBounds());
+    }
+
   });
 
   // Emitted when the window is closed.
@@ -581,6 +593,7 @@ if (handleSquirrelEvent()) {
     let noteData = data.noteData;
     let noteDataTextOnly = data.noteDataTextOnly;
     let updatePreviewContent = data.updatePreviewContent;
+    let exitApp = data.exitApp;
 
     if (noteName && notebookName) {
       dbMessager.getFromSettings('notebooksLocation')
@@ -600,6 +613,9 @@ if (handleSquirrelEvent()) {
               dbMessager.saveNoteContent(noteDataToSave)
               .then(() => {
 
+                if (exitApp) {
+                  app.quit();
+                }
                 // For cases when user edits note content and immediately goes back
                 // to home page. Update content that just got saved inside the
                 // preview window of home page.
@@ -634,6 +650,8 @@ if (handleSquirrelEvent()) {
         
         }
       });
+    } else if (exitApp) {
+      app.quit();
     }
 
   });
