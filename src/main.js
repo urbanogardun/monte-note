@@ -18,8 +18,8 @@ function createWindow() {
     options.webPreferences = {
         webSecurity: false
     };
-    options.minWidth = 350;
-    options.minHeight = 350;
+    options.minWidth = 360;
+    options.minHeight = 360;
     let isWindowFullScreen = store.get('winFullScreen', false);
     if (isWindowFullScreen) {
         options.fullscreen = true;

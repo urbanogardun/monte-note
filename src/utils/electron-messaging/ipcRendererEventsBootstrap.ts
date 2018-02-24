@@ -136,14 +136,12 @@ export function ipcRendererEventsBootstrap() {
         ipcRenderer.on(EXIT_APP_SAVE_CONTENT, (event: Event, message: string): void => {
 
             // Save current note content if on notebook page
-            if (window.location.pathname.includes('/notebooks/') 
-            && (!window.location.pathname.includes('/notebooks/.trashcan'))) {
-
+            if ($('span#notebook-name').length > 0) {
                 let editor = document.querySelector('.ql-editor') as Element;
                 let noteData = editor.innerHTML;
                 let store = reduxStore.getState();
                 let note = store.lastOpenedNote;
-                let notebook = window.location.pathname.split('/').pop();
+                let notebook = $('span#notebook-name').attr('data-notebook');
     
                 let data = {
                     noteName: note,

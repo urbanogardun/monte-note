@@ -38,6 +38,7 @@ export class Notebook extends React.Component<Props, State> {
         return (
             <div className="container-fluid notebook-container">
                 <div className="row">
+                    <span id="notebook-name" data-notebook={this.state.notebookName}/>
                     <Sidebar 
                         notebookName={this.state.notebookName}
                         notes={this.props.notes}
