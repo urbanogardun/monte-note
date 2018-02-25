@@ -867,7 +867,8 @@ if (handleSquirrelEvent()) {
     // from the db
     dbMessager.getFromSettings('notebooksLocation')
     .then((location: string) => {
-      NotebookManager.destroyNote(location, notebook, note + '.html')
+      let pathToNote = path.join(location, '.trashcan', notebook, note);
+      NotebookManager.destroyNote(pathToNote)
       .then((response: boolean) => {
         if (response) {
           dbMessager.removeNote(notebook, note);

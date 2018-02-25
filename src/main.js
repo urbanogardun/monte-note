@@ -679,7 +679,8 @@ else {
         // from the db
         dbMessager.getFromSettings('notebooksLocation')
             .then((location) => {
-            notebookManager_1.default.destroyNote(location, notebook, note + '.html')
+            let pathToNote = path.join(location, '.trashcan', notebook, note);
+            notebookManager_1.default.destroyNote(pathToNote)
                 .then((response) => {
                 if (response) {
                     dbMessager.removeNote(notebook, note);

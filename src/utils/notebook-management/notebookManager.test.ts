@@ -2,6 +2,7 @@ jest.mock('../dbMessager');
 jest.mock('fs-extra');
 import NotebookManager from './notebookManager';
 import { DbMessager } from '../dbMessager';
+const path = require('path');
 
 let notebookManager: NotebookManager;
 let testNotebook = 'chemistry';
@@ -202,11 +203,12 @@ test('restores note from .trashcan directory', done => {
 });
 
 test('deletes note from drive inside the .trashcan directory', done => {
-  let noteName = 'testNote.html';
+  let noteName = 'testNote';
   let notebookName = 'test-nbook-1';
   let notebooksLocation = 'C:\\notebooks';
+  let pathToNote = path.join(notebooksLocation, '.trashcan', notebookName, noteName);
 
-  NotebookManager.destroyNote(notebooksLocation, notebookName, noteName)
+  NotebookManager.destroyNote(pathToNote)
   .then((result: boolean) => {
     done();
     expect(result).toEqual(true);

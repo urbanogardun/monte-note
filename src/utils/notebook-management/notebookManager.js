@@ -363,10 +363,9 @@ class NotebookManager {
             });
         });
     }
-    static destroyNote(notebooksLocation, notebookName, noteName) {
-        let notePath = path.join(notebooksLocation, index_1.TRASHCAN, notebookName, noteName);
+    static destroyNote(pathToNote) {
         return new Promise(resolve => {
-            fs.remove(notePath)
+            fs.remove(pathToNote)
                 .then(() => {
                 resolve(true);
             })

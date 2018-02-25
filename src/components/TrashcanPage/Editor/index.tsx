@@ -30,10 +30,9 @@ export class TrashcanEditor extends React.Component<Props, State> {
     componentDidMount() {
         this.quill = new Quill('#quill-container', {
             modules: {
-                toolbar: [
-                    ['omega'],
-                    ['delete-note']
-                ],
+                toolbar: {
+                    container: '#toolbar'
+                },
                 attachmentPopoverTrash: {
                     noteInTrash: true
                 }
@@ -159,6 +158,10 @@ export class TrashcanEditor extends React.Component<Props, State> {
     render() {
         return (
             <div className="col trashcan main-content trashcan-page-editor">
+                <div id="toolbar">
+                    <button className="ql-omega"/>
+                    <button className="ql-delete-note"/>
+                </div>
                 <div id="quill-container" />
             </div>
         );

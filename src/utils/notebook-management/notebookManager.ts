@@ -397,10 +397,9 @@ export class NotebookManager {
         });
     }
 
-    static destroyNote(notebooksLocation: string, notebookName: string, noteName: string) {
-        let notePath = path.join(notebooksLocation, TRASHCAN, notebookName, noteName);
+    static destroyNote(pathToNote: string) {
         return new Promise(resolve => {
-            fs.remove(notePath)
+            fs.remove(pathToNote)
             .then(() => {
                 resolve(true);
             })
