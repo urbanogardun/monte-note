@@ -54,7 +54,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
         .add('.new-notebook-container-sm').on('click', function(event: any) {
             event.preventDefault();
             if ($(this).hasClass('sidebar-notebooks-dropdown-md')) {
-                ($('#collapseNotebooksBigSidebar') as any).collapse('toggle')
+                ($('#collapseNotebooksBigSidebar') as any).collapse('toggle');
             } else if ($(this).hasClass('new-notebook-container-sm')) {
                 $('.tag-links-sm').hide();
                 $('.sidebar-notebook-links-sm').hide();
@@ -106,9 +106,10 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                             </div>
                         </div>
 
-                        {(Object.keys(this.props.trash).map((notebook: string) => {
+                        {(Object.keys(this.props.trash).map((notebook: string, i: number) => {
                             if (this.props.trash[notebook].length > 0) {
-                                let notebookNameForId = notebook.split(' ').join('-');
+                                let valueForId = i.toString();
+                                // let notebookNameForId = notebook.split(' ').join('-');
                                 let notebookNameTrimmed = notebook.length > 17 ? notebook.slice(0, 15) + '...' : notebook;
                                 return (
                                     <div 
@@ -122,16 +123,16 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                                 title={notebook} 
                                                 className="sidebar-item-text" 
                                                 data-toggle="collapse" 
-                                                href={`#${notebookNameForId}`} 
+                                                href={`#${valueForId}`} 
                                                 aria-expanded="false" 
-                                                aria-controls={notebookNameForId}
+                                                aria-controls={valueForId}
                                             >
                                                 {notebookNameTrimmed}
                                                 <span className="oi oi-chevron-bottom sidebar-item-icon" />
                                                 <span className="oi oi-chevron-left sidebar-item-icon" />
                                             </a>
                                         </div>
-                                        <div className="sidebar-collapse-content collapse" id={notebookNameForId}>
+                                        <div className="sidebar-collapse-content collapse" id={valueForId}>
                                             <ul className="sidebar-collapsed-content list-unstyled trashed-notes-sidebar-lg">
                                                 {(this.props.trash[notebook].map((note: string, index: number) => {
                                                     let noteName = note.split(' ').join('-');
@@ -196,7 +197,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
 
                         {(Object.keys(this.props.trash).map((notebook: string, i: number) => {
                             if (this.props.trash[notebook].length > 0) {
-                                let notebookNameForId = notebook.split(' ').join('-');
+                                let valueForId = i.toString();
                                 let notebookNameTrimmed = notebook.length > 17 ? notebook.slice(0, 15) + '...' : notebook;
                                 return (
                                     <React.Fragment key={notebook}>
@@ -204,13 +205,13 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                         title={notebook} 
                                         className="nav-link trash-notebook-sidebar-md" 
                                         data-toggle="collapse" 
-                                        href={`#${notebookNameForId}md`} 
+                                        href={`#${valueForId}md`} 
                                         aria-expanded="false" 
-                                        aria-controls={`${notebookNameForId}md`}
+                                        aria-controls={`${valueForId}md`}
                                     >
                                         {notebookNameTrimmed}
                                     </a>
-                                    <div className="collapse" id={`${notebookNameForId}md`}>
+                                    <div className="collapse" id={`${valueForId}md`}>
                                         <ul className="sidebar-collapsed-content list-unstyled trashed-notes-sidebar-md">
                                             {(this.props.trash[notebook].map((note: string, index: number) => {
                                                 let noteName = note.split(' ').join('-');
@@ -222,7 +223,7 @@ export class TrashcanSidebar extends React.Component<Props, State> {
                                                         onClick={(e) => {
                                                             this.getNoteFromTrash(notebook, note);
                                                             this.markNoteActive(
-                                                                e, `${notebookNameForId}-${noteName}`);
+                                                                e, `${valueForId}-${noteName}`);
                                                         }}
                                                     >
                                                         {note}
