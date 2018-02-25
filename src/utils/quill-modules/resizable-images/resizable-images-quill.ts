@@ -27,7 +27,7 @@ function initializeResponsiveImages(quill: Quill) {
             // Save location of image element inside editor. Later when we're
             // about to resize an image, a resized image will get placed exactly
             // where the original image was.
-            let blot = Parchment.find($(e.target).parent()[0] as Node);
+            let blot = Parchment.find($(e.target)[0] as Node);
             imageIndexPosition = blot.offset(quill.scroll);
 
             $(this).css(
@@ -94,6 +94,7 @@ function initializeResponsiveImages(quill: Quill) {
                             height: elementHeight,
                             class: 'image-upload'
                             },              'user');
+
                     }
                 }
 
