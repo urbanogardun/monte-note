@@ -4,28 +4,26 @@
 
 Note taking application with a rich set of editing and management features.
 
-***
-Autosaved note content. Add images and attachments to your note. Put notes into notebooks you
-create and organize them further with custom tags. Instantly search and filter through all notes. 
-
-Also includes rich note content editing capabilities.
-***
-## Note Page:
+## Note Page
 
 ![Note Page](./static/monte-note-note-page.gif "Note Page")
 
-## Search through note content:
+## Search through notes
 
 ![Search Notes](./static/monte-note-search.gif "Search Notes")
 
-## Preview notes:
+## Preview note
 
 ![Preview Notes](./static/monte-note-browse.gif "Preview Notes")
 
-## Other Features:
+## Responsive design
+
+![Responsive Design](./static/monte-note-responsive.gif "Responsive Design")
+
+## Other Features
 
 - Autosave note content
-- Use custom tags for notes
+- Add custom tags to notes
 - Attach any type of data to a note
 - Easily open attachments
 - Add and resize images
@@ -44,10 +42,19 @@ Linux:
 
 ## In the Future:
 
+- Extend test case coverage
 - Export notes to PDF
 - Table creation
 - Add more keyboard shortcuts
 - Package the application for Mac
+
+## Stack:
+
+- Electron
+- React
+- Redux
+- Quill
+
 
 
 

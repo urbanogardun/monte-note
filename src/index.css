@@ -8,7 +8,7 @@
 
 ::-webkit-scrollbar
 {
-	width: 10px;
+  width: 10px;
 	background-color: #F5F5F5;
 }
 
@@ -17,8 +17,9 @@ div.notebooks-search-filter-list::-webkit-scrollbar {
 }
 
 div.sidebar-extension-sm::-webkit-scrollbar,
-div.main-content::-webkit-scrollbar {
-  width: 0px;
+div.main-content::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  width: 0px !important;
 }
 
 ::-webkit-scrollbar-thumb
