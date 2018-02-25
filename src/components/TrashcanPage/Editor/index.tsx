@@ -111,19 +111,16 @@ export class TrashcanEditor extends React.Component<Props, State> {
 
     deleteNote() {
         if (confirm('Are you sure you want to delete this note?')) {
-            // Update trash app state
+            // Remove note that is about to be deleted from the
+            // trashed notes list by updating the app state
             let updateTrash = this.props.updateTrash as Function;
             let newTrash = Object.assign({}, this.props.trash);
-            for (const notebook in this.props.trash) {
-                if (this.props.trash.hasOwnProperty(notebook)) {
-                    let notes = this.props.trash[notebook];
-                    notes = notes.filter((note: string) => { return note !== this.props.note; });
-                    this.props.trash[notebook] = notes;
-                    newTrash[notebook] = notes;
-                    break;
-                }
-            }
-    
+            let currentNotebook = this.props.notebook as string;
+            let notes = this.props.trash[currentNotebook];
+            notes = notes.filter((note: string) => { return note !== this.props.note; });
+            this.props.trash[currentNotebook] = notes;
+            newTrash[currentNotebook] = notes;
+
             updateTrash(newTrash);
             this.quill.deleteText(0, this.quill.getLength());
     
