@@ -59,7 +59,8 @@
     "electron-pack": "npm run build --em.main=build/main.js",
     "electron-start": "node_modules/.bin/electron .",
     "package-win": "electron-packager . --icon=src/assets/icons/win/icon.ico --asar --platform=win32 --overwrite=true",
-    "package-linux": "electron-packager . --icon=src/assets/icons/png/256x256.png --asar --platform=linux --arch=x64 --overwrite=true"
+    "package-linux": "electron-packager . monte-note --icon=src/assets/icons/png/256x256.png --asar --platform=linux --arch=x64 --overwrite=true",
+    "build-deb": "electron-installer-debian --src ./monte-note-linux-x64 --dest ./MonteNote-debian-amd64 --arch amd64 --config debian.config.json"
   },
   "build": {
     "appId": "com.example.electron-cra",
