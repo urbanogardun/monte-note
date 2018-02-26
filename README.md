@@ -1,6 +1,6 @@
 # MonteNote
 
-![MonteNote logo](./static/128x128.png "MonteNote")
+![MonteNote logo](./static/logo.png "MonteNote")
 
 Note taking application with a rich set of editing and management features.
 
