@@ -8,21 +8,21 @@ Note taking application with a rich set of editing and management features.
 
 ![Note Page](./static/monte-note-note-page.gif "Note Page")
 
-## Search through notes
+## Search Note Content
 
 ![Search Notes](./static/monte-note-search.gif "Search Notes")
 
-## Preview note
+## Preview Notes
 
 ![Preview Notes](./static/monte-note-browse.gif "Preview Notes")
 
-## Responsive design
+## Responsive Design
 
 ![Responsive Design](./static/monte-note-responsive.gif "Responsive Design")
 
 ## Other Features
 
-- Autosave note content
+- Note content gets autosaved
 - Add custom tags to notes
 - Attach any type of data to a note
 - Easily open attachments
@@ -50,10 +50,10 @@ Linux:
 
 ## Stack:
 
-- Electron
-- React
-- Redux
-- Quill
+- [Electron](https://github.com/electron/electron)
+- [React](https://github.com/facebook/react)
+- [Redux](https://github.com/reactjs/redux)
+- [Quill](https://github.com/quilljs/quill)
 
 
 
