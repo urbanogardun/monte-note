@@ -67,7 +67,7 @@ function createWindow() {
   if (isWindowFullScreen) {
     options.fullscreen = true;
   }
-  options.icon = path.join(__dirname, 'assets', 'icons', 'png', '64x64.png');
+  options.icon = path.join(__dirname, 'assets', 'icons', 'png', '128x128.png');
 
   // Create the browser window.
   mainWindow = new BrowserWindow(options);
