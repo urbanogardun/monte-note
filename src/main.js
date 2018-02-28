@@ -130,6 +130,18 @@ if (handleSquirrelEvent()) {
     // squirrel event handled and app will exit in 1000ms, so don't do anything else
 }
 else {
+    // Only allow app to run one instance of itself
+    let isSecondInstance = electron_1.app.makeSingleInstance(() => {
+        if (mainWindow) {
+            if (mainWindow.isMinimized()) {
+                mainWindow.restore();
+            }
+            mainWindow.focus();
+        }
+    });
+    if (isSecondInstance) {
+        electron_1.app.quit();
+    }
     // This method will be called when Electron has finished
     // initialization and is ready to create browser windows.
     // Some APIs can only be used after this event occurs.
