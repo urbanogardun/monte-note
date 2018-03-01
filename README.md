@@ -36,11 +36,9 @@ MonteNote is a note taking application with a rich set of editing and management
 
 ## Setup
 
-Windows:
-[Windows x64](https://github.com/urbanogardun/monte-note/releases/download/v0.1.0b/MonteNote-0.1.0b.exe)
+[Latest release for Windows x64](https://github.com/urbanogardun/monte-note/releases)
 
-Linux:
-[Debian AMD64](https://github.com/urbanogardun/monte-note/releases/download/v0.1.0b/monte-note_0.1.0b_amd64.deb)
+[Latest release for Debian AMD64](https://github.com/urbanogardun/monte-note/releases)
 
 ## In the Future:
 
