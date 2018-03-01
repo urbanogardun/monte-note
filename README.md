@@ -2,7 +2,7 @@
 
 ![MonteNote logo](./static/logo.png "MonteNote")
 
-Note taking application with a rich set of editing and management features.
+MonteNote is a note taking application with a rich set of editing and management features.
 
 ## Note Page
 
@@ -37,8 +37,10 @@ Note taking application with a rich set of editing and management features.
 ## Setup
 
 Windows:
+[Windows x64](https://github.com/urbanogardun/monte-note/releases/download/v0.1.0b/MonteNote-0.1.0b.exe)
 
 Linux:
+[Debian AMD64](https://github.com/urbanogardun/monte-note/releases/download/v0.1.0b/monte-note_0.1.0b_amd64.deb)
 
 ## In the Future:
 
