@@ -20,14 +20,10 @@ it('renders the sidebar', () => {
   expect(sidebar.find('.sidebar')).toHaveLength(1);
 });
 
-it('renders the input on button click', () => {
-    sidebar.find('input.sidebar-app-form').first().simulate('submit');
-    expect(sidebar.find('.hidden').exists()).toEqual(true);
-});
-
-it('resets component state when input field gets out of focus', () => {
-    sidebar.setState({inputValue: 'test-note'});
-    expect(sidebar.state('inputValue')).toEqual('');
+it('types new note name for renaming', () => {
+    let newName = 'new-note-name'
+    sidebar.setState({inputValue: newName});
+    expect(sidebar.state('inputValue')).toEqual(newName);
 });
 
 it('strips leading and trailing whitespace from input field', () => {
