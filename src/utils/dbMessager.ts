@@ -188,7 +188,7 @@ export class DbMessager {
      */
     prepareNoteForDb(notebook: string, noteLocation: string, fullNoteLocation?: string) {
         return new Promise(resolve => {
-            let noteDir = path.resolve(fullNoteLocation, '..');
+            let noteDir = fullNoteLocation ? path.resolve(fullNoteLocation, '..') : path.resolve(noteLocation);
             NotebookManager.getTagsFromTagFile(noteDir)
             .then((tags: string[]) => {
                 let data = {
