@@ -1,5 +1,6 @@
 import * as React from 'react';
 import ElectronMessager from '../../../../utils/electron-messaging/electronMessager';
+import sanitizeName from '../../../../utils/nameSanitizer';
 import { 
     ADD_NOTE, 
     UPDATE_NOTE_STATE, 
@@ -100,7 +101,8 @@ export class NewNote extends React.Component<Props, State> {
     }
 
     addNote(name: string) {
-        if ( (name) && (this.props.notes.indexOf(name) === -1) ) {
+        let newName = sanitizeName(name);
+        if ( (name) && (name === newName) && (this.props.notes.indexOf(name) === -1) ) {
             this.setState(
                 {lastOpenedNote: name,
                 noteContent: '',

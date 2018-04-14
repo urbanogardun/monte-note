@@ -1,5 +1,6 @@
 import * as React from 'react';
 import ElectronMessager from '../../../utils/electron-messaging/electronMessager';
+import sanitizeName from '../../../utils/nameSanitizer';
 import { ADD_NOTEBOOK, TRASHCAN } from '../../../constants/index';
 import './index.css';
 import * as $ from 'jquery';
@@ -77,7 +78,13 @@ export class NewNotebookButton extends React.Component<Props, State> {
     }
 
     prepareNotebook(name: string) {
-        return name.trim();
+        name = name.trim();
+        let newName = sanitizeName(name);
+        if (newName === name) {
+            return newName;
+        } else {
+            return '';
+        }
     }
 
     addNotebook(name: string) {
