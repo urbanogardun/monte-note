@@ -6,6 +6,6 @@ describe('<Welcome />', () => {
 
   it('should render a <Welcome /> component', () => {
     const wrapper = shallow(<Welcome />);
-    expect(wrapper.find('.welcome')).toHaveLength(1);
+    expect(wrapper.find('.welcome-screen')).toHaveLength(1);
   });
 });
